@@ -1,7 +1,7 @@
 import app from "./app.js";
 
 //setup port 3000 or the port in env
-const port = process.env.port || 3000;
+const port = process.env.PORT || 4000;
 
 //start server
 const server = app.listen(port, console.log(`Server is up on port ${port}`));
