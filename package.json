@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "node ./backend/src/index",
-    "dev": "env-cmd -f ./backend/config/.env nodemon ./backend/src/index",
+    "dev": "env-cmd -f ./backend/config/dev.env nodemon ./backend/src/index",
     "test": "NODE_OPTIONS=--experimental-vm-modules env-cmd -f ./backend/config/test.env jest --watch --runInBand"
   }
 }
