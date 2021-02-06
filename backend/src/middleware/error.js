@@ -26,4 +26,4 @@ const errorHandler = (err, req, res, next) => {
     .send({ success: false, error: error.message || "Server Error" });
 };
 
-export { errorHandler as default };
+export default errorHandler;
