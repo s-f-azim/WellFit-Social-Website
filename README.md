@@ -8,10 +8,17 @@
 Add two files in the config folder named ``dev.env`` and ``test.env``, each file should have:
 
 ```.env 
+#mode
+NODE_ENV=DEVELOPMENT (TEST for test.env)
 
-PORT=3000
+# frontend url
+CLIENT_URL=http://localhost:8000
 
-MONGO_URI="your database url"+"for test.env add -test to the end of your url"
+#port
+PORT=4000
+
+#db url (for test.env add -test to the end of your url)
+MONGO_URI=your database url 
 ```
 
 
@@ -20,17 +27,20 @@ MONGO_URI="your database url"+"for test.env add -test to the end of your url"
 
 ## first time cloning:
 
+`in both folders run the command`:
+
 ```node 
 yarn install 
 ```
 
-#### to run the server in development mode
+## to run the server in development mode
 
+`while in the backend folder run:`
 ```node
 yarn dev 
 ```
 
-#### to run tests 
+## to run tests 
 
 ```node
 yarn test
