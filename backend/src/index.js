@@ -1,6 +1,6 @@
 import app from "./app.js";
 
-//setup port 3000 or the port in env
+//setup port 4000 or the port in env
 const port = process.env.PORT || 4000;
 
 //start server
