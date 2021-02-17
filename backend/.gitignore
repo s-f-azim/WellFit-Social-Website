@@ -81,7 +81,8 @@ typings/
 
 # dotenv environment variables file
 # *.env
-
+#config 
+tsconfig.json
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
