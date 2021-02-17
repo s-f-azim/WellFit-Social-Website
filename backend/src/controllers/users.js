@@ -1,4 +1,5 @@
 import asyncHandler from "../middleware/async.js";
+import generateToken from "../utils/generateToken.js";
 import User from "../models/User.js";
 
 /**
@@ -9,7 +10,8 @@ import User from "../models/User.js";
  */
 const createUser = asyncHandler(async (req, res) => {
   const user = await User.create(req.body);
-  res.status(201).send({ success: true, data: user });
+  const token = generateToken(user.id);
+  res.status(201).send({ success: true, data: user, token });
 });
 
 export { createUser };
