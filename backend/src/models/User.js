@@ -22,9 +22,15 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// hash the password piror to save
 UserSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
-    this.password=await bcrypt.has(this.password,10)
+    this.password = await bcrypt.has(this.password, 10);
   }
   next();
 });
+
+//create user model
+const User = mongoose.model("User", UserSchema);
+
+export default User;
