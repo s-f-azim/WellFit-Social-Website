@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
+import ErrorResponse from "../utils/errorResponse.js";
 
 //create user schema
 const UserSchema = new mongoose.Schema(
@@ -22,6 +23,13 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+//change the json to not send specified fields
+UserSchema.methods.toJSON = function () {
+  const userObject = this.toObject();
+  delete userObject.password; //remove the password
+  return userObject;
+};
+
 // hash the password piror to save
 UserSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
@@ -29,6 +37,19 @@ UserSchema.pre("save", async function (next) {
   }
   next();
 });
+
+//check that given email and password exists
+UserSchema.statics.checkCredentials = async ({ email, password }) => {
+  const user = await User.findOne({ email }).select("+password");
+  if (!user) {
+    throw new ErrorResponse("Unable to login", 404);
+  }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new ErrorResponse("Unable to login", 404);
+  }
+  return user;
+};
 
 //create user model
 const User = mongoose.model("User", UserSchema);

@@ -14,4 +14,15 @@ const createUser = asyncHandler(async (req, res) => {
   res.status(201).send({ success: true, data: user, token });
 });
 
-export { createUser };
+/**
+ * @async
+ * @desc login a user given the email and password
+ * @route POST /api/users/login
+ * @access public
+ */
+const loginUser = asyncHandler(async (req, res) => {
+  const user = await User.checkCredentials(req.body);
+  res.status(200).send({ success: true, data: user });
+});
+
+export { createUser, loginUser };
