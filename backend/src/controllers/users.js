@@ -1,5 +1,4 @@
 import asyncHandler from "../middleware/async.js";
-import generateToken from "../utils/generateToken.js";
 import User from "../models/User.js";
 
 /**
@@ -10,7 +9,7 @@ import User from "../models/User.js";
  */
 const createUser = asyncHandler(async (req, res) => {
   const user = await User.create(req.body);
-  const token = generateToken(user.id);
+  const token = user.getSginedJWTToken();
   res.status(201).send({ success: true, data: user, token });
 });
 
@@ -22,7 +21,12 @@ const createUser = asyncHandler(async (req, res) => {
  */
 const loginUser = asyncHandler(async (req, res) => {
   const user = await User.checkCredentials(req.body);
-  res.status(200).send({ success: true, data: user });
+  const token = user.getSginedJWTToken();
+  res.status(200).send({ success: true, data: user, token });
 });
 
-export { createUser, loginUser };
+const getUser = asyncHandler(async (req, res) => {
+  res.status(200).send({ success: true, data: req.user, });
+});
+
+export { createUser, loginUser, getUser };

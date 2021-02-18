@@ -4,12 +4,14 @@ import errorHandler from "./middleware/error.js";
 import cors from "cors";
 import ErrorResponse from "./utils/errorResponse.js";
 import userRoutes from "./routes/user.js";
+import passport from "../config/passport-setup.js";
 //connect to the database
 connectDb();
 
 //create the app and setup
 const app = express();
 app.use(express.json());
+app.use(passport.initialize());
 
 //cors
 if (process.env.NODE_ENV === "DEVELOPMENT") {

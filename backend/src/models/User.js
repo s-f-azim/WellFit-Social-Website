@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
+import JWT from "jsonwebtoken";
 import ErrorResponse from "../utils/errorResponse.js";
 
 //create user schema
@@ -49,6 +50,10 @@ UserSchema.statics.checkCredentials = async ({ email, password }) => {
     throw new ErrorResponse("Unable to login", 404);
   }
   return user;
+};
+// Sign JWT and return the token
+UserSchema.methods.getSginedJWTToken = function () {
+  return JWT.sign({ id: this._id }, process.env.JWT_SECRET);
 };
 
 //create user model
