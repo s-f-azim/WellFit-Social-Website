@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Carousel, Button, Form, Input } from 'antd';
+
 class Questionnaire extends Component {
 
     constructor(props) {
@@ -20,21 +21,26 @@ class Questionnaire extends Component {
         this.carousel.current.prev();
     }
 
-    carouselStyle = {
-        margin: '50px 100px',
+    divStyle = {
+        margin: '0',
         height: '400px',
         color: '#fff',
         lineHeight: '160px',
         textAlign: 'center',
         background: '#364d79',
-        padding:' 50px',
+        padding:'50px',
+    };
+
+    carouselStyle = {
+        background: '#ddd',
+        padding:'50px',
     };
 
     render() {
         return (
-            <div>
+            <div style={this.divStyle}>
                  <Form layout='vertical'>
-                    <Carousel dotPosition='top' style={this.carouselStyle} ref={this.carousel}>
+                    <Carousel style={this.carouselStyle} dotPosition='top' ref={this.carousel}>
                         <div>
                             <Form.Item label="What is yout BMI?" name="bmi">
                                 <Input />
@@ -52,7 +58,6 @@ class Questionnaire extends Component {
                     </Carousel>
                 </Form>
                 <div>
-                    <Button type="danger">CANCEL</Button>
                     <Button type="primary" onClick={this.prev}>PREVIOUS</Button>
                     <Button>SKIP</Button>
                     <Button type="primary" onClick={this.next}>NEXT</Button>
