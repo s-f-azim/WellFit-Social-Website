@@ -1,0 +1,8 @@
+.ant-row {
+  min-width: 20vw;
+}
+@media screen and (max-width: 1024px) {
+  .ant-row {
+    min-width: 52vw;
+  }
+}
