@@ -2,6 +2,7 @@ import express from "express";
 import connectDb from "../config/db.js";
 import errorHandler from "./middleware/error.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import ErrorResponse from "./utils/errorResponse.js";
 import userRoutes from "./routes/user.js";
 import passport from "../config/passport-setup.js";
@@ -11,6 +12,10 @@ connectDb();
 //create the app and setup
 const app = express();
 app.use(express.json());
+
+// cookie parser
+app.use(cookieParser());
+//passport setup
 app.use(passport.initialize());
 
 //cors

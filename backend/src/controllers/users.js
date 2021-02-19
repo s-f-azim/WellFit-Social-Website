@@ -9,8 +9,7 @@ import User from "../models/User.js";
  */
 const createUser = asyncHandler(async (req, res) => {
   const user = await User.create(req.body);
-  const token = user.getSginedJWTToken();
-  res.status(201).send({ success: true, data: user, token });
+  sendTokenResponse(user, 201, res);
 });
 
 /**
@@ -21,12 +20,36 @@ const createUser = asyncHandler(async (req, res) => {
  */
 const loginUser = asyncHandler(async (req, res) => {
   const user = await User.checkCredentials(req.body);
-  const token = user.getSginedJWTToken();
-  res.status(200).send({ success: true, data: user, token });
+  sendTokenResponse(user, 200, res);
 });
 
+/**
+ * @async
+ * @desc get user profile
+ * @route GET /api/users/profile
+ * @access private
+ */
 const getUser = asyncHandler(async (req, res) => {
-  res.status(200).send({ success: true, data: req.user, });
+  res.status(200).send({ success: true, data: req.user });
 });
 
+/**
+ * @desc get the token from the user model and create a cookie
+ * @param {User} user - a user
+ * @param {int} statusCode - integer of status code ex 404
+ */
+const sendTokenResponse = (user, statusCode, res) => {
+  const token = user.getSginedJWTToken();
+  const options = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
+  if (process.env.NODE_ENV === "PRODUCTION") options.secure = true;
+  res
+    .status(statusCode)
+    .cookie("token", token, options)
+    .send({ success: true, token });
+};
 export { createUser, loginUser, getUser };
