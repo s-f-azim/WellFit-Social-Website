@@ -1,5 +1,10 @@
 import Head from "next/head";
+import TestElement from "../components/Navbar";
+import React, {Component} from 'react'
 import { Button } from "antd";
+
+
+
 
 export default function Home() {
   return (
@@ -8,6 +13,9 @@ export default function Home() {
       <Button shape="round" type="primary">
         test
       </Button>
+      <TestElement name="Nice" />
     </div>
   );
 }
+
+
