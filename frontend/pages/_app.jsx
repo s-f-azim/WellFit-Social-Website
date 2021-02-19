@@ -1,10 +1,15 @@
-import Layout from "../components/Layout";
+import { Layout } from "antd";
 import "antd/dist/antd.css";
 import "../styles/main.scss";
+const { Header, Footer, Content } = Layout;
 function MyApp({ Component, pageProps }) {
   return (
     <Layout>
-      <Component {...pageProps} />
+      <Header></Header>
+      <Content>
+        <Component {...pageProps} />
+      </Content>
+      <Footer>Test</Footer>
     </Layout>
   );
 }
