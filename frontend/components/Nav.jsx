@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Menu, Icon, Button } from "antd";
 import { useState } from "react";
-import Logo from "./Logo";
+// import Logo from "./Logo";
 import ProfileTopBar from "./ProfileTopBar";
 import ProfileBar from "./ProfileBar";
 const Nav = () => {
