@@ -2,7 +2,7 @@ import ErrorResponse from "../utils/errorResponse.js";
 
 //custom error handlers to write custom messages and status
 const errorHandler = (err, req, res, next) => {
-  const error = { ...err };
+  let error = { ...err };
   error.message = err.message;
 
   //Mongoose wrong objectId format
