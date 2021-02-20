@@ -20,6 +20,19 @@ const UserSchema = new mongoose.Schema(
       required: [true, "Please add a password"],
       minlength: 8,
     },
+    name: {
+      type: String,
+      required: [true, "please give us your name"],
+      minlength: 3,
+    },
+    gender: {
+      type: String,
+      enum: ["male", "female", "non-binary"]
+    },
+    location: {
+      type: String,
+      enum: ["Europe", "Asia", "North America", "South America", "Australia", "Africa"]
+    },
   },
   { timestamps: true }
 );

@@ -14,7 +14,7 @@ const Nav = () => {
           <Menu.Item key="1">
             <Link href="/signup">
               <Button shape="round" size="large">
-                Join Us
+                Register
               </Button>
             </Link>
           </Menu.Item>

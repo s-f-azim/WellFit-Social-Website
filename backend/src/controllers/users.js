@@ -35,6 +35,16 @@ const getUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc update user profile
+ * @route PATCH /api/users/profile
+ * @access private
+ */
+ const updateUser = asyncHandler(async (req, res) => {
+  res.status(200).send({ success: true, data: req.user });
+});
+
+/**
+ * @async
  * @desc logout the user and delete the cookie
  * @route GET /api/users/logout
  * @access private
@@ -66,4 +76,4 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie("token", token, options)
     .send({ success: true, token, data: user });
 };
-export { createUser, loginUser, getUser, logoutUser };
+export { createUser, loginUser, getUser, logoutUser, updateUser };

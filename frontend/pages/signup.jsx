@@ -30,12 +30,13 @@ const Signup = () => {
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
   const onFinish = async (values) => {
-    const { email, password } = values;
+    const { email, name, password } = values;
     try {
-      console.log(email, password);
+      console.log(email, name, password);
       const response = await axios.post(`${API}/users/signup`, {
         email: email,
-        password: password,
+        name: name,
+        password: password,        
       });
       if (response.data.success) {
         router.push("/");
@@ -84,6 +85,22 @@ const Signup = () => {
               <Input />
             </Form.Item>
             <Form.Item
+              name="name"
+              label="Name"
+              rules={[
+                {
+                  min: 3, 
+                  message: "Name should be 3 or more letters",
+                },
+                {
+                  required: true,
+                  message: "Please enter your name",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
               name="password"
               label="Password"
               rules={[
@@ -116,18 +133,6 @@ const Signup = () => {
               <Input.Password />
             </Form.Item>
             <Form.Item
-              name="location"
-              label="Residence"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter your location",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
               name="agreement"
               valuePropName="checked"
               rules={[
@@ -135,7 +140,7 @@ const Signup = () => {
                   validator: (_, value) =>
                     value
                       ? Promise.resolve()
-                      : Promise.reject("Should accept agreement"),
+                      : Promise.reject("Please accept the consumer agreement"),
                 },
               ]}
               {...tailFormItemLayout}

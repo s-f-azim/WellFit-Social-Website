@@ -1,9 +1,7 @@
-import Head from "next/head";
-import { Button } from "antd";
-
 export default function Home() {
   return (
     <div>
+        <h1>hi</h1>
     </div>
   );
 }
