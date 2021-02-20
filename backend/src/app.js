@@ -26,7 +26,6 @@ app.use(santanize());
 app.use(helmet());
 
 // Prevent XSS attacks
-
 app.use(xss());
 
 // passport setup

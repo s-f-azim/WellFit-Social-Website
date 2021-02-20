@@ -2,11 +2,17 @@ import passport from "passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import User from "../src/models/User.js";
 
+// get the cookie out of the request
+const cookieExtractor = (req) => {
+  const jwt = req && req.cookies ? req.cookies["token"] : null;
+  return jwt;
+};
+
 //JWT strategy
 passport.use(
   new Strategy(
     {
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: cookieExtractor,
       secretOrKey: process.env.JWT_SECRET,
       passReqToCallback: true,
     },
