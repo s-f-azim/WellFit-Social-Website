@@ -36,7 +36,7 @@ const getUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc update user profile
- * @route PATCH /api/users/profile
+ * @route PATCH /api/users/editprofile
  * @access private
  */
  const updateUser = asyncHandler(async (req, res) => {
