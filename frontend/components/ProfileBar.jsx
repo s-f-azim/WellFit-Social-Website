@@ -1,4 +1,9 @@
 import { Avatar } from "antd";
+import axios from "axios";
+import API from "../config";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext.js";
 import {
   AntDesignOutlined,
   SettingOutlined,
@@ -8,6 +13,15 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 const ProfileBar = ({ profileOpen, setProfileOpen }) => {
+  const { user, setUser } = useContext(UserContext);
+  const router = useRouter();
+  const logout = async () => {
+    const response = await axios.get(`${API}/users/logout`);
+    if (response.data.success) {
+      setUser(null);
+      router.push("/");
+    }
+  };
   return (
     <div className={`profile-bar ${profileOpen ? "active" : ""}`}>
       <CloseOutlined onClick={() => setProfileOpen(false)} />
@@ -33,7 +47,7 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
         <SettingOutlined />
         <h1>Settings</h1>
       </div>
-      <div className="item logout">
+      <div onClick={logout} className="item logout">
         <LogoutOutlined />
         <h1>Logout</h1>
       </div>
