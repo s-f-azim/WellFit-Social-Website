@@ -34,6 +34,20 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @async
+ * @desc logout the user and delete the cookie
+ * @route GET /api/users/logout
+ * @access private
+ */
+const logoutUser = asyncHandler(async (req, res) => {
+  res.cookie("token", "none", {
+    expires: new Date(Date.now() + 10 * 10),
+    httpOnly: true,
+  });
+  res.status(200).send({ success: true });
+});
+
+/**
  * @desc get the token from the user model and create a cookie
  * @param {User} user - a user
  * @param {int} statusCode - integer of status code ex 404
@@ -50,6 +64,6 @@ const sendTokenResponse = (user, statusCode, res) => {
   res
     .status(statusCode)
     .cookie("token", token, options)
-    .send({ success: true, token });
+    .send({ success: true, token, data: user });
 };
-export { createUser, loginUser, getUser };
+export { createUser, loginUser, getUser, logoutUser };
