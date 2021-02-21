@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Avatar } from "antd";
-import axios from "axios";
-import API from "../config";
+import { logout as signout } from "../utils/auth.js";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext.js";
@@ -17,7 +16,7 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
   const { user, setUser } = useContext(UserContext);
   const router = useRouter();
   const logout = async () => {
-    const response = await axios.get(`${API}/users/logout`);
+    const response = await signout();
     if (response.data.success) {
       setUser(null);
       router.push("/");
@@ -38,7 +37,10 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
       </div>
       <div className="item">
         <EditOutlined />
-        <h1 onClick={() => setProfileOpen(false)}><Link href="/editProfile">Edit profile</Link></h1></div>
+        <h1 onClick={() => setProfileOpen(false)}>
+          <Link href="/editProfile">Edit profile</Link>
+        </h1>
+      </div>
       <div className="item">
         <HistoryOutlined />
         <h1>Change goals</h1>

@@ -32,9 +32,7 @@ app.use(xss());
 app.use(passport.initialize());
 
 // cors
-if (process.env.NODE_ENV === "DEVELOPMENT") {
-  app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
-}
+app.use(cors({ credentials: true, origin: `${process.env.CLIENT_URL}` }));
 
 // routes
 app.use("/api/users", userRoutes);
