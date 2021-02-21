@@ -38,7 +38,7 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
       </div>
       <div className="item">
         <EditOutlined />
-        <h1><Link href="/editProfile">Edit profile</Link></h1>      </div>
+        <h1 onClick={() => setProfileOpen(false)}><Link href="/editProfile">Edit profile</Link></h1></div>
       <div className="item">
         <HistoryOutlined />
         <h1>Change goals</h1>

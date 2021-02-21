@@ -29,7 +29,9 @@ const Nav = () => {
       ) : (
         <>
           <Menu.Item className="modified-item" key="3">
-            <ProfileTopBar setProfileOpen={setProfileOpen} />
+            <ProfileTopBar
+            profileOpen={profileOpen}
+            setProfileOpen={setProfileOpen} />
           </Menu.Item>
           <ProfileBar
             profileOpen={profileOpen}

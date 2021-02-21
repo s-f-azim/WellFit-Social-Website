@@ -36,7 +36,6 @@ const editProfilePage = () => {
   const onFinish = async (values) => {
     const { gender, location } = values;
     try {
-      console.log(gender, location);
       const response = await axios.patch(`${API}/users/editProfile`, {
         gender: gender,
         location: location,
@@ -45,6 +44,7 @@ const editProfilePage = () => {
         router.push("/");
       }
     } catch (err) {
+      console.log(err);
       setHasError(true);
     }
   };
