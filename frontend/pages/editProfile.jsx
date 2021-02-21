@@ -88,10 +88,10 @@ const editProfilePage = () => {
               ]}
             >
               <Select placeholder="Select your gender">
-                <Option value="male">Male</Option>
-                <Option value="lucy">Female</Option>
-                <Option value="nonbinary"> Non-Binary</Option>
-                <Option value="prefernottosay">Prefer not to say</Option>
+                <Option value="Male">Male</Option>
+                <Option value="Female">Female</Option>
+                <Option value="Non-Binary"> Non-Binary</Option>
+                <Option value="Prefer not to say">Prefer not to say</Option>
               </Select>
             </Form.Item>
 
@@ -106,12 +106,12 @@ const editProfilePage = () => {
               ]}
             >
               <Select placeholder="Select your location">
-                <Option value="europe">Europe</Option>
-                <Option value="asia">Asia</Option>
-                <Option value="NA">North America</Option>
-                <Option value="SA">South America</Option>
-                <Option value="australia">Australia</Option>
-                <Option value="africa">Africa</Option>
+                <Option value="Europe">Europe</Option>
+                <Option value="Asia">Asia</Option>
+                <Option value="North America">North America</Option>
+                <Option value="South America">South America</Option>
+                <Option value="Australia">Australia</Option>
+                <Option value="Africa">Africa</Option>
               </Select>
             </Form.Item>
 

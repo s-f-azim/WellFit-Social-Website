@@ -1,6 +1,7 @@
 import API from "../config";
 import axios from "axios";
 import { getCookie } from "./auth.js";
+axios.defaults.withCredentials = true;
 
 const updateUser = (gender, location) =>
   axios.patch(

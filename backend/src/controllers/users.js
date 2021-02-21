@@ -39,17 +39,15 @@ const getUser = asyncHandler(async (req, res) => {
  * @route PATCH /api/users/editprofile
  * @access private
  */
- const updateUser = asyncHandler(async (req, res) => {
-   const{location} = req.body;
-   const{gender} = req.gender;
-   const updatedUser = await User.findByIdAndUpdate(
-     req.user._id,
-     {location:req.body.location, gender: re.body.gender},
-     {runValidators: true, new: true}
-   );
+const updateUser = asyncHandler(async (req, res) => {
+  const { gender, location } = req.body;
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user._id,
+    { location: location, gender: gender },
+    { runValidators: true, new: true }
+  );
   sendTokenResponse(updatedUser, 200, res);
 });
-
 
 /**
  * @async

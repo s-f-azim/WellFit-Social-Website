@@ -27,15 +27,25 @@ const UserSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      default: "preferNotToSay",
+      trim: true,
+      default: "Prefer not to say",
       required: [true, "Please enter your gender"],
-      enum: ["male", "female", "non-binary", "preferNotToSay"]
+      enum: ["Male", "Female", "Non-binary", "Prefer not to say"],
     },
     location: {
       type: String,
-      default: "preferNotToSay",
+      trim: true,
+      default: "Prefer not to say",
       required: [true, "Please enter your location"],
-      enum: ["Europe", "Asia", "North America", "South America", "Australia", "Africa", "preferNotToSay"]
+      enum: [
+        "Europe",
+        "Asia",
+        "North America",
+        "South America",
+        "Australia",
+        "Africa",
+        "Prefer not to say",
+      ],
     },
   },
   { timestamps: true }
