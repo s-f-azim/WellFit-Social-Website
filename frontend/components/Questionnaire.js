@@ -1,70 +1,106 @@
-import React, { Component } from 'react';
-import { Carousel, Button, Form, Input } from 'antd';
+import React, { Component, useEffect, useRef, useState } from 'react';
+import {
+    Form,
+    Input,
+    InputNumber,
+    Button,
+    Carousel,
+} from 'antd';
 
-class Questionnaire extends Component {
+const carouselStyle = {
+    background: '#171717',
+};
 
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            bmi: '',
+const Questionnaire = () => {
+
+    const carousel = useRef();
+    const [form] = Form.useForm();
+    const [fields, setFields] = useState([
+        'weight',
+        'height',
+        'bmi',
+    ]);
+    const [slideIndex, setSlideIndex] = useState(0);
+
+    const onFinish = (values) => {
+        console.log('Success:', values);
+    }
+
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failure:', errorInfo);
+    }
+
+    const previous = () => {
+        if (form.getFieldError(fields[slideIndex]).length === 0) {
+            carousel.current.prev();
         }
-
-        this.carousel = React.createRef();
     }
 
-    next = () => {
-        this.carousel.current.next();
+    const next = () => {
+        if (form.getFieldError(fields[slideIndex]).length === 0) {
+            carousel.current.next();
+        }
     }
 
-    prev = () => {
-        this.carousel.current.prev();
+    const onSlideChange = (from, to) => {
+        setSlideIndex(to);
     }
 
-    divStyle = {
-        margin: '0',
-        height: '400px',
-        color: '#fff',
-        lineHeight: '160px',
-        textAlign: 'center',
-        background: '#364d79',
-        padding:'50px',
-    };
+    return (
+        <>
+            <Form
+                name="questionnaire"
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                form={form}
+            >
 
-    carouselStyle = {
-        background: '#ddd',
-        padding:'50px',
-    };
+                <Carousel style={carouselStyle} ref={carousel} beforeChange={onSlideChange}>
 
-    render() {
-        return (
-            <div style={this.divStyle}>
-                 <Form layout='vertical'>
-                    <Carousel style={this.carouselStyle} dotPosition='top' ref={this.carousel}>
-                        <div>
-                            <Form.Item label="What is yout BMI?" name="bmi">
-                                <Input />
-                            </Form.Item>
-                        </div>
-                        <div>
-                            <h3>2</h3>
-                        </div>
-                        <div>
-                            <h3>3</h3>
-                        </div>
-                        <div>
-                            <h3>4</h3>
-                        </div>
-                    </Carousel>
-                </Form>
-                <div>
-                    <Button type="primary" onClick={this.prev}>PREVIOUS</Button>
-                    <Button>SKIP</Button>
-                    <Button type="primary" onClick={this.next}>NEXT</Button>
-                </div>
-            </div>
-        );
-    }
+                <Form.Item
+                    label="Weight:"
+                    name="weight"
+                    rules={[{ min: 0, message: 'Please input a positive number!' }]}    
+                >
+                    <InputNumber />
+                </Form.Item>
+
+                <Form.Item
+                    label="Height:"
+                    name="height"
+                    rules={[{ min: 0, message: 'Please input a positive number!' }]} 
+                >
+                    <InputNumber />
+                </Form.Item>
+
+                <Form.Item
+                    label="BMI:"
+                    name="bmi"
+                    rules={[{ min: 0, message: 'Please input a positive number!' }]}     
+                >
+                    <InputNumber />
+                </Form.Item>
+
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Submit
+                    </Button>
+                </Form.Item>
+
+                </Carousel>
+
+            </Form>
+
+            <Button onClick={previous}>
+                PREVIOUS
+            </Button>
+
+            <Button onClick={next}>
+                NEXT
+            </Button>
+
+        </>
+    );
 
 }
 
