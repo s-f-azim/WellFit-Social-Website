@@ -1,20 +1,21 @@
 import Head from "next/head";
-import TestElement from "../components/Navbar";
+import TestElement from "../components/Navbar2";
 import React, {Component} from 'react'
 import { Button } from "antd";
+import Layout from "antd/lib/layout/layout";
 
 
-
+const user = {
+  name: "Oskar",
+  age: 13,
+  occupation: "Test"
+};
 
 export default function Home() {
   return (
-    <div>
-      Hello you there
-      <Button shape="round" type="primary">
-        test
-      </Button>
-      <TestElement name="Nice" />
-    </div>
+    <Layout>
+      <TestElement user={null} />
+    </Layout>
   );
 }
 
