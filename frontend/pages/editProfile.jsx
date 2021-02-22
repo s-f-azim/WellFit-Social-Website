@@ -85,7 +85,7 @@ const editProfilePage = () => {
     type="flex"
     justify="center"
     align="middle"
-    style={{ minHeight: "85vh" }}
+    // style={{ height: 85vh" }} TODO: undertsand why 65vh+ moves down
     >
     <Card>
     <Tabs defaultActiveKey="1">
@@ -105,9 +105,9 @@ const editProfilePage = () => {
       banner
       />
     )}
-    <h1 align="center">Modify profile information</h1>
+    <h1>Modify profile information</h1>
     <Alert
-    message="This helps instructors know about you right away"
+    message="This helps professionals know about you right away"
     type="info"
     showIcon
     />
@@ -137,7 +137,7 @@ const editProfilePage = () => {
     rules={[
       {
         type: "number",
-        min: 0,
+        min: 16,
         max: 120,
       },
     ]}
@@ -177,11 +177,11 @@ const editProfilePage = () => {
     {hasError && (
       <Alert
       type="error"
-      message="something went wrong, please try again"
+      message="Make sure both passwords match and are over 8 characters"
       banner
       />
     )}
-    <h1 align="center">Change your email or password</h1>
+    <h1>Change your email or password</h1>
     </Space>
     <Form.Item
     name="email"

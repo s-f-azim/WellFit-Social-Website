@@ -11,7 +11,7 @@ it("Should signup a new user", async () => {
   const count = await User.countDocuments();
   const response = await request(app)
     .post("/api/users/signup")
-    .send({ email: "tesst3@tessst.com", password: "password12@" })
+    .send({ email: "testEmail1@test.com", password: "12345678", name: "test" })
     .expect(201);
   //assert that the database was changed correctly
   const user = await User.findById(response.body.data._id);
@@ -23,7 +23,7 @@ it("Should not signup a new user", async () => {
   const count = await User.countDocuments();
   const response = await request(app)
     .post("/api/users/signup")
-    .send({ email: "test@test.com", password: "password12@" })
+    .send({ email: "testEmail@test.com", password: "password12@", name: "testUser1" })
     .expect(400);
 });
 
