@@ -27,7 +27,7 @@ const LandingPage = () => {
         <LandingImage/>
       </Col>
     </Row>
-    <Row style={{paddingTop: '15%'}}>
+    <Row style={{paddingTop: '5%'}}>
       <Col lg={{span: 8}} span={0}></Col>
       <Col lg={{span: 8}} span={24} style = {{fontSize: "30px"}}>
         <Row style={{display:"flex", justifyContent:"center", alignItems:"center"}}>

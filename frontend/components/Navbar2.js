@@ -40,7 +40,7 @@ function Navbar2({user}) {
     return (    
         <Header className="topheader" style={{backgroundColor: "white"}}>
             <div className="logo" type="flex">
-                <Title level={3} className="logo-text">InstaFit</Title>
+                <Title level={2} className="logo-text">InstaFit</Title>
             </div> 
             
             {user===null ? <RightButtons user={user}/> : <LoggedInButtons user={user}/>}
