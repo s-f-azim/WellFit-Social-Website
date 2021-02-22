@@ -6,7 +6,6 @@ import { Button } from "antd";
 import { Layout, Row, Col } from "antd";
 import Navbar1 from "../components/Navbar1";
 import LandingText from "../components/LandingText";
-import LandingImage from "../components/LandingImage";
 import "../styles/landing.scss";
 const {Content, Footer} = Layout;
 const user = {
