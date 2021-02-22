@@ -23,6 +23,7 @@ function RightButtons({user}) {
 
     );
 }
+
 function LoggedInButtons({user}) {
     return(
         <div className="buttons">
@@ -48,4 +49,4 @@ function Navbar2({user}) {
 
  
 
-export default TestElement;
+export default Navbar2;
