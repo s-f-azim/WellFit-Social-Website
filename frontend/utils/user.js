@@ -6,7 +6,7 @@ axios.defaults.withCredentials = true;
 const updateUser = (gender, location) =>
   axios.patch(
     `${API}/users/editProfile`,
-    { gender: gender, location: location },
+    { gender: gender, location: location, age: age, nickname: nickname, bio: bio },
     { headers: { Authorization: `Bearer ${getCookie("token")}` } }
   );
 
