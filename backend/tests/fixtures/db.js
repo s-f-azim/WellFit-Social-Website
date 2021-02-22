@@ -30,14 +30,17 @@ const userTwo = {
 };
 
 const users = [userOne, userTwo];
-
+//token
+let tokenOne;
 const setupDatabase = async () => {
   await User.deleteMany();
+  let count = 0;
   // seed users
   for (let u of users) {
     const user = new User(u);
     await user.save();
+    if (count === 0) tokenOne = user.getSginedJWTToken();
   }
 };
 
-export { userOne, userTwo, setupDatabase, userOneId };
+export { userOne, userTwo, setupDatabase, userOneId, tokenOne };

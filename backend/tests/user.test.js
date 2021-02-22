@@ -1,7 +1,7 @@
 import User from "../src/models/User";
 import app from "../src/app";
 import request from "supertest";
-import { userOne, setupDatabase } from "./fixtures/db.js";
+import { tokenOne, userOne, setupDatabase } from "./fixtures/db.js";
 
 // setup db for each test
 beforeEach(setupDatabase);
@@ -23,7 +23,11 @@ it("Should not signup a new user", async () => {
   const count = await User.countDocuments();
   const response = await request(app)
     .post("/api/users/signup")
-    .send({ email: "testEmail@test.com", password: "password12@", name: "testUser1" })
+    .send({
+      email: "testEmail@test.com",
+      password: "password12@",
+      name: "testUser1",
+    })
     .expect(400);
 });
 
@@ -47,4 +51,20 @@ it("Should logout a user", async () => {
     .send(userOne)
     .expect(200);
   const lougout = await request(app).get("/api/users/logout").expect(200);
+});
+
+// assert non logged in user cant edit their information
+it("Should not  edit profile when not logged in", async () => {
+  const response = await request(app)
+    .patch("/api/users/editProfile")
+    .send()
+    .expect(401);
+});
+// assert only logged in user can edit their information
+it("Should not edit profile when not logged in", async () => {
+  const response = await request(app)
+    .patch("/api/users/editProfile")
+    .send()
+    .set("Cookie", [`token=${tokenOne}`])
+    .expect(200);
 });
