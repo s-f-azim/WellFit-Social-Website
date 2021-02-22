@@ -40,16 +40,14 @@ const getUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const updateUser = asyncHandler(async (req, res) => {
-  const update = Object.keys(req.body);
-  update.filter(update => req.body[update] !== "")
-  update.forEach(update => req.user[update] = req.body[update])
+  console.log(req.body);
+  const updates = Object.keys(req.body);
+  console.log(updates);
+  updates.forEach(
+    (update) =>
+      req.body[update] !== undefined && (req.user[update] = req.body[update])
+  );
   const updatedUser = await req.user.save();
-  // const { gender, location, age, nickname, bio } = req.body;
-  // const updatedUser = await User.findByIdAndUpdate(
-  //   req.user._id,
-  //   { location: location, gender: gender, age: age, nickname: nickname, bio: bio },
-  //   { runValidators: true, new: true }
-// );
   sendTokenResponse(updatedUser, 200, res);
 });
 

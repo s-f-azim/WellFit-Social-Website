@@ -46,6 +46,11 @@ body {
 .ant-menu-item:selected {
   all: inherit;
 }
+.ant-select-item-option-selected {
+  .ant-select-item-option-content {
+    color: white;
+  }
+}
 .container-form {
   display: flex;
   justify-content: center;

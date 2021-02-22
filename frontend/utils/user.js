@@ -3,10 +3,16 @@ import axios from "axios";
 import { getCookie } from "./auth.js";
 axios.defaults.withCredentials = true;
 
-const updateUser = (gender, location) =>
+const updateUser = (gender, location, age, nickname, bio) =>
   axios.patch(
     `${API}/users/editProfile`,
-    { gender: gender, location: location, age: age, nickname: nickname, bio: bio },
+    {
+      gender: gender,
+      location: location,
+      age: age,
+      nickname: nickname,
+      bio: bio,
+    },
     { headers: { Authorization: `Bearer ${getCookie("token")}` } }
   );
 
