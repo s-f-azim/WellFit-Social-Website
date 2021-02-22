@@ -20,12 +20,14 @@ const signin = (email, password) => {
 // logout the user
 const logout = () => {
   removeCookie("token");
+  removeCookie("user");
   return axios.get(`${API}/users/logout`);
 };
 
 // authenticate user by setting the cookie
 const authenticate = (data, next) => {
   setCookie("token", data.token);
+  setCookie("user", data.data);
   next();
 };
 
@@ -41,9 +43,6 @@ const removeCookie = (key) =>
 const getCookie = (key) => {
   if (process.browser) return cookie.get(key);
 };
-
-// check if the cookie exists
-const checkCookie = () => process.browser && getCookie("token");
 
 export {
   signup,

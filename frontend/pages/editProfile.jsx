@@ -1,6 +1,6 @@
 import { updateUser } from "../utils/user.js";
-import { checkCookie } from "../utils/auth.js";
 import { useRouter } from "next/router";
+import { UserContext } from "../contexts/UserContext.js";
 import {
   Space,
   Form,
@@ -12,7 +12,7 @@ import {
   Card,
   Select,
 } from "antd";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 const { Option } = Select;
 
@@ -41,10 +41,11 @@ const tailFormItemLayout = {
 
 const editProfilePage = () => {
   const router = useRouter();
+  const { user, setUser } = useContext(UserContext);
   //redirect to home page if user not logged in
-  // useEffect(() => {
-  //   if (!checkCookie()) router.push("/");
-  // });
+  useEffect(() => {
+    if (!user) router.push("/");
+  }, []);
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
   const onFinish = async (values) => {
@@ -55,7 +56,6 @@ const editProfilePage = () => {
         router.push("/");
       }
     } catch (err) {
-      console.log(err);
       setHasError(true);
     }
   };
