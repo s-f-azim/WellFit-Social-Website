@@ -22,7 +22,8 @@
     transform: translate(-450%, -70%);
   }
   h1,
-  .anticon {
+  .anticon,
+  a {
     color: white;
     transition: color 0.3s ease-in-out;
   }
@@ -35,7 +36,8 @@
     align-items: center;
     justify-content: center;
     &:hover {
-      & > * {
+      & > *,
+      a {
         color: #40a9ff;
       }
     }
@@ -67,9 +69,4 @@
     border-radius: 0;
     transform: translateX(0);
   }
-}
-
-a
-{
-    color: #ffffff;
 }
