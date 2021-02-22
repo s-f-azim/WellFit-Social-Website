@@ -15,7 +15,7 @@ const Nav = () => {
   }, []);
 
   return (
-    <Menu mode="horizontal" style={{ padding: "2rem", border: "none" }}>
+    <Menu mode="horizontal" style={{ padding: "0.7rem", border: "none" }}>
       {!user ? (
         <>
           <Menu.Item key="1">

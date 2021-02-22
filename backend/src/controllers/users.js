@@ -40,10 +40,10 @@ const getUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const updateUser = asyncHandler(async (req, res) => {
-  const { gender, location } = req.body;
+  const { gender, location, age, nickname, bio } = req.body;
   const updatedUser = await User.findByIdAndUpdate(
     req.user._id,
-    { location: location, gender: gender },
+    { location: location, gender: gender, age: age, nickname: nickname, bio: bio },
     { runValidators: true, new: true }
   );
   sendTokenResponse(updatedUser, 200, res);
