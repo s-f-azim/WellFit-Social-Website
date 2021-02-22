@@ -11,6 +11,8 @@ import {
   Row,
   Card,
   Select,
+  InputNumber,
+  Pagination,
 } from "antd";
 import { useState, useEffect, useContext } from "react";
 
@@ -82,10 +84,11 @@ const editProfilePage = () => {
       banner
       />
     )}
-    <h1 align = "center">Edit profile information</h1>
+    <h1 align = "center">Add profile information</h1>
+    <Alert message="This helps instructors know about you right away" type="warning" showIcon />
     <Form.Item
     name="gender"
-    label="gender"
+    label="Gender"
     rules={[
       {
 
@@ -121,24 +124,31 @@ const editProfilePage = () => {
 
     <Form.Item
       name="age"
-      label="age"
+      label="Age"
+      rules={[
+        {
+          type: 'number',
+          min: 0,
+          max: 120,
+        },
+      ]}
     >
-      <Input />
+      <InputNumber />
     </Form.Item>
 
     <Form.Item
       name="nickname"
-      label="nickname"
+      label="Nickname"
     >
       <Input />
     </Form.Item>
 
     <Form.Item
       name="bio"
-      label="bio"
+      label="Bio"
 
     >
-      <Input />
+      <Input.TextArea />
     </Form.Item>
 
     <Form.Item {...tailFormItemLayout}>
@@ -146,6 +156,7 @@ const editProfilePage = () => {
     Update my info
     </Button>
     </Form.Item>
+    <Pagination simple defaultCurrent={1} total={20} />
     </Space>
     </Form>
     </Card>

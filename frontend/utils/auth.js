@@ -50,6 +50,5 @@ export {
   logout,
   setCookie,
   getCookie,
-  checkCookie,
   authenticate,
 };
