@@ -11,11 +11,14 @@ const app = express();
 app.use(express.json());
 
 //cors
+
 if (process.env.NODE_ENV === "DEVELOPMENT") {
   app.use(cors({ origin: `${process.env.CLIENT_URL}` }));
 }
 
 //routes
+import usersRouter from "./routes/users.js";
+app.use('/users', usersRouter);
 
 //setup middleware
 app.use(errorHandler);
