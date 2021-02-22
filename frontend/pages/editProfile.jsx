@@ -12,7 +12,7 @@ import {
   Card,
   Select,
   InputNumber,
-  Pagination,
+  Menu,
 } from "antd";
 import { useState, useEffect, useContext } from "react";
 
@@ -62,6 +62,7 @@ const editProfilePage = () => {
     }
   };
   return (
+
     <Row
     type="flex"
     justify="center"
@@ -69,6 +70,7 @@ const editProfilePage = () => {
     style={{ minHeight: "85vh" }}
     >
     <Card>
+
     <Form
     {...formItemLayout}
     form={form}
@@ -84,16 +86,11 @@ const editProfilePage = () => {
       banner
       />
     )}
-    <h1 align = "center">Add profile information</h1>
-    <Alert message="This helps instructors know about you right away" type="warning" showIcon />
+    <h1 align = "center">Modify profile information</h1>
+    <Alert message="This helps instructors know about you right away" type="info" showIcon />
     <Form.Item
     name="gender"
     label="Gender"
-    rules={[
-      {
-
-      },
-    ]}
     >
     <Select placeholder="Select your gender">
     <Option value="Male">Male</Option>
@@ -106,11 +103,6 @@ const editProfilePage = () => {
     <Form.Item
     name="location"
     label="Location"
-    rules={[
-      {
-
-      },
-    ]}
     >
     <Select placeholder="Select your location">
     <Option value="Europe">Europe</Option>
@@ -156,7 +148,6 @@ const editProfilePage = () => {
     Update my info
     </Button>
     </Form.Item>
-    <Pagination simple defaultCurrent={1} total={20} />
     </Space>
     </Form>
     </Card>
