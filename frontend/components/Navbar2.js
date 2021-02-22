@@ -35,7 +35,7 @@ function LoggedInButtons({user}) {
 }
 
 
-function TestElement({user}) {
+function Navbar2({user}) {
     return (    
         <Header className="topheader" style={{backgroundColor: "white"}}>
             <div className="logo" type="flex">

@@ -1,5 +1,5 @@
 import Head from "next/head";
-import TestElement from "../components/Navbar2";
+import Navbar2 from "../components/Navbar2";
 import React, {Component} from 'react'
 import { Button } from "antd";
 import { Layout, Row, Col } from "antd";
@@ -18,7 +18,7 @@ const user = {
 export default function Home() {
   return (
     <Layout>
-      <TestElement user={null}/>   
+      <Navbar2 user={null}/>   
       <Content style={{padding: '50px', backgroundColor: 'white'}}>
         <Row>
           <Col span = {4}></Col>
@@ -47,6 +47,7 @@ export default function Home() {
             </Row>
           </Col>
         </Row>
+        {/* TODO: Add more CONTENT */}
       </Content>
 
       {/*<TestElement name="Nice" />*/}
