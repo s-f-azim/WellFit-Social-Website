@@ -36,22 +36,14 @@ function LoggedInButtons({user}) {
 
 
 function TestElement({user}) {
-    return (
-        <Layout className="main" >
+    return (    
+        <Header className="topheader" style={{backgroundColor: "white"}}>
+            <div className="logo" type="flex">
+                <Title level={3} className="logo-text">InstaFit</Title>
+            </div> 
             
-            <Layout>
-            
-                <Content><Header className="topheader" style={{backgroundColor: "white"}}>
-                <div className="logo" type="flex">
-                    <Title level={3} className="logo-text">InstaFit</Title>
-                </div> 
-                
-                {user===null ? <RightButtons user={user}/> : <LoggedInButtons user={user}/>}
-                
-            </Header>main content</Content>
-                
-            </Layout>
-        </Layout>);
+            {user===null ? <RightButtons user={user}/> : <LoggedInButtons user={user}/>}
+        </Header>);
   }
 
  
