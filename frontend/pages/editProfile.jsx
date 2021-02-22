@@ -82,7 +82,7 @@ const editProfilePage = () => {
       banner
       />
     )}
-    <h1 align = "center">Edit/Add profile information</h1>
+    <h1 align = "center">Edit profile information</h1>
     <Form.Item
     name="gender"
     label="gender"
@@ -122,12 +122,6 @@ const editProfilePage = () => {
     <Form.Item
       name="age"
       label="age"
-      rules={[
-        {
-          type: "Number",
-          message: "Invalid age",
-        },
-      ]}
     >
       <Input />
     </Form.Item>
@@ -135,12 +129,6 @@ const editProfilePage = () => {
     <Form.Item
       name="nickname"
       label="nickname"
-      rules={[
-        {
-          type: "String",
-          message: "Invalid nickname",
-        },
-      ]}
     >
       <Input />
     </Form.Item>
@@ -148,12 +136,7 @@ const editProfilePage = () => {
     <Form.Item
       name="bio"
       label="bio"
-      rules={[
-        {
-          type: "String",
-          message: "invalid bio",
-        },
-      ]}
+
     >
       <Input />
     </Form.Item>
