@@ -64,6 +64,9 @@ const editProfilePage = () => {
       setHasError(true);
     }
   };
+  let date = new Date();
+  date.setFullYear(date.getFullYear() - 16);
+  date = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 
   const { TabPane } = Tabs;
 
@@ -123,7 +126,7 @@ const editProfilePage = () => {
                     },
                   ]}
                 >
-                  <DatePicker />
+                  <DatePicker disabledDate={(d) => !d || d.isAfter(date)} />
                 </Form.Item>
 
                 <Form.Item name="nickname" label="Nickname">
