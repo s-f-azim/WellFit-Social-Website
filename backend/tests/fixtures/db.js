@@ -5,8 +5,14 @@ const userOneId = new mongoose.Types.ObjectId();
 
 const userOne = {
   _id: userOneId,
-  email: "test@test.com",
-  password: "password@12",
+  email: "testEmail@test.com",
+  password: "12345678",
+  name: "testUser1",
+  gender: "Male",
+  location: "Africa",
+  birthday: new Date(),
+  nickname: "testicles",
+  bio: "I have no balls",
 };
 
 const userTwoId = new mongoose.Types.ObjectId();
@@ -15,17 +21,25 @@ const userTwo = {
   _id: userTwoId,
   email: "test2@test.com",
   password: "password@123",
+  name: "testUser2",
+  gender: "Female",
+  location: "Europe",
+  birthday: new Date(),
+  nickname: "Notesticles",
+  bio: "I have many balls",
 };
 
 const users = [userOne, userTwo];
-
+//token
+const tokens = [];
 const setupDatabase = async () => {
   await User.deleteMany();
   // seed users
   for (let u of users) {
     const user = new User(u);
     await user.save();
+    tokens.push(user.getSginedJWTToken());
   }
 };
 
-export { userOne, userTwo, setupDatabase, userOneId };
+export { userOne, userTwo, setupDatabase, userOneId, tokens };
