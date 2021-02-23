@@ -28,7 +28,6 @@ const UserSchema = new mongoose.Schema(
     gender: {
       type: String,
       trim: true,
-      default: "Prefer not to say",
       enum: ["Male", "Female", "Non-Binary", "Prefer not to say"],
     },
     location: {
@@ -44,9 +43,11 @@ const UserSchema = new mongoose.Schema(
         "Prefer not to say",
       ],
     },
-    age: {
-      type: Number,
+
+    birthday: {
+      type: Date,
     },
+
     nickname: {
       type: String,
     },
