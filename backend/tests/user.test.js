@@ -1,7 +1,7 @@
 import User from "../src/models/User";
 import app from "../src/app";
 import request from "supertest";
-import { tokenOne, userOne, userTwo, setupDatabase } from "./fixtures/db.js";
+import { tokens, userOne, userTwo, setupDatabase } from "./fixtures/db.js";
 
 // setup db for each test
 beforeEach(setupDatabase);
@@ -65,23 +65,27 @@ it("Should not edit profile when not logged in", async () => {
   const response = await request(app)
     .patch("/api/users/editProfile")
     .send()
-    .set("Cookie", [`token=${tokenOne}`])
+    .set("Cookie", [`token=${tokens[0]}`])
     .expect(200);
 });
 // assert update a user attribute
-it("Should update a user's attribute", async () => {
+it("Should update a user's valid attribute", async () => {
   const response = await request(app)
     .patch("/api/users/editProfile")
-    .send(userOne)
-    .set("Cookie", [`token=${tokenOne}`])
+    .send({ email: "testtttttttt@test.com" })
+    .set("Cookie", [`token=${tokens[0]}`])
     .expect(200);
+  const user = await User.findById(userOne._id);
+  expect(user.email).toBe("testtttttttt@test.com");
 });
 
-// assert does not allow to update a user attribute
-it("Should not update a user's attribute", async () => {
+// assert update a user attribute
+it("Should not update a user's invalid attribute", async () => {
   const response = await request(app)
     .patch("/api/users/editProfile")
-    .send(userTwo)
-    .set("Cookie", [`token=${tokenOne}`])
-    .expect(401);
+    .send({ size: "large" })
+    .set("Cookie", [`token=${tokens[0]}`])
+    .expect(200);
+  const user = await User.findById(userOne._id);
+  expect(user.size).toEqual(undefined);
 });
