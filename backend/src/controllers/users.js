@@ -40,9 +40,7 @@ const getUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const updateUser = asyncHandler(async (req, res) => {
-  console.log(req.body);
   const updates = Object.keys(req.body);
-  console.log(updates);
   updates.forEach(
     (update) =>
       req.body[update] !== undefined && (req.user[update] = req.body[update])
