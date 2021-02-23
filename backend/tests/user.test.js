@@ -1,7 +1,7 @@
 import User from "../src/models/User";
 import app from "../src/app";
 import request from "supertest";
-import { tokenOne, userOne, setupDatabase } from "./fixtures/db.js";
+import { tokenOne, userOne, userTwo, setupDatabase } from "./fixtures/db.js";
 
 // setup db for each test
 beforeEach(setupDatabase);
@@ -50,7 +50,7 @@ it("Should logout a user", async () => {
     .post("/api/users/login")
     .send(userOne)
     .expect(200);
-  const lougout = await request(app).get("/api/users/logout").expect(200);
+  const logout = await request(app).get("/api/users/logout").expect(200);
 });
 
 // assert non logged in user cant edit their information
@@ -67,4 +67,21 @@ it("Should not edit profile when not logged in", async () => {
     .send()
     .set("Cookie", [`token=${tokenOne}`])
     .expect(200);
+});
+// assert update a user attribute
+it("Should update a user's attribute", async () => {
+  const response = await request(app)
+    .patch("/api/users/editProfile")
+    .send(userOne)
+    .set("Cookie", [`token=${tokenOne}`])
+    .expect(200);
+});
+
+// assert does not allow to update a user attribute
+it("Should not update a user's attribute", async () => {
+  const response = await request(app)
+    .patch("/api/users/editProfile")
+    .send(userTwo)
+    .set("Cookie", [`token=${tokenOne}`])
+    .expect(401);
 });
