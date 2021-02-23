@@ -6,6 +6,7 @@ import {
     Button,
     Carousel,
     Select,
+    Radio,
 } from 'antd';
 
 const { Option } = Select;
@@ -87,10 +88,30 @@ const Questionnaire = () => {
                 label="Gender:"
                 name="gender"  
             >
-                 <Select allowClear>
+                 <Select 
+                    onChange={onGenderChange}
+                    allowClear
+                >
                     <Option value="male">Male</Option>
                     <Option value="female">Female</Option>
                 </Select>
+            </Form.Item>
+
+            <Form.Item
+                label="Gender:"
+                name="gender"  
+            >
+                <Select allowClear>
+                    <Option value="male">Male</Option>
+                    <Option value="female">Female</Option>
+                </Select>
+            </Form.Item>
+
+            <Form.Item name="isPregnant" label="isPregnant">
+                <Radio.Group>
+                    <Radio value={true}>True</Radio>
+                    <Radio value={false}>False</Radio>
+                </Radio.Group>
             </Form.Item>
 
             <Form.Item
