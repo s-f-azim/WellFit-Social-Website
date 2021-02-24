@@ -26,6 +26,7 @@ const Questionnaire = () => {
   const carousel = useRef();
   const [form] = Form.useForm();
   const [valid, setValid] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const onFinish = async (values) => {
     console.log("Success:", values);
@@ -67,13 +68,6 @@ const Questionnaire = () => {
   return (
     <>
       <Card
-      title={
-      <Steps progressDot>
-        <Step />
-        <Step />
-        <Step />
-      </Steps>
-      }
       className="container-card"
         style={{padding: '0 1rem'}}
         actions={[
@@ -88,7 +82,7 @@ const Questionnaire = () => {
             onFieldsChange={onFieldsChange}
             form={form}
             colon={false}
-            size="large"
+            
             layout="vertical"
             labelCol={{
               span: 12,
@@ -97,7 +91,26 @@ const Questionnaire = () => {
               span: 12,
             }}
           >
-            <Carousel ref={carousel} dotPosition="top" dots={false}>
+<Row>
+
+<Col span={1}>
+<Steps progressDot current={currentSlide} responsive direction="vertical">
+        <Step />
+        <Step />
+        <Step />
+        <Step />
+        <Step />
+        <Step />
+        <Step />
+      </Steps>
+
+      </Col>
+
+      <Col span={23}>
+
+            <Carousel ref={carousel} dotPosition="top" dots={false} effect="fade"
+              beforeChange={(from, to) => setCurrentSlide(to)}
+            >
 
               <Card>
                 <Card.Grid>
@@ -188,7 +201,7 @@ const Questionnaire = () => {
 
               <Card>
               <Card.Grid>
-              <Form.Item>
+              <Form.Item label="Submit to confirm your preferences!">
                 <Button type="primary" htmlType="submit">
                   Submit
                 </Button>
@@ -197,6 +210,8 @@ const Questionnaire = () => {
               </Card>
 
             </Carousel>
+                </Col>
+            </Row>
 
           </Form>
 

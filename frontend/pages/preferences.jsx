@@ -10,8 +10,11 @@ const { Content, Footer } = Layout;
 
 export default function Preferences() {
   return (
-    <Row>
-      <Col span={14} offset={5} >
+    <Row
+      style={{height:'100vh'}}
+      align="middle"
+    >
+      <Col lg={{ span: 14, offset: 5 }}>
           <Questionnaire />
       </Col>
     </Row>
