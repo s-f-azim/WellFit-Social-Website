@@ -26,9 +26,9 @@ const userSchema = new mongoose.Schema({
         }
     },
 
-    gender: {
+    preferredGender: {
         type: String,
-        enum: ["male", "female"]
+        enum: ["male", "female", "any"]
     },
     
     isPregnant: Boolean,

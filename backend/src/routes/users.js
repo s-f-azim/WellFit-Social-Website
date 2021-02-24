@@ -15,7 +15,7 @@ router.route('/edit/:id').post((req, res) => {
             user.weight = Number(req.body.weight);
             user.height = Number(req.body.height);
             user.bmi = Number(req.body.bmi);
-            user.gender = req.body.gender;
+            user.prefferedGender = req.body.prefferedGender;
             user.isPregnant = req.body.isPregnant;
             user.fitnessLevel = req.body.fitnessLevel;
 
