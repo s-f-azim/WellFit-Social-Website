@@ -17,6 +17,7 @@ import {
   DatePicker,
 } from "antd";
 import { useState, useEffect, useContext } from "react";
+import InstQuest from "../components/InstQuest.jsx";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -147,6 +148,7 @@ const editProfilePage = () => {
     </TabPane>
 
     <TabPane tab="Detailed info" key="2">
+    <InstQuest/>
     </TabPane>
 
     <TabPane tab="Edit Credentials" key="3">
