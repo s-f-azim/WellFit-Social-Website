@@ -91,7 +91,7 @@ const editProfilePage = () => {
       banner
       />
     )}
-    <h1>Modify profile information</h1>
+    <h1>Add/Edit basic profile information</h1>
     <Alert
     message="This helps professionals know about you right away"
     type="info"
@@ -148,10 +148,11 @@ const editProfilePage = () => {
     </TabPane>
 
     <TabPane tab="Detailed info" key="2">
+    <h1>Add/Edit in-depth profile information</h1>
     <InstQuest/>
     </TabPane>
 
-    <TabPane tab="Edit Credentials" key="3">
+    <TabPane tab="Credentials" key="3">
     <Form
     {...formItemLayout}
     form={form}
