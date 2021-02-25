@@ -4,7 +4,8 @@ import {
   Row,
   Card,
   Space,
-  Col,
+  Input,
+  Select,
 } from "antd";
 import { updateUser } from "../utils/user.js";
 import { useRouter } from "next/router";
@@ -83,12 +84,20 @@ const InstQuest = () => {
     )}
     <br/>
     <h2> Overview of your profile: </h2>
+    <Form.Item
+    name= "Qualification"
+    label= "Qualification(s)">
+    <Select placeholder="Select your qualification">
+    <Option value="Physique trainer">Physique trainer</Option>
+    <Option value="Performance trainer">Performance trainer</Option>
+    <Option value="Lifestyle trainer">Lifestyle trainer</Option>
+    <Option value="Other">Other/Several of the above</Option>
+    </Select>
+    </Form.Item>
     <h2> Your career: </h2>
     <h2> Communication: </h2>
     <h2> Payment and rates: </h2>
     <h2> Additional info: </h2>
-    <Form.Item>
-    </Form.Item>
     </Space>
     </Form>
     </>
@@ -96,21 +105,24 @@ const InstQuest = () => {
 }
 export default InstQuest;
 
-// For client:
+
+
+
+// for instructors:
 /*
-profilePicture
-weight
-height
-bmi -> slider
-goals
-pregnancy (women) check box
-fitnessLevel slider
-hypertrophyLevel slider
-strengthLevel slider
-caloricIntake dropdown
-injuries (past present) inputs added to list
-past or present steroid use (optional) same
-healthConditions same
-gymAvailable checkbox?
-preferredTrainingDuration slider
+achievements
+official diplomas?
+speciality as instructor
+feedback from other clients
+avaialble packages
+price range
+service format
+communication frequency
+preferred way of Communication
+Payment options
+preferred experience level in:
+-overall fitness
+-hypertrophy
+-strength
+preferred gender to work with
 */
