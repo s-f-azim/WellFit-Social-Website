@@ -4,6 +4,7 @@ import {
   Row,
   Card,
   Space,
+  Col,
 } from "antd";
 import { updateUser } from "../utils/user.js";
 import { useRouter } from "next/router";
@@ -14,9 +15,13 @@ const infoAlertText = (
   <h4>
   Adding information on this page helps us tailor our
   <br/>
-  services to make your experience more unique,
+  services and allows client to be matched more
   <br/>
-  but you are not required to provide any information.
+  efficiently, as well as knowing who you are and how
+  <br/>
+  you work before initiating contact. We encourage
+  <br/>
+  but do not require you to provide this information.
   </h4>
 )
 
@@ -77,7 +82,11 @@ const InstQuest = () => {
       />
     )}
     <br/>
-    <h2> Physical Data: </h2>
+    <h2> Overview of your profile: </h2>
+    <h2> Your career: </h2>
+    <h2> Communication: </h2>
+    <h2> Payment and rates: </h2>
+    <h2> Additional info: </h2>
     <Form.Item>
     </Form.Item>
     </Space>
@@ -87,7 +96,7 @@ const InstQuest = () => {
 }
 export default InstQuest;
 
-
+// For client:
 /*
 profilePicture
 weight
