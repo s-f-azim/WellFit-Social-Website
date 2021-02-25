@@ -46,8 +46,6 @@ const nextConfig = {
     config.resolve.alias["containers"] = path.join(__dirname, "containers");
     return config;
   },
-};
-const API = {
   publicRuntimeConfig: {
     APP_NAME: "instaFit",
     API_DEVELOPMENT: `http://localhost:4000/api`,
@@ -57,6 +55,5 @@ const API = {
 };
 module.exports = withPlugins(
   [withSass, withImages, withLess, withCss],
-  nextConfig,
-  API
+  nextConfig
 );
