@@ -1,5 +1,6 @@
-import { Layout } from "antd";
+// import { Layout } from "antd";
 import "antd/dist/antd.css";
+import Layout from "../components/Layout.jsx";
 import "../styles/main.scss";
 // import { env } from "../config.js";
 import Nav from "../components/Nav.jsx";
@@ -12,12 +13,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <UserContext.Provider value={providerValue}>
       <Layout>
-        <Header>
-          <Nav />
-        </Header>
-        <Content>
-          <Component {...pageProps} />
-        </Content>
+        <Component {...pageProps} />
       </Layout>
     </UserContext.Provider>
   );
