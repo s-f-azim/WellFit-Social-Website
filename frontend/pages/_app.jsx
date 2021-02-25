@@ -12,9 +12,6 @@ function MyApp({ Component, pageProps }) {
   return (
     <UserContext.Provider value={providerValue}>
       <Layout>
-        <Header>
-          <Nav />
-        </Header>
         <Content>
           <Component {...pageProps} />
         </Content>

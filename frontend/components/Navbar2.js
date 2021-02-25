@@ -1,51 +1,116 @@
-import {Layout, Menu, Breadcrumb, Button, Typography} from 'antd';
-import {useState} from 'react';
+import {Layout, Menu, Icon, Breadcrumb, Button, Typography, Input, Space, Row, Col} from 'antd';
 const {Header, Content, Sider} = Layout;
+const {Search} = Input;
 const { Title } = Typography;
+import { useState, useContext, useEffect } from "react";
+import { UserContext } from "../contexts/UserContext.js";
+import { getCookie } from "../utils/auth.js";
+import ProfileBar from "./ProfileBar";
 
 
-function RightButtons({user}) {
-    return(
-       <>
-       <Menu mode="horizontal" className="buttons">
-           <Menu.Item>
-               <Button type="link">
-                   Join us
-               </Button>
-           </Menu.Item>
-           <Menu.Item>
-               <Button type="primary">
-                   Login
-               </Button>
-           </Menu.Item>
-       </Menu>
-       </>
-
-    );
-}
-
-function LoggedInButtons({user}) {
-    return(
+const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
+    const { user, setUser } = useContext(UserContext);
+    const [click, setClick] = useState(true);
+    const handleClick = () => setClick(!click);
+    const closeMobileMenu = () => setClick(false);
+    
+    return (
+        <>
         <div className="buttons">
-            {/* TODO: add link to user profile*/}
-            <Button type="primary" >
-                {`Welcome ${user.name}`}
-            </Button>
-        </div>
-    );
-}
-
-
-function Navbar2({user}) {
-    return (    
-        <Header className="topheader" style={{backgroundColor: "white"}}>
-            <div className="logo" type="flex">
-                <Title level={2} className="logo-text">InstaFit</Title>
-            </div> 
+          <ul className={click ? "nav-options activs" : "nav-options"}>
             
-            {user===null ? <RightButtons user={user}/> : <LoggedInButtons user={user}/>}
-        </Header>);
-  }
+            <li className="option" onClick={closeMobileMenu}>
+                <Button type="link" href="#">Courses</Button>
+            </li>
+            <li className="option" onClick={closeMobileMenu}>
+                <Button type="link" href="#">Instructors</Button>
+            </li>
+            <li className="option" >
+                
+                <Button type="link" onClick={() => setProfileOpen(!profileOpen)}><img src={require("../public/person.svg")} /> {user.name}</Button>
+            </li>
+            <li className="option">
+                <Search placeholder="Search our Site" enterButton />
+            </li>
+        </ul>
+        </div>
+        
+        <div className=" mobile-menu" >
+          {click ? (
+            <a className="" onClick={handleClick}>
+                <img style={{width:'35px', height:'35px'}} src={require("../public/x.svg")}/>
+            </a>
+          ) : (
+            <a className="" onClick={handleClick}>
+                <img style={{width:'35px', height:'35px'}} src={require("../public/list.svg")}/>
+            </a>
+          )}
+        </div>
+      </>
+    );
+  };
+  const LoggedOutMenu = () => {
+    const [click, setClick] = useState(true);
+    const handleClick = () => setClick(!click);
+    const closeMobileMenu = () => setClick(false);
+    
+    return (
+        <>
+        <div className="buttons">
+          <ul className={click ? "nav-options activs" : "nav-options"}>
+            
+            <li className="option" onClick={closeMobileMenu}>
+                <Button type="primary" href="/login">Sign In</Button>
+            </li>
+            <li className="option" onClick={closeMobileMenu}>
+                <Button type="link" href="/signup">Sign Up</Button>
+            </li>
+        </ul>
+        </div>
+        
+        <div className=" mobile-menu" >
+          {click ? (
+            <a className="" onClick={handleClick}>
+                <img style={{width:'35px', height:'35px'}} src={require("../public/x.svg")}/>
+            </a>
+          ) : (
+            <a className="" onClick={handleClick}>
+                <img style={{width:'35px', height:'35px'}} src={require("../public/list.svg")}/>
+            </a>
+          )}
+        </div>
+      </>
+    );
+  };
+
+const Navbar2 = () => {
+  const [profileOpen, setProfileOpen] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+
+  // on componont mount check if the user exists in the cookies
+  useEffect(() => {
+    if (getCookie("user")) setUser(JSON.parse(getCookie("user")));
+  }, []);
+  return (  
+    <>  
+    <Header className="topheader" style={{backgroundColor: "white"}}>
+                    <Title level={2} className="logo-text">InstaFit</Title>
+            {user===null ? <LoggedOutMenu/> : <><LoggedInMenu profileOpen={profileOpen}
+            setProfileOpen={setProfileOpen}/>
+                    
+            <ProfileBar
+            profileOpen={profileOpen}
+            setProfileOpen={setProfileOpen}
+            /></>}
+        
+        
+        
+        
+    </Header>
+    </>);
+
+}
+    
 
  
 
