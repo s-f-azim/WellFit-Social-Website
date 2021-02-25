@@ -4,7 +4,7 @@ import errorHandler from "./middleware/error.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import ErrorResponse from "./utils/errorResponse.js";
-import userRoutes from "./routes/users.js";
+import usersRouter from "./routes/users.js";
 import passport from "../config/passport-setup.js";
 import santanize from "express-mongo-sanitize";
 import helmet from "helmet";
@@ -33,8 +33,11 @@ app.use(xss());
 // passport setup
 app.use(passport.initialize());
 
+// cors
+app.use(cors({ credentials: true, origin: `${process.env.CLIENT_URL}` }));
+
 // routes
-app.use("/api/users", userRoutes);
+app.use("/api/users", usersRouter);
 
 // 404 if the route doesn't match
 app.all("*", (_, res) => {

@@ -1,6 +1,4 @@
-import axios from "axios";
 import { useRouter } from "next/router";
-import API from "../config";
 import {
   Space,
   Form,
@@ -13,6 +11,7 @@ import {
   Card,
 } from "antd";
 import { useState, useContext } from "react";
+import { signin, getCookie, authenticate } from "../utils/auth.js";
 import { UserContext } from "../contexts/UserContext.js";
 
 const formItemLayout = {
@@ -46,14 +45,12 @@ const Login = () => {
   const onFinish = async (values) => {
     const { email, password } = values;
     try {
-      console.log(email, password);
-      const response = await axios.post(`${API}/users/login`, {
-        email: email,
-        password: password,
-      });
+      const response = await signin(email, password);
       if (response.data.success) {
         setUser(response.data.data);
-        router.push("/");
+        authenticate(response.data, () => {
+          router.push("/");
+        });
       }
     } catch (err) {
       setHasError(true);

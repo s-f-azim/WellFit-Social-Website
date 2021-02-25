@@ -14,6 +14,40 @@ const userSchema = new mongoose.Schema({
     validate(value) {
       if (!validator.isEmail(value)) throw new Error("Email is Invalid");
     },
+    name: {
+      type: String,
+      required: [true, "please enter your name"],
+      minlength: 3,
+    },
+    gender: {
+      type: String,
+      trim: true,
+      enum: ["Male", "Female", "Non-Binary", "Prefer not to say"],
+    },
+    location: {
+      type: String,
+      trim: true,
+      enum: [
+        "Europe",
+        "Asia",
+        "North America",
+        "South America",
+        "Australia",
+        "Africa",
+        "Prefer not to say",
+      ],
+    },
+
+    birthday: {
+      type: Date,
+    },
+
+    nickname: {
+      type: String,
+    },
+    bio: {
+      type: String,
+    },
   },
 
   password: {
