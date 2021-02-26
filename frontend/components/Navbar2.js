@@ -1,5 +1,5 @@
 import {Layout, Menu, Icon, Breadcrumb, Button, Typography, Input, Space, Row, Col} from 'antd';
-const {Header, Content, Sider} = Layout;
+const {Header} = Layout;
 const {Search} = Input;
 const { Title } = Typography;
 import { useState, useContext, useEffect } from "react";
@@ -10,7 +10,7 @@ import ProfileBar from "./ProfileBar";
 
 const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
     const { user, setUser } = useContext(UserContext);
-    const [click, setClick] = useState(true);
+    const [click, setClick] = useState(false);
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
     
@@ -95,13 +95,12 @@ const Navbar2 = () => {
     <>  
     <Header className="topheader" style={{backgroundColor: "white"}}>
                     <Title level={2} className="logo-text">InstaFit</Title>
-            {user===null ? <LoggedOutMenu/> : <><LoggedInMenu profileOpen={profileOpen}
-            setProfileOpen={setProfileOpen}/>
-                    
-            <ProfileBar
-            profileOpen={profileOpen}
-            setProfileOpen={setProfileOpen}
-            /></>}
+            {
+                user===null ? <LoggedOutMenu/> : <>
+                    <LoggedInMenu profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>     
+                    <ProfileBar profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>
+                </>
+            }
         
         
         
