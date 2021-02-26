@@ -3,9 +3,7 @@ import Navbar from "../components/Navbar2";
 import LandingPage from "../components/LandingText";
 import React, {Component} from 'react'
 import { Layout, Row, Col } from "antd";
-import Navbar1 from "../components/Navbar1";
 const {Content, Footer} = Layout;
-
 
 export default function Home() {
   return (
