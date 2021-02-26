@@ -41,7 +41,6 @@ const nextConfig = {
     }
 
     config.resolve.alias["utils"] = path.join(__dirname, "utils");
-    config.resolve.alias["store"] = path.join(__dirname, "redux");
     config.resolve.alias["components"] = path.join(__dirname, "components");
     config.resolve.alias["containers"] = path.join(__dirname, "containers");
     return config;

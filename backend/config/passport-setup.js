@@ -103,12 +103,10 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const currentUser = await User.findOne({ facebookId: profile.id });
-      console.log("hmm");
       // check if the person has logged with google before
       if (currentUser) {
         done(null, currentUser);
       } else {
-        console.log(typeof profile.id);
         const { email, first_name, last_name } = profile._json;
         await User.create({
           facebookId: profile.id,

@@ -19,8 +19,11 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [
         function () {
-          console.log(this.googleId, this.instaId);
-          return this.googleId === undefined || this.instaId === undefined;
+          return (
+            this.googleId === undefined &&
+            this.instaId === undefined &&
+            this.facebookId === undefined
+          );
         },
         "Please add a password",
       ],
