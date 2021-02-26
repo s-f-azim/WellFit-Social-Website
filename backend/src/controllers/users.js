@@ -49,6 +49,20 @@ const updateUser = asyncHandler(async (req, res) => {
   sendTokenResponse(updatedUser, 200, res);
 });
 
+const followUser = asyncHandler(async (req, res) => {
+  if (User.findOne({ _id: req.body.user_id })) {
+    if (!req.user.following.includes(req.body.user_id) && req.user._id.str !== req.body.user_id.str) {
+      req.user.following.push(req.body.user_id);
+    }
+    const updatedUser = await req.user.save();
+    sendTokenResponse(updatedUser, 200, res);
+  }
+  else {
+    const updatedUser = req.user;
+    sendTokenResponse(updatedUser, 400, res);
+  }
+});
+
 /**
  * @async
  * @desc logout the user and delete the cookie
@@ -82,4 +96,4 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie("token", token, options)
     .send({ success: true, token, data: user });
 };
-export { createUser, loginUser, getUser, logoutUser, updateUser };
+export { createUser, loginUser, getUser, logoutUser, updateUser, followUser };
