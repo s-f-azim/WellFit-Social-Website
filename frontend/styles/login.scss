@@ -1,6 +1,15 @@
 .ant-row {
   min-width: 20vw;
 }
+.buttons {
+  display: flex;
+  flex-direction: space-between;
+  & > * {
+    margin-right: 0.4rem;
+    font-size: 1rem;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .ant-row {
     min-width: 52vw;
