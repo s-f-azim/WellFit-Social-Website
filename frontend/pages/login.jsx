@@ -13,7 +13,7 @@ import {
 import { InstagramOutlined, GoogleOutlined } from "@ant-design/icons";
 import API from "../config.js";
 import { useState, useContext } from "react";
-import { signin, getCookie, authenticate } from "../utils/auth.js";
+import { signin, authenticate } from "../utils/auth.js";
 import { UserContext } from "../contexts/UserContext.js";
 
 const formItemLayout = {
@@ -61,6 +61,11 @@ const Login = () => {
   };
   // Google oauth login
   const googleOuthHandler = (e) => {
+    e.preventDefault();
+    window.open(`${API}/users/oauth/google`, "_self");
+  };
+  // Insta oauth login
+  const instaHandler = (e) => {
     e.preventDefault();
     window.open(`${API}/users/oauth/google`, "_self");
   };
@@ -114,17 +119,15 @@ const Login = () => {
                 Login
               </Button>
             </Form.Item>
-            <Form.Item>
-              <div className="social-media-login">
-                <h2>Login with social media</h2>
-                <div className="buttons">
-                  <Button type="primary">
-                    <InstagramOutlined />
-                  </Button>
-                  <Button type="primry" onClick={googleOuthHandler}>
-                    <GoogleOutlined />
-                  </Button>
-                </div>
+            <Form.Item {...tailFormItemLayout}>
+              <h3>Or login with</h3>
+              <div className="buttons">
+                <Button type="primary" onClick={instaHandler}>
+                  <InstagramOutlined />
+                </Button>
+                <Button type="primary" onClick={googleOuthHandler}>
+                  <GoogleOutlined />
+                </Button>
               </div>
             </Form.Item>
           </Space>

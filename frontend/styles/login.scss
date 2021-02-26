@@ -1,16 +1,12 @@
 .ant-row {
   min-width: 20vw;
 }
-.social-media-login {
+.buttons {
   display: flex;
-  // width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  .buttons {
-    display: flex;
-    flex-direction: space-between;
-    background-color: red;
+  flex-direction: space-between;
+  & > * {
+    margin-right: 0.4rem;
+    font-size: 1rem;
   }
 }
 

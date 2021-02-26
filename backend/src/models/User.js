@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [
         function () {
-          return this.googleId == undefined;
+          return this.googleId === undefined || this.instaId === undefined;
         },
         "Please add a password",
       ],
@@ -60,6 +60,9 @@ const UserSchema = new mongoose.Schema(
       type: String,
     },
     googleId: {
+      type: String,
+    },
+    instaId: {
       type: String,
     },
   },

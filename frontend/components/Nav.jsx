@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Menu, Icon, Button } from "antd";
-import { useState, useContext, useEffect } from "react";
+import { Menu, Button } from "antd";
+import { useState, useContext } from "react";
 import { UserContext } from "../contexts/UserContext.js";
 import ProfileTopBar from "./ProfileTopBar";
 import ProfileBar from "./ProfileBar";
