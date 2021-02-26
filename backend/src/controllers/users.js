@@ -49,6 +49,12 @@ const updateUser = asyncHandler(async (req, res) => {
   sendTokenResponse(updatedUser, 200, res);
 });
 
+/**
+ * @async
+ * @desc add following user profile
+ * @route PATCH /api/users/follow
+ * @access private
+ */
 const followUser = asyncHandler(async (req, res) => {
   if (User.findOne({ _id: req.body.user_id })) {
     if (!req.user.following.includes(req.body.user_id)) {
@@ -61,6 +67,16 @@ const followUser = asyncHandler(async (req, res) => {
   //   const updatedUser = req.user;
   //   sendTokenResponse(updatedUser, 400, res);
   // }
+});
+
+/**
+ * @async
+ * @desc get user following
+ * @route GET /api/users/followList
+ * @access private
+ */
+const getFollowing = asyncHandler(async (req, res) => {
+  res.status(200).send({ success: true, data: req.user.following });
 });
 
 /**
@@ -96,4 +112,4 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie("token", token, options)
     .send({ success: true, token, data: user });
 };
-export { createUser, loginUser, getUser, logoutUser, updateUser, followUser };
+export { createUser, loginUser, getUser, logoutUser, updateUser, followUser, getFollowing };
