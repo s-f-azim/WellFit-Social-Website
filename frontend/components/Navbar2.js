@@ -17,22 +17,20 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
     return (
         <>
         <div className="buttons">
-          <ul className={click ? "nav-options activs" : "nav-options"}>
-            
-            <li className="option" onClick={closeMobileMenu}>
-                <Button type="link" href="#">Courses</Button>
-            </li>
-            <li className="option" onClick={closeMobileMenu}>
-                <Button type="link" href="#">Instructors</Button>
-            </li>
-            <li className="option" >
-                
-                <Button type="link" onClick={() => setProfileOpen(!profileOpen)}><img src={require("../public/person.svg")} /> {user.name}</Button>
-            </li>
-            <li className="option">
-                <Search placeholder="Search our Site" enterButton />
-            </li>
-        </ul>
+            <ul className={click ? "nav-options activs" : "nav-options"}>
+                <li className="option" onClick={closeMobileMenu}>
+                    <Button type="link" href="#">Courses</Button>
+                </li>
+                <li className="option" onClick={closeMobileMenu}>
+                    <Button type="link" href="#">Instructors</Button>
+                </li>
+                <li className="option" >
+                    <Button type="link" onClick={() => setProfileOpen(!profileOpen)}><img src={require("../public/person.svg")} /> {user.name}</Button>
+                </li>
+                <li className="option">
+                    <Search placeholder="Search our Site" enterButton />
+                </li>
+            </ul>
         </div>
         
         <div className=" mobile-menu" >
@@ -50,22 +48,21 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
     );
   };
   const LoggedOutMenu = () => {
-    const [click, setClick] = useState(true);
+    const [click, setClick] = useState(false);
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
     
     return (
         <>
         <div className="buttons">
-          <ul className={click ? "nav-options activs" : "nav-options"}>
-            
-            <li className="option" onClick={closeMobileMenu}>
-                <Button type="primary" href="/login">Sign In</Button>
-            </li>
-            <li className="option" onClick={closeMobileMenu}>
-                <Button type="link" href="/signup">Sign Up</Button>
-            </li>
-        </ul>
+            <ul className={click ? "nav-options activs" : "nav-options"}>
+                <li className="option" onClick={closeMobileMenu}>
+                    <Button type="primary" href="/login">Sign In</Button>
+                </li>
+                <li className="option" onClick={closeMobileMenu}>
+                    <Button type="link" href="/signup">Sign Up</Button>
+                </li>
+            </ul>
         </div>
         
         <div className=" mobile-menu" >
@@ -83,29 +80,25 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
     );
   };
 
-const Navbar2 = () => {
+const Navbar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
   // on componont mount check if the user exists in the cookies
   useEffect(() => {
     if (getCookie("user")) setUser(JSON.parse(getCookie("user")));
-  }, []);
+     }, []);
   return (  
     <>  
-    <Header className="topheader" style={{backgroundColor: "white"}}>
-                    <Title level={2} className="logo-text">InstaFit</Title>
-            {
-                user===null ? <LoggedOutMenu/> : <>
-                    <LoggedInMenu profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>     
-                    <ProfileBar profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>
-                </>
-            }
-        
-        
-        
-        
-    </Header>
+        <Header className="topheader" style={{backgroundColor: "white"}}>
+            <Title level={2} className="logo-text">InstaFit</Title>
+                {
+                    user===null ? <LoggedOutMenu/> : <>
+                        <LoggedInMenu profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>     
+                        <ProfileBar profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>
+                    </>
+                }
+        </Header>
     </>);
 
 }
@@ -113,4 +106,4 @@ const Navbar2 = () => {
 
  
 
-export default Navbar2;
+export default Navbar;

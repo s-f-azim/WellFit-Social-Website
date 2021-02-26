@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Navbar2 from "../components/Navbar2";
+import Navbar from "../components/Navbar2";
 import LandingPage from "../components/LandingText";
 import React, {Component} from 'react'
 import { Layout, Row, Col } from "antd";
@@ -10,7 +10,7 @@ const {Content, Footer} = Layout;
 export default function Home() {
   return (
     <Layout>
-      <Navbar2 user={null}/>   
+      <Navbar/>   
       <LandingPage/>
       <Footer style={{textAlign: 'center', backgroundColor: 'white'}}>
         {/* Update this as soon as more information is available */}
