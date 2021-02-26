@@ -37,7 +37,7 @@ const LandingPage = () => {
             What are you looking for?
           </button>
         </Row>
-        <Row style={{display:"flex", justifyContent: "center", alignItems:"center" /*, fontFamily: "Source Sans Pro"*/ }}>
+        <Row style={{display:"flex", justifyContent: "center", alignItems:"center" }}>
           OR
         </Row>
         <Row style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
