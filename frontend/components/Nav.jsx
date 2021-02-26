@@ -1,19 +1,12 @@
 import Link from "next/link";
-import { Menu, Icon, Button } from "antd";
-import { useState, useContext, useEffect } from "react";
+import { Menu, Button } from "antd";
+import { useState, useContext } from "react";
 import { UserContext } from "../contexts/UserContext.js";
-import { getCookie } from "../utils/auth.js";
 import ProfileTopBar from "./ProfileTopBar";
 import ProfileBar from "./ProfileBar";
 const Nav = () => {
   const [profileOpen, setProfileOpen] = useState(false);
-  const { user, setUser } = useContext(UserContext);
-
-  // on componont mount check if the user exists in the cookies
-  useEffect(() => {
-    if (getCookie("user")) setUser(JSON.parse(getCookie("user")));
-  }, []);
-
+  const { user } = useContext(UserContext);
   return (
     <Menu mode="horizontal" style={{ padding: "0.7rem", border: "none" }}>
       {!user ? (
@@ -50,5 +43,4 @@ const Nav = () => {
     </Menu>
   );
 };
-
 export default Nav;

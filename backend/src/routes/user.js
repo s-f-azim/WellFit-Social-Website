@@ -5,6 +5,9 @@ import {
   getUser,
   logoutUser,
   updateUser,
+  googleOauth,
+  facebookOauth,
+  instagramOauth,
 } from "../controllers/users.js";
 import passport from "../../config/passport-setup.js";
 const router = new express.Router();
@@ -18,5 +21,36 @@ router
 router
   .route("/profile")
   .get(passport.authenticate("jwt", { session: false }), getUser);
+router.route("/oauth/google").get(
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    session: false,
+  })
+);
+router
+  .route("/oauth/google/redirect")
+  .get(passport.authenticate("google", { session: false }), googleOauth);
+
+router.route("/oauth/instagram").get(
+  passport.authenticate("instagram", {
+    session: false,
+    scope: ["user_profile"],
+  })
+);
+
+router
+  .route("/oauth/instagram/redirect")
+  .get(passport.authenticate("instagram", { session: false }), instagramOauth);
+
+router.route("/oauth/facebook").get(
+  passport.authenticate("facebook", {
+    session: false,
+    scope: ["email"],
+  })
+);
+
+router
+  .route("/oauth/facebook/redirect")
+  .get(passport.authenticate("facebook", { session: false }), facebookOauth);
 
 export default router;

@@ -39,7 +39,7 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
       <div className="item">
         <EditOutlined />
         <h1 onClick={() => setProfileOpen(false)}>
-          <Link href="/editProfile" >Edit profile</Link>
+          <Link href="/editProfile">Edit profile</Link>
         </h1>
       </div>
       <div className="item">

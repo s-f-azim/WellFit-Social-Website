@@ -41,14 +41,13 @@ const nextConfig = {
     }
 
     config.resolve.alias["utils"] = path.join(__dirname, "utils");
-    config.resolve.alias["store"] = path.join(__dirname, "redux");
     config.resolve.alias["components"] = path.join(__dirname, "components");
     config.resolve.alias["containers"] = path.join(__dirname, "containers");
     return config;
   },
   publicRuntimeConfig: {
     APP_NAME: "instaFit",
-    API_DEVELOPMENT: `http://localhost:4000/api`,
+    API_DEVELOPMENT: `https://localhost:4000/api`,
     API_PRODUCTION: `http://localhost:4000/api`,
     PRODUCTION: false,
   },
