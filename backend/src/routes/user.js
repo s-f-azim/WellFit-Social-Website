@@ -21,7 +21,7 @@ router
   .route("/profile")
   .get(passport.authenticate("jwt", { session: false }), getUser);
 router
-  .route("/follow")
+  .route("/follow/:id")
   .patch(passport.authenticate("jwt", { session: false }), followUser);
 router
   .route("/getFollowing")
