@@ -12,6 +12,7 @@ const cookieExtractor = (req) => {
 // setup passport
 
 passport.serializeUser((user, done) => {
+  console.log("i'm here");
   done(null, user.id);
 });
 

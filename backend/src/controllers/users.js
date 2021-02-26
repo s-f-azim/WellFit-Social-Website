@@ -70,7 +70,17 @@ const logoutUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const googleOauth = asyncHandler(async (req, res) => {
-  sendTokenResponse(req.user, 200, res);
+  const token = req.user.getSginedJWTToken();
+  const options = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "PRODUCTION" ? true : false,
+  };
+  res.cookie("user", JSON.stringify(req.user));
+  res.cookie("token", token);
+  res.redirect(`${process.env.CLIENT_URL}`);
 });
 
 /**
@@ -85,8 +95,8 @@ const sendTokenResponse = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
+    secure: process.env.NODE_ENV === "PRODUCTION" ? true : false,
   };
-  if (process.env.NODE_ENV === "PRODUCTION") options.secure = true;
   res
     .status(statusCode)
     .cookie("token", token, options)

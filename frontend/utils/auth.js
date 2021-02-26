@@ -9,7 +9,7 @@ const signup = (name, email, password) => {
     password: password,
   });
 };
-
+const googleOauth = () => axios.get(`${API}/users/oauth/google`);
 // login a user
 const signin = (email, password) => {
   return axios.post(`${API}/users/login`, {
@@ -45,6 +45,7 @@ const getCookie = (key) => {
 };
 
 export {
+  googleOauth,
   signup,
   signin,
   logout,
