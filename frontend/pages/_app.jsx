@@ -3,6 +3,7 @@ import "antd/dist/antd.css";
 import "../styles/main.scss";
 // import { env } from "../config.js";
 import Nav from "../components/Nav.jsx";
+import Navbar from "../components/Navbar";
 import { useState, useMemo } from "react";
 import { UserContext } from "../contexts/UserContext.js";
 const { Header, Footer, Content } = Layout;
@@ -12,6 +13,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <UserContext.Provider value={providerValue}>
       <Layout>
+        <Navbar/> 
         <Content>
           <Component {...pageProps} />
         </Content>

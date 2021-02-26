@@ -91,12 +91,12 @@ const Navbar = () => {
   return (  
     <>  
         <Header className="topheader" style={{backgroundColor: "white"}}>
-            <Title level={2} className="logo-text">InstaFit</Title>
+          <Title level={2} className="logo-text"><a href= "/" > InstaFit </a></Title>
                 {
-                    user===null ? <LoggedOutMenu/> : <>
-                        <LoggedInMenu profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>     
-                        <ProfileBar profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>
-                    </>
+                  user===null ? <LoggedOutMenu/> : <>
+                      <LoggedInMenu profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>     
+                      <ProfileBar profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>
+                  </>
                 }
         </Header>
     </>);

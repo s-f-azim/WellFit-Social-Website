@@ -1,14 +1,12 @@
 import Head from "next/head";
-import Navbar from "../components/Navbar2";
-import LandingPage from "../components/LandingText";
+import LandingPage from "../components/LandingPage";
 import React, {Component} from 'react'
 import { Layout, Row, Col } from "antd";
 const {Content, Footer} = Layout;
 
 export default function Home() {
   return (
-    <Layout>
-      <Navbar/>   
+    <Layout>  
       <LandingPage/>
       <Footer style={{textAlign: 'center', backgroundColor: 'white'}}>
         {/* Update this as soon as more information is available */}
