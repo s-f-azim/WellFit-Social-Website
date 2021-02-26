@@ -222,7 +222,7 @@ const editProfilePage = () => {
     </Form.Item>
     <Form.Item
     name="confirm"
-    label="Confirm Password"
+    label="Confirm password"
     dependencies={["password"]}
     hasFeedback
     rules={[

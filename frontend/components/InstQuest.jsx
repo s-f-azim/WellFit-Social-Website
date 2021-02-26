@@ -18,8 +18,12 @@ import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 const yourCareerText = (
   <h2> Your career </h2>
 );
+const communicationText = (
+  <h2> Client Communication </h2>
+);
 
 const { Panel } = Collapse;
+const { TextArea } = Input;
 
 const formItemLayout = {
   labelCol: {
@@ -104,7 +108,7 @@ const InstQuest = () => {
     <Option value="Physique trainer">Physique trainer</Option>
     <Option value="Performance trainer">Performance trainer</Option>
     <Option value="Lifestyle trainer">Lifestyle trainer</Option>
-    <Option value="Other">Other/Several of the above</Option>
+    <Option value="Other">Other</Option>
     </Select>
     </Form.Item>
 
@@ -121,13 +125,13 @@ const InstQuest = () => {
         name={[field.name, 'Qualification']}
         fieldKey={[field.fieldKey, 'Qualification']}
         >
-        <Input style={{ width: "89%"}} placeholder="Enter your qualification" />
+        <Input style={{ width: "90%"}} placeholder="Enter your qualification" />
         <CloseOutlined style = {{color: "red", margin: "7px"}} onClick={() => remove(field.name)} />
         </Form.Item>
         </Space>
       ))}
       <Form.Item>
-      <Button style={{ width: "57.5%"}} onClick={() => add()} block icon={<PlusOutlined style = {{color: "#33FF49"}} />}>
+      <Button style={{ width: "60%"}} onClick={() => add()} block icon={<PlusOutlined style = {{color: "#33FF49"}} />}>
       Add a Qualification
       </Button>
       </Form.Item>
@@ -135,15 +139,49 @@ const InstQuest = () => {
     )}
     </Form.List>
     </Form.Item>
+
     <Form.Item
     name = "specialty"
     label = "Field of expertise">
     <Input placeholder = "bodybuilding, Yoga, nutrition..."/>
     </Form.Item>
 
+    <Form.Item
+    name = "Customer stories"
+    label = "Customer stories">
+    <Form.List name="Customer stories">
+    {(fields, { add, remove }) => (
+      <>
+      {fields.map(field => (
+        <Space key={field.key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+        <Form.Item
+        {...field}
+        name={[field.name, 'Customer story']}
+        fieldKey={[field.fieldKey, 'Customer story']}
+        >
+
+        <TextArea showCount maxLength={200} style={{ width: "90%"}} placeholder="Enter a past customer story, or feedback received" />
+        <CloseOutlined style = {{color: "red", margin: "7px"}} onClick={() => remove(field.name)} />
+        </Form.Item>
+        </Space>
+      ))}
+      <Form.Item>
+      <Button style={{ width: "60%"}} onClick={() => add()} block icon={<PlusOutlined style = {{color: "#33FF49"}} />}>
+      Add a customer story
+      </Button>
+      </Form.Item>
+      </>
+    )}
+    </Form.List>
+    </Form.Item>
+    </Panel>
+    
+    <Panel header={communicationText} key="2">
+
+
     </Panel>
     </Collapse>
-    <h2> Communication </h2>
+
     <h2> Payment and rates </h2>
     <h2> Additional info </h2>
 
@@ -164,8 +202,6 @@ export default InstQuest;
 
 // for instructors:
 /*
-speciality as instructor
-feedback from other clients
 avaialble packages
 price range
 service format
