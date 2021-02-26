@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 import {
   Form,
-  Input,
   InputNumber,
   Button,
   Carousel,
   Select,
-  Radio,
   Row,
   Col,
   Layout,
@@ -14,35 +12,35 @@ import {
   Steps,
 } from "antd";
 
+import { useRouter } from "next/router";
+import { updateUser } from "../utils/user.js";
+import { UserContext } from "../contexts/UserContext.js";
+
 const { Option } = Select;
 
-const { Header, Content, Footer } = Layout;
-
 const { Step } = Steps;
-
-import axios from "axios";
 
 const Questionnaire = () => {
   const carousel = useRef();
   const [form] = Form.useForm();
   const [valid, setValid] = useState(true);
+
+  const router = useRouter();
+  const { user, setUser } = useContext(UserContext);
+
+  const totalSlides = 5;
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const onFinish = async (values) => {
-    console.log("Success:", values);
-    /*
-    const response = await axios.post(
-      "http://localhost:4000/users/edit/602e49521e619c1742306434",
-      {
-        weight: values.weight,
-        height: values.height,
-        bmi: values.bmi,
-        gender: values.gender,
-        isPregnant: values.isPregnant,
-        fitnessLevel: values.fitnessLevel,
-      }
-    );
-    */
+    console.log(user);
+    console.log("Success:", values)
+
+    try {
+      const response = await updateUser(values);
+    } catch (err) {
+      console.log(err);
+    }
+    
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -65,30 +63,71 @@ const Questionnaire = () => {
     carousel.current.next();
   };
 
+  const PreviousButton = () => {
+    return (
+      <Button
+        size="large"
+        type="primary"
+        onClick={previous}
+        disabled={!valid || currentSlide <= 0}
+        block
+      >
+        PREVIOUS
+      </Button>
+    );
+  };
+
+  const NextButton = () => {
+    return (
+      currentSlide === totalSlides-1 ?
+      <Button
+        size="large"
+        type="primary"
+        disabled={!valid}
+        onClick={() => form.submit()}
+        block
+      >
+        SUBMIT
+      </Button>
+      :
+      <Button
+        size="large"
+        type="primary"
+        onClick={next}
+        disabled={!valid}
+        block
+      >
+        NEXT
+      </Button>
+    );
+  };
+
+  const FormSteps = () => {
+    let steps = [];
+    for (let i = 0; i < totalSlides; i++) {
+      steps.push(<Step />);    
+    }
+
+    return (
+      <Steps
+        progressDot
+        current={currentSlide}
+        responsive
+        direction="vertical"
+      >
+        {steps}
+      </Steps>
+    );
+  };
+
   return (
     <>
       <Card
         className="container-card"
         style={{ padding: "0 1rem" }}
         actions={[
-          <Button
-            size="large"
-            type="primary"
-            onClick={previous}
-            disabled={!valid}
-            block
-          >
-            PREVIOUS
-          </Button>,
-          <Button
-            size="large"
-            type="primary"
-            onClick={next}
-            disabled={!valid}
-            block
-          >
-            NEXT
-          </Button>,
+          <PreviousButton />,
+          <NextButton />,
         ]}
       >
         <Form
@@ -108,34 +147,20 @@ const Questionnaire = () => {
         >
           <Row>
             <Col span={1}>
-              <Steps
-                progressDot
-                current={currentSlide}
-                responsive
-                direction="vertical"
-              >
-                <Step />
-                <Step />
-                <Step />
-                <Step />
-                <Step />
-                <Step />
-                <Step />
-              </Steps>
+              <FormSteps />
             </Col>
 
             <Col span={23}>
               <Carousel
                 ref={carousel}
-                dotPosition="top"
                 dots={false}
                 effect="fade"
                 beforeChange={(from, to) => setCurrentSlide(to)}
               >
-                <Card bordered={false}>
+                <Card>
                   <Card.Grid>
                     <Form.Item
-                      label="What is your weight?"
+                      label="What is your weight? (kg)"
                       name="weight"
                       rules={[
                         {
@@ -151,7 +176,7 @@ const Questionnaire = () => {
 
                   <Card.Grid>
                     <Form.Item
-                      label="What is your height?"
+                      label="What is your height? (cm)"
                       name="height"
                       rules={[
                         {
@@ -168,20 +193,9 @@ const Questionnaire = () => {
 
                 <Card>
                   <Card.Grid>
-                    <Form.Item label="Are you pregnant?" name="isPregnant">
-                      <Radio.Group>
-                        <Radio value={true}>Yes</Radio>
-                        <Radio value={false}>No</Radio>
-                      </Radio.Group>
-                    </Form.Item>
-                  </Card.Grid>
-                </Card>
-
-                <Card>
-                  <Card.Grid>
                     <Form.Item
                       label="Preferred instructor's gender?"
-                      name="gender"
+                      name="preferredGender"
                     >
                       <Select allowClear>
                         <Option value="male">Male</Option>
@@ -210,8 +224,21 @@ const Questionnaire = () => {
                 <Card>
                   <Card.Grid>
                     <Form.Item
-                      label="Preferred training duration?"
+                      label="Preferred training duration? (minutes)"
                       name="trainingDuration"
+                      rules={[
+                        {
+                          type: "number",
+                          min: 0,
+                          message: "Please enter positive numbers only",
+                        },
+                        {
+                          validator: async (_, value) => {
+                            if (!value || Number.isInteger(value)) return Promise.resolve();
+                            return Promise.reject('Please enter a whole number');
+                          }
+                        }
+                      ]}
                     >
                       <InputNumber />
                     </Form.Item>
@@ -222,7 +249,7 @@ const Questionnaire = () => {
                   <Card.Grid>
                     <Form.Item
                       label="What training equipment do you have available?"
-                      name="fitnessLevel"
+                      name="trainingEquipment"
                     >
                       <Select mode="multiple" allowClear>
                         <Option value="dumbbells">Dumbbells</Option>
@@ -238,11 +265,7 @@ const Questionnaire = () => {
 
                 <Card>
                   <Card.Grid>
-                    <Form.Item label="Submit to confirm your preferences!">
-                      <Button type="primary" htmlType="submit">
-                        Submit
-                      </Button>
-                    </Form.Item>
+                    
                   </Card.Grid>
                 </Card>
               </Carousel>

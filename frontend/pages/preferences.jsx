@@ -3,12 +3,22 @@ import {
   Layout,
   Row,
   Col,
-  Card,
 } from "antd";
+import { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
+import { UserContext } from "../contexts/UserContext.js";
 
 const { Content, Footer } = Layout;
 
 export default function Preferences() {
+  const router = useRouter();
+  const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    console.log(user);
+    //if (!user) router.push("/");
+  }, []);
+
   return (
     <Row
       style={{height:'100vh'}}

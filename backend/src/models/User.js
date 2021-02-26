@@ -5,25 +5,29 @@ import JWT from "jsonwebtoken";
 import ErrorResponse from "../utils/errorResponse.js";
 
 //create user schema
-const userSchema = new mongoose.Schema({
-
-  email: {
-    type: String,
-    unique: true,
-    required: [true, "Please add an email address"],
-    validate(value) {
-      if (!validator.isEmail(value)) throw new Error("Email is Invalid");
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Please add an email address"],
+      validate(value) {
+        if (!validator.isEmail(value)) throw new Error("Email is Invalid");
+      },
     },
+
     name: {
       type: String,
       required: [true, "please enter your name"],
       minlength: 3,
     },
+    
     gender: {
       type: String,
       trim: true,
       enum: ["Male", "Female", "Non-Binary", "Prefer not to say"],
     },
+
     location: {
       type: String,
       trim: true,
@@ -45,54 +49,55 @@ const userSchema = new mongoose.Schema({
     nickname: {
       type: String,
     },
+
     bio: {
       type: String,
     },
-  },
 
-  password: {
-    type: String,
-    required: [true, "Please add a password"],
-    minlength: 8,
-  },
+    password: {
+      type: String,
+      required: [true, "Please add a password"],
+      minlength: 8,
+    },
 
-  weight: {
-    type: Number,
-    min: 0,
-    validate : {
-      validator : Number.isInteger
-    }
-  },
+    weight: {
+      type: Number,
+      min: 0,
+    },
 
-  height: {
-    type: Number,
-    min: 0,
-    validate : {
-        validator : Number.isInteger
-    }
-  },
+    height: {
+      type: Number,
+      min: 0,
+    },
 
-  bmi: {
-    type: Number,
-    min: 0,
-    validate : {
-        validator : Number.isInteger
-    }
-  },
+    preferredGender: {
+      type: String,
+      enum: ["male", "female", "any"],
+    },
 
-  preferredGender: {
-    type: String,
-    enum: ["male", "female", "any"]
-  },
-  
-  isPregnant: Boolean,
+    isPregnant: Boolean,
 
-  fitnessLevel: {
-    type: String,
-    enum: ["beginner", "intermediate", "advanced"]
-  },
+    fitnessLevel: {
+      type: String,
+      enum: ["beginner", "intermediate", "advanced"],
+    },
 
-},
+    trainingDuration: {
+      type: Number,
+      min: 0,
+      validate: {
+        validator: Number.isInteger,
+      },
+    },
+
+    trainingEquipment: [
+      {
+        type: String,
+        enum: ["dumbbells", "barbells", "resistanceBands", "treadmill"],
+      },
+    ],
+
+  },
   { timestamps: true }
 );
 
