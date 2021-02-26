@@ -12,8 +12,9 @@ const Nav = () => {
   // on componont mount check if the user exists in the cookies
   useEffect(() => {
     if (getCookie("user")) setUser(JSON.parse(getCookie("user")));
+    console.log("hmm", user);
   }, []);
-
+  console.log(getCookie("user"));
   return (
     <Menu mode="horizontal" style={{ padding: "0.7rem", border: "none" }}>
       {!user ? (

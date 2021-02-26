@@ -10,6 +10,8 @@ import {
   Row,
   Card,
 } from "antd";
+import { InstagramOutlined, GoogleOutlined } from "@ant-design/icons";
+import API from "../config.js";
 import { useState, useContext } from "react";
 import { signin, getCookie, authenticate } from "../utils/auth.js";
 import { UserContext } from "../contexts/UserContext.js";
@@ -42,6 +44,7 @@ const Login = () => {
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
   const { user, setUser } = useContext(UserContext);
+  // normal login handler
   const onFinish = async (values) => {
     const { email, password } = values;
     try {
@@ -55,6 +58,11 @@ const Login = () => {
     } catch (err) {
       setHasError(true);
     }
+  };
+  // Google oauth login
+  const googleOuthHandler = (e) => {
+    e.preventDefault();
+    window.open(`${API}/users/oauth/google`, "_self");
   };
   return (
     <Row
@@ -105,6 +113,19 @@ const Login = () => {
               <Button type="primary" htmlType="submit">
                 Login
               </Button>
+            </Form.Item>
+            <Form.Item>
+              <div className="social-media-login">
+                <h2>Login with social media</h2>
+                <div className="buttons">
+                  <Button type="primary">
+                    <InstagramOutlined />
+                  </Button>
+                  <Button type="primry" onClick={googleOuthHandler}>
+                    <GoogleOutlined />
+                  </Button>
+                </div>
+              </div>
             </Form.Item>
           </Space>
         </Form>

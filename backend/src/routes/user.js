@@ -5,6 +5,7 @@ import {
   getUser,
   logoutUser,
   updateUser,
+  googleOauth,
 } from "../controllers/users.js";
 import passport from "../../config/passport-setup.js";
 const router = new express.Router();
@@ -18,5 +19,14 @@ router
 router
   .route("/profile")
   .get(passport.authenticate("jwt", { session: false }), getUser);
+router.route("/oauth/google").get(
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    session: false,
+  })
+);
+router
+  .route("/oauth/google/redirect")
+  .get(passport.authenticate("google", { session: false }), googleOauth);
 
 export default router;

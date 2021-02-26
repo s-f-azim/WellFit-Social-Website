@@ -1,6 +1,19 @@
 .ant-row {
   min-width: 20vw;
 }
+.social-media-login {
+  display: flex;
+  // width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .buttons {
+    display: flex;
+    flex-direction: space-between;
+    background-color: red;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .ant-row {
     min-width: 52vw;
