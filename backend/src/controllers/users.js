@@ -56,9 +56,21 @@ const updateUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const followUser = asyncHandler(async (req, res) => {
+  // User.findOne({ _id: req.body.user_id }, (err, user) => {
+  //   if (err) { res.send(err); }
+  //   if (user._id.str === req.user._id) { res.send("User cannot follow itself"); }
+  //   if (req.user.following.includes(req.body.user_id)) { res.send("Already followes"); }
+  //   req.user.following.push(req.body.user_id);
+  // })
+  // const updatedUser = await req.user.save();
+  // sendTokenResponse(updatedUser, 200, res);
   if (User.findOne({ _id: req.body.user_id })) {
     if (!req.user.following.includes(req.body.user_id)) {
       req.user.following.push(req.body.user_id);
+    }
+    else {
+      const index = req.user.following.indexOf(req.body.user_id);
+      req.user.following.splice(index, 1);
     }
     const updatedUser = await req.user.save();
     sendTokenResponse(updatedUser, 200, res);
@@ -71,11 +83,17 @@ const followUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
- * @desc get user following
+ * @desc get user following list
  * @route GET /api/users/followList
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
+  for (var i = 0; i < req.user.following.length; i++) {
+    User.findById(req.user.following[i], (err, user) => {
+      if (err) { res.send(err); }
+      console.log(user.name);
+    })
+  }
   res.status(200).send({ success: true, data: req.user.following });
 });
 
