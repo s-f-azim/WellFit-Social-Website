@@ -40,7 +40,7 @@ router.route("/oauth/instagram").get(
 
 router
   .route("/oauth/instagram/redirect")
-  .get(passport.authenticate("instagram", { session: false }), googleOauth);
+  .get(passport.authenticate("instagram", { session: false }), instagramOauth);
 
 router.route("/oauth/facebook").get(
   passport.authenticate("facebook", {
@@ -50,5 +50,5 @@ router.route("/oauth/facebook").get(
 
 router
   .route("/oauth/facebook/redirect")
-  .get(passport.authenticate("facebook", { session: false }), googleOauth);
+  .get(passport.authenticate("facebook", { session: false }), facebookOauth);
 export default router;

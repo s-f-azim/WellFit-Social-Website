@@ -78,7 +78,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       console.log(profile);
-      /* const currentUser = await User.findOne({ instaID: profile.id });
+      const currentUser = await User.findOne({ instaID: profile.id });
       // check if the person has logged with google before
       if (currentUser) {
         done(null, currentUser);
@@ -88,7 +88,7 @@ passport.use(
           email: profile.emails[0].value,
           name: `${profile.name.givenName} ${profile.name.familyName}`,
         });
-      } */
+      }
     }
   )
 );
