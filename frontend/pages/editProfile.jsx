@@ -15,9 +15,11 @@ import {
   Menu,
   Tabs,
   DatePicker,
+  Modal,
 } from "antd";
 import { useState, useEffect, useContext } from "react";
 import InstQuest from "../components/InstQuest.jsx";
+import QuestionCircleOutlined from '@ant-design/icons';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -45,7 +47,28 @@ const tailFormItemLayout = {
   },
 };
 
+const infoAlertText = (
+  <p>
+  Adding information on this page helps us tailor our
+  services and allows client to be matched more
+  efficiently, as well as knowing who you are and how
+  you work before initiating contact. We encourage
+  but do not require you to provide this information.
+  </p>
+)
+
 const editProfilePage = () => {
+
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+  const showAlert = () => {
+    setIsAlertVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsAlertVisible(false);
+  };
+
   const router = useRouter();
   const { user, setUser } = useContext(UserContext);
   //redirect to home page if user not logged in
@@ -147,8 +170,20 @@ const editProfilePage = () => {
     </Form>
     </TabPane>
 
-    <TabPane tab="Detailed info" key="2">
-    <h1>Add/Edit in-depth profile information</h1>
+    <TabPane tab= "Detailed info" key="2">
+
+    <h1>Add/Edit in-depth profile information {      <>
+          <Button type = "primary" shape = "circle" onClick={showAlert}>
+          ?
+          </Button>
+          <Modal closable = {false}
+          cancelButtonProps = {{ style: { display: 'none' } }}
+          title="This info is optional"
+          visible={isAlertVisible}
+          onOk={handleOk}>
+          {infoAlertText}
+          </Modal>
+          </>}</h1>
     <InstQuest/>
     </TabPane>
 

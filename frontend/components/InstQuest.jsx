@@ -15,21 +15,6 @@ import { UserContext } from "../contexts/UserContext.js";
 import { useState, useEffect, useContext } from "react";
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 
-
-const infoAlertText = (
-  <h4>
-  Adding information on this page helps us tailor our
-  <br/>
-  services and allows client to be matched more
-  <br/>
-  efficiently, as well as knowing who you are and how
-  <br/>
-  you work before initiating contact. We encourage
-  <br/>
-  but do not require you to provide this information.
-  </h4>
-)
-
 const yourCareerText = (
   <h2> Your career </h2>
 );
@@ -43,7 +28,7 @@ const formItemLayout = {
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 15 },
+    sm: { span: 11 },
   },
 };
 
@@ -62,6 +47,16 @@ const tailFormItemLayout = {
 
 // Instructor Questionnaire
 const InstQuest = () => {
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+  const showAlert = () => {
+    setIsAlertVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsAlertVisible(false);
+  };
+
   const router = useRouter();
   const { user, setUser } = useContext(UserContext);
   //redirect to home page if user not logged in
@@ -84,12 +79,6 @@ const InstQuest = () => {
 
   return (
     <>
-    <Alert
-    message="This page is optional"
-    description= {infoAlertText}
-    type="info"
-    showIcon
-    />
     <Form
     {...formItemLayout}
     form={form}
@@ -105,7 +94,6 @@ const InstQuest = () => {
       banner
       />
     )}
-    <br/>
     <Collapse bordered={false} ghost = {true}>
     <Panel header={yourCareerText} key="1">
 
@@ -133,13 +121,13 @@ const InstQuest = () => {
         name={[field.name, 'Qualification']}
         fieldKey={[field.fieldKey, 'Qualification']}
         >
-        <Input style={{ width: "90%"}} placeholder="Enter your qualification" />
+        <Input style={{ width: "89%"}} placeholder="Enter your qualification" />
+        <CloseOutlined style = {{color: "red", margin: "7px"}} onClick={() => remove(field.name)} />
         </Form.Item>
-        <CloseOutlined style = {{color: "red"}} onClick={() => remove(field.name)} />
         </Space>
       ))}
       <Form.Item>
-      <Button style={{ width: "90%"}} onClick={() => add()} block icon={<PlusOutlined style = {{color: "#33FF49"}} />}>
+      <Button style={{ width: "57.5%"}} onClick={() => add()} block icon={<PlusOutlined style = {{color: "#33FF49"}} />}>
       Add a Qualification
       </Button>
       </Form.Item>
@@ -147,12 +135,18 @@ const InstQuest = () => {
     )}
     </Form.List>
     </Form.Item>
+    <Form.Item
+    name = "specialty"
+    label = "Field of expertise">
+    <Input placeholder = "bodybuilding, Yoga, nutrition..."/>
+    </Form.Item>
 
     </Panel>
     </Collapse>
-    <h2> Communication: </h2>
-    <h2> Payment and rates: </h2>
-    <h2> Additional info: </h2>
+    <h2> Communication </h2>
+    <h2> Payment and rates </h2>
+    <h2> Additional info </h2>
+
     <Form.Item {...tailFormItemLayout}>
     <Button type="primary" htmlType="submit">
     Update/Confirm my info
@@ -170,8 +164,6 @@ export default InstQuest;
 
 // for instructors:
 /*
-achievements
-official diplomas?
 speciality as instructor
 feedback from other clients
 avaialble packages
