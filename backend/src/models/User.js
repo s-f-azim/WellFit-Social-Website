@@ -65,6 +65,12 @@ const UserSchema = new mongoose.Schema(
     instaId: {
       type: String,
     },
+    facebookId: {
+      type: String,
+    },
+    twitterId: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

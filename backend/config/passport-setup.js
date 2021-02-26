@@ -1,6 +1,8 @@
 import passport from "passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { Strategy as googleStrategy } from "passport-google-oauth20";
+import { Strategy as facebookStrategy } from "passport-facebook";
+import { Strategy as instagramStrategy } from "passport-instagram";
 import User from "../src/models/User.js";
 
 // get the cookie out of the request
@@ -48,8 +50,8 @@ passport.use(
 passport.use(
   new googleStrategy(
     {
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: `${process.env.SERVER_API_URL}/users/oauth/google/redirect`,
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -58,7 +60,53 @@ passport.use(
       if (currentUser) {
         done(null, currentUser);
       } else {
-        const user = await User.create({
+        await User.create({
+          googleId: profile.id,
+          email: profile.emails[0].value,
+          name: `${profile.name.givenName} ${profile.name.familyName}`,
+        });
+      }
+    }
+  )
+);
+// Instagram oauth strategy
+passport.use(
+  new instagramStrategy(
+    {
+      clientID: process.env.INSTA_CLIENT_ID,
+      clientSecret: process.env.INSTA_CLIENT_SECRET,
+      callbackURL: `${process.env.SERVER_API_URL}/users/oauth/google/redirect`,
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      const currentUser = await User.findOne({ instaID: profile.id });
+      // check if the person has logged with google before
+      if (currentUser) {
+        done(null, currentUser);
+      } else {
+        await User.create({
+          googleId: profile.id,
+          email: profile.emails[0].value,
+          name: `${profile.name.givenName} ${profile.name.familyName}`,
+        });
+      }
+    }
+  )
+);
+// Facebook oauth strategy
+passport.use(
+  new facebookStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: `${process.env.SERVER_API_URL}/users/oauth/google/redirect`,
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      const currentUser = await User.findOne({ googleId: profile.id });
+      // check if the person has logged with google before
+      if (currentUser) {
+        done(null, currentUser);
+      } else {
+        await User.create({
           googleId: profile.id,
           email: profile.emails[0].value,
           name: `${profile.name.givenName} ${profile.name.familyName}`,

@@ -10,7 +10,12 @@ import {
   Row,
   Card,
 } from "antd";
-import { InstagramOutlined, GoogleOutlined } from "@ant-design/icons";
+import {
+  InstagramOutlined,
+  GoogleOutlined,
+  TwitterOutlined,
+  FacebookOutlined,
+} from "@ant-design/icons";
 import API from "../config.js";
 import { useState, useContext } from "react";
 import { signin, authenticate } from "../utils/auth.js";
@@ -127,6 +132,12 @@ const Login = () => {
                 </Button>
                 <Button type="primary" onClick={googleOuthHandler}>
                   <GoogleOutlined />
+                </Button>
+                <Button type="primary" onClick={instaHandler}>
+                  <InstagramOutlined />
+                </Button>
+                <Button type="primary" onClick={googleOuthHandler}>
+                  <FacebookOutlined />
                 </Button>
               </div>
             </Form.Item>
