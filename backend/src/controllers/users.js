@@ -64,6 +64,16 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @async
+ * @desc login user using oauth
+ * @route GET /api/users/google/redirect
+ * @access private
+ */
+const googleOauth = asyncHandler(async (req, res) => {
+  sendTokenResponse(req.user, 200, res);
+});
+
+/**
  * @desc get the token from the user model and create a cookie
  * @param {User} user - a user
  * @param {int} statusCode - integer of status code ex 404
@@ -82,4 +92,4 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie("token", token, options)
     .send({ success: true, token, data: user });
 };
-export { createUser, loginUser, getUser, logoutUser, updateUser };
+export { createUser, loginUser, getUser, logoutUser, updateUser, googleOauth };

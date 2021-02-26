@@ -17,7 +17,12 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Please add a password"],
+      required: [
+        function () {
+          return this.googleId == undefined;
+        },
+        "Please add a password",
+      ],
       minlength: 8,
     },
     name: {
@@ -52,6 +57,9 @@ const UserSchema = new mongoose.Schema(
       type: String,
     },
     bio: {
+      type: String,
+    },
+    googleId: {
       type: String,
     },
   },
