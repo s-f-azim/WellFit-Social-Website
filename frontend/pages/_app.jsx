@@ -8,7 +8,6 @@ import { UserContext } from "../contexts/UserContext.js";
 function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null);
   const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
-  console.log("test", getCookie("token"));
   return (
     <UserContext.Provider value={providerValue}>
       <Layout>

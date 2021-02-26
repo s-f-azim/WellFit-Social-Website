@@ -77,7 +77,6 @@ passport.use(
       callbackURL: `${process.env.SERVER_API_URL}/users/oauth/instagram/redirect`,
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log(profile);
       const currentUser = await User.findOne({ instaID: profile.id });
       // check if the person has logged with google before
       if (currentUser) {
