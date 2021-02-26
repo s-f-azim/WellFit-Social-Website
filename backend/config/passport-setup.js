@@ -14,7 +14,6 @@ const cookieExtractor = (req) => {
 // setup passport
 
 passport.serializeUser((user, done) => {
-  console.log("i'm here");
   done(null, user.id);
 });
 
@@ -75,20 +74,21 @@ passport.use(
     {
       clientID: process.env.INSTA_CLIENT_ID,
       clientSecret: process.env.INSTA_CLIENT_SECRET,
-      callbackURL: `${process.env.SERVER_API_URL}/users/oauth/google/redirect`,
+      callbackURL: `${process.env.SERVER_API_URL}/users/oauth/instagram/redirect/`,
     },
     async (accessToken, refreshToken, profile, done) => {
-      const currentUser = await User.findOne({ instaID: profile.id });
+      console.log(profile);
+      /* const currentUser = await User.findOne({ instaID: profile.id });
       // check if the person has logged with google before
       if (currentUser) {
         done(null, currentUser);
       } else {
         await User.create({
-          googleId: profile.id,
+          instaId: profile.id,
           email: profile.emails[0].value,
           name: `${profile.name.givenName} ${profile.name.familyName}`,
         });
-      }
+      } */
     }
   )
 );
@@ -96,20 +96,23 @@ passport.use(
 passport.use(
   new facebookStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.SERVER_API_URL}/users/oauth/google/redirect`,
+      clientID: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+      callbackURL: `${process.env.SERVER_API_URL}/users/oauth/facebook/redirect/`,
+      profileFields: ["email", "name"],
     },
     async (accessToken, refreshToken, profile, done) => {
-      const currentUser = await User.findOne({ googleId: profile.id });
+      const currentUser = await User.findOne({ facebookId: profile.id });
       // check if the person has logged with google before
       if (currentUser) {
         done(null, currentUser);
       } else {
+        const { email, first_name, last_name } = profile._json;
+        console.log(profile);
         await User.create({
-          googleId: profile.id,
-          email: profile.emails[0].value,
-          name: `${profile.name.givenName} ${profile.name.familyName}`,
+          facebookId: profile.id,
+          email: email,
+          name: `${first_name} ${last_name}`,
         });
       }
     }

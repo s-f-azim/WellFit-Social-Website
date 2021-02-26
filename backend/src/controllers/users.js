@@ -65,22 +65,42 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
- * @desc login user using oauth
+ * @desc google login user using oauth
  * @route GET /api/users/google/redirect
  * @access private
  */
 const googleOauth = asyncHandler(async (req, res) => {
-  const token = req.user.getSginedJWTToken();
-  const options = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "PRODUCTION" ? true : false,
-  };
-  res.cookie("user", JSON.stringify(req.user));
-  res.cookie("token", token);
-  res.redirect(`${process.env.CLIENT_URL}`);
+  sendTokenResponseOauth(req.user, 200, res);
+});
+
+/**
+ * @async
+ * @desc facebook login user using oauth
+ * @route GET /api/users/faceboo/redirect
+ * @access private
+ */
+const facebookOauth = asyncHandler(async (req, res) => {
+  sendTokenResponseOauth(req.user, 200, res);
+});
+
+/**
+ * @async
+ * @desc instagram login user using oauth
+ * @route GET /api/users/instagram/redirect
+ * @access private
+ */
+const instagramOauth = asyncHandler(async (req, res) => {
+  sendTokenResponseOauth(req.user, 200, res);
+});
+
+/**
+ * @async
+ * @desc twitter login user using oauth
+ * @route GET /api/users/twitter/redirect
+ * @access private
+ */
+const twitterOauth = asyncHandler(async (req, res) => {
+  sendTokenResponseOauth(req.user, 200, res);
 });
 
 /**
@@ -102,4 +122,32 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie("token", token, options)
     .send({ success: true, token, data: user });
 };
-export { createUser, loginUser, getUser, logoutUser, updateUser, googleOauth };
+/**
+ * @desc get the token from the user model and create a cookie
+ * @param {User} user - a user
+ * @param {int} statusCode - integer of status code ex 404
+ */
+const sendTokenResponseOauth = (user, statusCode, res) => {
+  const token = user.getSginedJWTToken();
+  const options = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "PRODUCTION" ? true : false,
+  };
+  res.cookie("user", JSON.stringify(user));
+  res.cookie("token", token);
+  res.redirect(`${process.env.CLIENT_URL}`);
+};
+export {
+  createUser,
+  loginUser,
+  getUser,
+  logoutUser,
+  updateUser,
+  googleOauth,
+  facebookOauth,
+  instagramOauth,
+  twitterOauth,
+};
