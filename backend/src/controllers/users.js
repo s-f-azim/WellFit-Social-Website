@@ -51,16 +51,16 @@ const updateUser = asyncHandler(async (req, res) => {
 
 const followUser = asyncHandler(async (req, res) => {
   if (User.findOne({ _id: req.body.user_id })) {
-    if (!req.user.following.includes(req.body.user_id) && req.user._id.str !== req.body.user_id.str) {
+    if (!req.user.following.includes(req.body.user_id)) {
       req.user.following.push(req.body.user_id);
     }
     const updatedUser = await req.user.save();
     sendTokenResponse(updatedUser, 200, res);
   }
-  else {
-    const updatedUser = req.user;
-    sendTokenResponse(updatedUser, 400, res);
-  }
+  // else {
+  //   const updatedUser = req.user;
+  //   sendTokenResponse(updatedUser, 400, res);
+  // }
 });
 
 /**
