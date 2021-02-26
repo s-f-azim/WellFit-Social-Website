@@ -6,7 +6,6 @@ import {
   logoutUser,
   updateUser,
   googleOauth,
-  twitterOauth,
   facebookOauth,
   instagramOauth,
 } from "../controllers/users.js";
@@ -35,6 +34,7 @@ router
 router.route("/oauth/instagram").get(
   passport.authenticate("instagram", {
     session: false,
+    scope: ["user_profile"],
   })
 );
 
@@ -52,4 +52,5 @@ router.route("/oauth/facebook").get(
 router
   .route("/oauth/facebook/redirect")
   .get(passport.authenticate("facebook", { session: false }), facebookOauth);
+
 export default router;

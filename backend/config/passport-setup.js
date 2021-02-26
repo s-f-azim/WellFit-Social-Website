@@ -74,7 +74,7 @@ passport.use(
     {
       clientID: process.env.INSTA_CLIENT_ID,
       clientSecret: process.env.INSTA_CLIENT_SECRET,
-      callbackURL: `${process.env.SERVER_API_URL}/users/oauth/instagram/redirect/`,
+      callbackURL: `${process.env.SERVER_API_URL}/users/oauth/instagram/redirect`,
     },
     async (accessToken, refreshToken, profile, done) => {
       console.log(profile);

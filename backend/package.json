@@ -21,7 +21,6 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-instagram": "^1.0.0",
     "passport-jwt": "^4.0.0",
-    "passport-twitter": "^1.0.4",
     "validator": "^13.5.2",
     "xss-clean": "^0.1.1"
   },

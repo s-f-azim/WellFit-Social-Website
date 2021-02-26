@@ -94,16 +94,6 @@ const instagramOauth = asyncHandler(async (req, res) => {
 });
 
 /**
- * @async
- * @desc twitter login user using oauth
- * @route GET /api/users/twitter/redirect
- * @access private
- */
-const twitterOauth = asyncHandler(async (req, res) => {
-  sendTokenResponseOauth(req.user, 200, res);
-});
-
-/**
  * @desc get the token from the user model and create a cookie
  * @param {User} user - a user
  * @param {int} statusCode - integer of status code ex 404
@@ -149,5 +139,4 @@ export {
   googleOauth,
   facebookOauth,
   instagramOauth,
-  twitterOauth,
 };

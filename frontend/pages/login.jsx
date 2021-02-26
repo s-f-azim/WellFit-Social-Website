@@ -70,9 +70,14 @@ const Login = () => {
     window.open(`${API}/users/oauth/google`, "_self");
   };
   // Insta oauth login
-  const instaHandler = (e) => {
+  const instaOauthHandler = (e) => {
     e.preventDefault();
-    window.open(`${API}/users/oauth/google`, "_self");
+    window.open(`${API}/users/oauth/instagram`, "_self");
+  };
+  // facebook oauth login
+  const facebookOuthHandler = (e) => {
+    e.preventDefault();
+    window.open(`${API}/users/oauth/facebook`, "_self");
   };
   return (
     <Row
@@ -127,16 +132,13 @@ const Login = () => {
             <Form.Item {...tailFormItemLayout}>
               <h3>Or login with</h3>
               <div className="buttons">
-                <Button type="primary" onClick={instaHandler}>
+                <Button type="primary" onClick={instaOauthHandler}>
                   <InstagramOutlined />
                 </Button>
                 <Button type="primary" onClick={googleOuthHandler}>
                   <GoogleOutlined />
                 </Button>
-                <Button type="primary" onClick={instaHandler}>
-                  <InstagramOutlined />
-                </Button>
-                <Button type="primary" onClick={googleOuthHandler}>
+                <Button type="primary" onClick={facebookOuthHandler}>
                   <FacebookOutlined />
                 </Button>
               </div>
