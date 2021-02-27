@@ -1,7 +1,10 @@
-import { signup } from "../utils/auth.js";
-import { useRouter } from "next/router";
-import { Space, Form, Input, Checkbox, Alert, Button, Row, Card } from "antd";
-import { useState } from "react";
+import { useRouter } from 'next/router';
+import {
+  Space, Form, Input, Checkbox, Alert, Button, Row, Card,
+} from 'antd';
+import { useState } from 'react';
+import { signup } from '../utils/auth';
+
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -33,7 +36,7 @@ const Signup = () => {
     try {
       const response = await signup(name, email, password);
       if (response.data.success) {
-        router.push("/");
+        router.push('/');
       }
     } catch (err) {
       setHasError(true);
@@ -44,7 +47,7 @@ const Signup = () => {
       type="flex"
       justify="center"
       align="middle"
-      style={{ minHeight: "85vh" }}
+      style={{ minHeight: '85vh' }}
     >
       <Card>
         <Form
@@ -67,12 +70,12 @@ const Signup = () => {
               label="Email"
               rules={[
                 {
-                  type: "email",
-                  message: "Invalid Email",
+                  type: 'email',
+                  message: 'Invalid Email',
                 },
                 {
                   required: true,
-                  message: "Please enter your email",
+                  message: 'Please enter your email',
                 },
               ]}
             >
@@ -84,11 +87,11 @@ const Signup = () => {
               rules={[
                 {
                   min: 3,
-                  message: "Name should be 3 or more letters",
+                  message: 'Name should be 3 or more letters',
                 },
                 {
                   required: true,
-                  message: "Please enter your name",
+                  message: 'Please enter your name',
                 },
               ]}
             >
@@ -98,7 +101,7 @@ const Signup = () => {
               name="password"
               label="Password"
               rules={[
-                { required: true, message: "Please enter your password" },
+                { required: true, message: 'Please enter your password' },
               ]}
               hasFeedback
             >
@@ -107,19 +110,19 @@ const Signup = () => {
             <Form.Item
               name="confirm"
               label="Confirm Password"
-              dependencies={["password"]}
+              dependencies={['password']}
               hasFeedback
               rules={[
                 {
                   required: true,
-                  message: "Please confirm your password",
+                  message: 'Please confirm your password',
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
+                    if (!value || getFieldValue('password') === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject("Sorry the passwords do not match");
+                    return Promise.reject('Sorry the passwords do not match');
                   },
                 }),
               ]}
@@ -131,16 +134,17 @@ const Signup = () => {
               valuePropName="checked"
               rules={[
                 {
-                  validator: (_, value) =>
-                    value
-                      ? Promise.resolve()
-                      : Promise.reject("Please accept the consumer agreement"),
+                  validator: (_, value) => (value
+                    ? Promise.resolve()
+                    : Promise.reject('Please accept the consumer agreement')),
                 },
               ]}
               {...tailFormItemLayout}
             >
               <Checkbox>
-                I have read the <a href="">agreement</a>
+                I have read the
+                {' '}
+                <a href="/">agreement</a>
               </Checkbox>
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
