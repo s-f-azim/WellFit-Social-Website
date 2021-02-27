@@ -1,26 +1,28 @@
-nav{
-    padding:4rem;
+nav {
+  padding: 4rem;
 }
 .logo-text {
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    display: inline-block;
-    font-family:'Poppins' ;
-    font-weight:800;
-    font-style:italic;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: inline-block;
+  font-family: "Poppins";
+  font-weight: 800;
+  font-style: italic;
 }
 .option .ant-input-group-wrapper {
   vertical-align: middle;
-  width:18rem;
-  &:focus{transform:scale(1.2);}
+  width: 18rem;
+  &:focus {
+    transform: scale(1.2);
+  }
 }
 .buttons {
-    float: right;
-    padding-top: 0rem;
-    margin-top: 0rem;
-    height: inherit;
-    font-size: 2rem;
+  float: right;
+  padding-top: 0rem;
+  margin-top: 0rem;
+  height: inherit;
+  font-size: 2rem;
 }
 
 .landing-text {
@@ -30,9 +32,9 @@ nav{
 }
 
 .topheader {
-    padding-top: 2rem;
-    padding-bottom: 5%;
-    background-color: white;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background-color: white;
 }
 
 /*Desktop View*/
@@ -44,9 +46,8 @@ nav{
 .option {
   float: left;
   margin: 0em 1em 0em 1em;
-  font-size: large;;
+  font-size: large;
 }
-
 
 .mobile-menu {
   display: none;
@@ -54,19 +55,18 @@ nav{
 .ant-btn.menuButton {
   font-size: 1.2rem;
 }
-@media (min-width:1244px){
-
-.option .ant-input-group-wrapper {
-  vertical-align: middle;
-  width:30rem;
-}
+@media (min-width: 1244px) {
+  .option .ant-input-group-wrapper {
+    vertical-align: middle;
+    width: 30rem;
+  }
 }
 @media (max-width: 999px) {
   /*Mobile View */
 
   .ant-btn.menuButton {
-      margin-top: 2rem;
-      margin-bottom: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   .nav-options {
@@ -94,7 +94,7 @@ nav{
     padding-left: 0px;
     padding-top: 2rem;
   }
-  
+
   .option {
     display: flex;
     align-items: center;
@@ -108,7 +108,7 @@ nav{
     float: right;
     display: block;
     position: absolute;
-    top: 1.4rem;
-    right: 1rem;
+    top: 2.4rem;
+    right: 2rem;
   }
 }

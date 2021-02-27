@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar.jsx";
 const Layout = ({ children }) => {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <main>{children}</main>
     </>
   );
