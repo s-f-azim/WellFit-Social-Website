@@ -1,5 +1,6 @@
-import asyncHandler from "../middleware/async.js";
-import User from "../models/User.js";
+/* eslint-disable no-use-before-define */
+import asyncHandler from '../middleware/async';
+import User from '../models/User';
 
 /**
  * @async
@@ -42,8 +43,7 @@ const getUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const updates = Object.keys(req.body);
   updates.forEach(
-    (update) =>
-      req.body[update] !== undefined && (req.user[update] = req.body[update])
+    (update) => req.body[update] !== undefined && (req.user[update] = req.body[update]),
   );
   const updatedUser = await req.user.save();
   sendTokenResponse(updatedUser, 200, res);
@@ -56,7 +56,7 @@ const updateUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const logoutUser = asyncHandler(async (req, res) => {
-  res.cookie("token", "none", {
+  res.cookie('token', 'none', {
     expires: new Date(Date.now() + 10 * 10),
     httpOnly: true,
   });
@@ -102,14 +102,14 @@ const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSginedJWTToken();
   const options = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
     ),
     httpOnly: true,
-    secure: process.env.NODE_ENV === "PRODUCTION" ? true : false,
+    secure: process.env.NODE_ENV === 'PRODUCTION',
   };
   res
     .status(statusCode)
-    .cookie("token", token, options)
+    .cookie('token', token, options)
     .send({ success: true, token, data: user });
 };
 /**
@@ -121,13 +121,13 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
   const token = user.getSginedJWTToken();
   const options = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
     ),
     httpOnly: true,
-    secure: process.env.NODE_ENV === "PRODUCTION" ? true : false,
+    secure: process.env.NODE_ENV === 'PRODUCTION',
   };
-  res.cookie("user", JSON.stringify(user));
-  res.cookie("token", token);
+  res.cookie('user', JSON.stringify(user));
+  res.cookie('token', token, options);
   res.redirect(`${process.env.CLIENT_URL}`);
 };
 export {
