@@ -5,7 +5,7 @@ const LandingText = () => {
   return (
     <div style={{
       display: "flex", alignItems: "center", height:"100%", verticalAlign:"middle"}}>
-      <p className="landingText"> Connect with health enthusiasts.
+      <p className="landing-text"> Connect with health enthusiasts.
       <br/>
       <br/>
       Enjoy a better lifestyle.</p>

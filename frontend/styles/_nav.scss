@@ -1,149 +1,104 @@
-.logo {
-    float: left;
-  }
-  .logo-text {
-      height: 100%;
-      align-items: center;
-      justify-content: center;
-      display: inline-block;
-      font-family: Poppins;
-  }
-  .option .ant-input-group-wrapper {
-    vertical-align: middle;
-  }
-  .buttons {
-      float: right;
-      padding-top: 0px;
-      margin-top: 0px;
-      height: inherit;
-      font-size: 2rem;
-  }
-  
-  .landingText {
-    display: block;
-    font-size: 2rem;
-    width: 100%;
-    }
-  
-  .topheader {
-      padding-top: 2rem;
-      padding-bottom: 5%;
-      background-color: white;
-  }
-  
-  /*Desktop View*/
-  .nav-options {
-    padding-left: 25px;
-    display: inline-block;
-    height: inherit;
-    list-style-type: none;
-  }
-  .option {
-    float: left;
-    margin: 0em 1em 0em 1em;
-    font-size: large;;
-  }
-  .mobile-option .ant-btn {
-    display: none;
-  }
-  
-  .option :hover {
-    color: $primary-color;
-  }
-  .signin-up {
-    display: flex;
-    padding: 0px 5px;
-    list-style-type: none;
-  }
-  .sign-in {
-    padding-right: 50px;
-    align-self: center;
-  }
-  .sign-in :hover {
-    color: white;
-  }
-  .signup-btn {
-    padding: 10px 10px;
-    height: 2.4rem;
-    border-radius: 3px;
-    color: white;
-    cursor: pointer;
+.logo-text {
+    height: 100%;
     align-items: center;
-  }
-  .mobile-menu {
-    display: none;
-  }
+    justify-content: center;
+    display: inline-block;
+    font-family: Poppins;
+}
+.option .ant-input-group-wrapper {
+  vertical-align: middle;
+}
+.buttons {
+    float: right;
+    padding-top: 0rem;
+    margin-top: 0rem;
+    height: inherit;
+    font-size: 2rem;
+}
+
+.landing-text {
+  display: block;
+  font-size: 2rem;
+  width: 100%;
+}
+
+.topheader {
+    padding-top: 2rem;
+    padding-bottom: 5%;
+    background-color: white;
+}
+
+/*Desktop View*/
+.nav-options {
+  display: inline-block;
+  height: inherit;
+  list-style-type: none;
+}
+.option {
+  float: left;
+  margin: 0em 1em 0em 1em;
+  font-size: large;;
+}
+
+.option :hover {
+  color: $primary-color;
+}
+
+.mobile-menu {
+  display: none;
+}
+.ant-btn.menuButton {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 999px) {
+  /*Mobile View */
+
   .ant-btn.menuButton {
-    font-size: 1.2rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
   }
-  @media (max-width: 999px) {
-    /*Mobile View */
-    .header {
-      padding: 0px 10px;
-    }
-    .ant-btn.menuButton {
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-    }
-    .logo {
-      width: 45px;
-      height: 45px;
-    }
-    .nav-options {
-      display: flex;
-      width: 100%;
-      height: 350px;
-      position: absolute;
-      top: 80px;
-      left: -100%;
-      opacity: 0;
-      transition: all 0.5s ease;
-      flex-direction: column;
-      list-style-type: none;
-      grid-gap: 0px;
-    }
-    .nav-options.activs {
-      background: white;
-      left: 0;
-      opacity: 1;
-      align-items: center;
-      height: 100%;
-      transition: all 0.5s ease;
-      z-index: 1;
-      align-content: center;
-      padding-left: 0px;
-      padding-top: 2rem;
-    }
-    
-    .menu-icon {
-      width: 45px;
-      height: 45px;
-    }
-    .option {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 10vw;
-      max-width: 60%;
-      padding: 30px 0px;
-    }
-    .sign-up {
-      border-radius: 3px;
-      color: white;
-      padding: 20px 0px;
-      width: 80%;
-      align-self: center;
-      border-radius: 3px;
-    }
+
+  .nav-options {
+    display: flex;
+    width: 100%;
+    position: absolute;
+    top: 5rem;
+    left: -100%;
+    opacity: 0;
+    transition: all 0.5s ease;
+    flex-direction: column;
+    list-style-type: none;
+    grid-gap: 0rem;
+  }
+
+  .nav-options.activs {
+    background: white;
+    left: 0;
+    opacity: 1;
+    align-items: center;
+    height: 100%;
+    transition: all 0.5s ease;
+    z-index: 1;
+    align-content: center;
+    padding-left: 0px;
+    padding-top: 2rem;
+  }
   
-    .signin-up {
-      display: none;
-    }
-    .mobile-menu {
-      float: right;
-      display: block;
-      position: absolute;
-      top: 1.4rem;
-      right: 1rem;
-    }
+  .option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vw;
+    max-width: 60%;
+    padding: 1.8rem 0rem;
   }
+
+  .mobile-menu {
+    float: right;
+    display: block;
+    position: absolute;
+    top: 1.4rem;
+    right: 1rem;
+  }
+}
