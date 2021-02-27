@@ -57,10 +57,10 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
         <div className="buttons">
             <ul className={click ? "nav-options activs" : "nav-options"}>
                 <li className="option" onClick={closeMobileMenu}>
-                    <Button type="primary" href="/login">Sign In</Button>
+                    <Button type="primary" className="menuButton" href="/login">Sign In</Button>
                 </li>
                 <li className="option" onClick={closeMobileMenu}>
-                    <Button type="link" href="/signup">Sign Up</Button>
+                    <Button type="link" className="menuButton" href="/signup">Sign Up</Button>
                 </li>
             </ul>
         </div>
