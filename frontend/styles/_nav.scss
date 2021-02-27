@@ -16,7 +16,9 @@
       padding-top: 0px;
       margin-top: 0px;
       height: inherit;
+      font-size: 2rem;
   }
+  
   .landingText {
     display: block;
     font-size: 2rem;
@@ -75,6 +77,11 @@
     /*Mobile View */
     .header {
       padding: 0px 10px;
+    }
+    .ant-btn.menuButton {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
     }
     .logo {
       width: 45px;
