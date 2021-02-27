@@ -2,7 +2,7 @@ import {Layout, Menu, Icon, Breadcrumb, Button, Typography, Input, Space, Row, C
 const {Header} = Layout;
 const {Search} = Input;
 const { Title } = Typography;
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { UserContext } from "../contexts/UserContext.js";
 import { getCookie } from "../utils/auth.js";
 import ProfileBar from "./ProfileBar";
@@ -19,13 +19,13 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
         <div className="buttons">
             <ul className={click ? "nav-options activs" : "nav-options"}>
                 <li className="option" onClick={closeMobileMenu}>
-                    <Button type="link" href="#">Courses</Button>
+                    <Button type="link" size = "large" href="#">Courses</Button>
                 </li>
                 <li className="option" onClick={closeMobileMenu}>
-                    <Button type="link" href="#">Instructors</Button>
+                    <Button type="link" size = "large" href="#">Instructors</Button>
                 </li>
                 <li className="option" >
-                    <Button type="link" onClick={() => setProfileOpen(!profileOpen)}><img src={require("../public/person.svg")} /> {user.name}</Button>
+                    <Button type="link" size = "large" onClick={() => setProfileOpen(!profileOpen)}><img src={require("../public/person.svg")} /> {user.name}</Button>
                 </li>
                 <li className="option">
                     <Search placeholder="Search our Site" enterButton />
@@ -82,24 +82,21 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
 
 const Navbar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
-  // on componont mount check if the user exists in the cookies
-  useEffect(() => {
-    if (getCookie("user")) setUser(JSON.parse(getCookie("user")));
-     }, []);
   return (  
     <>  
-        <Header className="topheader" style={{backgroundColor: "white"}}>
-          <Title level={2} className="logo-text"><a href= "/" > InstaFit </a></Title>
-                {
-                  user===null ? <LoggedOutMenu/> : <>
-                      <LoggedInMenu profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>     
-                      <ProfileBar profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>
-                  </>
-                }
-        </Header>
-    </>);
+      <Header className="topheader" style={{backgroundColor: "white"}}>
+        <Title level={2} className="logo-text"><a href= "/"> InstaFit </a></Title>
+              {
+                user===null ? <LoggedOutMenu/> : <>
+                    <LoggedInMenu profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>     
+                    <ProfileBar profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>
+                </>
+              }
+      </Header>
+    </>
+  );
 
 }
     

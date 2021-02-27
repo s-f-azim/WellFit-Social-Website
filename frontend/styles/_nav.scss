@@ -6,6 +6,7 @@
       align-items: center;
       justify-content: center;
       display: inline-block;
+      font-family: Poppins;
   }
   .option .ant-input-group-wrapper {
     vertical-align: middle;
@@ -58,7 +59,6 @@
     padding: 10px 10px;
     height: 2.4rem;
     border-radius: 3px;
-    background: rgb(222, 9, 241);
     color: white;
     cursor: pointer;
     align-items: center;
@@ -114,7 +114,6 @@
       padding: 30px 0px;
     }
     .sign-up {
-      background: rgb(222, 9, 241);
       border-radius: 3px;
       color: white;
       padding: 20px 0px;

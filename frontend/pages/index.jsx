@@ -1,8 +1,6 @@
 import Head from "next/head";
 import LandingPage from "../components/LandingPage";
 import React, {Component} from 'react'
-import { Layout } from "antd";
-const {Content, Footer} = Layout;
 import { useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext.js";
 import { getCookie } from "../utils/auth.js";
@@ -14,15 +12,10 @@ export default function Home({ token, userCookie }) {
     if (getCookie("user") && getCookie("user") !== null)
       setUser(JSON.parse(getCookie("user")));
   }, []);
-  return (
-    <Layout>  
+  return ( 
+    <>
       <LandingPage/>
-      <Footer style={{textAlign: 'center', backgroundColor: 'white'}}>
-        {/* Update this as soon as more information is available */}
-        <p>(c) Copyright Stuff</p>
-        <p>Maybe Pagetree </p>
-      </Footer>
-    </Layout>
+    </>
   );
 }
 
