@@ -19,13 +19,13 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
         <div className="buttons">
             <ul className={click ? "nav-options activs" : "nav-options"}>
                 <li className="option" onClick={closeMobileMenu}>
-                    <Button type="link" className="menuButton" size = "large" href="#">Courses</Button>
+                    <Button type="link" className="menuButton" href="#">Courses</Button>
                 </li>
                 <li className="option" onClick={closeMobileMenu}>
-                    <Button type="link" className="menuButton" size = "large" href="#">Instructors</Button>
+                    <Button type="link" className="menuButton" href="#">Instructors</Button>
                 </li>
                 <li className="option menuButton" >
-                    <Button type="link" className="menuButton" size = "large" onClick={() => setProfileOpen(!profileOpen)}><img src={require("../public/person.svg")} /> {user.name}</Button>
+                    <Button type="link" className="menuButton" onClick={() => setProfileOpen(!profileOpen)}><img src={require("../public/person.svg")} /> {user.name}</Button>
                 </li>
                 <li className="option">
                     <Search placeholder="Search our Site" enterButton />
@@ -57,10 +57,10 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
         <div className="buttons">
             <ul className={click ? "nav-options activs" : "nav-options"}>
                 <li className="option" onClick={closeMobileMenu}>
-                    <Button type="primary" className="menuButton" href="/login">Sign In</Button>
+                    <Button shape = "round" type="primary" className="menuButton" href="/login">Sign In</Button>
                 </li>
                 <li className="option" onClick={closeMobileMenu}>
-                    <Button type="link" className="menuButton" href="/signup">Sign Up</Button>
+                    <Button shape = "round" type="link" className="menuButton" href="/signup">Sign Up</Button>
                 </li>
             </ul>
         </div>
