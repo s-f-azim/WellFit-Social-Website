@@ -1,9 +1,14 @@
+nav{
+    padding:4rem;
+}
 .logo-text {
     height: 100%;
     align-items: center;
     justify-content: center;
     display: inline-block;
-    font-family: Poppins;
+    font-family:'Poppins' ;
+    font-weight:800;
+    font-style:italic;
 }
 .option .ant-input-group-wrapper {
   vertical-align: middle;
@@ -40,9 +45,6 @@
   font-size: large;;
 }
 
-.option :hover {
-  color: $primary-color;
-}
 
 .mobile-menu {
   display: none;

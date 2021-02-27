@@ -3,6 +3,7 @@ const {Header} = Layout;
 const {Search} = Input;
 const { Title } = Typography;
 import { useState, useContext } from "react";
+import Link from "next/link"
 import { UserContext } from "../contexts/UserContext.js";
 import { getCookie } from "../utils/auth.js";
 import ProfileBar from "./ProfileBar";
@@ -22,7 +23,9 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
                     <Button type="link" className="menuButton" href="#">Courses</Button>
                 </li>
                 <li className="option" onClick={closeMobileMenu}>
-                    <Button type="link" className="menuButton" href="#">Instructors</Button>
+        <Link href="#">
+                    <Button size="large">Instructors</Button>
+        </Link>
                 </li>
                 <li className="option menuButton" >
                     <Button type="link" className="menuButton" onClick={() => setProfileOpen(!profileOpen)}><img src={require("../public/person.svg")} /> {user.name}</Button>
@@ -57,10 +60,14 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
         <div className="buttons">
             <ul className={click ? "nav-options activs" : "nav-options"}>
                 <li className="option" onClick={closeMobileMenu}>
-                    <Button shape = "round" type="primary" className="menuButton" href="/login">Sign In</Button>
+        <Link href="/login">
+                    <Button size="large"shape = "round" type="primary">Sign In</Button>
+        </Link>
                 </li>
                 <li className="option" onClick={closeMobileMenu}>
-                    <Button shape = "round" type="link" className="menuButton" href="/signup">Sign Up</Button>
+        <Link href="/signup">
+                    <Button size="large"shape = "round" >Sign up</Button>
+        </Link>
                 </li>
             </ul>
         </div>
@@ -86,7 +93,7 @@ const Navbar = () => {
 
   return (  
     <>  
-      <Header className="topheader" style={{backgroundColor: "white"}}>
+      <nav className="topheader" style={{backgroundColor: "white"}}>
         <Title level={1} className="logo-text"><a href= "/"> InstaFit </a></Title>
               {
                 user===null ? <LoggedOutMenu/> : <>
@@ -94,7 +101,7 @@ const Navbar = () => {
                     <ProfileBar profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>
                 </>
               }
-      </Header>
+      </nav>
     </>
   );
 
