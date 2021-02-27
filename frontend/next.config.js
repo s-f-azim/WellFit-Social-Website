@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+/* eslint-disable consistent-return */
 const withLess = require('@zeit/next-less');
 const withPlugins = require('next-compose-plugins');
 const withImages = require('next-images');

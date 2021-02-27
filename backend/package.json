@@ -29,7 +29,8 @@
     "server": "env-cmd -f ./config/dev.env nodemon ./src/index",
     "client": "cd ../frontend && yarn dev",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "test": "NODE_OPTIONS=--experimental-vm-modules env-cmd -f ./config/test.env jest --watch=all --runInBand --forceExit"
+    "test": "NODE_OPTIONS=--experimental-vm-modules env-cmd -f ./config/test.env jest --watch=all --runInBand --forceExit",
+    "lint": "eslint --quiet --fix-dry-run ."
   },
   "devDependencies": {
     "concurrently": "^5.3.0",

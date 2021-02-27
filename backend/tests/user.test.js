@@ -3,7 +3,7 @@ import User from '../src/models/User.js';
 import app from '../src/app.js';
 import {
   tokens, userOne, setupDatabase,
-} from './fixtures/db';
+} from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);

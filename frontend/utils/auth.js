@@ -33,9 +33,7 @@ const authenticate = (data, next) => {
 };
 
 // Get the cookie
-const getCookie = (key) => {
-  if (process.browser) return cookie.get(key);
-};
+const getCookie = (key) => (process.browser ? cookie.get(key) : '');
 
 export {
   signup,

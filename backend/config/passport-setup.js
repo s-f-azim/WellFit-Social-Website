@@ -29,6 +29,7 @@ passport.use(
       secretOrKey: process.env.JWT_SECRET,
       passReqToCallback: true,
     },
+    // eslint-disable-next-line consistent-return
     async (req, payload, done) => {
       try {
         // find the user specified in the token
