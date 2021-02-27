@@ -73,13 +73,15 @@
   .mobile-menu {
     display: none;
   }
+  .ant-btn.menuButton {
+    font-size: 1rem;
+  }
   @media (max-width: 999px) {
     /*Mobile View */
     .header {
       padding: 0px 10px;
     }
     .ant-btn.menuButton {
-        font-size: 1.5rem;
         margin-top: 2rem;
         margin-bottom: 2rem;
     }

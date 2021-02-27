@@ -87,7 +87,7 @@ const Navbar = () => {
   return (  
     <>  
       <Header className="topheader" style={{backgroundColor: "white"}}>
-        <Title level={2} className="logo-text"><a href= "/"> InstaFit </a></Title>
+        <Title level={1} className="logo-text"><a href= "/"> InstaFit </a></Title>
               {
                 user===null ? <LoggedOutMenu/> : <>
                     <LoggedInMenu profileOpen={profileOpen} setProfileOpen={setProfileOpen}/>     
