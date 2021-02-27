@@ -1,16 +1,5 @@
 import { useRouter } from 'next/router';
-import {
-  Space,
-  Form,
-  Input,
-  Alert,
-  Button,
-  Row,
-  Card,
-  Select,
-  Tabs,
-  DatePicker,
-} from 'antd';
+import { Space, Form, Input, Alert, Button, Row, Card, Select, Tabs, DatePicker } from 'antd';
 import { useState, useEffect, useContext } from 'react';
 import UserContext from '../contexts/UserContext';
 import updateUser from '../utils/user';
@@ -80,11 +69,7 @@ const editProfilePage = () => {
             >
               <Space direction="vertical" size="middle">
                 {hasError && (
-                  <Alert
-                    type="error"
-                    message="something went wrong, please try again"
-                    banner
-                  />
+                  <Alert type="error" message="something went wrong, please try again" banner />
                 )}
                 <h1>Modify profile information</h1>
                 <Alert

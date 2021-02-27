@@ -1,53 +1,38 @@
 {
-    "plugins":["jest"],
-    "env": {
-        "browser": true,
-        "es2020": true,
-        "node": true,
-        "jest/globals": true
+  "plugins": ["jest"],
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "node": true,
+    "jest/globals": true
+  },
+  "extends": ["airbnb-base", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"]
+      }
     },
-    "extends": [
-        "airbnb-base"
-    ],
-    "parserOptions": {
-        "ecmaVersion": 11,
-        "sourceType": "module"
-    },
-    "settings": {
-            "import/resolver": {
-                "node": {
-                    "extensions": [
-                        ".js",
-                        ".jsx"
-                    ]
-                }
-            },
-            "jest": {
-                "version": 26
-            }
-        },
-    "rules": {
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "import/extensions":["error", "always",
-            {"ignorePackages": true
-            }],
-      "no-underscore-dangle": "off",
-      "no-return-assign":"off"
-        
-    },
-    "overrides": [
-        {
-            "files": [
-                "*.test.js",
-                "*.spec.js"
-            ],
-            "rules": {
-                "no-unused-expressions": "off"
-            }
-        }
-    ]
-    
+    "jest": {
+      "version": 26
+    }
+  },
+  "rules": {
+    "quotes": ["error", "single"],
+    "import/extensions": ["error", "always", { "ignorePackages": true }],
+    "no-underscore-dangle": "off",
+    "no-return-assign": "off"
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js", "*.spec.js"],
+      "rules": {
+        "no-unused-expressions": "off"
+      }
+    }
+  ]
 }

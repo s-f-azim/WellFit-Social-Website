@@ -8,13 +8,15 @@ const ProfileTopBar = ({ profileOpen, setProfileOpen }) => {
   const { user } = useContext(UserContext);
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div
-      className="profile-top-bar"
-      onClick={() => setProfileOpen(!profileOpen)}
-    >
+    <div className="profile-top-bar" onClick={() => setProfileOpen(!profileOpen)}>
       <Avatar
         size={{
-          xs: 20, sm: 22, md: 25, lg: 30, xl: 35, xxl: 50,
+          xs: 20,
+          sm: 22,
+          md: 25,
+          lg: 30,
+          xl: 35,
+          xxl: 50,
         }}
         icon={<AntDesignOutlined />}
       />

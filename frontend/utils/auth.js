@@ -8,16 +8,18 @@ const setCookie = (key, value) => (process.browser ? cookie.set(key, value, { ex
 // remove the cookie
 const removeCookie = (key) => (process.browser ? cookie.remove(key, { expires: 1 }) : '');
 
-const signup = (name, email, password) => axios.post(`${API}/users/signup`, {
-  name,
-  email,
-  password,
-});
+const signup = (name, email, password) =>
+  axios.post(`${API}/users/signup`, {
+    name,
+    email,
+    password,
+  });
 // login a user
-const signin = (email, password) => axios.post(`${API}/users/login`, {
-  email,
-  password,
-});
+const signin = (email, password) =>
+  axios.post(`${API}/users/login`, {
+    email,
+    password,
+  });
 // logout the user
 const logout = () => {
   removeCookie('token');
@@ -35,11 +37,4 @@ const authenticate = (data, next) => {
 // Get the cookie
 const getCookie = (key) => (process.browser ? cookie.get(key) : '');
 
-export {
-  signup,
-  signin,
-  logout,
-  setCookie,
-  getCookie,
-  authenticate,
-};
+export { signup, signin, logout, setCookie, getCookie, authenticate };

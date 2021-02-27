@@ -7,7 +7,9 @@ export default function Home({ token, userCookie }) {
   const { setUser } = useContext(UserContext);
   // on componont mount check if the user exists in the cookies
   useEffect(() => {
-    if (getCookie('user') && getCookie('user') !== null) { setUser(JSON.parse(getCookie('user'))); }
+    if (getCookie('user') && getCookie('user') !== null) {
+      setUser(JSON.parse(getCookie('user')));
+    }
   }, []);
   return <div />;
 }

@@ -44,6 +44,4 @@ const setupDatabase = async () => {
   }
 };
 
-export {
-  userOne, userTwo, setupDatabase, userOneId, tokens,
-};
+export { userOne, userTwo, setupDatabase, userOneId, tokens };

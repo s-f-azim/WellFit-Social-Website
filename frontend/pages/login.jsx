@@ -1,19 +1,6 @@
 import { useRouter } from 'next/router';
-import {
-  Space,
-  Form,
-  Input,
-
-  Alert,
-  Button,
-  Row,
-  Card,
-} from 'antd';
-import {
-  InstagramOutlined,
-  GoogleOutlined,
-  FacebookOutlined,
-} from '@ant-design/icons';
+import { Space, Form, Input, Alert, Button, Row, Card } from 'antd';
+import { InstagramOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
 import { useState, useContext } from 'react';
 import API from '../config';
 import { signin, authenticate } from '../utils/auth';
@@ -78,12 +65,7 @@ const Login = () => {
     window.open(`${API}/users/oauth/facebook`, '_self');
   };
   return (
-    <Row
-      type="flex"
-      justify="center"
-      align="middle"
-      style={{ minHeight: '85vh' }}
-    >
+    <Row type="flex" justify="center" align="middle" style={{ minHeight: '85vh' }}>
       <Card>
         <Form
           {...formItemLayout}
@@ -93,9 +75,7 @@ const Login = () => {
           scrollToFirstError
         >
           <Space direction="vertical" size="large">
-            {hasError && (
-              <Alert type="error" message="Unable to login" banner />
-            )}
+            {hasError && <Alert type="error" message="Unable to login" banner />}
             <Form.Item
               name="email"
               label="Email"
@@ -115,9 +95,7 @@ const Login = () => {
             <Form.Item
               name="password"
               label="Password"
-              rules={[
-                { required: true, message: 'Please enter your password' },
-              ]}
+              rules={[{ required: true, message: 'Please enter your password' }]}
               hasFeedback
             >
               <Input.Password />

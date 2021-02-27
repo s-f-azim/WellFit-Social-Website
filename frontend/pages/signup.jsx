@@ -1,7 +1,5 @@
 import { useRouter } from 'next/router';
-import {
-  Space, Form, Input, Checkbox, Alert, Button, Row, Card,
-} from 'antd';
+import { Space, Form, Input, Checkbox, Alert, Button, Row, Card } from 'antd';
 import { useState } from 'react';
 import { signup } from '../utils/auth';
 
@@ -43,12 +41,7 @@ const Signup = () => {
     }
   };
   return (
-    <Row
-      type="flex"
-      justify="center"
-      align="middle"
-      style={{ minHeight: '85vh' }}
-    >
+    <Row type="flex" justify="center" align="middle" style={{ minHeight: '85vh' }}>
       <Card>
         <Form
           {...formItemLayout}
@@ -59,11 +52,7 @@ const Signup = () => {
         >
           <Space direction="vertical" size="large">
             {hasError && (
-              <Alert
-                type="error"
-                message="this user already exists please try again"
-                banner
-              />
+              <Alert type="error" message="this user already exists please try again" banner />
             )}
             <Form.Item
               name="email"
@@ -100,9 +89,7 @@ const Signup = () => {
             <Form.Item
               name="password"
               label="Password"
-              rules={[
-                { required: true, message: 'Please enter your password' },
-              ]}
+              rules={[{ required: true, message: 'Please enter your password' }]}
               hasFeedback
             >
               <Input.Password />
@@ -134,17 +121,16 @@ const Signup = () => {
               valuePropName="checked"
               rules={[
                 {
-                  validator: (_, value) => (value
-                    ? Promise.resolve()
-                    : Promise.reject('Please accept the consumer agreement')),
+                  validator: (_, value) =>
+                    value
+                      ? Promise.resolve()
+                      : Promise.reject('Please accept the consumer agreement'),
                 },
               ]}
               {...tailFormItemLayout}
             >
               <Checkbox>
-                I have read the
-                {' '}
-                <a href="/">agreement</a>
+                I have read the <a href="/">agreement</a>
               </Checkbox>
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>

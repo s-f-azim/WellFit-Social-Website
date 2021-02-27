@@ -29,7 +29,12 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
       <Avatar
         className="profile-pic"
         size={{
-          xs: 59, sm: 68, md: 75, lg: 85, xl: 95, xxl: 130,
+          xs: 59,
+          sm: 68,
+          md: 75,
+          lg: 85,
+          xl: 95,
+          xxl: 130,
         }}
         icon={<AntDesignOutlined />}
       />
