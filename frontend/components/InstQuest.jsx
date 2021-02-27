@@ -9,7 +9,7 @@ import {
   Collapse,
   Button,
   Rate,
-  BackTop,
+  Slider,
 } from "antd";
 import { updateUser } from "../utils/user.js";
 import { useRouter } from "next/router";
@@ -249,18 +249,51 @@ const InstQuest = () => {
 
     <Panel header={additionalText} key="4">
     <Form.Item
-    name= "Payment frequency"
-    label= "Payment frequency">
+    name= "Service format"
+    label= "Service format">
     <Select
-    placeholder="Select preferred">
-    <Option value="One time">One time</Option>
-    <Option value="Twice a week">Twice a week</Option>
-    <Option value="Weekly"> Weekly</Option>
-    <Option value="Twice a month">Twice a month</Option>
-    <Option value="Monthly">Monthly</Option>
+    mode = "multiple"
+    placeholder="Select multiple">
+    <Option value="Non-client-specific videos">Non-client-specific videos</Option>
+    <Option value="In person sessions">In person training or coaching sessions</Option>
+    <Option value="PDFs, Excel sheets or others"> PDFs, Excel sheets or other files</Option>
+    <Option value="Physical product">Physical product</Option>
+    <Option value="Audio content">Audio content</Option>
+    <Option value="Text based content (book, guidebook, leaflet...)">Text based content (book, guidebook, leaflet...)</Option>
     <Option value="Other">Other</Option>
     </Select>
     </Form.Item>
+
+    <Form.Item
+    name= "client gender preference"
+    label= "client gender preference">
+    <Select
+    placeholder="Select your preferred client gender">
+    <Option value="Male">Male</Option>
+    <Option value="Male">Female</Option>
+    <Option value="Male">Non-Binary</Option>
+    <Option value="Male">Any</Option>
+    </Select>
+    </Form.Item>
+    <br/>
+    <Form.Item
+    name= "Client overall fitness level preference"
+    label= "Client overall fitness level preference">
+    <Slider range defaultValue={[10, 90]} tooltipVisible />
+    </Form.Item>
+    <br/>
+    <Form.Item
+    name= "Client overall hypertrophy level preference"
+    label= "Client overall hypertrophy level preference">
+    <Slider range defaultValue={[5, 70]} tooltipVisible />
+    </Form.Item>
+    <br/>
+    <Form.Item
+    name= "Client overall strength level preference"
+    label= "Client overall strength level preference">
+    <Slider range defaultValue={[5, 70]} tooltipVisible />
+    </Form.Item>
+
     </Panel>
     </Collapse>
 
@@ -281,10 +314,10 @@ export default InstQuest;
 
 // for instructors:
 /*
-service format
+
 preferred experience level in:
--overall fitness
+
 -hypertrophy
 -strength
-preferred gender to work with
+
 */
