@@ -12,6 +12,8 @@ nav{
 }
 .option .ant-input-group-wrapper {
   vertical-align: middle;
+  width:18rem;
+  &:focus{transform:scale(1.2);}
 }
 .buttons {
     float: right;
@@ -52,7 +54,13 @@ nav{
 .ant-btn.menuButton {
   font-size: 1.2rem;
 }
+@media (min-width:1244px){
 
+.option .ant-input-group-wrapper {
+  vertical-align: middle;
+  width:30rem;
+}
+}
 @media (max-width: 999px) {
   /*Mobile View */
 

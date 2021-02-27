@@ -19,6 +19,9 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
         <>
         <div className="buttons">
             <ul className={click ? "nav-options activs" : "nav-options"}>
+                <li className="option">
+                    <Search placeholder="Search our Site" enterButton />
+                </li>
                 <li className="option" onClick={closeMobileMenu}>
                     <Button type="link" className="menuButton" href="#">Courses</Button>
                 </li>
@@ -29,9 +32,6 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
                 </li>
                 <li className="option menuButton" >
                     <Button type="link" className="menuButton" onClick={() => setProfileOpen(!profileOpen)}><img src={require("../public/person.svg")} /> {user.name}</Button>
-                </li>
-                <li className="option">
-                    <Search placeholder="Search our Site" enterButton />
                 </li>
             </ul>
         </div>
