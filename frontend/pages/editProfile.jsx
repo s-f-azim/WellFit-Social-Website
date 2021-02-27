@@ -19,7 +19,7 @@ import {
 } from "antd";
 import { useState, useEffect, useContext } from "react";
 import InstQuest from "../components/InstQuest.jsx";
-import QuestionCircleOutlined from '@ant-design/icons';
+import {QuestionCircleOutlined} from '@ant-design/icons';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -50,8 +50,8 @@ const tailFormItemLayout = {
 const infoAlertText = (
   <p>
   Adding information on this page helps us tailor our
-  services and allows client to be matched more
-  efficiently, as well as knowing who you are and how
+  services and allows clients to be matched more
+  efficiently, as well as letting them know who you are and how
   you work before initiating contact. We encourage
   but do not require you to provide this information.
   </p>

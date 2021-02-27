@@ -1,4 +1,8 @@
-import { Layout } from "antd";
+import {
+  Layout,
+  BackTop,
+ } from "antd";
+import { ArrowUpOutlined} from '@ant-design/icons';
 import "antd/dist/antd.css";
 import "../styles/main.scss";
 // import { env } from "../config.js";
@@ -16,7 +20,10 @@ function MyApp({ Component, pageProps }) {
           <Nav />
         </Header>
         <Content>
-          <Component {...pageProps} />
+          <BackTop>
+            <div> Top<ArrowUpOutlined /></div>
+          </BackTop>
+            <Component {...pageProps} />
         </Content>
       </Layout>
     </UserContext.Provider>

@@ -8,33 +8,34 @@ import {
   Select,
   Collapse,
   Button,
+  Rate,
+  BackTop,
 } from "antd";
 import { updateUser } from "../utils/user.js";
 import { useRouter } from "next/router";
 import { UserContext } from "../contexts/UserContext.js";
 import { useState, useEffect, useContext } from "react";
-import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { CloseOutlined, PlusOutlined, PoundOutlined } from '@ant-design/icons';
 
 const yourCareerText = (
   <h2> Your career </h2>
 );
+
 const communicationText = (
-  <h2> Client Communication </h2>
+  <h2> Client Communication (if applicable)</h2>
+);
+
+const paymentText = (
+  <h2> Payment information (if applicable) </h2>
+);
+
+const additionalText = (
+  <h2> Additional information </h2>
 );
 
 const { Panel } = Collapse;
 const { TextArea } = Input;
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 6 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 11 },
-  },
-};
 
 const tailFormItemLayout = {
   wrapperCol: {
@@ -84,7 +85,6 @@ const InstQuest = () => {
   return (
     <>
     <Form
-    {...formItemLayout}
     form={form}
     name="Update my info"
     onFinish={onFinish}
@@ -175,19 +175,98 @@ const InstQuest = () => {
     </Form.List>
     </Form.Item>
     </Panel>
-    
+
     <Panel header={communicationText} key="2">
+    <Form.Item
+    name= "Communication modes"
+    label= "Communication modes">
+    <Select
+    mode="multiple"
+    placeholder="Select multiple">
+    <Option value="Email">Email</Option>
+    <Option value="Phone calls">Phone calls</Option>
+    <Option value="Text messages">Text messages</Option>
+    <Option value="Whatsapp">Whatsapp</Option>
+    <Option value="Social Media">Social Media</Option>
+    <Option value="In person preferred">In person only</Option>
+    <Option value="Messaging app">Email</Option>
+    <Option value="Other">Other</Option>
+    </Select>
+    </Form.Item>
 
+    <Form.Item
+    name= "Communication frequency"
+    label= "Communication frequency">
+    <Select
+    placeholder="Select preferred">
+    <Option value="Daily">Daily</Option>
+    <Option value="Three-Four times a week">Three-Four times a week</Option>
+    <Option value="Twice a week">Twice a week</Option>
+    <Option value="Weekly"> Weekly</Option>
+    <Option value="Twice a month">Twice a month</Option>
+    <Option value="Monthly">Monthly</Option>
+    <Option value="Other">Other</Option>
+    </Select>
+    </Form.Item>
+    </Panel>
 
+    <Panel header={paymentText} key="3">
+    <Form.Item
+    name = "Price range"
+    label = "Price range"
+    >
+    <Rate style = {{color: "green"}} character={<PoundOutlined />}/>
+    </Form.Item>
+    <Form.Item
+    name= "Payment frequency"
+    label= "Payment frequency">
+    <Select
+    placeholder="Select preferred">
+    <Option value="One time">One time</Option>
+    <Option value="Twice a week">Twice a week</Option>
+    <Option value="Weekly"> Weekly</Option>
+    <Option value="Twice a month">Twice a month</Option>
+    <Option value="Monthly">Monthly</Option>
+    <Option value="Other">Other</Option>
+    </Select>
+    </Form.Item>
+
+    <Form.Item
+    name= "Payment options"
+    label= "Payment options">
+    <Select
+    mode="multiple"
+    placeholder="Select multiple">
+    <Option value="Paypal">Paypal</Option>
+    <Option value="Wired (bank) transfer">Wired (bank) transfer</Option>
+    <Option value="Cash">Cash</Option>
+    <Option value="Other banking app">Other banking app</Option>
+    <Option value="Check">Check</Option>
+    <Option value="Other">Other</Option>
+    </Select>
+    </Form.Item>
+    </Panel>
+
+    <Panel header={additionalText} key="4">
+    <Form.Item
+    name= "Payment frequency"
+    label= "Payment frequency">
+    <Select
+    placeholder="Select preferred">
+    <Option value="One time">One time</Option>
+    <Option value="Twice a week">Twice a week</Option>
+    <Option value="Weekly"> Weekly</Option>
+    <Option value="Twice a month">Twice a month</Option>
+    <Option value="Monthly">Monthly</Option>
+    <Option value="Other">Other</Option>
+    </Select>
+    </Form.Item>
     </Panel>
     </Collapse>
 
-    <h2> Payment and rates </h2>
-    <h2> Additional info </h2>
-
     <Form.Item {...tailFormItemLayout}>
     <Button type="primary" htmlType="submit">
-    Update/Confirm my info
+    Save info
     </Button>
     </Form.Item>
     </Space>
@@ -202,12 +281,7 @@ export default InstQuest;
 
 // for instructors:
 /*
-avaialble packages
-price range
 service format
-communication frequency
-preferred way of Communication
-Payment options
 preferred experience level in:
 -overall fitness
 -hypertrophy
