@@ -51,6 +51,37 @@ const updateUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc add following user profile
+ * @route PATCH /api/users/follow
+ * @access private
+ */
+const followUser = asyncHandler(async (req, res) => {
+  if (User.findOne({ _id: req.params.id })) {
+    if (!req.user.following.includes(req.params.id) && req.user._id + " " !== req.params.id + " ") {
+      req.user.following.push(req.params.id);
+    }
+    else {
+      const index = req.user.following.indexOf(req.params.id);
+      if (index > -1) { req.user.following.splice(index, 1); }
+    }
+    const updatedUser = await req.user.save();
+    sendTokenResponse(updatedUser, 200, res);
+  }
+});
+
+/**
+ * @async
+ * @desc get user following list
+ * @route GET /api/users/followList
+ * @access private
+ */
+const getFollowing = asyncHandler(async (req, res) => {
+  const followingUsers = await User.findById(req.user._id).populate("following");
+  res.status(200).send({ success: true, data: followingUsers.following });
+});
+
+/**
+ * @async
  * @desc logout the user and delete the cookie
  * @route GET /api/users/logout
  * @access private
@@ -139,4 +170,6 @@ export {
   googleOauth,
   facebookOauth,
   instagramOauth,
+  followUser,
+  getFollowing
 };

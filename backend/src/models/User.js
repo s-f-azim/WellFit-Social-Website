@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { } from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 import JWT from "jsonwebtoken";
@@ -75,6 +75,7 @@ const UserSchema = new mongoose.Schema(
     twitterId: {
       type: String,
     },
+    following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );

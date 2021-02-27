@@ -8,6 +8,8 @@ import {
   googleOauth,
   facebookOauth,
   instagramOauth,
+  followUser,
+  getFollowing,
 } from "../controllers/users.js";
 import passport from "../../config/passport-setup.js";
 const router = new express.Router();
@@ -52,5 +54,12 @@ router.route("/oauth/facebook").get(
 router
   .route("/oauth/facebook/redirect")
   .get(passport.authenticate("facebook", { session: false }), facebookOauth);
+
+router
+  .route("/follow/:id")
+  .patch(passport.authenticate("jwt", { session: false }), followUser);
+router
+  .route("/getFollowing")
+  .get(passport.authenticate("jwt", { session: false }), getFollowing);
 
 export default router;
