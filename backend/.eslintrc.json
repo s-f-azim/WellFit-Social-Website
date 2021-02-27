@@ -1,6 +1,7 @@
 {
     "plugins":["jest"],
     "env": {
+        "browser": true,
         "es2020": true,
         "node": true,
         "jest/globals": true
@@ -30,6 +31,9 @@
             "error",
             "single"
         ],
+        "import/extensions":["error", "always",
+            {"ignorePackages": true
+            }],
       "no-underscore-dangle": "off",
       "no-return-assign":"off"
         

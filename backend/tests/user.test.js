@@ -1,6 +1,6 @@
 import request from 'supertest';
-import User from '../src/models/User';
-import app from '../src/app';
+import User from '../src/models/User.js';
+import app from '../src/app.js';
 import {
   tokens, userOne, setupDatabase,
 } from './fixtures/db';

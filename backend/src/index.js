@@ -1,7 +1,7 @@
 import fs from 'fs';
 import https from 'https';
 import path from 'path';
-import app from './app';
+import app from './app.js';
 
 // setup port 4000 or the port in env
 const port = process.env.PORT || 4000;

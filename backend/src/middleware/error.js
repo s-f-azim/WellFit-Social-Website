@@ -1,4 +1,4 @@
-import ErrorResponse from '../utils/errorResponse';
+import ErrorResponse from '../utils/errorResponse.js';
 
 // custom error handlers to write custom messages and status
 // eslint-disable-next-line no-unused-vars

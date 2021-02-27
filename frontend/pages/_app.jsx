@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import Layout from '../components/Layout';
 import '../styles/main.scss';
 // import { env } from "../config.js";
-import { UserContext } from '../contexts/UserContext';
+import UserContext from '../contexts/UserContext';
 
 function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null);

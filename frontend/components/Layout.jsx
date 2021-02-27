@@ -1,11 +1,10 @@
-import Nav from "../components/Nav.jsx";
-const Layout = ({ children }) => {
-  return (
-    <>
-      <Nav />
-      <main>{children}</main>
-    </>
-  );
-};
+import Nav from './Nav';
+
+const Layout = ({ children }) => (
+  <>
+    <Nav />
+    <main>{children}</main>
+  </>
+);
 
 export default Layout;

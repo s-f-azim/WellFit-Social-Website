@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { UserContext } from '../contexts/UserContext';
+import UserContext from '../contexts/UserContext';
 import { getCookie } from '../utils/auth';
 
 // eslint-disable-next-line no-unused-vars

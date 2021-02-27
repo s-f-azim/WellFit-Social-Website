@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import JWT from 'jsonwebtoken';
-import ErrorResponse from '../utils/errorResponse';
+import ErrorResponse from '../utils/errorResponse.js';
 
 // create user schema
 const UserSchema = new mongoose.Schema(

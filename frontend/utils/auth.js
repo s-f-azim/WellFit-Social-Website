@@ -13,7 +13,6 @@ const signup = (name, email, password) => axios.post(`${API}/users/signup`, {
   email,
   password,
 });
-const googleOauth = () => axios.get(`${API}/users/oauth/google`);
 // login a user
 const signin = (email, password) => axios.post(`${API}/users/login`, {
   email,
@@ -39,7 +38,6 @@ const getCookie = (key) => {
 };
 
 export {
-  googleOauth,
   signup,
   signin,
   logout,

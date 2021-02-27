@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import User from '../../src/models/User';
+import User from '../../src/models/User.js';
 
 const userOneId = new mongoose.Types.ObjectId();
 

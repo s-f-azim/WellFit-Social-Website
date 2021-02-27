@@ -12,8 +12,8 @@ import {
   DatePicker,
 } from 'antd';
 import { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../contexts/UserContext';
-import { updateUser } from '../utils/user';
+import UserContext from '../contexts/UserContext';
+import updateUser from '../utils/user';
 
 const { Option } = Select;
 
@@ -186,6 +186,7 @@ const editProfilePage = () => {
                       if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                       }
+                      // eslint-disable-next-line prefer-promise-reject-errors
                       return Promise.reject('Sorry the passwords do not match');
                     },
                   }),

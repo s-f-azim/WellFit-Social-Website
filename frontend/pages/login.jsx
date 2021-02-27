@@ -17,7 +17,7 @@ import {
 import { useState, useContext } from 'react';
 import API from '../config';
 import { signin, authenticate } from '../utils/auth';
-import { UserContext } from '../contexts/UserContext';
+import UserContext from '../contexts/UserContext';
 
 const formItemLayout = {
   labelCol: {

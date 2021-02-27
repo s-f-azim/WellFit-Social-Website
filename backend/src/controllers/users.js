@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
-import asyncHandler from '../middleware/async';
-import User from '../models/User';
+import asyncHandler from '../middleware/async.js';
+import User from '../models/User.js';
 
 /**
  * @async
