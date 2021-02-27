@@ -1,10 +1,10 @@
-import "antd/dist/antd.css";
-import Layout from "../components/Layout.jsx";
-import "../styles/main.scss";
-import { getCookie } from "../utils/auth.js";
+import { useState, useMemo } from 'react';
+import 'antd/dist/antd.css';
+import Layout from '../components/Layout';
+import '../styles/main.scss';
 // import { env } from "../config.js";
-import { useState, useMemo } from "react";
-import { UserContext } from "../contexts/UserContext.js";
+import UserContext from '../contexts/UserContext';
+
 function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null);
   const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);

@@ -1,14 +1,15 @@
-import Link from "next/link";
-import { Menu, Button } from "antd";
-import { useState, useContext } from "react";
-import { UserContext } from "../contexts/UserContext.js";
-import ProfileTopBar from "./ProfileTopBar";
-import ProfileBar from "./ProfileBar";
+import Link from 'next/link';
+import { Menu, Button } from 'antd';
+import { useState, useContext } from 'react';
+import UserContext from '../contexts/UserContext';
+import ProfileTopBar from './ProfileTopBar';
+import ProfileBar from './ProfileBar';
+
 const Nav = () => {
   const [profileOpen, setProfileOpen] = useState(false);
   const { user } = useContext(UserContext);
   return (
-    <Menu mode="horizontal" style={{ padding: "0.7rem", border: "none" }}>
+    <Menu mode="horizontal" style={{ padding: '0.7rem', border: 'none' }}>
       {!user ? (
         <>
           <Menu.Item key="1">
@@ -29,15 +30,9 @@ const Nav = () => {
       ) : (
         <>
           <Menu.Item className="modified-item" key="3">
-            <ProfileTopBar
-              profileOpen={profileOpen}
-              setProfileOpen={setProfileOpen}
-            />
+            <ProfileTopBar profileOpen={profileOpen} setProfileOpen={setProfileOpen} />
           </Menu.Item>
-          <ProfileBar
-            profileOpen={profileOpen}
-            setProfileOpen={setProfileOpen}
-          />
+          <ProfileBar profileOpen={profileOpen} setProfileOpen={setProfileOpen} />
         </>
       )}
     </Menu>

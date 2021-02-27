@@ -1,6 +1,7 @@
-import API from "../config";
-import axios from "axios";
-import { getCookie } from "./auth.js";
+import axios from 'axios';
+import API from '../config';
+import { getCookie } from './auth';
+
 axios.defaults.withCredentials = true;
 
 const updateUser = (values) =>
@@ -9,7 +10,7 @@ const updateUser = (values) =>
     {
       ...values,
     },
-    { headers: { Authorization: `Bearer ${getCookie("token")}` } }
+    { headers: { Authorization: `Bearer ${getCookie('token')}` } }
   );
 
-export { updateUser };
+export { updateUser as default };
