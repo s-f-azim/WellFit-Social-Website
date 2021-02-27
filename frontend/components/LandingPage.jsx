@@ -3,16 +3,19 @@ import {Row, Col, Button} from 'antd';
 
 const LandingText = () => {
   return (
-    <div style={{fontSize: "3em"}}>
-      <p> Connect with health enthusiasts.</p>
-      <p> Enjoy a better lifestyle.</p>
+    <div style={{
+      display: "flex", alignItems: "center", height:"100%", verticalAlign:"middle"}}>
+      <p className="landingText"> Connect with health enthusiasts.
+      <br/>
+      <br/>
+      Enjoy a better lifestyle.</p>
     </div>
   );
 }
 
 const LandingImage = () => {
 	return (
-    <Image src="/../public/jogging.svg" layout = "fill"/>
+    <Image src="/../public/jogging.svg" layout = "intrinsic" width="550" height="550"/>
   );
 }
 
@@ -31,17 +34,17 @@ const LandingPage = () => {
   return (
     <>
       <div style={{padding: '3rem', backgroundColor: 'white'}}>
-        <Row style={{paddingTop: '5%'}}>
+        <Row>
           <Col md={{span:5}} span = {0}></Col>
-          <Col xs={{span: 24}} md={{span: 4}}>
+          <Col xs={{span: 24}} md={{span: 4}} style={{}}>
             <LandingText/>
           </Col>
           <Col md={{span: 5}} span={0}></Col>
-          <Col md={{span:10}} style={{objectFit: "contain"}}>
+          <Col md={{span:10}} xs={{span:24}}>
             <LandingImage/>
           </Col>
         </Row>
-        <Row style={{paddingTop: '5%'}}>
+        <Row style={{paddingTop: '1rem'}}>
           <Col lg={{span: 8}} span={0}></Col>
           <Col lg={{span: 8}} span={24} style = {{fontSize: "1.5rem"}}>
             <Row style={{display:"flex", justifyContent:"center", alignItems:"center"}}>

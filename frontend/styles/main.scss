@@ -30,6 +30,7 @@ body {
 .ant-menu-item:selected {
   all: inherit;
 }
+
 .ant-select-item-option-selected {
   .ant-select-item-option-content {
     color: white;
@@ -49,7 +50,6 @@ body {
   background-color: #e6f7ff;
   border: 1px solid #91d5ff;
 }
-
 // @media (prefers-reduced-motion: reduce) {
 //   *,
 //   *::before,
