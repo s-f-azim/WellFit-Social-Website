@@ -24,16 +24,6 @@ import {QuestionCircleOutlined} from '@ant-design/icons';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-};
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
@@ -100,7 +90,6 @@ const editProfilePage = () => {
     <Tabs defaultActiveKey="1">
     <TabPane tab="Basic Info" key="1">
     <Form
-    {...formItemLayout}
     form={form}
     name="Update my info"
     onFinish={onFinish}
@@ -189,7 +178,6 @@ const editProfilePage = () => {
 
     <TabPane tab="Credentials" key="3">
     <Form
-    {...formItemLayout}
     form={form}
     name="Edit my info"
     onFinish={onFinish}
@@ -238,7 +226,7 @@ const editProfilePage = () => {
     >
     <Input.Password />
     </Form.Item>
-    <Form.Item className="submit" {...tailFormItemLayout}>
+    <Form.Item {...tailFormItemLayout} className="submit">
     <Button type="primary" htmlType="submit">
     Confirm
     </Button>
