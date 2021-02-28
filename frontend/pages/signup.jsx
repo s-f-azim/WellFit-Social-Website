@@ -89,7 +89,10 @@ const Signup = () => {
             <Form.Item
               name="password"
               label="Password"
-              rules={[{ required: true, message: 'Please enter your password' }]}
+              rules={[
+                { required: true, message: 'Please enter your password' },
+                { min: 8, message: 'Password must be minimum 8 characters' },
+              ]}
               hasFeedback
             >
               <Input.Password />

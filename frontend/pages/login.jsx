@@ -107,7 +107,7 @@ const Login = () => {
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
               <h3>Or login with</h3>
-              <div className="buttons">
+              <div className="buttons-form">
                 <Button type="primary" onClick={instaOauthHandler}>
                   <InstagramOutlined />
                 </Button>

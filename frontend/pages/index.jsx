@@ -1,3 +1,6 @@
+import Head from 'next/head';
+import LandingPage from '../components/LandingPage';
+import React, { Component } from 'react';
 import { useContext, useEffect } from 'react';
 import UserContext from '../contexts/UserContext';
 import { getCookie } from '../utils/auth';
@@ -11,9 +14,14 @@ export default function Home({ token, userCookie }) {
       setUser(JSON.parse(getCookie('user')));
     }
   }, []);
-  return <div />;
+  return (
+    <>
+      <LandingPage />
+    </>
+  );
 }
-export function getServerSideProps({ req }) {
+
+export function getServerSideProps({ req, res }) {
   return {
     props: {
       token: req.cookies.token || '',
