@@ -1,10 +1,10 @@
-import { Button, Typography, Input } from "antd";
+import { Button, Typography, Input } from 'antd';
 const { Search } = Input;
 const { Title } = Typography;
-import { useState, useContext } from "react";
-import Link from "next/link";
-import { UserContext } from "../contexts/UserContext.js";
-import ProfileBar from "./ProfileBar";
+import { useState, useContext } from 'react';
+import Link from 'next/link';
+import UserContext from '../contexts/UserContext';
+import ProfileBar from './ProfileBar';
 
 const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
   const { user, setUser } = useContext(UserContext);
@@ -15,7 +15,7 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
   return (
     <>
       <div className="buttons">
-        <ul className={click ? "nav-options activs" : "nav-options"}>
+        <ul className={click ? 'nav-options activs' : 'nav-options'}>
           <li className="option">
             <Search placeholder="Search our Site" enterButton />
           </li>
@@ -34,12 +34,8 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
             </Link>
           </li>
           <li className="option">
-            <Button
-              type="link"
-              className="menuButton"
-              onClick={() => setProfileOpen(!profileOpen)}
-            >
-              <img src={require("../public/person.svg")} /> {user.name}
+            <Button type="link" className="menuButton" onClick={() => setProfileOpen(!profileOpen)}>
+              <img src={require('../public/person.svg')} /> {user.name}
             </Button>
           </li>
         </ul>
@@ -48,17 +44,11 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
       <div className=" mobile-menu">
         {click ? (
           <a className="" onClick={handleClick}>
-            <img
-              style={{ width: "35px", height: "35px" }}
-              src={require("../public/x.svg")}
-            />
+            <img style={{ width: '35px', height: '35px' }} src={require('../public/x.svg')} />
           </a>
         ) : (
           <a className="" onClick={handleClick}>
-            <img
-              style={{ width: "35px", height: "35px" }}
-              src={require("../public/list.svg")}
-            />
+            <img style={{ width: '35px', height: '35px' }} src={require('../public/list.svg')} />
           </a>
         )}
       </div>
@@ -73,7 +63,7 @@ const LoggedOutMenu = () => {
   return (
     <>
       <div className="buttons">
-        <ul className={click ? "nav-options activs" : "nav-options"}>
+        <ul className={click ? 'nav-options activs' : 'nav-options'}>
           <li className="option" onClick={closeMobileMenu}>
             <Link href="/login">
               <Button size="large" shape="round" type="primary">
@@ -94,17 +84,11 @@ const LoggedOutMenu = () => {
       <div className="mobile-menu">
         {click ? (
           <a className="" onClick={handleClick}>
-            <img
-              style={{ width: "35px", height: "35px" }}
-              src={require("../public/x.svg")}
-            />
+            <img style={{ width: '35px', height: '35px' }} src={require('../public/x.svg')} />
           </a>
         ) : (
           <a className="" onClick={handleClick}>
-            <img
-              style={{ width: "35px", height: "35px" }}
-              src={require("../public/list.svg")}
-            />
+            <img style={{ width: '35px', height: '35px' }} src={require('../public/list.svg')} />
           </a>
         )}
       </div>
@@ -118,7 +102,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="topheader" style={{ backgroundColor: "white" }}>
+      <nav className="topheader" style={{ backgroundColor: 'white' }}>
         <Title level={1} className="logo-text">
           <a href="/"> InstaFit </a>
         </Title>
@@ -126,14 +110,8 @@ const Navbar = () => {
           <LoggedOutMenu />
         ) : (
           <>
-            <LoggedInMenu
-              profileOpen={profileOpen}
-              setProfileOpen={setProfileOpen}
-            />
-            <ProfileBar
-              profileOpen={profileOpen}
-              setProfileOpen={setProfileOpen}
-            />
+            <LoggedInMenu profileOpen={profileOpen} setProfileOpen={setProfileOpen} />
+            <ProfileBar profileOpen={profileOpen} setProfileOpen={setProfileOpen} />
           </>
         )}
       </nav>

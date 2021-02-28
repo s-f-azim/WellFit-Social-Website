@@ -1,25 +1,10 @@
-import { useRouter } from "next/router";
-import {
-  Space,
-  Form,
-  Input,
-  Col,
-  Checkbox,
-  Alert,
-  Button,
-  Row,
-  Card,
-} from "antd";
-import {
-  InstagramOutlined,
-  GoogleOutlined,
-  TwitterOutlined,
-  FacebookOutlined,
-} from "@ant-design/icons";
-import API from "../config.js";
-import { useState, useContext } from "react";
-import { signin, authenticate } from "../utils/auth.js";
-import { UserContext } from "../contexts/UserContext.js";
+import { useRouter } from 'next/router';
+import { Space, Form, Input, Alert, Button, Row, Card } from 'antd';
+import { InstagramOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
+import { useState, useContext } from 'react';
+import API from '../config';
+import { signin, authenticate } from '../utils/auth';
+import UserContext from '../contexts/UserContext';
 
 const formItemLayout = {
   labelCol: {
@@ -48,7 +33,7 @@ const Login = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   // normal login handler
   const onFinish = async (values) => {
     const { email, password } = values;
@@ -57,7 +42,7 @@ const Login = () => {
       if (response.data.success) {
         setUser(response.data.data);
         authenticate(response.data, () => {
-          router.push("/");
+          router.push('/');
         });
       }
     } catch (err) {
@@ -67,25 +52,20 @@ const Login = () => {
   // Google oauth login
   const googleOuthHandler = (e) => {
     e.preventDefault();
-    window.open(`${API}/users/oauth/google`, "_self");
+    window.open(`${API}/users/oauth/google`, '_self');
   };
   // Insta oauth login
   const instaOauthHandler = (e) => {
     e.preventDefault();
-    window.open(`${API}/users/oauth/instagram`, "_self");
+    window.open(`${API}/users/oauth/instagram`, '_self');
   };
   // facebook oauth login
   const facebookOuthHandler = (e) => {
     e.preventDefault();
-    window.open(`${API}/users/oauth/facebook`, "_self");
+    window.open(`${API}/users/oauth/facebook`, '_self');
   };
   return (
-    <Row
-      type="flex"
-      justify="center"
-      align="middle"
-      style={{ minHeight: "85vh" }}
-    >
+    <Row type="flex" justify="center" align="middle" style={{ minHeight: '85vh' }}>
       <Card>
         <Form
           {...formItemLayout}
@@ -95,20 +75,18 @@ const Login = () => {
           scrollToFirstError
         >
           <Space direction="vertical" size="large">
-            {hasError && (
-              <Alert type="error" message="Unable to login" banner />
-            )}
+            {hasError && <Alert type="error" message="Unable to login" banner />}
             <Form.Item
               name="email"
               label="Email"
               rules={[
                 {
-                  type: "email",
-                  message: "Invalid Email",
+                  type: 'email',
+                  message: 'Invalid Email',
                 },
                 {
                   required: true,
-                  message: "Please enter your email",
+                  message: 'Please enter your email',
                 },
               ]}
             >
@@ -117,9 +95,7 @@ const Login = () => {
             <Form.Item
               name="password"
               label="Password"
-              rules={[
-                { required: true, message: "Please enter your password" },
-              ]}
+              rules={[{ required: true, message: 'Please enter your password' }]}
               hasFeedback
             >
               <Input.Password />
