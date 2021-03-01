@@ -20,7 +20,7 @@ router
   .route("/profile")
   .get(passport.authenticate("jwt", { session: false }), getUser);
 router
-  .route("/settings")
+  .route("/delete")
   .delete(passport.authenticate("jwt", { session: false }), deleteUser);
 
 export default router;
