@@ -108,7 +108,7 @@ const InstQuest = () => {
     <Panel header={yourCareerText} key="1">
 
     <Form.Item
-    name= "Trainer type"
+    name= "trainerType"
     label= "Trainer type">
     <Select placeholder="Select your qualification">
     <Option value="Physique trainer">Physique trainer</Option>
@@ -118,10 +118,9 @@ const InstQuest = () => {
     </Select>
     </Form.Item>
 
-    <Form.Item
-    name = "qualifications"
+    <Form.List
+    name="qualifications"
     label = "Qualifications">
-    <Form.List name="qualifications">
     {(fields, { add, remove }) => (
       <>
       {fields.map(field => (
@@ -144,7 +143,6 @@ const InstQuest = () => {
       </>
     )}
     </Form.List>
-    </Form.Item>
 
     <Form.Item
     name = "specialty"
@@ -153,7 +151,7 @@ const InstQuest = () => {
     </Form.Item>
 
     <Form.Item
-    name = "Customer stories"
+    name = "customerStories"
     label = "Customer stories">
     <Form.List name="Customer stories">
     {(fields, { add, remove }) => (
@@ -185,7 +183,7 @@ const InstQuest = () => {
 
     <Panel header={communicationText} key="2">
     <Form.Item
-    name= "Communication modes"
+    name= "communicationModes"
     label= "Communication modes">
     <Select
     mode="multiple"
@@ -202,7 +200,7 @@ const InstQuest = () => {
     </Form.Item>
 
     <Form.Item
-    name= "Communication frequency"
+    name= "communicationFrequency"
     label= "Communication frequency">
     <Select
     placeholder="Select preferred">
@@ -219,13 +217,13 @@ const InstQuest = () => {
 
     <Panel header={paymentText} key="3">
     <Form.Item
-    name = "Price range"
+    name = "priceRange"
     label = "Price range"
     >
     <Rate style = {{color: "green"}} character={<PoundOutlined />}/>
     </Form.Item>
     <Form.Item
-    name= "Payment frequency"
+    name= "paymentFrequency"
     label= "Payment frequency">
     <Select
     placeholder="Select preferred">
@@ -239,7 +237,7 @@ const InstQuest = () => {
     </Form.Item>
 
     <Form.Item
-    name= "Payment options"
+    name= "paymentOptions"
     label= "Payment options">
     <Select
     mode="multiple"
@@ -256,7 +254,7 @@ const InstQuest = () => {
 
     <Panel header={additionalText} destroyInactivePanel = {true} key="4">
     <Form.Item
-    name= "Service format"
+    name= "serviceFormat"
     label= "Service format">
     <Select
     mode = "multiple"
@@ -266,37 +264,37 @@ const InstQuest = () => {
     <Option value="PDFs, Excel sheets or others"> PDFs, Excel sheets or other files</Option>
     <Option value="Physical product">Physical product</Option>
     <Option value="Audio content">Audio content</Option>
-    <Option value="Text based content (book, guidebook, leaflet...)">Text based content (book, guidebook, leaflet...)</Option>
+    <Option value="Text based content">Text based content (book, guidebook, leaflet...)</Option>
     <Option value="Other">Other</Option>
     </Select>
     </Form.Item>
 
     <Form.Item
-    name= "client gender preference"
-    label= "client gender preference">
+    name= "clientGenderPreference"
+    label= "Client gender preference">
     <Select
     placeholder="Select your preferred client gender">
     <Option value="Male">Male</Option>
-    <Option value="Male">Female</Option>
-    <Option value="Male">Non-Binary</Option>
-    <Option value="Male">Any</Option>
+    <Option value="Female">Female</Option>
+    <Option value="Non-Binary">Non-Binary</Option>
+    <Option value="Any">Any</Option>
     </Select>
     </Form.Item>
     <br/>
     <Form.Item
-    name= "Client overall fitness level preference"
+    name= "clientFitness"
     label= "Client overall fitness level preference">
     <Slider range defaultValue={[0, 100]} tooltipVisible />
     </Form.Item>
     <br/>
     <Form.Item
-    name= "Client overall hypertrophy level preference"
+    name= "clientHypertrophy"
     label= "Client overall hypertrophy level preference">
     <Slider range defaultValue={[0, 100]} tooltipVisible />
     </Form.Item>
     <br/>
     <Form.Item
-    name= "Client overall strength level preference"
+    name= "clientStrength"
     label= "Client overall strength level preference">
     <Slider range defaultValue={[0, 100]} tooltipVisible />
     </Form.Item>
