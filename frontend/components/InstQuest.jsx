@@ -10,12 +10,13 @@ import {
   Button,
   Rate,
   Slider,
+  notification,
 } from "antd";
 import { updateUser } from "../utils/user.js";
 import { useRouter } from "next/router";
 import { UserContext } from "../contexts/UserContext.js";
 import { useState, useEffect, useContext } from "react";
-import { CloseOutlined, PlusOutlined, PoundOutlined } from '@ant-design/icons';
+import { CloseOutlined, PlusOutlined, PoundOutlined, CheckOutlined } from '@ant-design/icons';
 
 const yourCareerText = (
   <h2> Your career </h2>
@@ -75,6 +76,11 @@ const InstQuest = () => {
     try {
       const response = await updateUser(values);
       if (response.data.success) {
+          notification.open({
+            message: 'Information updated!',
+            duration: 2,
+            icon: <CheckOutlined style={{ color: "#33FF49" }} />
+          });
         router.push("/");
       }
     } catch (err) {
@@ -131,7 +137,7 @@ const InstQuest = () => {
         </Space>
       ))}
       <Form.Item>
-      <Button style={{ width: "60%"}} onClick={() => add()} block icon={<PlusOutlined style = {{color: "#33FF49"}} />}>
+      <Button onClick={() => add()} block icon={<PlusOutlined style = {{color: "#33FF49"}} />}>
       Add a Qualification
       </Button>
       </Form.Item>
@@ -159,14 +165,15 @@ const InstQuest = () => {
         name={[field.name, 'Customer story']}
         fieldKey={[field.fieldKey, 'Customer story']}
         >
-
-        <TextArea showCount maxLength={200} style={{ width: "90%"}} placeholder="Enter a past customer story, or feedback received" />
+        <Row>
+        <TextArea showCount maxLength={200} placeholder="Enter a past customer story, or feedback received" />
         <CloseOutlined style = {{color: "red", margin: "7px"}} onClick={() => remove(field.name)} />
+        </Row>
         </Form.Item>
         </Space>
       ))}
       <Form.Item>
-      <Button style={{ width: "60%"}} onClick={() => add()} block icon={<PlusOutlined style = {{color: "#33FF49"}} />}>
+      <Button onClick={() => add()} block icon={<PlusOutlined style = {{color: "#33FF49"}} />}>
       Add a customer story
       </Button>
       </Form.Item>
@@ -247,7 +254,7 @@ const InstQuest = () => {
     </Form.Item>
     </Panel>
 
-    <Panel header={additionalText} key="4">
+    <Panel header={additionalText} destroyInactivePanel = {true} key="4">
     <Form.Item
     name= "Service format"
     label= "Service format">
@@ -279,19 +286,19 @@ const InstQuest = () => {
     <Form.Item
     name= "Client overall fitness level preference"
     label= "Client overall fitness level preference">
-    <Slider range defaultValue={[10, 90]} tooltipVisible />
+    <Slider range defaultValue={[0, 100]} tooltipVisible />
     </Form.Item>
     <br/>
     <Form.Item
     name= "Client overall hypertrophy level preference"
     label= "Client overall hypertrophy level preference">
-    <Slider range defaultValue={[5, 70]} tooltipVisible />
+    <Slider range defaultValue={[0, 100]} tooltipVisible />
     </Form.Item>
     <br/>
     <Form.Item
     name= "Client overall strength level preference"
     label= "Client overall strength level preference">
-    <Slider range defaultValue={[5, 70]} tooltipVisible />
+    <Slider range defaultValue={[0, 100]} tooltipVisible />
     </Form.Item>
 
     </Panel>
@@ -308,16 +315,3 @@ const InstQuest = () => {
   )
 }
 export default InstQuest;
-
-
-
-
-// for instructors:
-/*
-
-preferred experience level in:
-
--hypertrophy
--strength
-
-*/

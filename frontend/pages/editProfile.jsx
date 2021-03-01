@@ -16,10 +16,11 @@ import {
   Tabs,
   DatePicker,
   Modal,
+  notification,
 } from "antd";
 import { useState, useEffect, useContext } from "react";
 import InstQuest from "../components/InstQuest.jsx";
-import {QuestionCircleOutlined} from '@ant-design/icons';
+import {QuestionCircleOutlined, CheckOutlined} from '@ant-design/icons';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -72,6 +73,11 @@ const editProfilePage = () => {
     try {
       const response = await updateUser(values);
       if (response.data.success) {
+        notification.open({
+          message: 'Information updated!',
+          duration: 2,
+          icon: <CheckOutlined style={{ color: "#33FF49" }} />
+        });
         router.push("/");
       }
     } catch (err) {
