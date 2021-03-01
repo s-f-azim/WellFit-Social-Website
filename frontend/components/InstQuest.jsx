@@ -73,6 +73,7 @@ const InstQuest = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
+    console.log(values);
     try {
       const response = await updateUser(values);
       if (response.data.success) {
@@ -127,58 +128,53 @@ const InstQuest = () => {
         <Space key={field.key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
         <Form.Item
         {...field}
-        name={[field.name, 'Qualification']}
-        fieldKey={[field.fieldKey, 'Qualification']}
+        name={[field.name, 'qualification']}
+        fieldKey={[field.fieldKey, 'qualification']}
         >
         <Input style={{ width: "90%"}} placeholder="Enter your qualification" />
         <CloseOutlined style = {{color: "red", margin: "7px"}} onClick={() => remove(field.name)} />
         </Form.Item>
         </Space>
       ))}
-      <Form.Item>
       <Button onClick={() => add()} block icon={<PlusOutlined style = {{color: "#33FF49"}} />}>
       Add a Qualification
       </Button>
-      </Form.Item>
+      <br/>
       </>
+
     )}
     </Form.List>
-
+    <br/>
     <Form.Item
     name = "specialty"
     label = "Field of expertise">
     <Input placeholder = "bodybuilding, Yoga, nutrition..."/>
     </Form.Item>
-
-    <Form.Item
-    name = "customerStories"
+    <Form.List
+    name="customerStories"
     label = "Customer stories">
-    <Form.List name="Customer stories">
     {(fields, { add, remove }) => (
       <>
       {fields.map(field => (
         <Space key={field.key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
         <Form.Item
         {...field}
-        name={[field.name, 'Customer story']}
-        fieldKey={[field.fieldKey, 'Customer story']}
+        name={[field.name, 'customerStory']}
+        fieldKey={[field.fieldKey, 'customerStory']}
         >
         <Row>
-        <TextArea showCount maxLength={200} placeholder="Enter a past customer story, or feedback received" />
+        <TextArea style = {{width: "90%"}} showCount maxLength={200} placeholder="Enter a past customer story, or feedback received" />
         <CloseOutlined style = {{color: "red", margin: "7px"}} onClick={() => remove(field.name)} />
         </Row>
         </Form.Item>
         </Space>
       ))}
-      <Form.Item>
       <Button onClick={() => add()} block icon={<PlusOutlined style = {{color: "#33FF49"}} />}>
       Add a customer story
       </Button>
-      </Form.Item>
       </>
     )}
     </Form.List>
-    </Form.Item>
     </Panel>
 
     <Panel header={communicationText} key="2">
