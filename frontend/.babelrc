@@ -1,11 +1,19 @@
 {
-  "presets": ["next/babel"],
-  "plugins": [
-    [
-      "import", {
-        "libraryName": "antd",
-        "style": true
-      }
-    ]
-  ]
+  "env": {
+    "dev": {
+      "presets": ["next/babel"],
+      "plugins": [
+        [
+          "import",
+          {
+            "libraryName": "antd",
+            "style": true
+          }
+        ]
+      ]
+    },
+    "test": {
+      "presets": ["next/babel"]
+    }
+  }
 }
