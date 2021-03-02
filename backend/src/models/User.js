@@ -56,7 +56,29 @@ const UserSchema = new mongoose.Schema(
     },
     tags: {
       type: [String],
-    }
+      validate: v => { //Checks if array of tags inputted is subset of preset of tags
+        const tags = ['#GetFit',
+                      '#Cardio',
+                      '#Cycling',
+                      '#FitFam',
+                      '#FitLife',
+                      '#Fitness',
+                      '#FitnessMotivation',
+                      '#FitnessAddict', 
+                      '#GetStrong',
+                      '#LiftHeavy',
+                      '#GirlsWhoLift',
+                      '#GymLife',
+                      '#GymTime',
+                      '#NoPainNoGain',
+                      '#PersonalTrainer',
+                      '#Sweat',
+                      '#Weights',
+                      '#WeightLifting',
+                      '#Workout'];
+        v.every(val => tags.includes(val));
+      },
+    },
   },
   { timestamps: true }
 );
