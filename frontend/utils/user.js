@@ -12,4 +12,10 @@ const updateUser = (values) =>
     { headers: { Authorization: `Bearer ${getCookie("token")}` } }
   );
 
-export { updateUser };
+const deleteUser = () => 
+    axios.delete(
+      `${API}/users/delete`,
+      { headers: { Authorization: `Bearer ${getCookie("token")}` } }
+  );
+
+export { updateUser, deleteUser };
