@@ -2,6 +2,7 @@ import User from "../src/models/User";
 import app from "../src/app";
 import request from "supertest";
 import { tokens, userOne, userTwo, setupDatabase } from "./fixtures/db.js";
+//import { it } from "date-fns/locale";
 
 // setup db for each test
 beforeEach(setupDatabase);
@@ -89,3 +90,14 @@ it("Should not update a user's invalid attribute", async () => {
   const user = await User.findById(userOne._id);
   expect(user.size).toEqual(undefined);
 });
+
+// assert delete a user
+it("Should delete a logged in user", async () => {
+  const response = await request(app)
+    .delete("/api/users/delete")
+    .send()
+    .set("Cookie", [`token=${tokens[0]}`])
+    .expect(200);
+  const userExists = await User.exists({_id: userOne._id});
+  expect(userExists).toEqual(false);
+}); 
