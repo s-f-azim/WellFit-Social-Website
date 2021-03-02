@@ -53,15 +53,6 @@ const tailFormItemLayout = {
 
 // Instructor Questionnaire
 const InstQuest = () => {
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
-
-  const showAlert = () => {
-    setIsAlertVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsAlertVisible(false);
-  };
 
   const router = useRouter();
   const { user, setUser } = useContext(UserContext);
@@ -281,19 +272,19 @@ const InstQuest = () => {
     <Form.Item
     name= "clientFitness"
     label= "Client overall fitness level preference">
-    <Slider range defaultValue={[0, 100]} tooltipVisible />
+    <Slider range defaultValue={[0, 100]}/>
     </Form.Item>
     <br/>
     <Form.Item
     name= "clientHypertrophy"
     label= "Client overall hypertrophy level preference">
-    <Slider range defaultValue={[0, 100]} tooltipVisible />
+    <Slider range defaultValue={[0, 100]}/>
     </Form.Item>
     <br/>
     <Form.Item
     name= "clientStrength"
     label= "Client overall strength level preference">
-    <Slider range defaultValue={[0, 100]} tooltipVisible />
+    <Slider range defaultValue={[0, 100]}/>
     </Form.Item>
 
     </Panel>
