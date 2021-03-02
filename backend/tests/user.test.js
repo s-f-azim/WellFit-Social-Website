@@ -2,7 +2,6 @@ import User from "../src/models/User";
 import app from "../src/app";
 import request from "supertest";
 import { tokens, userOne, userTwo, setupDatabase } from "./fixtures/db.js";
-//import { it } from "date-fns/locale";
 
 // setup db for each test
 beforeEach(setupDatabase);
