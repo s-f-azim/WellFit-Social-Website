@@ -150,6 +150,7 @@ const InstQuest = () => {
     label = "Field of expertise">
     <Input placeholder = "bodybuilding, Yoga, nutrition..."/>
     </Form.Item>
+
     <Form.List
     name="customerStories"
     label = "Customer stories">
