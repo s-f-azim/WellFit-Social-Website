@@ -104,7 +104,7 @@ const InstQuest = () => {
                 </Select>
               </Form.Item>
 
-              <Form.List name="qualifications" label="Qualifications">
+              <Form.List name="qualifications" >
                 {(fields, { add, remove }) => (
                   <>
                     {fields.map((field) => (
@@ -115,18 +115,17 @@ const InstQuest = () => {
                       >
                         <Form.Item
                           {...field}
-                          name={[field.name, "qualification"]}
                           fieldKey={[field.fieldKey, "qualification"]}
                         >
                           <Input
                             style={{ width: "90%" }}
                             placeholder="Enter your qualification"
                           />
+                        </Form.Item>
                           <CloseOutlined
                             style={{ color: "red", margin: "7px" }}
                             onClick={() => remove(field.name)}
                           />
-                        </Form.Item>
                       </Space>
                     ))}
                     <Button
@@ -156,7 +155,6 @@ const InstQuest = () => {
                       >
                         <Form.Item
                           {...field}
-                          name={[field.name, "customerStory"]}
                           fieldKey={[field.fieldKey, "customerStory"]}
                         >
                           <Row>
@@ -166,12 +164,12 @@ const InstQuest = () => {
                               maxLength={200}
                               placeholder="Enter a past customer story, or feedback received"
                             />
+                          </Row>
+                        </Form.Item>
                             <CloseOutlined
                               style={{ color: "red", margin: "7px" }}
                               onClick={() => remove(field.name)}
                             />
-                          </Row>
-                        </Form.Item>
                       </Space>
                     ))}
                     <Button
