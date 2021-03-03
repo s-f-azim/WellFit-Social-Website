@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState, useContext } from 'react';
-import { Form, InputNumber, Button, Carousel, Select, Row, Col, Layout, Card, Steps } from 'antd';
+import { useRef, useState } from 'react';
+import { Form, InputNumber, Button, Carousel, Select, Row, Col, Card, Steps } from 'antd';
 
-//import { useRouter } from "next/router";
-import { updateUser } from '../utils/user.js';
-//import { UserContext } from "../contexts/UserContext.js";
+// import { useRouter } from "next/router";
+import updateUser from '../utils/user';
+// import { UserContext } from "../contexts/UserContext.js";
 
 const { Option } = Select;
 
@@ -14,32 +14,23 @@ const Questionnaire = () => {
   const [form] = Form.useForm();
   const [valid, setValid] = useState(true);
 
-  //const router = useRouter();
-  //const { user, setUser } = useContext(UserContext);
+  // const router = useRouter();
+  // const { user, setUser } = useContext(UserContext);
 
   const totalSlides = 5;
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const onFinish = async (values) => {
-    //console.log(user);
-    console.log('Success:', values);
-
     try {
-      const response = await updateUser(values);
+      await updateUser(values);
     } catch (err) {
-      console.log(err);
+      setCurrentSlide(5);
     }
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failure:', errorInfo);
-  };
+  const haveErrors = (fields) => fields.find((field) => field.errors.length !== 0);
 
-  const haveErrors = (fields) => {
-    return fields.find((field) => field.errors.length !== 0);
-  };
-
-  const onFieldsChange = (changedFields, allFields) => {
+  const onFieldsChange = (changedFields) => {
     setValid(!haveErrors(changedFields));
   };
 
@@ -51,22 +42,20 @@ const Questionnaire = () => {
     carousel.current.next();
   };
 
-  const PreviousButton = () => {
-    return (
-      <Button
-        size="large"
-        type="primary"
-        onClick={previous}
-        disabled={!valid || currentSlide <= 0}
-        block
-      >
-        PREVIOUS
-      </Button>
-    );
-  };
+  const PreviousButton = () => (
+    <Button
+      size="large"
+      type="primary"
+      onClick={previous}
+      disabled={!valid || currentSlide <= 0}
+      block
+    >
+      PREVIOUS
+    </Button>
+  );
 
-  const NextButton = () => {
-    return currentSlide === totalSlides - 1 ? (
+  const NextButton = () =>
+    currentSlide === totalSlides - 1 ? (
       <Button size="large" type="primary" disabled={!valid} onClick={() => form.submit()} block>
         SUBMIT
       </Button>
@@ -75,20 +64,6 @@ const Questionnaire = () => {
         NEXT
       </Button>
     );
-  };
-
-  const FormSteps = () => {
-    let steps = [];
-    for (let i = 0; i < totalSlides; i++) {
-      steps.push(<Step key={i} />);
-    }
-
-    return (
-      <Steps progressDot current={currentSlide} direction="vertical">
-        {steps}
-      </Steps>
-    );
-  };
 
   return (
     <>
@@ -100,7 +75,6 @@ const Questionnaire = () => {
         <Form
           name="questionnaire"
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           onFieldsChange={onFieldsChange}
           form={form}
           colon={false}
@@ -114,7 +88,11 @@ const Questionnaire = () => {
         >
           <Row>
             <Col span={1}>
-              <FormSteps />
+              <Steps progressDot current={currentSlide} direction="vertical">
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <Step key={i} />
+                ))}
+              </Steps>
             </Col>
 
             <Col span={23}>
@@ -223,7 +201,7 @@ const Questionnaire = () => {
                 </Card>
 
                 <Card>
-                  <Card.Grid></Card.Grid>
+                  <Card.Grid />
                 </Card>
               </Carousel>
             </Col>

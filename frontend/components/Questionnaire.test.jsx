@@ -1,12 +1,9 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Questionnaire from './Questionnaire';
-
-import { useRouter } from 'next/router';
-import { updateUser } from '../utils/user.js';
 
 jest.mock('next/router');
 jest.mock('../utils/user', () => {
-  updateUser: jest.fn();
+  jest.fn();
 });
 
 it('renders the fields', () => {

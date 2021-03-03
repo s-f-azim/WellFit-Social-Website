@@ -1,10 +1,11 @@
+import { useState, useMemo } from 'react';
 import 'antd/dist/antd.css';
 import Head from 'next/head';
 import Layout from '../components/Layout';
 import '../styles/main.scss';
 
 // import { env } from "../config.js";
-import { useState, useMemo } from 'react';
+
 import UserContext from '../contexts/UserContext';
 
 function MyApp({ Component, pageProps }) {
