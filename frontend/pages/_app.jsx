@@ -5,12 +5,9 @@ import '../styles/main.scss';
 import Head from 'next/head';
 import { useState, useMemo } from 'react';
 import Layout from '../components/Layout';
-// import { env } from "../config.js";
-import UserContext from '../contexts/UserContext';
+import { AuthProvider } from '../services/auth';
 
 function MyApp({ Component, pageProps }) {
-  const [user, setUser] = useState(null);
-  const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
     <>
       <Head>
@@ -20,7 +17,7 @@ function MyApp({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
-      <UserContext.Provider value={providerValue}>
+      <AuthProvider>
         <Layout>
           <BackTop>
             <div>
@@ -30,7 +27,7 @@ function MyApp({ Component, pageProps }) {
           </BackTop>
           <Component {...pageProps} />
         </Layout>
-      </UserContext.Provider>
+      </AuthProvider>
     </>
   );
 }

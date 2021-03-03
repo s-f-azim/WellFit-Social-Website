@@ -15,7 +15,7 @@ import {
   notification,
   Tabs,
 } from 'antd';
-import updateUser from '../utils/user';
+import updateUser from '../actions/user';
 import UserContext from '../contexts/UserContext';
 import InstQuest from '../components/InstQuest';
 

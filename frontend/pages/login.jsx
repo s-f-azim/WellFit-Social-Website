@@ -6,10 +6,8 @@ import {
   FacebookOutlined,
   SmileOutlined,
 } from '@ant-design/icons';
-import { useState, useContext } from 'react';
-import API from '../config';
-import { signin, authenticate } from '../utils/auth';
-import UserContext from '../contexts/UserContext';
+import { useState } from 'react';
+import API from '../services/api';
 
 const formItemLayout = {
   labelCol: {

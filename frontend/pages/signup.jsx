@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, notification } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { signup } from '../utils/auth';
+import { signup } from '../actions/auth';
 
 const formItemLayout = {
   labelCol: {
