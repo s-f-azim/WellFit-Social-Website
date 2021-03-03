@@ -6,13 +6,13 @@ import {
 } from "antd";
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-import { UserContext } from "../contexts/UserContext.js";
+//import { UserContext } from "../contexts/UserContext.js";
 
 const { Content, Footer } = Layout;
 
 export default function Preferences() {
   const router = useRouter();
-  const { user, setUser } = useContext(UserContext);
+//  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     console.log(user);

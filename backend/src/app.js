@@ -7,7 +7,7 @@ import xss from 'xss-clean';
 import connectDb from '../config/db.js';
 import errorHandler from './middleware/error.js';
 import ErrorResponse from './utils/errorResponse.js';
-import userRoutes from './routes/users.js';
+import userRoutes from './routes/user.js';
 import passport from '../config/passport-setup.js';
 
 // connect to the database
