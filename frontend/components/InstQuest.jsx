@@ -2,7 +2,6 @@ import {
   Alert,
   Form,
   Row,
-  Card,
   Space,
   Input,
   Select,
@@ -11,17 +10,15 @@ import {
   Rate,
   Slider,
   notification,
-} from "antd";
-import { updateUser } from "../utils/user.js";
-import { useRouter } from "next/router";
-import { UserContext } from "../contexts/UserContext.js";
-import { useState, useEffect, useContext } from "react";
-import {
-  CloseOutlined,
-  PlusOutlined,
-  PoundOutlined,
-  CheckOutlined,
-} from "@ant-design/icons";
+} from 'antd';
+
+import { CloseOutlined, PlusOutlined, PoundOutlined, CheckOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
+import { useState, useContext } from 'react';
+import UserContext from '../contexts/UserContext';
+import updateUser from '../utils/user';
+
+const { Option } = Select;
 
 const yourCareerText = <h2> Your career </h2>;
 
@@ -60,13 +57,13 @@ const InstQuest = () => {
       const response = await updateUser(values);
       if (response.data.success) {
         notification.open({
-          message: "Information updated!",
+          message: 'Information updated!',
           duration: 2,
-          icon: <CheckOutlined style={{ color: "#33FF49" }} />,
+          icon: <CheckOutlined style={{ color: '#33FF49' }} />,
         });
         setUser(response.data.data);
         console.log(user);
-        router.push("/");
+        router.push('/');
       }
     } catch (err) {
       setHasError(true);
@@ -75,21 +72,12 @@ const InstQuest = () => {
 
   return (
     <>
-      <Form
-        form={form}
-        name="Update my info"
-        onFinish={onFinish}
-        scrollToFirstError
-      >
+      <Form form={form} name="Update my info" onFinish={onFinish} scrollToFirstError>
         <Space direction="vertical" size="middle">
           {hasError && (
-            <Alert
-              type="error"
-              message="something went wrong, please try again"
-              banner
-            />
+            <Alert type="error" message="something went wrong, please try again" banner />
           )}
-          <Collapse bordered={false} ghost={true}>
+          <Collapse bordered={false} ghost>
             <Panel header={yourCareerText} key="1">
               <Form.Item name="trainerType" label="Trainer type">
                 <Select
@@ -97,9 +85,7 @@ const InstQuest = () => {
                   defaultValue={user.trainerType ? user.trainerType : null}
                 >
                   <Option value="Physique trainer">Physique trainer</Option>
-                  <Option value="Performance trainer">
-                    Performance trainer
-                  </Option>
+                  <Option value="Performance trainer">Performance trainer</Option>
                   <Option value="Lifestyle trainer">Lifestyle trainer</Option>
                   <Option value="Other">Other</Option>
                 </Select>
@@ -111,20 +97,14 @@ const InstQuest = () => {
                     {fields.map((field) => (
                       <Space
                         key={field.key}
-                        style={{ display: "flex", marginBottom: 8 }}
+                        style={{ display: 'flex', marginBottom: 8 }}
                         align="baseline"
                       >
-                        <Form.Item
-                          {...field}
-                          fieldKey={[field.fieldKey, "qualification"]}
-                        >
-                          <Input
-                            style={{ width: "90%" }}
-                            placeholder="Enter your qualification"
-                          />
+                        <Form.Item {...field} fieldKey={[field.fieldKey, 'qualification']}>
+                          <Input style={{ width: '90%' }} placeholder="Enter your qualification" />
                         </Form.Item>
                         <CloseOutlined
-                          style={{ color: "red", margin: "7px" }}
+                          style={{ color: 'red', margin: '7px' }}
                           onClick={() => remove(field.name)}
                         />
                       </Space>
@@ -132,7 +112,7 @@ const InstQuest = () => {
                     <Button
                       onClick={() => add()}
                       block
-                      icon={<PlusOutlined style={{ color: "#33FF49" }} />}
+                      icon={<PlusOutlined style={{ color: '#33FF49' }} />}
                     >
                       Add a Qualification
                     </Button>
@@ -154,16 +134,13 @@ const InstQuest = () => {
                     {fields.map((field) => (
                       <Space
                         key={field.key}
-                        style={{ display: "flex", marginBottom: 8 }}
+                        style={{ display: 'flex', marginBottom: 8 }}
                         align="baseline"
                       >
-                        <Form.Item
-                          {...field}
-                          fieldKey={[field.fieldKey, "customerStory"]}
-                        >
+                        <Form.Item {...field} fieldKey={[field.fieldKey, 'customerStory']}>
                           <Row>
                             <TextArea
-                              style={{ width: "90%" }}
+                              style={{ width: '90%' }}
                               showCount
                               maxLength={200}
                               placeholder="Enter a past customer story, or feedback received"
@@ -171,7 +148,7 @@ const InstQuest = () => {
                           </Row>
                         </Form.Item>
                         <CloseOutlined
-                          style={{ color: "red", margin: "7px" }}
+                          style={{ color: 'red', margin: '7px' }}
                           onClick={() => remove(field.name)}
                         />
                       </Space>
@@ -179,7 +156,7 @@ const InstQuest = () => {
                     <Button
                       onClick={() => add()}
                       block
-                      icon={<PlusOutlined style={{ color: "#33FF49" }} />}
+                      icon={<PlusOutlined style={{ color: '#33FF49' }} />}
                     >
                       Add a customer story
                     </Button>
@@ -191,9 +168,7 @@ const InstQuest = () => {
             <Panel header={communicationText} key="2">
               <Form.Item name="communicationModes" label="Communication modes">
                 <Select
-                  defaultValue={
-                    user.communicationModes ? user.communicationModes : null
-                  }
+                  defaultValue={user.communicationModes ? user.communicationModes : null}
                   mode="multiple"
                   placeholder="Select multiple"
                 >
@@ -208,22 +183,13 @@ const InstQuest = () => {
                 </Select>
               </Form.Item>
 
-              <Form.Item
-                name="communicationFrequency"
-                label="Communication frequency"
-              >
+              <Form.Item name="communicationFrequency" label="Communication frequency">
                 <Select
-                  defaultValue={
-                    user.communicationFrequency
-                      ? user.communicationFrequency
-                      : null
-                  }
+                  defaultValue={user.communicationFrequency ? user.communicationFrequency : null}
                   placeholder="Select preferred"
                 >
                   <Option value="Daily">Daily</Option>
-                  <Option value="Three-Four times a week">
-                    Three-Four times a week
-                  </Option>
+                  <Option value="Three-Four times a week">Three-Four times a week</Option>
                   <Option value="Twice a week">Twice a week</Option>
                   <Option value="Weekly"> Weekly</Option>
                   <Option value="Twice a month">Twice a month</Option>
@@ -237,15 +203,13 @@ const InstQuest = () => {
               <Form.Item name="priceRange" label="Price range">
                 <Rate
                   defaultValue={user.priceRange ? user.priceRange : 1}
-                  style={{ color: "green" }}
+                  style={{ color: 'green' }}
                   character={<PoundOutlined />}
                 />
               </Form.Item>
               <Form.Item name="paymentFrequency" label="Payment frequency">
                 <Select
-                  defaultValue={
-                    user.paymentFrequency ? user.paymentFrequency : null
-                  }
+                  defaultValue={user.paymentFrequency ? user.paymentFrequency : null}
                   placeholder="Select preferred"
                 >
                   <Option value="One time">One time</Option>
@@ -259,16 +223,12 @@ const InstQuest = () => {
 
               <Form.Item name="paymentOptions" label="Payment options">
                 <Select
-                  defaultValue={
-                    user.paymentOptions ? user.paymentOptions : null
-                  }
+                  defaultValue={user.paymentOptions ? user.paymentOptions : null}
                   mode="multiple"
                   placeholder="Select multiple"
                 >
                   <Option value="Paypal">Paypal</Option>
-                  <Option value="Wired (bank) transfer">
-                    Wired (bank) transfer
-                  </Option>
+                  <Option value="Wired (bank) transfer">Wired (bank) transfer</Option>
                   <Option value="Cash">Cash</Option>
                   <Option value="Other banking app">Other banking app</Option>
                   <Option value="Check">Check</Option>
@@ -277,21 +237,19 @@ const InstQuest = () => {
               </Form.Item>
             </Panel>
 
-            <Panel header={additionalText} destroyInactivePanel={true} key="4">
+            <Panel header={additionalText} destroyInactivePanel key="4">
               <Form.Item name="serviceFormat" label="Service format">
                 <Select
                   defaultValue={user.serviceFormat ? user.serviceFormat : null}
                   mode="multiple"
                   placeholder="Select multiple"
                 >
-                  <Option value="Non-client-specific videos">
-                    Non-client-specific videos
-                  </Option>
+                  <Option value="Non-client-specific videos">Non-client-specific videos</Option>
                   <Option value="In person sessions">
                     In person training or coaching sessions
                   </Option>
                   <Option value="PDFs, Excel sheets or others">
-                    {" "}
+                    {' '}
                     PDFs, Excel sheets or other files
                   </Option>
                   <Option value="Physical product">Physical product</Option>
@@ -303,16 +261,9 @@ const InstQuest = () => {
                 </Select>
               </Form.Item>
 
-              <Form.Item
-                name="clientGenderPreference"
-                label="Client gender preference"
-              >
+              <Form.Item name="clientGenderPreference" label="Client gender preference">
                 <Select
-                  defaultValue={
-                    user.clientGenderPreference
-                      ? user.clientGenderPreference
-                      : null
-                  }
+                  defaultValue={user.clientGenderPreference ? user.clientGenderPreference : null}
                   placeholder="Select your preferred client gender"
                 >
                   <Option value="Male">Male</Option>
@@ -322,16 +273,8 @@ const InstQuest = () => {
                 </Select>
               </Form.Item>
               <br />
-              <Form.Item
-                name="clientFitness"
-                label="Client overall fitness level preference"
-              >
-                <Slider
-                  defaultValue={
-                    user.clientFitness ? user.clientFitness : [0, 100]
-                  }
-                  range
-                />
+              <Form.Item name="clientFitness" label="Client overall fitness level preference">
+                <Slider defaultValue={user.clientFitness ? user.clientFitness : [0, 100]} range />
               </Form.Item>
               <br />
               <Form.Item
@@ -340,22 +283,12 @@ const InstQuest = () => {
               >
                 <Slider
                   range
-                  defaultValue={
-                    user.clientHypertrophy ? user.clientHypertrophy : [0, 100]
-                  }
+                  defaultValue={user.clientHypertrophy ? user.clientHypertrophy : [0, 100]}
                 />
               </Form.Item>
               <br />
-              <Form.Item
-                name="clientStrength"
-                label="Client overall strength level preference"
-              >
-                <Slider
-                  range
-                  defaultValue={
-                    user.clientStrength ? user.clientStrength : [0, 100]
-                  }
-                />
+              <Form.Item name="clientStrength" label="Client overall strength level preference">
+                <Slider range defaultValue={user.clientStrength ? user.clientStrength : [0, 100]} />
               </Form.Item>
             </Panel>
           </Collapse>

@@ -1,32 +1,37 @@
-import {
-  Layout,
-  BackTop,
- } from "antd";
-import { ArrowUpOutlined} from '@ant-design/icons';
-import "antd/dist/antd.css";
-import "../styles/main.scss";
+import { BackTop } from 'antd';
+import { ArrowUpOutlined } from '@ant-design/icons';
+import 'antd/dist/antd.css';
+import '../styles/main.scss';
+import Head from 'next/head';
+import { useState, useMemo } from 'react';
+import Layout from '../components/Layout';
 // import { env } from "../config.js";
-import Nav from "../components/Nav.jsx";
-import { useState, useMemo } from "react";
-import { UserContext } from "../contexts/UserContext.js";
-const { Header, Footer, Content } = Layout;
+import UserContext from '../contexts/UserContext';
+
 function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null);
   const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
-    <UserContext.Provider value={providerValue}>
-      <Layout>
-        <Header>
-          <Nav />
-        </Header>
-        <Content>
+    <>
+      <Head>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,700&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
+      <UserContext.Provider value={providerValue}>
+        <Layout>
           <BackTop>
-            <div> Top<ArrowUpOutlined /></div>
+            <div>
+              Top
+              <ArrowUpOutlined />
+            </div>
           </BackTop>
-            <Component {...pageProps} />
-        </Content>
-      </Layout>
-    </UserContext.Provider>
+          <Component {...pageProps} />
+        </Layout>
+      </UserContext.Provider>
+    </>
   );
 }
 

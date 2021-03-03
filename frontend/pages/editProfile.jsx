@@ -1,29 +1,25 @@
-import { updateUser } from "../utils/user.js";
-import { useRouter } from "next/router";
-import { UserContext } from "../contexts/UserContext.js";
+import { CheckOutlined } from '@ant-design/icons';
+import { useState, useEffect, useContext } from 'react';
+import { useRouter } from 'next/router';
 import {
   Space,
   Form,
   Input,
-  Checkbox,
   Alert,
   Button,
   Row,
   Card,
   Select,
-  InputNumber,
-  Menu,
-  Tabs,
   DatePicker,
   Modal,
   notification,
-} from "antd";
-import { useState, useEffect, useContext } from "react";
-import InstQuest from "../components/InstQuest.jsx";
-import { QuestionCircleOutlined, CheckOutlined } from "@ant-design/icons";
+  Tabs,
+} from 'antd';
+import updateUser from '../utils/user';
+import UserContext from '../contexts/UserContext';
+import InstQuest from '../components/InstQuest';
 
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const tailFormItemLayout = {
   wrapperCol: {
@@ -40,10 +36,9 @@ const tailFormItemLayout = {
 
 const infoAlertText = (
   <p>
-    Adding information on this page helps us tailor our services and allows
-    clients to be matched more efficiently, as well as letting them know who you
-    are and how you work before initiating contact. We encourage but do not
-    require you to provide this information.
+    Adding information on this page helps us tailor our services and allows clients to be matched
+    more efficiently, as well as letting them know who you are and how you work before initiating
+    contact. We encourage but do not require you to provide this information.
   </p>
 );
 
@@ -59,10 +54,10 @@ const editProfilePage = () => {
   };
 
   const router = useRouter();
-  const { user, setUser } = useContext(UserContext);
-  //redirect to home page if user not logged in
+  const { user } = useContext(UserContext);
+  // redirect to home page if user not logged in
   useEffect(() => {
-    if (!user) router.push("/");
+    if (!user) router.push('/');
   }, []);
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
@@ -72,11 +67,11 @@ const editProfilePage = () => {
       const response = await updateUser(values);
       if (response.data.success) {
         notification.open({
-          message: "Information updated!",
+          message: 'Information updated!',
           duration: 2,
-          icon: <CheckOutlined style={{ color: "#33FF49" }} />,
+          icon: <CheckOutlined style={{ color: '#33FF49' }} />,
         });
-        router.push("/");
+        router.push('/');
       }
     } catch (err) {
       setHasError(true);
@@ -93,19 +88,10 @@ const editProfilePage = () => {
       <Card>
         <Tabs defaultActiveKey="1">
           <TabPane tab="Basic Info" key="1">
-            <Form
-              form={form}
-              name="Update my info"
-              onFinish={onFinish}
-              scrollToFirstError
-            >
+            <Form form={form} name="Update my info" onFinish={onFinish} scrollToFirstError>
               <Space direction="vertical" size="middle">
                 {hasError && (
-                  <Alert
-                    type="error"
-                    message="something went wrong, please try again"
-                    banner
-                  />
+                  <Alert type="error" message="something went wrong, please try again" banner />
                 )}
                 <h1>Add/Edit basic profile information</h1>
                 <Alert
@@ -138,8 +124,8 @@ const editProfilePage = () => {
                   label="Birthday"
                   rules={[
                     {
-                      type: "object",
-                      message: "Please select your birthday",
+                      type: 'object',
+                      message: 'Please select your birthday',
                     },
                   ]}
                 >
@@ -165,34 +151,27 @@ const editProfilePage = () => {
 
           <TabPane tab="Detailed info" key="2">
             <h1>
-              Add/Edit in-depth profile information{" "}
-              {
-                <>
-                  <Button type="primary" shape="circle" onClick={showAlert}>
-                    ?
-                  </Button>
-                  <Modal
-                    closable={false}
-                    cancelButtonProps={{ style: { display: "none" } }}
-                    title="This info is optional"
-                    visible={isAlertVisible}
-                    onOk={handleOk}
-                  >
-                    {infoAlertText}
-                  </Modal>
-                </>
-              }
+              Add/Edit in-depth profile information{' '}
+              <>
+                <Button type="primary" shape="circle" onClick={showAlert}>
+                  ?
+                </Button>
+                <Modal
+                  closable={false}
+                  cancelButtonProps={{ style: { display: 'none' } }}
+                  title="This info is optional"
+                  visible={isAlertVisible}
+                  onOk={handleOk}
+                >
+                  {infoAlertText}
+                </Modal>
+              </>
             </h1>
             <InstQuest />
           </TabPane>
 
           <TabPane tab="Credentials" key="3">
-            <Form
-              form={form}
-              name="Edit my info"
-              onFinish={onFinish}
-              scrollToFirstError
-            >
+            <Form form={form} name="Edit my info" onFinish={onFinish} scrollToFirstError>
               <Space direction="vertical" size="middle">
                 {hasError && (
                   <Alert
@@ -208,8 +187,8 @@ const editProfilePage = () => {
                 label="New email"
                 rules={[
                   {
-                    type: "email",
-                    message: "Invalid Email",
+                    type: 'email',
+                    message: 'Invalid Email',
                   },
                 ]}
               >
@@ -220,16 +199,17 @@ const editProfilePage = () => {
               </Form.Item>
               <Form.Item
                 name="confirm"
-                label="Confirm password"
-                dependencies={["password"]}
+                label="Confirm Password"
+                dependencies={['password']}
                 hasFeedback
                 rules={[
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (!value || getFieldValue("password") === value) {
+                      if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject("Sorry the passwords do not match");
+                      // eslint-disable-next-line prefer-promise-reject-errors
+                      return Promise.reject('Sorry the passwords do not match');
                     },
                   }),
                 ]}
