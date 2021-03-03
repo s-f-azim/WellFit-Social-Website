@@ -20,9 +20,9 @@ const UserSchema = new mongoose.Schema(
       required: [
         function () {
           return (
-            this.googleId === undefined
-            && this.instaId === undefined
-            && this.facebookId === undefined
+            this.googleId === undefined &&
+            this.instaId === undefined &&
+            this.facebookId === undefined
           );
         },
         'Please add a password',
@@ -73,8 +73,14 @@ const UserSchema = new mongoose.Schema(
       type: String,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
+// connect the creator of courses to the user (ex user.courses)
+UserSchema.virtual('courses', {
+  ref: 'Course',
+  localField: '_id',
+  foreignField: 'creators',
+});
 
 // change the json to not send specified fields
 UserSchema.methods.toJSON = function () {

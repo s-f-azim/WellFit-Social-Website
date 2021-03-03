@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import LandingPage from '../components/LandingPage';
-import React, { Component } from 'react';
 import { useContext, useEffect } from 'react';
 import UserContext from '../contexts/UserContext';
 import { getCookie } from '../utils/auth';
