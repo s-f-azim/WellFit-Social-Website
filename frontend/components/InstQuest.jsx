@@ -104,7 +104,7 @@ const InstQuest = () => {
                 </Select>
               </Form.Item>
 
-              <Form.List name="qualifications" label="Qualifications">
+              <Form.List name="qualifications" >
                 {(fields, { add, remove }) => (
                   <>
                     {fields.map((field) => (
@@ -122,11 +122,11 @@ const InstQuest = () => {
                             style={{ width: "90%" }}
                             placeholder="Enter your qualification"
                           />
+                        </Form.Item>
                           <CloseOutlined
                             style={{ color: "red", margin: "7px" }}
                             onClick={() => remove(field.name)}
                           />
-                        </Form.Item>
                       </Space>
                     ))}
                     <Button
