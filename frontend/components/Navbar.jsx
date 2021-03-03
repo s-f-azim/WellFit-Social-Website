@@ -1,13 +1,13 @@
 import { Button, Typography, Input } from 'antd';
 const { Search } = Input;
 const { Title } = Typography;
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import UserContext from '../contexts/UserContext';
 import ProfileBar from './ProfileBar';
+import { useAuth } from '../services/auth';
 
 const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useAuth();
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -98,7 +98,7 @@ const LoggedOutMenu = () => {
 
 const Navbar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user } = useAuth();
 
   return (
     <>

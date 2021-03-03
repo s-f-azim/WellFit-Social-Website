@@ -16,7 +16,6 @@ import {
   Tabs,
 } from 'antd';
 import updateUser from '../actions/user';
-import UserContext from '../contexts/UserContext';
 import InstQuest from '../components/InstQuest';
 
 const { Option } = Select;
@@ -54,11 +53,6 @@ const editProfilePage = () => {
   };
 
   const router = useRouter();
-  const { user, setUser } = useContext(UserContext);
-  // redirect to home page if user not logged in
-  useEffect(() => {
-    if (!user) router.push('/');
-  }, []);
 
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();

@@ -7,6 +7,7 @@ import {
   SmileOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
+import { useAuth } from '../services/auth';
 import API from '../services/api';
 
 const formItemLayout = {
@@ -36,23 +37,18 @@ const Login = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
-  const { setUser } = useContext(UserContext);
+  const { login } = useAuth();
   // normal login handler
   const onFinish = async (values) => {
     const { email, password } = values;
     try {
-      const response = await signin(email, password);
-      if (response.data.success) {
-        notification.open({
-          message: 'Welcome back!',
-          duration: 2,
-          icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
-        });
-        setUser(response.data.data);
-        authenticate(response.data, () => {
-          router.push('/');
-        });
-      }
+      const something = await login(email, password);
+      notification.open({
+        message: 'Welcome back!',
+        duration: 2,
+        icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
+      });
+      router.push('/');
     } catch (err) {
       setHasError(true);
     }
