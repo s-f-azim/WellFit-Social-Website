@@ -51,15 +51,12 @@ const tailFormItemLayout = {
 const InstQuest = () => {
   const router = useRouter();
   const { user, setUser } = useContext(UserContext);
-  //redirect to home page if user not logged in
-  useEffect(() => {
-    if (!user) router.push("/");
-  }, []);
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
 
+
   const onFinish = async (values) => {
-    console.log(values);
+    console.log(user);
     try {
       const response = await updateUser(values);
       if (response.data.success) {
@@ -68,6 +65,8 @@ const InstQuest = () => {
           duration: 2,
           icon: <CheckOutlined style={{ color: "#33FF49" }} />,
         });
+          setUser(response.data.data)
+          console.log(user);
         router.push("/");
       }
     } catch (err) {
@@ -94,7 +93,8 @@ const InstQuest = () => {
           <Collapse bordered={false} ghost={true}>
             <Panel header={yourCareerText} key="1">
               <Form.Item name="trainerType" label="Trainer type">
-                <Select placeholder="Select your qualification">
+                <Select placeholder="Select your qualification" defaultValue={user.trainerType?user.trainerType
+                    :null}>
                   <Option value="Physique trainer">Physique trainer</Option>
                   <Option value="Performance trainer">
                     Performance trainer
