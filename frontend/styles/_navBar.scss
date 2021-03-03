@@ -1,0 +1,114 @@
+nav {
+  padding: 4rem;
+}
+.logo-text {
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: inline-block;
+  font-family: "Poppins";
+  font-weight: 800;
+  font-style: italic;
+}
+.option .ant-input-group-wrapper {
+  vertical-align: middle;
+  width: 18rem;
+  &:focus {
+    transform: scale(1.2);
+  }
+}
+.buttons {
+  float: right;
+  padding-top: 0rem;
+  margin-top: 0rem;
+  height: inherit;
+  font-size: 2rem;
+}
+
+.landing-text {
+  display: block;
+  font-size: 2rem;
+  width: 100%;
+}
+
+.topheader {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background-color: white;
+}
+
+/*Desktop View*/
+.nav-options {
+  display: inline-block;
+  height: inherit;
+  list-style-type: none;
+}
+.option {
+  float: left;
+  margin: 0em 1em 0em 1em;
+  font-size: large;
+}
+
+.mobile-menu {
+  display: none;
+}
+.ant-btn.menuButton {
+  font-size: 1.2rem;
+}
+@media (min-width: 1244px) {
+  .option .ant-input-group-wrapper {
+    vertical-align: middle;
+    width: 30rem;
+  }
+}
+@media (max-width: 999px) {
+  /*Mobile View */
+
+  .ant-btn.menuButton {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .nav-options {
+    display: flex;
+    width: 100%;
+    position: absolute;
+    top: 5rem;
+    left: -100%;
+    opacity: 0;
+    transition: all 0.5s ease;
+    flex-direction: column;
+    list-style-type: none;
+    grid-gap: 0rem;
+  }
+
+  .nav-options.activs {
+    background: white;
+    left: 0;
+    opacity: 1;
+    align-items: center;
+    height: 100%;
+    transition: all 0.5s ease;
+    z-index: 1;
+    align-content: center;
+    padding-left: 0px;
+    padding-top: 2rem;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vw;
+    max-width: 60%;
+    padding: 1.8rem 0rem;
+  }
+
+  .mobile-menu {
+    float: right;
+    display: block;
+    position: absolute;
+    top: 2.4rem;
+    right: 2rem;
+  }
+}

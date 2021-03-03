@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import "./questionnaire.scss";
 @import "./preferences.scss";
 @import "./variables.scss";
@@ -12,6 +13,15 @@
 @import "./nav.scss";
 
 *,
+=======
+@import './variables.scss';
+@import './404.scss';
+@import './navBar.scss';
+@import './profileBar.scss';
+@import './profileTopBar.scss';
+@import './signup.scss';
+@import './login.scss';
+>>>>>>> 36e158b1fdba44ada89fcdb1fdcd151775b54e34
 body,
 ::before,
 ::after {
@@ -28,9 +38,18 @@ html:focus-within {
 body {
   min-height: 100%;
   min-width: 100%;
-  font-family: system-ui;
+  font-family: sans-serif, system-ui;
   text-rendering: optimizeSpeed;
 }
+<<<<<<< HEAD
+=======
+.ant-menu-item {
+  line-height: 64px;
+}
+.ant-menu-item:selected {
+  all: inherit;
+}
+>>>>>>> 36e158b1fdba44ada89fcdb1fdcd151775b54e34
 
 .ant-select-item-option-selected {
   .ant-select-item-option-content {
@@ -48,7 +67,6 @@ body {
   background-color: #e6f7ff;
   border: 1px solid #91d5ff;
 }
-
 // @media (prefers-reduced-motion: reduce) {
 //   *,
 //   *::before,

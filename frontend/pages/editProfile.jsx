@@ -1,25 +1,10 @@
-import { updateUser } from "../utils/user.js";
-import { useRouter } from "next/router";
-import { UserContext } from "../contexts/UserContext.js";
-import {
-  Space,
-  Form,
-  Input,
-  Checkbox,
-  Alert,
-  Button,
-  Row,
-  Card,
-  Select,
-  InputNumber,
-  Menu,
-  Tabs,
-  DatePicker,
-} from "antd";
-import { useState, useEffect, useContext } from "react";
+import { useRouter } from 'next/router';
+import { Space, Form, Input, Alert, Button, Row, Card, Select, Tabs, DatePicker } from 'antd';
+import { useState, useEffect, useContext } from 'react';
+import UserContext from '../contexts/UserContext';
+import updateUser from '../utils/user';
 
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const formItemLayout = {
   labelCol: {
@@ -46,10 +31,10 @@ const tailFormItemLayout = {
 
 const editProfilePage = () => {
   const router = useRouter();
-  const { user, setUser } = useContext(UserContext);
-  //redirect to home page if user not logged in
+  const { user } = useContext(UserContext);
+  // redirect to home page if user not logged in
   useEffect(() => {
-    if (!user) router.push("/");
+    if (!user) router.push('/');
   }, []);
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
@@ -58,7 +43,7 @@ const editProfilePage = () => {
     try {
       const response = await updateUser(values);
       if (response.data.success) {
-        router.push("/");
+        router.push('/');
       }
     } catch (err) {
       setHasError(true);
@@ -84,11 +69,7 @@ const editProfilePage = () => {
             >
               <Space direction="vertical" size="middle">
                 {hasError && (
-                  <Alert
-                    type="error"
-                    message="something went wrong, please try again"
-                    banner
-                  />
+                  <Alert type="error" message="something went wrong, please try again" banner />
                 )}
                 <h1>Modify profile information</h1>
                 <Alert
@@ -121,8 +102,8 @@ const editProfilePage = () => {
                   label="Birthday"
                   rules={[
                     {
-                      type: "object",
-                      message: "Please select your birthday",
+                      type: 'object',
+                      message: 'Please select your birthday',
                     },
                   ]}
                 >
@@ -169,8 +150,8 @@ const editProfilePage = () => {
                 label="New email"
                 rules={[
                   {
-                    type: "email",
-                    message: "Invalid Email",
+                    type: 'email',
+                    message: 'Invalid Email',
                   },
                 ]}
               >
@@ -182,15 +163,16 @@ const editProfilePage = () => {
               <Form.Item
                 name="confirm"
                 label="Confirm Password"
-                dependencies={["password"]}
+                dependencies={['password']}
                 hasFeedback
                 rules={[
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (!value || getFieldValue("password") === value) {
+                      if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject("Sorry the passwords do not match");
+                      // eslint-disable-next-line prefer-promise-reject-errors
+                      return Promise.reject('Sorry the passwords do not match');
                     },
                   }),
                 ]}
