@@ -67,7 +67,7 @@ const UserSchema = new mongoose.Schema(
       type: [String],
     },
     speciality: {
-      type: [String],
+      type: String,
     },
     customerStories: {
       type: [String],
