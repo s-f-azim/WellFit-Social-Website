@@ -67,13 +67,13 @@ const UserSchema = new mongoose.Schema(
       type: [String],
     },
     speciality: {
-      type: String,
+      type: [String],
     },
     customerStories: {
       type: [String],
     },
     communicationModes: {
-      type: String,
+      type: [String],
       enum: [
         "Email",
         "Phone calls",
@@ -112,7 +112,7 @@ const UserSchema = new mongoose.Schema(
       ],
     },
     paymentOptions: {
-      type: String,
+      type: [String],
       enum: [
         "Paypal",
         "Wired (bank) transfer",
@@ -123,7 +123,7 @@ const UserSchema = new mongoose.Schema(
       ],
     },
     serviceFormat: {
-      type: String,
+      type: [String],
       enum: [
         "Non-client-specific videos",
         "In person sessions",
