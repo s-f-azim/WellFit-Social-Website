@@ -136,12 +136,7 @@ const UserSchema = new mongoose.Schema(
     },
     clientGenderPreference: {
       type: String,
-      enum: [
-        "Male",
-        "Female",
-        "Non-Binary",
-        "Any",
-      ],
+      enum: ["Male", "Female", "Non-Binary", "Any"],
     },
     clientFitness: {
       type: [Number],

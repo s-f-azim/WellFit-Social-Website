@@ -44,11 +44,4 @@ const getCookie = (key) => {
   if (process.browser) return cookie.get(key);
 };
 
-export {
-  signup,
-  signin,
-  logout,
-  setCookie,
-  getCookie,
-  authenticate,
-};
+export { signup, signin, logout, setCookie, getCookie, authenticate };
