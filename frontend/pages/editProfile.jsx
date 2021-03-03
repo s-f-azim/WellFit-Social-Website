@@ -59,6 +59,7 @@ const editProfilePage = () => {
   useEffect(() => {
     if (!user) router.push('/');
   }, []);
+
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
 
