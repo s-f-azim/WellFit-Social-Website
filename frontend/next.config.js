@@ -54,7 +54,4 @@ const nextConfig = {
     PRODUCTION: false,
   },
 };
-module.exports = withPlugins(
-  [withSass, withImages, withLess, withCss],
-  nextConfig,
-);
+module.exports = withPlugins([withSass, withImages, withLess, withCss], nextConfig);

@@ -1,19 +1,8 @@
-import { useEffect, useRef, useState, useContext } from "react";
-import {
-  Form,
-  InputNumber,
-  Button,
-  Carousel,
-  Select,
-  Row,
-  Col,
-  Layout,
-  Card,
-  Steps,
-} from "antd";
+import { useEffect, useRef, useState, useContext } from 'react';
+import { Form, InputNumber, Button, Carousel, Select, Row, Col, Layout, Card, Steps } from 'antd';
 
 //import { useRouter } from "next/router";
-import { updateUser } from "../utils/user.js";
+import { updateUser } from '../utils/user.js';
 //import { UserContext } from "../contexts/UserContext.js";
 
 const { Option } = Select;
@@ -33,18 +22,17 @@ const Questionnaire = () => {
 
   const onFinish = async (values) => {
     //console.log(user);
-    console.log("Success:", values)
+    console.log('Success:', values);
 
     try {
       const response = await updateUser(values);
     } catch (err) {
       console.log(err);
     }
-    
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failure:", errorInfo);
+    console.log('Failure:', errorInfo);
   };
 
   const haveErrors = (fields) => {
@@ -78,25 +66,12 @@ const Questionnaire = () => {
   };
 
   const NextButton = () => {
-    return (
-      currentSlide === totalSlides-1 ?
-      <Button
-        size="large"
-        type="primary"
-        disabled={!valid}
-        onClick={() => form.submit()}
-        block
-      >
+    return currentSlide === totalSlides - 1 ? (
+      <Button size="large" type="primary" disabled={!valid} onClick={() => form.submit()} block>
         SUBMIT
       </Button>
-      :
-      <Button
-        size="large"
-        type="primary"
-        onClick={next}
-        disabled={!valid}
-        block
-      >
+    ) : (
+      <Button size="large" type="primary" onClick={next} disabled={!valid} block>
         NEXT
       </Button>
     );
@@ -105,15 +80,11 @@ const Questionnaire = () => {
   const FormSteps = () => {
     let steps = [];
     for (let i = 0; i < totalSlides; i++) {
-      steps.push(<Step key={i} />);    
+      steps.push(<Step key={i} />);
     }
 
     return (
-      <Steps
-        progressDot
-        current={currentSlide}
-        direction="vertical"
-      >
+      <Steps progressDot current={currentSlide} direction="vertical">
         {steps}
       </Steps>
     );
@@ -123,11 +94,8 @@ const Questionnaire = () => {
     <>
       <Card
         className="container-card"
-        style={{ padding: "0 1rem" }}
-        actions={[
-          <PreviousButton />,
-          <NextButton />,
-        ]}
+        style={{ padding: '0 1rem' }}
+        actions={[<PreviousButton />, <NextButton />]}
       >
         <Form
           name="questionnaire"
@@ -163,9 +131,9 @@ const Questionnaire = () => {
                       name="weight"
                       rules={[
                         {
-                          type: "number",
+                          type: 'number',
                           min: 0,
-                          message: "Please enter positive numbers only",
+                          message: 'Please enter positive numbers only',
                         },
                       ]}
                     >
@@ -179,9 +147,9 @@ const Questionnaire = () => {
                       name="height"
                       rules={[
                         {
-                          type: "number",
+                          type: 'number',
                           min: 0,
-                          message: "Please enter positive numbers only",
+                          message: 'Please enter positive numbers only',
                         },
                       ]}
                     >
@@ -192,10 +160,7 @@ const Questionnaire = () => {
 
                 <Card>
                   <Card.Grid>
-                    <Form.Item
-                      label="Preferred instructor's gender?"
-                      name="preferredGender"
-                    >
+                    <Form.Item label="Preferred instructor's gender?" name="preferredGender">
                       <Select allowClear>
                         <Option value="male">Male</Option>
                         <Option value="female">Female</Option>
@@ -207,10 +172,7 @@ const Questionnaire = () => {
 
                 <Card>
                   <Card.Grid>
-                    <Form.Item
-                      label="What is your Fitness Level?"
-                      name="fitnessLevel"
-                    >
+                    <Form.Item label="What is your Fitness Level?" name="fitnessLevel">
                       <Select allowClear>
                         <Option value="beginner">Beginner</Option>
                         <Option value="intermediate">Intermediate</Option>
@@ -227,16 +189,16 @@ const Questionnaire = () => {
                       name="trainingDuration"
                       rules={[
                         {
-                          type: "number",
+                          type: 'number',
                           min: 0,
-                          message: "Please enter positive numbers only",
+                          message: 'Please enter positive numbers only',
                         },
                         {
                           validator: async (_, value) => {
                             if (!value || Number.isInteger(value)) return Promise.resolve();
                             return Promise.reject('Please enter a whole number');
-                          }
-                        }
+                          },
+                        },
                       ]}
                     >
                       <InputNumber />
@@ -253,9 +215,7 @@ const Questionnaire = () => {
                       <Select mode="multiple" allowClear>
                         <Option value="dumbbells">Dumbbells</Option>
                         <Option value="barbells">Barbells</Option>
-                        <Option value="resistanceBands">
-                          Resistance Bands
-                        </Option>
+                        <Option value="resistanceBands">Resistance Bands</Option>
                         <Option value="treadmill">Treadmill</Option>
                       </Select>
                     </Form.Item>
@@ -263,9 +223,7 @@ const Questionnaire = () => {
                 </Card>
 
                 <Card>
-                  <Card.Grid>
-                    
-                  </Card.Grid>
+                  <Card.Grid></Card.Grid>
                 </Card>
               </Carousel>
             </Col>

@@ -1,7 +1,7 @@
 module.exports = {
   presets: [
     [
-      "@babel/preset-env",
+      '@babel/preset-env',
       {
         targets: {
           esmodules: true,
@@ -9,9 +9,9 @@ module.exports = {
       },
     ],
     [
-      "@babel/preset-react",
+      '@babel/preset-react',
       {
-        runtime: "automatic",
+        runtime: 'automatic',
       },
     ],
   ],
