@@ -12,9 +12,9 @@ import {
   Steps,
 } from "antd";
 
-import { useRouter } from "next/router";
+//import { useRouter } from "next/router";
 import { updateUser } from "../utils/user.js";
-import { UserContext } from "../contexts/UserContext.js";
+//import { UserContext } from "../contexts/UserContext.js";
 
 const { Option } = Select;
 
@@ -25,14 +25,14 @@ const Questionnaire = () => {
   const [form] = Form.useForm();
   const [valid, setValid] = useState(true);
 
-  const router = useRouter();
-  const { user, setUser } = useContext(UserContext);
+  //const router = useRouter();
+  //const { user, setUser } = useContext(UserContext);
 
   const totalSlides = 5;
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const onFinish = async (values) => {
-    console.log(user);
+    //console.log(user);
     console.log("Success:", values)
 
     try {
@@ -105,14 +105,13 @@ const Questionnaire = () => {
   const FormSteps = () => {
     let steps = [];
     for (let i = 0; i < totalSlides; i++) {
-      steps.push(<Step />);    
+      steps.push(<Step key={i} />);    
     }
 
     return (
       <Steps
         progressDot
         current={currentSlide}
-        responsive
         direction="vertical"
       >
         {steps}
