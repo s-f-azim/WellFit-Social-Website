@@ -1,6 +1,11 @@
 import { useRouter } from 'next/router';
-import { Space, Form, Input, Alert, Button, Row, Card } from 'antd';
-import { InstagramOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
+import { Space, Form, Input, Alert, Button, Row, Card, notification } from 'antd';
+import {
+  InstagramOutlined,
+  GoogleOutlined,
+  FacebookOutlined,
+  SmileOutlined,
+} from '@ant-design/icons';
 import { useState, useContext } from 'react';
 import API from '../config';
 import { signin, authenticate } from '../utils/auth';
@@ -40,6 +45,11 @@ const Login = () => {
     try {
       const response = await signin(email, password);
       if (response.data.success) {
+        notification.open({
+          message: 'Welcome back!',
+          duration: 2,
+          icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
+        });
         setUser(response.data.data);
         authenticate(response.data, () => {
           router.push('/');

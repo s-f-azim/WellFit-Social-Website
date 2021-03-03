@@ -52,7 +52,6 @@ const InstQuest = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    console.log(user);
     try {
       const response = await updateUser(values);
       if (response.data.success) {
@@ -62,7 +61,6 @@ const InstQuest = () => {
           icon: <CheckOutlined style={{ color: '#33FF49' }} />,
         });
         setUser(response.data.data);
-        console.log(user);
         router.push('/');
       }
     } catch (err) {

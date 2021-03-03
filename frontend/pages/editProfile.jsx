@@ -54,7 +54,7 @@ const editProfilePage = () => {
   };
 
   const router = useRouter();
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   // redirect to home page if user not logged in
   useEffect(() => {
     if (!user) router.push('/');
@@ -71,6 +71,7 @@ const editProfilePage = () => {
           duration: 2,
           icon: <CheckOutlined style={{ color: '#33FF49' }} />,
         });
+        setUser(response.data.data);
         router.push('/');
       }
     } catch (err) {
@@ -100,7 +101,10 @@ const editProfilePage = () => {
                   showIcon
                 />
                 <Form.Item name="gender" label="Gender">
-                  <Select placeholder="Select your gender">
+                  <Select
+                    defaultValue={user.gender ? user.gender : null}
+                    placeholder="Select your gender"
+                  >
                     <Option value="Male">Male</Option>
                     <Option value="Female">Female</Option>
                     <Option value="Non-Binary"> Non-Binary</Option>
@@ -109,7 +113,10 @@ const editProfilePage = () => {
                 </Form.Item>
 
                 <Form.Item name="location" label="Location">
-                  <Select placeholder="Select your location">
+                  <Select
+                    defaultValue={user.location ? user.location : null}
+                    placeholder="Select your location"
+                  >
                     <Option value="Europe">Europe</Option>
                     <Option value="Asia">Asia</Option>
                     <Option value="North America">North America</Option>
@@ -129,15 +136,18 @@ const editProfilePage = () => {
                     },
                   ]}
                 >
-                  <DatePicker disabledDate={(d) => !d || d.isAfter(date)} />
+                  <DatePicker
+                    defaultValue={user.birtdhay ? user.birthday : null}
+                    disabledDate={(d) => !d || d.isAfter(date)}
+                  />
                 </Form.Item>
 
                 <Form.Item name="nickname" label="Nickname">
-                  <Input />
+                  <Input defaultValue={user.nickname ? user.nickname : null} />
                 </Form.Item>
 
                 <Form.Item name="bio" label="Bio">
-                  <Input.TextArea />
+                  <Input.TextArea defaultValue={user.bio ? user.bio : null} />
                 </Form.Item>
 
                 <Form.Item {...tailFormItemLayout}>
@@ -151,7 +161,7 @@ const editProfilePage = () => {
 
           <TabPane tab="Detailed info" key="2">
             <h1>
-              Add/Edit in-depth profile information{' '}
+              Add/Edit in-depth profile information
               <>
                 <Button type="primary" shape="circle" onClick={showAlert}>
                   ?
