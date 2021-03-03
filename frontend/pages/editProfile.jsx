@@ -137,7 +137,7 @@ const editProfilePage = () => {
                   ]}
                 >
                   <DatePicker
-                    defaultValue={user.birtdhay ? user.birthday : null}
+                    defaultPickerValue={user.birtdhay ? user.birthday : null}
                     disabledDate={(d) => !d || d.isAfter(date)}
                   />
                 </Form.Item>
@@ -147,7 +147,7 @@ const editProfilePage = () => {
                 </Form.Item>
 
                 <Form.Item name="bio" label="Bio">
-                  <Input.TextArea defaultValue={user.bio ? user.bio : null} />
+                  <Input.TextArea maxLength={300} defaultValue={user.bio ? user.bio : null} />
                 </Form.Item>
 
                 <Form.Item {...tailFormItemLayout}>

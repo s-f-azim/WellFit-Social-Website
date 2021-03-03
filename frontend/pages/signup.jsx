@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
-import { Space, Form, Input, Checkbox, Alert, Button, Row, Card } from 'antd';
+import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, notification } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { signup } from '../utils/auth';
 
@@ -34,6 +35,11 @@ const Signup = () => {
     try {
       const response = await signup(name, email, password);
       if (response.data.success) {
+        notification.open({
+          message: 'Signed up successfully!',
+          duration: 2,
+          icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
+        });
         router.push('/');
       }
     } catch (err) {
