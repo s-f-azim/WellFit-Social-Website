@@ -47,7 +47,7 @@ const nextConfig = {
   },
   publicRuntimeConfig: {
     APP_NAME: "instaFit",
-    API_DEVELOPMENT: `https://localhost:4000/api`,
+    API_DEVELOPMENT: `http://localhost:4000/api`,
     API_PRODUCTION: `http://localhost:4000/api`,
     PRODUCTION: false,
   },
