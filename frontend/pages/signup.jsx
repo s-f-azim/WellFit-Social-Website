@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, notification } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { signup } from '../actions/auth';
 import { useAuth } from '../services/auth';
 
 const formItemLayout = {
@@ -31,7 +30,7 @@ const Signup = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
-  const { login } = useAuth();
+  const { login, signup } = useAuth();
   const onFinish = async (values) => {
     const { email, name, password } = values;
     try {

@@ -11,17 +11,16 @@ export const AuthProvider = ({ children }) => {
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
   useEffect(() => {
     async function loadUserFromCookies() {
-      // const token = cookies;
-      // const { data: responseData } = await api.get('users/me');
-      // if (responseData.data) setUser(responseData.data);
-      /* if (token) {
+      const token = cookies;
+      if (token) {
         api.defaults.headers.Authorization = `Bearer ${token}`;
         const { data: responseData } = await api.get('users/me');
-      } */
+        if (responseData.data) setUser(responseData.data);
+      }
       setLoading(false);
     }
     loadUserFromCookies();
-  }, [pathname]);
+  }, []);
 
   const login = async (email, password) => {
     const response = await api.post('users/login', { email, password });
@@ -40,21 +39,19 @@ export const AuthProvider = ({ children }) => {
     await api.get('users/logout');
     Router.push('/');
   };
+  const signup = async (name, email, password) =>
+    await api.post('/users/signup', {
+      name,
+      email,
+      password,
+    });
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated: !!user, user, login, loading, logout, setUser }}
+      value={{ isAuthenticated: !!user, user, login, loading, logout, setUser, signup }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
 export const useAuth = () => useContext(AuthContext);
-
-export const ProtectRoute = ({ children }) => {
-  const { isAuthenticated, isLoading } = useAuth();
-  if (isLoading || !isAuthenticated) {
-    return <div>loading</div>;
-  }
-  return children;
-};
