@@ -1,9 +1,7 @@
 import request from 'supertest';
 import User from '../src/models/User.js';
 import app from '../src/app.js';
-import {
-  tokens, userOne, setupDatabase,
-} from './fixtures/db.js';
+import { tokens, userOne, userTwo, setupDatabase } from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
@@ -36,10 +34,7 @@ it('Should not signup a new user', async () => {
 
 // assert user login with valid data
 it('Should login user', async () => {
-  await request(app)
-    .post('/api/users/login')
-    .send(userOne)
-    .expect(200);
+  await request(app).post('/api/users/login').send(userOne).expect(200);
 });
 
 // assert user login with invalid data
@@ -49,19 +44,13 @@ it('Should login user', async () => {
 
 // assert logout of a user
 it('Should logout a user', async () => {
-  await request(app)
-    .post('/api/users/login')
-    .send(userOne)
-    .expect(200);
+  await request(app).post('/api/users/login').send(userOne).expect(200);
   await request(app).get('/api/users/logout').expect(200);
 });
 
 // assert non logged in user cant edit their information
 it('Should not  edit profile when not logged in', async () => {
-  await request(app)
-    .patch('/api/users/editProfile')
-    .send()
-    .expect(401);
+  await request(app).patch('/api/users/editProfile').send().expect(401);
 });
 // assert only logged in user can edit their information
 it('Should not edit profile when not logged in', async () => {
@@ -91,4 +80,59 @@ it('Should not update a user\'s invalid attribute', async () => {
     .expect(200);
   const user = await User.findById(userOne._id);
   expect(user.size).toEqual(undefined);
+});
+
+it('Should add a review with valid data', async () => {
+  const review = { rate: 5, comment: 'test' };
+
+  await request(app)
+    .post(`/api/users/review/${userTwo._id}`)
+    .send(review)
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(200);
+  const user = await User.findById(userTwo._id);
+  expect(user.reviews).not.toHaveLength(0);
+});
+
+it('Should not add a review with invalid data', async () => {
+  const review = { rate: -1, comment: 'test' };
+
+  await request(app)
+    .post(`/api/users/review/${userTwo._id}`)
+    .send(review)
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(400);
+  const user = await User.findById(userTwo._id);
+  expect(user.reviews).toHaveLength(0);
+});
+
+it('Should not allow users to review themselves', async () => {
+  const review = { rate: 5, comment: 'test' };
+
+  await request(app)
+    .post(`/api/users/review/${userOne._id}`)
+    .send(review)
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(400);
+  const user = await User.findById(userOne._id);
+  expect(user.reviews).toHaveLength(0);
+});
+
+it('Should not allow to review same user more than once', async () => {
+  const review = { rate: 5, comment: 'test' };
+
+  await request(app)
+    .post(`/api/users/review/${userTwo._id}`)
+    .send(review)
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(200);
+
+  await request(app)
+    .post(`/api/users/review/${userTwo._id}`)
+    .send(review)
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(400);
+
+  const user = await User.findById(userTwo._id);
+  expect(user.reviews).toHaveLength(1);
 });

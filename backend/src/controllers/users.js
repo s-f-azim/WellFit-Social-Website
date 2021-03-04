@@ -43,7 +43,8 @@ const getUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const updates = Object.keys(req.body);
   updates.forEach(
-    (update) => req.body[update] !== undefined && (req.user[update] = req.body[update]),
+    (update) =>
+      req.body[update] !== undefined && (req.user[update] = req.body[update])
   );
   const updatedUser = await req.user.save();
   sendTokenResponse(updatedUser, 200, res);
@@ -61,6 +62,32 @@ const logoutUser = asyncHandler(async (req, res) => {
     httpOnly: true,
   });
   res.status(200).send({ success: true });
+});
+
+/**
+ * @async
+ * @desc review another user
+ * @route POST /api/users/review/:id
+ * @access private
+ */
+const reviewUser = asyncHandler(async (req, res) => {
+  if (req.user._id.toString() === req.params.id) {
+    return res.status(400).send({ error: 'Please do not review yourself' });
+  }
+
+  const otherUser = await User.findById(req.params.id);
+
+  if (otherUser.reviews.some((review) => review.author === req.user._id)) {
+    return res.status(400).send({ error: 'You already reviewed this user' });
+  }
+
+  otherUser.reviews.push({
+    author: req.user,
+    ...req.body,
+  });
+
+  await otherUser.save();
+  return res.status(200).send({ success: true });
 });
 
 /**
@@ -102,7 +129,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSginedJWTToken();
   const options = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'PRODUCTION',
@@ -121,7 +148,7 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
   const token = user.getSginedJWTToken();
   const options = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'PRODUCTION',
@@ -136,6 +163,7 @@ export {
   getUser,
   logoutUser,
   updateUser,
+  reviewUser,
   googleOauth,
   facebookOauth,
   instagramOauth,

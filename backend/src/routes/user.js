@@ -5,6 +5,7 @@ import {
   getUser,
   logoutUser,
   updateUser,
+  reviewUser,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -20,13 +21,16 @@ router
   .route('/editProfile')
   .patch(passport.authenticate('jwt', { session: false }), updateUser);
 router
+  .route('/review/:id')
+  .post(passport.authenticate('jwt', { session: false }), reviewUser);
+router
   .route('/profile')
   .get(passport.authenticate('jwt', { session: false }), getUser);
 router.route('/oauth/google').get(
   passport.authenticate('google', {
     scope: ['profile', 'email'],
     session: false,
-  }),
+  })
 );
 router
   .route('/oauth/google/redirect')
@@ -36,7 +40,7 @@ router.route('/oauth/instagram').get(
   passport.authenticate('instagram', {
     session: false,
     scope: ['user_profile'],
-  }),
+  })
 );
 
 router
@@ -47,7 +51,7 @@ router.route('/oauth/facebook').get(
   passport.authenticate('facebook', {
     session: false,
     scope: ['email'],
-  }),
+  })
 );
 
 router

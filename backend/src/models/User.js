@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs';
 import JWT from 'jsonwebtoken';
 import ErrorResponse from '../utils/errorResponse.js';
 
-
 // create user schema
 const UserSchema = new mongoose.Schema(
   {
@@ -22,9 +21,9 @@ const UserSchema = new mongoose.Schema(
       required: [
         function () {
           return (
-            this.googleId === undefined
-            && this.instaId === undefined
-            && this.facebookId === undefined
+            this.googleId === undefined &&
+            this.instaId === undefined &&
+            this.facebookId === undefined
           );
         },
         'Please add a password',
@@ -37,7 +36,7 @@ const UserSchema = new mongoose.Schema(
       required: [true, 'please enter your name'],
       minlength: 3,
     },
-    
+
     gender: {
       type: String,
       trim: true,
@@ -82,14 +81,12 @@ const UserSchema = new mongoose.Schema(
 
     preferredGender: {
       type: String,
-      enum: ["male", "female", "any"],
+      enum: ['male', 'female', 'any'],
     },
-
-    isPregnant: Boolean,
 
     fitnessLevel: {
       type: String,
-      enum: ["beginner", "intermediate", "advanced"],
+      enum: ['beginner', 'intermediate', 'advanced'],
     },
 
     trainingDuration: {
@@ -103,10 +100,28 @@ const UserSchema = new mongoose.Schema(
     trainingEquipment: [
       {
         type: String,
-        enum: ["dumbbells", "barbells", "resistanceBands", "treadmill"],
+        enum: ['dumbbells', 'barbells', 'resistanceBands', 'treadmill'],
       },
     ],
 
+    reviews: [
+      {
+        _id: false,
+        author: {
+          type: mongoose.Schema.ObjectId,
+          ref: 'User',
+        },
+        rate: {
+          type: Number,
+          required: [true, 'Please add a rating'],
+          min: 0,
+          max: 5,
+        },
+        comment: {
+          type: String,
+        },
+      },
+    ],
 
     googleId: {
       type: String,
@@ -117,11 +132,9 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
-
   },
-  { timestamps: true },
+  { timestamps: true }
 );
-
 
 // change the json to not send specified fields
 UserSchema.methods.toJSON = function () {
@@ -137,7 +150,6 @@ UserSchema.pre('save', async function (next) {
   }
   next();
 });
-
 
 // check that given email and password exists
 UserSchema.statics.checkCredentials = async ({ email, password }) => {
