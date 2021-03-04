@@ -32,9 +32,9 @@ const Signup = () => {
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
   const onFinish = async (values) => {
-    const { role, email, name, password } = values;
+    const { role, email, fName, lName, password } = values;
     try {
-      const response = await signup(role, name, email, password);
+      const response = await signup(role, fName, lName, email, password);
       if (response.data.success) {
         router.push('/');
       }
@@ -88,16 +88,32 @@ const Signup = () => {
               <Input />
             </Form.Item>
             <Form.Item
-              name="name"
-              label="Name"
+              name="fName"
+              label="First name"
               rules={[
                 {
-                  min: 3,
-                  message: 'Name should be 3 or more letters',
+                  min: 2,
+                  message: 'Name should be 2 or more letters',
                 },
                 {
                   required: true,
-                  message: 'Please enter your name',
+                  message: 'Please enter your first name',
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="lName"
+              label="Last name"
+              rules={[
+                {
+                  min: 2,
+                  message: 'Name should be 2 or more letters',
+                },
+                {
+                  required: true,
+                  message: 'Please enter your last name',
                 },
               ]}
             >

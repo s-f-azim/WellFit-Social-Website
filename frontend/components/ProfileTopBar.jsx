@@ -20,7 +20,7 @@ const ProfileTopBar = ({ profileOpen, setProfileOpen }) => {
         }}
         icon={<AntDesignOutlined />}
       />
-      <h2>{user.name}</h2>
+      <h2>{user.fName}</h2>
       <CaretDownOutlined />
     </div>
   );

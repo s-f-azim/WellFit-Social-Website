@@ -35,7 +35,7 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
           </li>
           <li className="option">
             <Button type="link" className="menuButton" onClick={() => setProfileOpen(!profileOpen)}>
-              <img src={require('../public/person.svg')} /> {user.name}
+              <img src={require('../public/person.svg')} /> {user.fName}
             </Button>
           </li>
         </ul>

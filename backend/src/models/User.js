@@ -29,10 +29,15 @@ const UserSchema = new mongoose.Schema(
       ],
       minlength: 8,
     },
-    name: {
+    fName: {
       type: String,
-      required: [true, 'please enter your name'],
-      minlength: 3,
+      required: [true, 'please enter your first name'],
+      minlength: 2,
+    },
+    lName: {
+      type: String,
+      required: [true, 'please enter your last name'],
+      minlength: 2,
     },
     gender: {
       type: String,
