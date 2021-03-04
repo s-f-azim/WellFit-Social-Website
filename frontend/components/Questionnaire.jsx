@@ -14,9 +14,6 @@ const Questionnaire = () => {
   const [form] = Form.useForm();
   const [valid, setValid] = useState(true);
 
-  // const router = useRouter();
-  // const { user, setUser } = useContext(UserContext);
-
   const totalSlides = 5;
   const [currentSlide, setCurrentSlide] = useState(0);
 
