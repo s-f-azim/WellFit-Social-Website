@@ -1,13 +1,12 @@
-import Head from 'next/head';
+import React, { useContext, useEffect } from 'react';
 import LandingPage from '../components/LandingPage';
-import React, { Component } from 'react';
-import { useContext, useEffect } from 'react';
+import AdminDashboard from '../components/AdminDashboard';
 import UserContext from '../contexts/UserContext';
 import { getCookie } from '../utils/auth';
 
 // eslint-disable-next-line no-unused-vars
 export default function Home({ token, userCookie }) {
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   // on componont mount check if the user exists in the cookies
   useEffect(() => {
     if (getCookie('user') && getCookie('user') !== null) {
@@ -15,13 +14,11 @@ export default function Home({ token, userCookie }) {
     }
   }, []);
   return (
-    <>
-      <LandingPage />
-    </>
+    <>{user ? user.role === 'admin' ? <AdminDashboard /> : <LandingPage /> : <LandingPage />}</>
   );
 }
 
-export function getServerSideProps({ req, res }) {
+export function getServerSideProps({ req }) {
   return {
     props: {
       token: req.cookies.token || '',
