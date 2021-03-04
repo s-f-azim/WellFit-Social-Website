@@ -20,9 +20,9 @@ const UserSchema = new mongoose.Schema(
       required: [
         function () {
           return (
-            this.googleId === undefined
-            && this.instaId === undefined
-            && this.facebookId === undefined
+            this.googleId === undefined &&
+            this.instaId === undefined &&
+            this.facebookId === undefined
           );
         },
         'Please add a password',
@@ -72,8 +72,13 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
+    role: {
+      type: String,
+      enum: ['client', 'instructor', 'admin'],
+      required: [true, 'Please select a role'],
+    },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 // change the json to not send specified fields

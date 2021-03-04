@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router';
-import { Space, Form, Input, Checkbox, Alert, Button, Row, Card } from 'antd';
+import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, Select } from 'antd';
 import { useState } from 'react';
 import { signup } from '../utils/auth';
+
+const { Option } = Select;
 
 const formItemLayout = {
   labelCol: {
@@ -30,9 +32,9 @@ const Signup = () => {
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
   const onFinish = async (values) => {
-    const { email, name, password } = values;
+    const { role, email, name, password } = values;
     try {
-      const response = await signup(name, email, password);
+      const response = await signup(role, name, email, password);
       if (response.data.success) {
         router.push('/');
       }
@@ -54,6 +56,21 @@ const Signup = () => {
             {hasError && (
               <Alert type="error" message="this user already exists please try again" banner />
             )}
+            <Form.Item
+              name="role"
+              label="Register as"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select a role',
+                },
+              ]}
+            >
+              <Select>
+                <Option value="client">Client</Option>
+                <Option value="instructor">Instructor</Option>
+              </Select>
+            </Form.Item>
             <Form.Item
               name="email"
               label="Email"

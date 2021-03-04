@@ -8,8 +8,9 @@ const setCookie = (key, value) => (process.browser ? cookie.set(key, value, { ex
 // remove the cookie
 const removeCookie = (key) => (process.browser ? cookie.remove(key, { expires: 1 }) : '');
 
-const signup = (name, email, password) =>
+const signup = (role, name, email, password) =>
   axios.post(`${API}/users/signup`, {
+    role,
     name,
     email,
     password,
