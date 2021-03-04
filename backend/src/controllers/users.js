@@ -66,11 +66,11 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
- * @desc review another user
+ * @desc create a review for another user
  * @route POST /api/users/review/:id
  * @access private
  */
-const reviewUser = asyncHandler(async (req, res) => {
+const createReview = asyncHandler(async (req, res) => {
   if (req.user._id.toString() === req.params.id) {
     return res.status(400).send({ error: 'Please do not review yourself' });
   }
@@ -90,6 +90,24 @@ const reviewUser = asyncHandler(async (req, res) => {
 
   await otherUser.save();
   return res.status(200).send({ success: true });
+});
+
+/**
+ * @async
+ * @desc delete a review
+ * @route DELETE /api/users/review/:id
+ * @access private
+ */
+const deleteReview = asyncHandler(async (req, res) => {
+  await User.findByIdAndUpdate(req.params.id, {
+    $pull: {
+      reviews: {
+        author: req.user,
+      },
+    },
+  });
+
+  res.status(200).send({ success: true });
 });
 
 /**
@@ -165,7 +183,8 @@ export {
   getUser,
   logoutUser,
   updateUser,
-  reviewUser,
+  createReview,
+  deleteReview,
   googleOauth,
   facebookOauth,
   instagramOauth,

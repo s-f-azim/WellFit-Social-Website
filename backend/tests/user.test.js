@@ -61,7 +61,7 @@ it('Should not edit profile when not logged in', async () => {
     .expect(200);
 });
 // assert update a user attribute
-it('Should update a user\'s valid attribute', async () => {
+it("Should update a user's valid attribute", async () => {
   await request(app)
     .patch('/api/users/editProfile')
     .send({ email: 'testtttttttt@test.com' })
@@ -72,7 +72,7 @@ it('Should update a user\'s valid attribute', async () => {
 });
 
 // assert update a user attribute
-it('Should not update a user\'s invalid attribute', async () => {
+it("Should not update a user's invalid attribute", async () => {
   await request(app)
     .patch('/api/users/editProfile')
     .send({ size: 'large' })
@@ -135,4 +135,23 @@ it('Should not allow to review same user more than once', async () => {
 
   const user = await User.findById(userTwo._id);
   expect(user.reviews).toHaveLength(1);
+});
+
+it('Should delete a review', async () => {
+  const review = { rate: 5, comment: 'test' };
+
+  await request(app)
+    .post(`/api/users/review/${userTwo._id}`)
+    .send(review)
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(200);
+
+  await request(app)
+    .delete(`/api/users/review/${userTwo._id}`)
+    .send()
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(200);
+
+  const user = await User.findById(userTwo._id);
+  expect(user.reviews).toHaveLength(0);
 });

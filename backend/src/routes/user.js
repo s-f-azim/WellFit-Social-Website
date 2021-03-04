@@ -5,7 +5,8 @@ import {
   getUser,
   logoutUser,
   updateUser,
-  reviewUser,
+  createReview,
+  deleteReview,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -22,7 +23,10 @@ router
   .patch(passport.authenticate('jwt', { session: false }), updateUser);
 router
   .route('/review/:id')
-  .post(passport.authenticate('jwt', { session: false }), reviewUser);
+  .post(passport.authenticate('jwt', { session: false }), createReview);
+router
+  .route('/review/:id')
+  .delete(passport.authenticate('jwt', { session: false }), deleteReview);
 router
   .route('/profile')
   .get(passport.authenticate('jwt', { session: false }), getUser);
