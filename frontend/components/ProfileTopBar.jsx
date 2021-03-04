@@ -1,11 +1,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Avatar } from 'antd';
-import { AntDesignOutlined, CaretDownOutlined } from '@ant-design/icons';
-import { useContext } from 'react';
-import UserContext from '../contexts/UserContext';
+import { useAuth } from '../services/auth';
 
 const ProfileTopBar = ({ profileOpen, setProfileOpen }) => {
-  const { user } = useContext(UserContext);
+  const { user } = useAuth();
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div className="profile-top-bar" onClick={() => setProfileOpen(!profileOpen)}>
