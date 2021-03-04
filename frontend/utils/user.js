@@ -12,4 +12,13 @@ const updateUser = (values) =>
     { headers: { Authorization: `Bearer ${getCookie("token")}` } }
   );
 
-export { updateUser };
+const addingFollowUser = (userId) =>
+  axios.patch(
+    `${API}/users/follow/${userId}`,
+    {
+
+    },
+    { headers: { Authorization: `Bearer ${getCookie("token")}` } }
+  )
+
+export { updateUser, addingFollowUser };
