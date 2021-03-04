@@ -89,3 +89,41 @@ it("Should not update a user's invalid attribute", async () => {
   const user = await User.findById(userOne._id);
   expect(user.size).toEqual(undefined);
 });
+
+// userId should be added
+it("Should increment user's following count", async () => {
+  const response = await request(app)
+    .patch(`/api/users/follow/${userTwo._id}`)
+    .send()
+    .set("Cookie", [`token=${tokens[0]}`])
+    .expect(200);
+  const user = await User.findById(userOne._id);
+  expect(user.following).toHaveLength(1);
+});
+
+// same user's userId shouldn't be added
+it("Shouldn't change user's following count", async () => {
+  const response = await request(app)
+    .patch(`/api/users/follow/${userOne._id}`)
+    .send()
+    .set("Cookie", [`token=${tokens[0]}`])
+    .expect(200);
+  const user = await User.findById(userOne._id);
+  expect(user.following).toHaveLength(0);
+});
+
+// userId should be added then removed again upon add request
+it("Should increment user's following count", async () => {
+  const response = await request(app)
+    .patch(`/api/users/follow/${userTwo._id}`)
+    .send()
+    .set("Cookie", [`token=${tokens[0]}`])
+    .expect(200);
+  const res = await request(app)
+    .patch(`/api/users/follow/${userTwo._id}`)
+    .send()
+    .set("Cookie", [`token=${tokens[0]}`])
+    .expect(200);
+  const user = await User.findById(userOne._id);
+  expect(user.following).toHaveLength(0);
+});
