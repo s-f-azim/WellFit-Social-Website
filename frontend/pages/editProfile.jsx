@@ -17,7 +17,7 @@ import {
 } from 'antd';
 import updateUser from '../actions/user';
 import InstQuest from '../components/InstQuest';
-import { useAuth } from '../services/auth';
+import { useAuth, ProtectRoute } from '../services/auth';
 
 const { Option } = Select;
 
@@ -236,4 +236,4 @@ const editProfilePage = () => {
   );
 };
 
-export default editProfilePage;
+export default ProtectRoute(editProfilePage);

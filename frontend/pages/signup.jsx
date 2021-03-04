@@ -3,6 +3,7 @@ import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, notification } 
 import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { signup } from '../actions/auth';
+import { useAuth } from '../services/auth';
 
 const formItemLayout = {
   labelCol: {
@@ -30,6 +31,7 @@ const Signup = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
+  const { login } = useAuth();
   const onFinish = async (values) => {
     const { email, name, password } = values;
     try {
@@ -40,9 +42,11 @@ const Signup = () => {
           duration: 2,
           icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
         });
+        await login(email, password);
         router.push('/');
       }
     } catch (err) {
+      console.log(err);
       setHasError(true);
     }
   };
