@@ -1,10 +1,11 @@
 import { Button, Typography, Input } from 'antd';
-const { Search } = Input;
-const { Title } = Typography;
 import { useState } from 'react';
+import { UserOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import ProfileBar from './ProfileBar';
 import { useAuth } from '../services/auth';
+const { Search } = Input;
+const { Title } = Typography;
 
 const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
   const { user } = useAuth();
@@ -35,7 +36,7 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
           </li>
           <li className="option">
             <Button type="link" className="menuButton" onClick={() => setProfileOpen(!profileOpen)}>
-              <img src={require('../public/person.svg')} /> {user.name}
+              <UserOutlined /> {user.name}
             </Button>
           </li>
         </ul>
@@ -44,11 +45,11 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
       <div className=" mobile-menu">
         {click ? (
           <a className="" onClick={handleClick}>
-            <img style={{ width: '35px', height: '35px' }} src={require('../public/x.svg')} />
+            <CloseOutlined />
           </a>
         ) : (
           <a className="" onClick={handleClick}>
-            <img style={{ width: '35px', height: '35px' }} src={require('../public/list.svg')} />
+            <MenuOutlined />
           </a>
         )}
       </div>
@@ -84,11 +85,11 @@ const LoggedOutMenu = () => {
       <div className="mobile-menu">
         {click ? (
           <a className="" onClick={handleClick}>
-            <img style={{ width: '35px', height: '35px' }} src={require('../public/x.svg')} />
+            <CloseOutlined />
           </a>
         ) : (
           <a className="" onClick={handleClick}>
-            <img style={{ width: '35px', height: '35px' }} src={require('../public/list.svg')} />
+            <MenuOutlined />
           </a>
         )}
       </div>

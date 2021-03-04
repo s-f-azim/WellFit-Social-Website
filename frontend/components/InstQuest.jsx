@@ -14,9 +14,9 @@ import {
 
 import { CloseOutlined, PlusOutlined, PoundOutlined, CheckOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { useState, useContext } from 'react';
-import UserContext from '../contexts/UserContext';
-import updateUser from '../utils/user';
+import { useState } from 'react';
+import updateUser from '../actions/user';
+import { useAuth } from '../services/auth';
 
 const { Option } = Select;
 
@@ -47,7 +47,7 @@ const tailFormItemLayout = {
 // Instructor Questionnaire
 const InstQuest = () => {
   const router = useRouter();
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useAuth();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
 

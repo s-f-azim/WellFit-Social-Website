@@ -1,5 +1,5 @@
 import { CheckOutlined } from '@ant-design/icons';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   Space,
@@ -17,6 +17,7 @@ import {
 } from 'antd';
 import updateUser from '../actions/user';
 import InstQuest from '../components/InstQuest';
+import { useAuth } from '../services/auth';
 
 const { Option } = Select;
 
@@ -53,6 +54,7 @@ const editProfilePage = () => {
   };
 
   const router = useRouter();
+  const { user, setUser } = useAuth();
 
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
