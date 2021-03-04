@@ -7,13 +7,10 @@ import Head from 'next/head';
 import Router from 'next/router';
 import Layout from '../components/Layout';
 import { AuthProvider } from '../services/auth';
-
-Router.events.on('routeChangeStart', (url) => {
-  console.log(`Loading:${url}`);
-  NProgress.start();
-});
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
+import { CookiesProvider } from 'react-cookie';
+Router.onRouteChangeStart = () => NProgress.start();
+Router.onRouteChangeComplete = () => NProgress.done();
+Router.onRouteChangeError = () => NProgress.done();
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -26,17 +23,19 @@ function MyApp({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
-      <AuthProvider>
-        <Layout>
-          <BackTop>
-            <div>
-              Top
-              <ArrowUpOutlined />
-            </div>
-          </BackTop>
-          <Component {...pageProps} />
-        </Layout>
-      </AuthProvider>
+      <CookiesProvider>
+        <AuthProvider>
+          <Layout>
+            <BackTop>
+              <div>
+                Top
+                <ArrowUpOutlined />
+              </div>
+            </BackTop>
+            <Component {...pageProps} />
+          </Layout>
+        </AuthProvider>
+      </CookiesProvider>
     </>
   );
 }
