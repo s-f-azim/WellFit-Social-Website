@@ -63,6 +63,99 @@ const UserSchema = new mongoose.Schema(
     bio: {
       type: String,
     },
+    trainerType: {
+      type: String,
+      enum: [
+        'Physique trainer',
+        'Performance trainer',
+        'Lifestyle trainer',
+        'Other',
+      ],
+    },
+    qualifications: {
+      type: [String],
+    },
+    speciality: {
+      type: String,
+    },
+    customerStories: {
+      type: [String],
+    },
+    communicationModes: {
+      type: [String],
+      enum: [
+        'Email',
+        'Phone calls',
+        'Text messages',
+        'Whatsapp',
+        'Social Media',
+        'In person preferred',
+        'Messaging app',
+        'Other',
+      ],
+    },
+    communicationFrequency: {
+      type: String,
+      enum: [
+        'Daily',
+        'Three-Four times a week',
+        'Twice a week',
+        'Weekly',
+        'Twice a month',
+        'Monthly',
+        'Other',
+      ],
+    },
+    priceRange: {
+      type: Number,
+    },
+    paymentFrequency: {
+      type: String,
+      enum: [
+        'One time',
+        'Twice a week',
+        'Weekly',
+        'Twice a month',
+        'Monthly',
+        'Other',
+      ],
+    },
+    paymentOptions: {
+      type: [String],
+      enum: [
+        'Paypal',
+        'Wired (bank) transfer',
+        'Cash',
+        'Other banking app',
+        'Check',
+        'Other',
+      ],
+    },
+    serviceFormat: {
+      type: [String],
+      enum: [
+        'Non-client-specific videos',
+        'In person sessions',
+        'PDFs, Excel sheets or others',
+        'Physical product',
+        'Audio content',
+        'Text based content',
+        'Other',
+      ],
+    },
+    clientGenderPreference: {
+      type: String,
+      enum: ['Male', 'Female', 'Non-Binary', 'Any'],
+    },
+    clientFitness: {
+      type: [Number],
+    },
+    clientHypertrophy: {
+      type: [Number],
+    },
+    clientStrength: {
+      type: [Number],
+    },
     googleId: {
       type: String,
     },

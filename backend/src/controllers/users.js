@@ -27,7 +27,7 @@ const loginUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc get user profile
- * @route GET /api/users/profile
+ * @route GET /api/users/me
  * @access private
  */
 const getUser = asyncHandler(async (req, res) => {
@@ -43,7 +43,8 @@ const getUser = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const updates = Object.keys(req.body);
   updates.forEach(
-    (update) => req.body[update] !== undefined && (req.user[update] = req.body[update]),
+    (update) =>
+      req.body[update] !== undefined && (req.user[update] = req.body[update])
   );
   const updatedUser = await req.user.save();
   sendTokenResponse(updatedUser, 200, res);
@@ -76,7 +77,7 @@ const googleOauth = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc facebook login user using oauth
- * @route GET /api/users/faceboo/redirect
+ * @route GET /api/users/facebook/redirect
  * @access private
  */
 const facebookOauth = asyncHandler(async (req, res) => {
@@ -102,7 +103,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSginedJWTToken();
   const options = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'PRODUCTION',
@@ -121,7 +122,7 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
   const token = user.getSginedJWTToken();
   const options = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'PRODUCTION',
