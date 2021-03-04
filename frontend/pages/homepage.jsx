@@ -1,13 +1,7 @@
-import {useState} from "react";
-import {Card,Modal,}
-const homePage=()=>{
-    const courses={
-        name:"something",
-        picture:"anoather thing",
+import { useState } from 'react';
+import Questionaire from '../components/SearchQuestions';
+const homePage = () => {
+  return <Questionaire></Questionaire>;
+};
 
-    }
-    return (
-    );
-}
-
-
+export default homePage;
