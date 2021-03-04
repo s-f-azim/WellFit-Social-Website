@@ -76,8 +76,13 @@ const followUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  const followingUsers = await User.findById(req.user._id).populate("following");
-  res.status(200).send({ success: true, data: followingUsers.following });
+  const page = parseInt(req.query.page || "1");
+  const limit = 2;
+  const startIndex = (page - 1) * limit;
+  const lastIndex = limit * page;
+  const followings = await User.findById(req.user._id).populate("following");
+  const results = followings.following.slice(startIndex, lastIndex);
+  res.status(200).send({ success: true, data: results });
 });
 
 /**

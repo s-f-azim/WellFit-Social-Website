@@ -4,6 +4,11 @@ import bcrypt from "bcryptjs";
 import JWT from "jsonwebtoken";
 import ErrorResponse from "../utils/errorResponse.js";
 
+// const followingSchema = mongoose.Schema(
+//   {
+//     user_id: { type: mongoose.Schema.ObjectId, ref: 'User' }
+//   }
+// );
 //create user schema
 const UserSchema = new mongoose.Schema(
   {
