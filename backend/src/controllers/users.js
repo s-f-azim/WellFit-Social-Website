@@ -77,7 +77,9 @@ const reviewUser = asyncHandler(async (req, res) => {
 
   const otherUser = await User.findById(req.params.id);
 
-  if (otherUser.reviews.some((review) => review.author === req.user._id)) {
+  if (
+    otherUser.reviews.some((review) => review.author._id.equals(req.user._id))
+  ) {
     return res.status(400).send({ error: 'You already reviewed this user' });
   }
 
