@@ -104,24 +104,7 @@ const UserSchema = new mongoose.Schema(
       },
     ],
 
-    reviews: [
-      {
-        _id: false,
-        author: {
-          type: mongoose.Schema.ObjectId,
-          ref: 'User',
-        },
-        rate: {
-          type: Number,
-          required: [true, 'Please add a rating'],
-          min: 0,
-          max: 5,
-        },
-        comment: {
-          type: String,
-        },
-      },
-    ],
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
 
     googleId: {
       type: String,

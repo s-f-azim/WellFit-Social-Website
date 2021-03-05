@@ -4,10 +4,6 @@ import {
   loginUser,
   getUser,
   logoutUser,
-  updateUser,
-  createReview,
-  getReviews,
-  deleteReview,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -19,16 +15,6 @@ const router = new express.Router();
 router.route('/signup').post(createUser);
 router.route('/login').post(loginUser);
 router.route('/logout').get(logoutUser);
-router
-  .route('/editProfile')
-  .patch(passport.authenticate('jwt', { session: false }), updateUser);
-router
-  .route('/reviews/:id')
-  .post(passport.authenticate('jwt', { session: false }), createReview);
-router
-  .route('/reviews/:id')
-  .delete(passport.authenticate('jwt', { session: false }), deleteReview);
-router.route('/reviews/:id').get(getReviews);
 router
   .route('/profile')
   .get(passport.authenticate('jwt', { session: false }), getUser);
