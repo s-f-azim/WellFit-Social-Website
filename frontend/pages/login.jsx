@@ -1,25 +1,14 @@
-import { useRouter } from "next/router";
-import {
-  Space,
-  Form,
-  Input,
-  Col,
-  Checkbox,
-  Alert,
-  Button,
-  Row,
-  Card,
-} from "antd";
+import { useRouter } from 'next/router';
+import { Space, Form, Input, Alert, Button, Row, Card, notification } from 'antd';
 import {
   InstagramOutlined,
   GoogleOutlined,
-  TwitterOutlined,
   FacebookOutlined,
-} from "@ant-design/icons";
-import API from "../config.js";
-import { useState, useContext } from "react";
-import { signin, authenticate } from "../utils/auth.js";
-import { UserContext } from "../contexts/UserContext.js";
+  SmileOutlined,
+} from '@ant-design/icons';
+import { useState } from 'react';
+import { useAuth } from '../services/auth';
+import API from '../services/api';
 
 const formItemLayout = {
   labelCol: {
@@ -48,18 +37,18 @@ const Login = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
-  const { user, setUser } = useContext(UserContext);
+  const { login } = useAuth();
   // normal login handler
   const onFinish = async (values) => {
     const { email, password } = values;
     try {
-      const response = await signin(email, password);
-      if (response.data.success) {
-        setUser(response.data.data);
-        authenticate(response.data, () => {
-          router.push("/");
-        });
-      }
+      const something = await login(email, password);
+      notification.open({
+        message: 'Welcome back!',
+        duration: 2,
+        icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
+      });
+      router.push('/');
     } catch (err) {
       setHasError(true);
     }
@@ -67,25 +56,20 @@ const Login = () => {
   // Google oauth login
   const googleOuthHandler = (e) => {
     e.preventDefault();
-    window.open(`${API}/users/oauth/google`, "_self");
+    window.open(`${API}/users/oauth/google`, '_self');
   };
   // Insta oauth login
   const instaOauthHandler = (e) => {
     e.preventDefault();
-    window.open(`${API}/users/oauth/instagram`, "_self");
+    window.open(`${API}/users/oauth/instagram`, '_self');
   };
   // facebook oauth login
   const facebookOuthHandler = (e) => {
     e.preventDefault();
-    window.open(`${API}/users/oauth/facebook`, "_self");
+    window.open(`${API}/users/oauth/facebook`, '_self');
   };
   return (
-    <Row
-      type="flex"
-      justify="center"
-      align="middle"
-      style={{ minHeight: "85vh" }}
-    >
+    <Row type="flex" justify="center" align="middle" style={{ minHeight: '85vh' }}>
       <Card>
         <Form
           {...formItemLayout}
@@ -95,20 +79,18 @@ const Login = () => {
           scrollToFirstError
         >
           <Space direction="vertical" size="large">
-            {hasError && (
-              <Alert type="error" message="Unable to login" banner />
-            )}
+            {hasError && <Alert type="error" message="Unable to login" banner />}
             <Form.Item
               name="email"
               label="Email"
               rules={[
                 {
-                  type: "email",
-                  message: "Invalid Email",
+                  type: 'email',
+                  message: 'Invalid Email',
                 },
                 {
                   required: true,
-                  message: "Please enter your email",
+                  message: 'Please enter your email',
                 },
               ]}
             >
@@ -117,9 +99,7 @@ const Login = () => {
             <Form.Item
               name="password"
               label="Password"
-              rules={[
-                { required: true, message: "Please enter your password" },
-              ]}
+              rules={[{ required: true, message: 'Please enter your password' }]}
               hasFeedback
             >
               <Input.Password />
@@ -131,7 +111,7 @@ const Login = () => {
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
               <h3>Or login with</h3>
-              <div className="buttons">
+              <div className="buttons-form">
                 <Button type="primary" onClick={instaOauthHandler}>
                   <InstagramOutlined />
                 </Button>
