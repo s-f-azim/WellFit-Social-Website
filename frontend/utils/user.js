@@ -13,4 +13,13 @@ const updateUser = (values) =>
     { headers: { Authorization: `Bearer ${getCookie('token')}` } }
   );
 
-export { updateUser as default };
+const createReview = (userId, review) =>
+  axios.patch(
+    `${API}/users/review/${userId}`,
+    {
+      ...review,
+    },
+    { headers: { Authorization: `Bearer ${getCookie('token')}` } }
+  );
+
+export { updateUser, createReview as default };
