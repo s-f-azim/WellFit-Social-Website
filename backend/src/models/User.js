@@ -63,6 +63,29 @@ const UserSchema = new mongoose.Schema(
     bio: {
       type: String,
     },
+    tags: {
+      type: [String],
+      enum: [
+        '#GetFit',
+        '#Cardio',
+        '#Cycling',
+        '#FitFam',
+        '#FitLife',
+        '#Fitness',
+        '#FitnessMotivation',
+        '#FitnessAddict', 
+        '#GetStrong',
+        '#LiftHeavy',
+        '#GirlsWhoLift',
+        '#GymLife',
+        '#GymTime',
+        '#NoPainNoGain',
+        '#PersonalTrainer',
+        '#Sweat',
+        '#Weights',
+        '#WeightLifting',
+        '#Workout'],
+    },
     trainerType: {
       type: String,
       enum: [
