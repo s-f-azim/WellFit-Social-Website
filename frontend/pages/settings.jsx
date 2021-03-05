@@ -1,7 +1,6 @@
-import { updateUser } from "../utils/user.js";
 import { useRouter } from "next/router";
-import { UserContext } from "../contexts/UserContext.js";
-import {deleteUser} from "../utils/user.js";
+import { useAuth } from "../services/auth";
+import { deleteUser } from "../actions/user";
 import {Button,
         Row,
         Card} from "antd";
@@ -9,7 +8,7 @@ import { useState, useEffect, useContext } from "react";
 
 const settingsPage = () => {
   const router = useRouter();
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useAuth();
   //redirect to home page if user not logged in or user deleted
   useEffect(() => {
     if (!user) router.push("/");
