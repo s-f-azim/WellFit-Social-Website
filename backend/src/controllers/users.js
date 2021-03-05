@@ -98,9 +98,10 @@ const createReview = asyncHandler(async (req, res) => {
  * @route GET /api/users/profile
  * @access public
  */
- const getReviews = asyncHandler(async (req, res) => {
-  const reviews = await User.findById(req.params.id, 'reviews')
-  res.status(200).send({ success: true, data: reviews });
+const getReviews = asyncHandler(async (req, res) => {
+  User.findById(req.params.id, 'reviews', (err, user) => {
+    res.status(200).json({ success: true, data: { reviews: user.reviews } });
+  });
 });
 
 /**

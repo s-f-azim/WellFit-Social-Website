@@ -15,11 +15,17 @@ const updateUser = (values) =>
 
 const createReview = (userId, review) =>
   axios.post(
-    `${API}/users/review/${userId}`,
+    `${API}/users/reviews/${userId}`,
     {
       ...review,
     },
     { headers: { Authorization: `Bearer ${getCookie('token')}` } }
   );
 
-export { updateUser, createReview };
+const getReviews = async (userId) => {
+  const res = await axios.get(`${API}/users/reviews/${userId}`);
+  console.log(res.data.data.reviews);
+  return res.data.data.reviews;
+};
+
+export { updateUser, createReview, getReviews };

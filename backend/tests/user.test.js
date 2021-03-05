@@ -61,7 +61,7 @@ it('Should not edit profile when not logged in', async () => {
     .expect(200);
 });
 // assert update a user attribute
-it("Should update a user's valid attribute", async () => {
+it('Should update a user\'s valid attribute', async () => {
   await request(app)
     .patch('/api/users/editProfile')
     .send({ email: 'testtttttttt@test.com' })
@@ -72,7 +72,7 @@ it("Should update a user's valid attribute", async () => {
 });
 
 // assert update a user attribute
-it("Should not update a user's invalid attribute", async () => {
+it('Should not update a user\'s invalid attribute', async () => {
   await request(app)
     .patch('/api/users/editProfile')
     .send({ size: 'large' })
@@ -82,11 +82,13 @@ it("Should not update a user's invalid attribute", async () => {
   expect(user.size).toEqual(undefined);
 });
 
-const countReviews = async (userId) =>
-  User.aggregate([
+const countReviews = async (userId) => {
+  const result = await User.aggregate([
     { $match: { _id: userId } },
-    { $project: { count: { $size: '$reviews' } } },
+    { $project: { _id: 0, count: { $size: '$reviews' } } },
   ]);
+  return result[0].count;
+};
 
 it('Should add a review with valid data', async () => {
   const count = await countReviews(userTwo._id);
@@ -102,6 +104,7 @@ it('Should add a review with valid data', async () => {
 });
 
 it('Should not add a review with invalid data', async () => {
+  const count = await countReviews(userTwo._id);
   const review = { rate: -1, comment: 'test' };
 
   await request(app)
@@ -109,11 +112,12 @@ it('Should not add a review with invalid data', async () => {
     .send(review)
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(400);
-  const user = await User.findById(userTwo._id);
-  expect(user.reviews).toHaveLength(0);
+
+  expect(await countReviews(userTwo._id)).toBe(count);
 });
 
 it('Should not allow users to review themselves', async () => {
+  const count = await countReviews(userOne._id);
   const review = { rate: 5, comment: 'test' };
 
   await request(app)
@@ -121,44 +125,40 @@ it('Should not allow users to review themselves', async () => {
     .send(review)
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(400);
-  const user = await User.findById(userOne._id);
-  expect(user.reviews).toHaveLength(0);
+
+  expect(await countReviews(userOne._id)).toBe(count);
 });
 
 it('Should not allow to review same user more than once', async () => {
+  const count = await countReviews(userOne._id);
   const review = { rate: 5, comment: 'test' };
 
   await request(app)
-    .post(`/api/users/reviews/${userTwo._id}`)
+    .post(`/api/users/reviews/${userOne._id}`)
     .send(review)
-    .set('Cookie', [`token=${tokens[0]}`])
-    .expect(200);
-
-  await request(app)
-    .post(`/api/users/reviews/${userTwo._id}`)
-    .send(review)
-    .set('Cookie', [`token=${tokens[0]}`])
+    .set('Cookie', [`token=${tokens[1]}`])
     .expect(400);
 
-  const user = await User.findById(userTwo._id);
-  expect(user.reviews).toHaveLength(1);
+  expect(await countReviews(userOne._id)).toBe(count);
+});
+
+it('Should get reviews', async () => {
+  const response = await request(app)
+    .get(`/api/users/reviews/${userOne._id}`)
+    .send()
+    .expect(200);
+
+  expect(response.body.data.reviews).not.toBeNull();
 });
 
 it('Should delete a reviews', async () => {
-  const review = { rate: 5, comment: 'test' };
+  const count = await countReviews(userOne._id);
 
   await request(app)
-    .post(`/api/users/reviews/${userTwo._id}`)
-    .send(review)
-    .set('Cookie', [`token=${tokens[0]}`])
-    .expect(200);
-
-  await request(app)
-    .delete(`/api/users/reviews/${userTwo._id}`)
+    .delete(`/api/users/reviews/${userOne._id}`)
     .send()
-    .set('Cookie', [`token=${tokens[0]}`])
+    .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
 
-  const user = await User.findById(userTwo._id);
-  expect(user.reviews).toHaveLength(0);
+  expect(await countReviews(userOne._id)).toBe(count - 1);
 });
