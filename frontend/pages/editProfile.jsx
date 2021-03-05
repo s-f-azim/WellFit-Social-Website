@@ -54,7 +54,8 @@ const tags = ['#GetFit',
   '#WeightLifting',
   '#Workout'];
 
-const childTags = tags.map(x => <Option value={x}>{x}</Option>);
+// const childTags = tags.map(x => <Option value={x}>{x}</Option>);
+
 
 const infoAlertText = (
   <p>
@@ -178,7 +179,7 @@ const editProfilePage = () => {
                         type: "string",
                       }
                     ]}>
-                      {childTags}
+                      {tags.map(x => <Option value={x}>{x}</Option>)}
                   </Select>
                   
                 </Form.Item>
