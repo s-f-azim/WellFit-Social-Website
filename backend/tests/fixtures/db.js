@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import User from '../../src/models/User.js';
 
 const userOneId = new mongoose.Types.ObjectId();
+const userTwoId = new mongoose.Types.ObjectId();
 
 const userOne = {
   _id: userOneId,
@@ -13,9 +14,14 @@ const userOne = {
   birthday: new Date(),
   nickname: 'testicles',
   bio: 'I have no balls',
+  reviews: [
+    {
+      author: userTwoId,
+      rate: 3,
+      comment: 'Test',
+    },
+  ],
 };
-
-const userTwoId = new mongoose.Types.ObjectId();
 
 const userTwo = {
   _id: userTwoId,

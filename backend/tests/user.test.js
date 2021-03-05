@@ -82,23 +82,30 @@ it("Should not update a user's invalid attribute", async () => {
   expect(user.size).toEqual(undefined);
 });
 
+const countReviews = async (userId) =>
+  User.aggregate([
+    { $match: { _id: userId } },
+    { $project: { count: { $size: '$reviews' } } },
+  ]);
+
 it('Should add a review with valid data', async () => {
+  const count = await countReviews(userTwo._id);
   const review = { rate: 5, comment: 'test' };
 
   await request(app)
-    .post(`/api/users/review/${userTwo._id}`)
+    .post(`/api/users/reviews/${userTwo._id}`)
     .send(review)
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
-  const user = await User.findById(userTwo._id);
-  expect(user.reviews).not.toHaveLength(0);
+
+  expect(await countReviews(userTwo._id)).toBe(count + 1);
 });
 
 it('Should not add a review with invalid data', async () => {
   const review = { rate: -1, comment: 'test' };
 
   await request(app)
-    .post(`/api/users/review/${userTwo._id}`)
+    .post(`/api/users/reviews/${userTwo._id}`)
     .send(review)
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(400);
@@ -110,7 +117,7 @@ it('Should not allow users to review themselves', async () => {
   const review = { rate: 5, comment: 'test' };
 
   await request(app)
-    .post(`/api/users/review/${userOne._id}`)
+    .post(`/api/users/reviews/${userOne._id}`)
     .send(review)
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(400);
@@ -122,13 +129,13 @@ it('Should not allow to review same user more than once', async () => {
   const review = { rate: 5, comment: 'test' };
 
   await request(app)
-    .post(`/api/users/review/${userTwo._id}`)
+    .post(`/api/users/reviews/${userTwo._id}`)
     .send(review)
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
 
   await request(app)
-    .post(`/api/users/review/${userTwo._id}`)
+    .post(`/api/users/reviews/${userTwo._id}`)
     .send(review)
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(400);
@@ -137,17 +144,17 @@ it('Should not allow to review same user more than once', async () => {
   expect(user.reviews).toHaveLength(1);
 });
 
-it('Should delete a review', async () => {
+it('Should delete a reviews', async () => {
   const review = { rate: 5, comment: 'test' };
 
   await request(app)
-    .post(`/api/users/review/${userTwo._id}`)
+    .post(`/api/users/reviews/${userTwo._id}`)
     .send(review)
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
 
   await request(app)
-    .delete(`/api/users/review/${userTwo._id}`)
+    .delete(`/api/users/reviews/${userTwo._id}`)
     .send()
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);

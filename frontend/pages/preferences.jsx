@@ -1,6 +1,5 @@
 import { Row, Col } from 'antd';
 import Questionnaire from '../components/Questionnaire';
-// import { UserContext } from "../contexts/UserContext.js";
 
 export default function Preferences() {
   return (

@@ -94,6 +94,17 @@ const createReview = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc get user profile
+ * @route GET /api/users/profile
+ * @access public
+ */
+ const getReviews = asyncHandler(async (req, res) => {
+  const reviews = await User.findById(req.params.id, 'reviews')
+  res.status(200).send({ success: true, data: reviews });
+});
+
+/**
+ * @async
  * @desc delete a review
  * @route DELETE /api/users/review/:id
  * @access private
@@ -184,6 +195,7 @@ export {
   logoutUser,
   updateUser,
   createReview,
+  getReviews,
   deleteReview,
   googleOauth,
   facebookOauth,

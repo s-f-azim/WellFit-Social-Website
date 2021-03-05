@@ -14,7 +14,7 @@ const updateUser = (values) =>
   );
 
 const createReview = (userId, review) =>
-  axios.patch(
+  axios.post(
     `${API}/users/review/${userId}`,
     {
       ...review,
@@ -22,4 +22,4 @@ const createReview = (userId, review) =>
     { headers: { Authorization: `Bearer ${getCookie('token')}` } }
   );
 
-export { updateUser, createReview as default };
+export { updateUser, createReview };
