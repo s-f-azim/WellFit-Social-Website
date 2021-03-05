@@ -5,6 +5,7 @@ import api from './api';
 
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
+  // eslint-disable-next-line no-unused-vars
   const { pathname, events } = useRouter();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -39,10 +40,13 @@ export const AuthProvider = ({ children }) => {
     await api.get('users/logout');
     Router.push('/');
   };
-  const signup = async (name, email, password) =>
+  const signup = async (role, email, fName, lName, password) =>
+    // eslint-disable-next-line no-return-await
     await api.post('/users/signup', {
-      name,
+      role,
       email,
+      fName,
+      lName,
       password,
     });
 

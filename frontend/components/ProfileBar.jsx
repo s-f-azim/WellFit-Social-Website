@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Avatar } from 'antd';
+import { Avatar, notification } from 'antd';
 import { useRouter } from 'next/router';
 import {
   AntDesignOutlined,
@@ -7,15 +7,21 @@ import {
   HistoryOutlined,
   EditOutlined,
   LogoutOutlined,
+  CheckOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
 import { useAuth } from '../services/auth';
 
 const ProfileBar = ({ profileOpen, setProfileOpen }) => {
+  // eslint-disable-next-line no-unused-vars
   const { user, logout } = useAuth();
   const router = useRouter();
   const signout = async () => {
-    const response = await logout();
+    notification.open({
+      message: 'Logged out successfully',
+      duration: 2,
+      icon: <CheckOutlined style={{ color: '#00FF00' }} />,
+    });
     router.push('/');
   };
   return (
