@@ -5,6 +5,7 @@ import {
   getUser,
   logoutUser,
   updateUser,
+  deleteUser,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -49,6 +50,10 @@ router.route('/oauth/facebook').get(
     scope: ['email'],
   })
 );
+
+router
+  .route("/delete")
+  .delete(passport.authenticate("jwt", { session: false }), deleteUser);
 
 router
   .route('/oauth/facebook/redirect')

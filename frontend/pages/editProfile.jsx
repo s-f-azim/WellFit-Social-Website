@@ -34,6 +34,29 @@ const tailFormItemLayout = {
   },
 };
 
+const tags = ['#GetFit',
+  '#Cardio',
+  '#Cycling',
+  '#FitFam',
+  '#FitLife',
+  '#Fitness',
+  '#FitnessMotivation',
+  '#FitnessAddict', 
+  '#GetStrong',
+  '#LiftHeavy',
+  '#GirlsWhoLift',
+  '#GymLife',
+  '#GymTime',
+  '#NoPainNoGain',
+  '#PersonalTrainer',
+  '#Sweat',
+  '#Weights',
+  '#WeightLifting',
+  '#Workout'];
+
+// const childTags = tags.map(x => <Option value={x}>{x}</Option>);
+
+
 const infoAlertText = (
   <p>
     Adding information on this page helps us tailor our services and allows clients to be matched
@@ -145,6 +168,20 @@ const editProfilePage = () => {
 
                 <Form.Item name="bio" label="Bio">
                   <Input.TextArea maxLength={300} defaultValue={user.bio ? user.bio : null} />
+                </Form.Item>
+
+                <Form.Item name="tags" label="Tags">
+                  <Select mode="tags" 
+                    style={{display: 'flex', flexFlow: 'column wrap',flexGrow: '2'}} 
+                    placeholder="Select your interests"
+                    rules={[
+                      {
+                        type: "string",
+                      }
+                    ]}>
+                      {tags.map(x => <Option value={x}>{x}</Option>)}
+                  </Select>
+                  
                 </Form.Item>
 
                 <Form.Item {...tailFormItemLayout}>
