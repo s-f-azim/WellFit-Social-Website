@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import slugify from 'slugify';
+import geocoder from '../utils/geocoder.js';
 
 const CourseSchema = new mongoose.Schema({
   creators: {
@@ -42,6 +44,10 @@ const CourseSchema = new mongoose.Schema({
       '#Workout',
     ],
   },
+  address: {
+    type: String,
+    required: [true, 'Please add an address'],
+  },
   isVirtual: Boolean,
   Gym: Boolean,
   slug: String,
@@ -49,11 +55,9 @@ const CourseSchema = new mongoose.Schema({
     type: {
       type: String,
       enum: ['Point'],
-      required: true,
     },
     coordinates: {
       type: [Number],
-      required: true,
       index: '2dsphere',
     },
     formattedAddress: String,
@@ -76,6 +80,27 @@ const CourseSchema = new mongoose.Schema({
     default: 'no-photo.jpg',
   },
 });
+// Geocode and create location field
+CourseSchema.pre('save', async function (next) {
+  const loc = await geocoder.geocode(this.address);
+  this.location = {
+    type: 'Point',
+    coordinates: [loc[0].longitude, loc[0].latitude],
+    formattedAddress: loc[0].formattedAddress,
+    street: loc[0].streetName,
+    city: loc[0].city,
+    zipcode: loc[0].zipcode,
+    country: loc[0].countryCode,
+  };
+  this.address = undefined;
+  next();
+});
+// Create course slug from the name
+CourseSchema.pre('save', function (next) {
+  this.slug = slugify(this.title, { lower: true });
+  next();
+});
+
 // create course model
 const Course = mongoose.model('Course', CourseSchema);
 
