@@ -7,10 +7,6 @@ const updateUser = (values) =>
 
 const deleteUser = () => api.delete('/users/delete');
 
-const addingFollowUser = (userId) =>
-  axios.patch(
-    `${API}/users/follow/${userId}`,
-    {},
-    { headers: { Authorization: `Bearer ${getCookie('token')}` } }
-  );
+const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
+
 export { updateUser as default, deleteUser, addingFollowUser };
