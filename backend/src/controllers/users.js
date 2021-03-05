@@ -1,5 +1,6 @@
-import asyncHandler from "../middleware/async.js";
-import User from "../models/User.js";
+/* eslint-disable no-use-before-define */
+import asyncHandler from '../middleware/async.js';
+import User from '../models/User.js';
 
 /**
  * @async
@@ -26,7 +27,7 @@ const loginUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc get user profile
- * @route GET /api/users/profile
+ * @route GET /api/users/me
  * @access private
  */
 const getUser = asyncHandler(async (req, res) => {
@@ -57,12 +58,16 @@ const updateUser = asyncHandler(async (req, res) => {
  */
 const followUser = asyncHandler(async (req, res) => {
   if (User.findOne({ _id: req.params.id })) {
-    if (!req.user.following.includes(req.params.id) && req.user._id + " " !== req.params.id + " ") {
+    if (
+      !req.user.following.includes(req.params.id) &&
+      req.user._id + ' ' !== req.params.id + ' '
+    ) {
       req.user.following.push(req.params.id);
-    }
-    else {
+    } else {
       const index = req.user.following.indexOf(req.params.id);
-      if (index > -1) { req.user.following.splice(index, 1); }
+      if (index > -1) {
+        req.user.following.splice(index, 1);
+      }
     }
     const updatedUser = await req.user.save();
     sendTokenResponse(updatedUser, 200, res);
@@ -76,11 +81,11 @@ const followUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || "1");
+  const page = parseInt(req.query.page || '1');
   const limit = 2;
   const startIndex = (page - 1) * limit;
   const lastIndex = limit * page;
-  const followings = await User.findById(req.user._id).populate("following");
+  const followings = await User.findById(req.user._id).populate('following');
   const results = followings.following.slice(startIndex, lastIndex);
   res.status(200).send({ success: true, data: results });
 });
@@ -92,10 +97,22 @@ const getFollowing = asyncHandler(async (req, res) => {
  * @access private
  */
 const logoutUser = asyncHandler(async (req, res) => {
-  res.cookie("token", "none", {
+  res.cookie('token', 'none', {
     expires: new Date(Date.now() + 10 * 10),
     httpOnly: true,
   });
+  res.status(200).send({ success: true });
+});
+
+/**
+ *
+ * @async
+ * @desc delete user from the db
+ * @route DELETE /api/users/settings
+ *
+ */
+const deleteUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndDelete(req.user._id);
   res.status(200).send({ success: true });
 });
 
@@ -112,7 +129,7 @@ const googleOauth = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc facebook login user using oauth
- * @route GET /api/users/faceboo/redirect
+ * @route GET /api/users/facebook/redirect
  * @access private
  */
 const facebookOauth = asyncHandler(async (req, res) => {
@@ -141,13 +158,14 @@ const sendTokenResponse = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: process.env.NODE_ENV === "PRODUCTION" ? true : false,
+    secure: process.env.NODE_ENV === 'PRODUCTION',
   };
   res
     .status(statusCode)
-    .cookie("token", token, options)
+    .cookie('token', token, options)
     .send({ success: true, token, data: user });
 };
+
 /**
  * @desc get the token from the user model and create a cookie
  * @param {User} user - a user
@@ -160,21 +178,23 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: process.env.NODE_ENV === "PRODUCTION" ? true : false,
+    secure: process.env.NODE_ENV === 'PRODUCTION',
   };
-  res.cookie("user", JSON.stringify(user));
-  res.cookie("token", token);
+  res.cookie('user', JSON.stringify(user));
+  res.cookie('token', token, options);
   res.redirect(`${process.env.CLIENT_URL}`);
 };
+
 export {
   createUser,
   loginUser,
   getUser,
   logoutUser,
   updateUser,
+  deleteUser,
   googleOauth,
   facebookOauth,
   instagramOauth,
   followUser,
-  getFollowing
+  getFollowing,
 };

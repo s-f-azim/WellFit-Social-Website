@@ -1,7 +1,9 @@
-import { signup } from "../utils/auth.js";
-import { useRouter } from "next/router";
-import { Space, Form, Input, Checkbox, Alert, Button, Row, Card } from "antd";
-import { useState } from "react";
+import { useRouter } from 'next/router';
+import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, notification } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { useAuth } from '../services/auth';
+
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -28,24 +30,27 @@ const Signup = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
+  const { login, signup } = useAuth();
   const onFinish = async (values) => {
     const { email, name, password } = values;
     try {
       const response = await signup(name, email, password);
       if (response.data.success) {
-        router.push("/");
+        notification.open({
+          message: 'Signed up successfully!',
+          duration: 2,
+          icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
+        });
+        await login(email, password);
+        router.push('/');
       }
     } catch (err) {
+      console.log(err);
       setHasError(true);
     }
   };
   return (
-    <Row
-      type="flex"
-      justify="center"
-      align="middle"
-      style={{ minHeight: "85vh" }}
-    >
+    <Row type="flex" justify="center" align="middle" style={{ minHeight: '85vh' }}>
       <Card>
         <Form
           {...formItemLayout}
@@ -56,23 +61,19 @@ const Signup = () => {
         >
           <Space direction="vertical" size="large">
             {hasError && (
-              <Alert
-                type="error"
-                message="this user already exists please try again"
-                banner
-              />
+              <Alert type="error" message="this user already exists please try again" banner />
             )}
             <Form.Item
               name="email"
               label="Email"
               rules={[
                 {
-                  type: "email",
-                  message: "Invalid Email",
+                  type: 'email',
+                  message: 'Invalid Email',
                 },
                 {
                   required: true,
-                  message: "Please enter your email",
+                  message: 'Please enter your email',
                 },
               ]}
             >
@@ -84,11 +85,11 @@ const Signup = () => {
               rules={[
                 {
                   min: 3,
-                  message: "Name should be 3 or more letters",
+                  message: 'Name should be 3 or more letters',
                 },
                 {
                   required: true,
-                  message: "Please enter your name",
+                  message: 'Please enter your name',
                 },
               ]}
             >
@@ -98,7 +99,8 @@ const Signup = () => {
               name="password"
               label="Password"
               rules={[
-                { required: true, message: "Please enter your password" },
+                { required: true, message: 'Please enter your password' },
+                { min: 8, message: 'Password must be minimum 8 characters' },
               ]}
               hasFeedback
             >
@@ -107,19 +109,19 @@ const Signup = () => {
             <Form.Item
               name="confirm"
               label="Confirm Password"
-              dependencies={["password"]}
+              dependencies={['password']}
               hasFeedback
               rules={[
                 {
                   required: true,
-                  message: "Please confirm your password",
+                  message: 'Please confirm your password',
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
+                    if (!value || getFieldValue('password') === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject("Sorry the passwords do not match");
+                    return Promise.reject('Sorry the passwords do not match');
                   },
                 }),
               ]}
@@ -134,13 +136,13 @@ const Signup = () => {
                   validator: (_, value) =>
                     value
                       ? Promise.resolve()
-                      : Promise.reject("Please accept the consumer agreement"),
+                      : Promise.reject('Please accept the consumer agreement'),
                 },
               ]}
               {...tailFormItemLayout}
             >
               <Checkbox>
-                I have read the <a href="">agreement</a>
+                I have read the <a href="/">agreement</a>
               </Checkbox>
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
