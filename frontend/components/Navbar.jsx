@@ -14,6 +14,10 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const onUserNameClick = () => {
+    setProfileOpen(!profileOpen);
+    closeMobileMenu();
+  };
 
   return (
     <>
@@ -37,7 +41,7 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
             </Link>
           </li>
           <li className="option">
-            <Button type="link" className="menuButton" onClick={() => setProfileOpen(!profileOpen)}>
+            <Button type="link" className="menuButton" onClick={onUserNameClick}>
               <UserOutlined /> {user.fName}
             </Button>
           </li>

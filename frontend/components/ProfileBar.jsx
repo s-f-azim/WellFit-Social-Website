@@ -15,6 +15,7 @@ import { useAuth } from '../services/auth';
 const ProfileBar = ({ profileOpen, setProfileOpen }) => {
   // eslint-disable-next-line no-unused-vars
   const { user, logout } = useAuth();
+  // eslint-disable-next-line no-unused-vars
   const router = useRouter();
   const signout = async () => {
     notification.open({
