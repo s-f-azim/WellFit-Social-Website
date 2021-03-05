@@ -13,6 +13,7 @@ import {
   getFollowing,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
+
 const router = new express.Router();
 
 router.route('/signup').post(createUser);

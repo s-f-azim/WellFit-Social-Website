@@ -8,8 +8,8 @@ const updateUser = (values) =>
 const deleteUser = () => api.delete('/users/delete');
 
 const addingFollowUser = (userId) =>
-  api.patch(
-    `/users/follow/${userId}`,
+  axios.patch(
+    `${API}/users/follow/${userId}`,
     {},
     { headers: { Authorization: `Bearer ${getCookie('token')}` } }
   );

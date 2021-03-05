@@ -119,6 +119,7 @@ it("Should increment user's following count", async () => {
   const user = await User.findById(userOne._id);
   expect(user.following).toHaveLength(0);
 });
+
 // assert delete a user
 it('Should delete a logged in user', async () => {
   await request(app)
