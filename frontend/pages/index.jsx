@@ -1,9 +1,10 @@
-import Head from "next/head";
-import { Button } from "antd";
+import LandingPage from '../components/LandingPage';
 
+// eslint-disable-next-line no-unused-vars
 export default function Home() {
   return (
-    <div>
-    </div>
+    <>
+      <LandingPage />
+    </>
   );
 }
