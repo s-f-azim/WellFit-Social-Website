@@ -22,6 +22,7 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
       duration: 2,
       icon: <CheckOutlined style={{ color: '#00FF00' }} />,
     });
+    setProfileOpen(false);
     logout();
   };
   return (
