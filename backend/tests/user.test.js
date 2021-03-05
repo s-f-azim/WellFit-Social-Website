@@ -103,3 +103,10 @@ it("Should delete a logged in user", async () => {
   const userExists = await User.exists({_id: userOne._id});
   expect(userExists).toEqual(false);
 }); 
+
+it("Should not delete a user when not logged in", async () => {
+  const response = await request(app)
+    .delete("/api/users/delete")
+    .send()
+    .expect(401);
+});
