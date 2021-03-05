@@ -1,5 +1,5 @@
 .profile-bar {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   display: flex;
   z-index: 99999999;
   flex-direction: column;
@@ -64,7 +64,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .profile-bar {
+  .profile-bar.active {
     width: 100%;
     border-radius: 0;
     transform: translateX(0);
