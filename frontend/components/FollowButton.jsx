@@ -1,4 +1,4 @@
-import { addingFollowUser } from '../utils/user.js';
+import { addingFollowUser } from '../actions/user.js';
 import { Button } from 'antd';
 
 const FollowButton = ({ userId }) => {
