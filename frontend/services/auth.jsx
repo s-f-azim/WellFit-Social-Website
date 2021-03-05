@@ -13,9 +13,13 @@ export const AuthProvider = ({ children }) => {
     async function loadUserFromCookies() {
       const token = cookies;
       if (token) {
-        api.defaults.headers.Authorization = `Bearer ${token}`;
-        const { data: responseData } = await api.get('users/me');
-        if (responseData.data) setUser(responseData.data);
+        try {
+          api.defaults.headers.Authorization = `Bearer ${token}`;
+          const { data: responseData } = await api.get('users/me');
+          if (responseData.data) setUser(responseData.data);
+        } catch (err) {
+          return;
+        }
       }
       setLoading(false);
     }

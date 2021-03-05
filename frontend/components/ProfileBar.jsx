@@ -50,7 +50,9 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
       </div>
       <div className="item">
         <SettingOutlined />
-        <h1>Settings</h1>
+        <h1 onClick={() => setProfileOpen(false)}>
+          <Link href="/settings">Settings</Link>
+        </h1>
       </div>
       <div onClick={signout} className="item logout">
         <LogoutOutlined />
