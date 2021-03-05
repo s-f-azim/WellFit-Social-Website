@@ -39,7 +39,7 @@ app.use(cors({ credentials: true, origin: `${process.env.CLIENT_URL}` }));
 
 // routes
 app.use('/api/users', userRoutes);
-userRoutes.use('/api/users/:reviewedId/reviews', reviewRoutes);
+// userRoutes.use('/:reviewedId/reviews', reviewRoutes);
 
 // 404 if the route doesn't match
 // eslint-disable-next-line no-unused-vars

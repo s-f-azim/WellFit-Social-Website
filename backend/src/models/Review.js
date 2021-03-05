@@ -28,6 +28,6 @@ const ReviewSchema = new mongoose.Schema(
 
 ReviewSchema.index({ reviewed: 1, reviewer: 1 }, { unique: true });
 
-const Review = mongoose.model('User', ReviewSchema);
+const Review = mongoose.model('Review', ReviewSchema);
 
 export default Review;

@@ -14,13 +14,6 @@ const userOne = {
   birthday: new Date(),
   nickname: 'testicles',
   bio: 'I have no balls',
-  reviews: [
-    {
-      author: userTwoId,
-      rate: 3,
-      comment: 'Test',
-    },
-  ],
 };
 
 const userTwo = {
