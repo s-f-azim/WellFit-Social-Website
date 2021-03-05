@@ -33,7 +33,9 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
         }}
         icon={<AntDesignOutlined />}
       />
-      <h1>{user.name}</h1>
+      <h1 className="item" onClick={() => setProfileOpen(false)}>
+        <Link href="/profile">{user.name}</Link>
+      </h1>
       <div className="item">
         <HistoryOutlined />
         <h1>Purchase history</h1>
