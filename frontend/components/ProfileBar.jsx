@@ -22,7 +22,7 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
       duration: 2,
       icon: <CheckOutlined style={{ color: '#00FF00' }} />,
     });
-    router.push('/');
+    logout();
   };
   return (
     <div className={`profile-bar ${profileOpen ? 'active' : ''}`}>

@@ -65,18 +65,18 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 /**
- * 
+ *
  * @async
- * @desc delete user from the db 
+ * @desc delete user from the db
  * @route DELETE /api/users/settings
- * 
+ *
  */
 const deleteUser = asyncHandler(async (req, res) => {
   await User.findByIdAndDelete(req.user._id);
-  res.status(200).send( {success: true} );
+  res.status(200).send({ success: true });
 });
 
-/** 
+/**
  * @async
  * @desc google login user using oauth
  * @route GET /api/users/google/redirect
