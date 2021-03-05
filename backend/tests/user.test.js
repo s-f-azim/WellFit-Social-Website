@@ -95,7 +95,7 @@ it('Should not update a user\'s invalid attribute', async () => {
 
 // assert delete a user
 it("Should delete a logged in user", async () => {
-  const response = await request(app)
+  await request(app)
     .delete("/api/users/delete")
     .send()
     .set("Cookie", [`token=${tokens[0]}`])
@@ -105,7 +105,7 @@ it("Should delete a logged in user", async () => {
 }); 
 
 it("Should not delete a user when not logged in", async () => {
-  const response = await request(app)
+  await request(app)
     .delete("/api/users/delete")
     .send()
     .expect(401);
