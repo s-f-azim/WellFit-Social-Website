@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useContext } from 'react';
 import { Form, InputNumber, Button, Carousel, Select, Row, Col, Layout, Card, Steps } from 'antd';
 
 import { useRouter } from 'next/router';
-import { updateUser } from '../actions/user';
+import updateUser from '../actions/user';
 import { useAuth } from '../services/auth';
 
 const { Option } = Select;
