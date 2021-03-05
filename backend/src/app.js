@@ -1,14 +1,14 @@
-import express from "express";
-import connectDb from "../config/db.js";
-import errorHandler from "./middleware/error.js";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import ErrorResponse from "./utils/errorResponse.js";
-import userRoutes from "./routes/user.js";
-import passport from "../config/passport-setup.js";
-import santanize from "express-mongo-sanitize";
-import helmet from "helmet";
-import xss from "xss-clean";
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import santanize from 'express-mongo-sanitize';
+import helmet from 'helmet';
+import xss from 'xss-clean';
+import connectDb from '../config/db.js';
+import errorHandler from './middleware/error.js';
+import ErrorResponse from './utils/errorResponse.js';
+import userRoutes from './routes/user.js';
+import passport from '../config/passport-setup.js';
 // connect to the database
 connectDb();
 
@@ -35,13 +35,14 @@ app.use(passport.initialize());
 app.use(cors({ credentials: true, origin: `${process.env.CLIENT_URL}` }));
 
 // routes
-app.use("/api/users", userRoutes);
+app.use('/api/users', userRoutes);
 
 // 404 if the route doesn't match
-app.all("*", (_, res) => {
-  throw new ErrorResponse("Resource not found on this server", 404);
+// eslint-disable-next-line no-unused-vars
+app.all('*', (_, res) => {
+  throw new ErrorResponse('Resource not found on this server', 404);
 });
-//setup middleware
+// setup middleware
 app.use(errorHandler);
 
 export default app;
