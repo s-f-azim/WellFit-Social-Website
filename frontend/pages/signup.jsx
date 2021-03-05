@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router';
-import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, Select } from 'antd';
+import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, Select, notification } from 'antd';
+import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { signup } from '../utils/auth';
+import { useAuth } from '../services/auth';
 
 const { Option } = Select;
 
@@ -31,14 +32,22 @@ const Signup = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
+  const { login, signup } = useAuth();
   const onFinish = async (values) => {
     const { role, email, fName, lName, password } = values;
     try {
       const response = await signup(role, fName, lName, email, password);
       if (response.data.success) {
+        notification.open({
+          message: 'Signed up successfully!',
+          duration: 2,
+          icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
+        });
+        await login(email, password);
         router.push('/');
       }
     } catch (err) {
+      console.log(err);
       setHasError(true);
     }
   };

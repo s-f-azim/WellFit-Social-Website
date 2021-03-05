@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { Avatar } from 'antd';
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
 import {
   AntDesignOutlined,
   SettingOutlined,
@@ -10,18 +9,14 @@ import {
   LogoutOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-import UserContext from '../contexts/UserContext';
-import { logout as signout } from '../utils/auth';
+import { useAuth } from '../services/auth';
 
 const ProfileBar = ({ profileOpen, setProfileOpen }) => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, logout } = useAuth();
   const router = useRouter();
-  const logout = async () => {
-    const response = await signout();
-    if (response.data.success) {
-      setUser(null);
-      router.push('/');
-    }
+  const signout = async () => {
+    const response = await logout();
+    router.push('/');
   };
   return (
     <div className={`profile-bar ${profileOpen ? 'active' : ''}`}>
@@ -57,7 +52,7 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
         <SettingOutlined />
         <h1>Settings</h1>
       </div>
-      <div onClick={logout} className="item logout">
+      <div onClick={signout} className="item logout">
         <LogoutOutlined />
         <h1>Logout</h1>
       </div>

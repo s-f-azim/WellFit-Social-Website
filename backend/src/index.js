@@ -6,7 +6,7 @@ import app from './app.js';
 // setup port 4000 or the port in env
 const port = process.env.PORT || 4000;
 let server;
-if (process.env.NODE_ENV !== 'PRODUCTION') {
+if (process.env.NODE_ENV === 'PRODUCTION') {
   const key = fs.readFileSync(path.join(path.resolve(), 'key.pem'));
   const cert = fs.readFileSync(path.join(path.resolve(), 'cert.pem'));
   server = https.createServer({ key, cert }, app);
