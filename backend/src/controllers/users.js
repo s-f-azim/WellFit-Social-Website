@@ -81,7 +81,7 @@ const followUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1');
+  const page = parseInt(req.query.page || '1', 10);
   const limit = 2;
   const startIndex = (page - 1) * limit;
   const lastIndex = limit * page;

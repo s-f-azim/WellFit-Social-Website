@@ -106,12 +106,12 @@ it("Shouldn't change user's following count", async () => {
 
 // userId should be added then removed again upon add request
 it("Should increment user's following count", async () => {
-  const response = await request(app)
+  await request(app)
     .patch(`/api/users/follow/${userTwo._id}`)
     .send()
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
-  const res = await request(app)
+  await request(app)
     .patch(`/api/users/follow/${userTwo._id}`)
     .send()
     .set('Cookie', [`token=${tokens[0]}`])
