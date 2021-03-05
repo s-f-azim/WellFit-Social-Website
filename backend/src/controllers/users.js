@@ -65,6 +65,18 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 /**
+ * 
+ * @async
+ * @desc delete user from the db 
+ * @route DELETE /api/users/settings
+ * 
+ */
+const deleteUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndDelete(req.user._id);
+  res.status(200).send( {success: true} );
+});
+
+/** 
  * @async
  * @desc google login user using oauth
  * @route GET /api/users/google/redirect
@@ -113,6 +125,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie('token', token, options)
     .send({ success: true, token, data: user });
 };
+
 /**
  * @desc get the token from the user model and create a cookie
  * @param {User} user - a user
@@ -131,12 +144,14 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
   res.cookie('token', token, options);
   res.redirect(`${process.env.CLIENT_URL}`);
 };
+
 export {
   createUser,
   loginUser,
   getUser,
   logoutUser,
   updateUser,
+  deleteUser,
   googleOauth,
   facebookOauth,
   instagramOauth,

@@ -5,4 +5,7 @@ const updateUser = (values) =>
         ...values,
     });
 
-export { updateUser as default };
+const deleteUser = () => 
+    api.delete('/users/delete');
+
+export { updateUser as default, deleteUser };
