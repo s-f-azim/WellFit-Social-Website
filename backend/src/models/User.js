@@ -222,26 +222,28 @@ UserSchema.pre('save', async function (next) {
 });
 // Geocode and create location field
 UserSchema.pre('save', async function (next) {
-  const loc = await geocoder.geocode(this.address);
-  const {
-    longitude,
-    latitude,
-    formattedAddress,
-    streetName,
-    city,
-    zipcode,
-    countryCode,
-  } = loc[0];
-  this.location = {
-    type: 'Point',
-    coordinates: [longitude, latitude],
-    formattedAddress: formattedAddress,
-    street: streetName,
-    city: city,
-    zipcode: zipcode,
-    country: countryCode,
-  };
-  this.address = undefined;
+  if (this.isModified('address')) {
+    const loc = await geocoder.geocode(this.address);
+    const {
+      longitude,
+      latitude,
+      formattedAddress,
+      streetName,
+      city,
+      zipcode,
+      countryCode,
+    } = loc[0];
+    this.location = {
+      type: 'Point',
+      coordinates: [longitude, latitude],
+      formattedAddress: formattedAddress,
+      street: streetName,
+      city: city,
+      zipcode: zipcode,
+      country: countryCode,
+    };
+    this.address = undefined;
+  }
   next();
 });
 
