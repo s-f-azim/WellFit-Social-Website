@@ -228,7 +228,7 @@ UserSchema.statics.checkCredentials = async ({ email, password }) => {
   return user;
 };
 // Sign JWT and return the token
-UserSchema.methods.getSginedJWTToken = function () {
+UserSchema.methods.getSignedJWTToken = function () {
   return JWT.sign({ id: this._id }, process.env.JWT_SECRET);
 };
 

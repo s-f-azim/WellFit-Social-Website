@@ -65,18 +65,18 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 /**
- * 
+ *
  * @async
- * @desc delete user from the db 
+ * @desc delete user from the db
  * @route DELETE /api/users/settings
- * 
+ *
  */
 const deleteUser = asyncHandler(async (req, res) => {
   await User.findByIdAndDelete(req.user._id);
-  res.status(200).send( {success: true} );
+  res.status(200).send({ success: true });
 });
 
-/** 
+/**
  * @async
  * @desc google login user using oauth
  * @route GET /api/users/google/redirect
@@ -112,7 +112,7 @@ const instagramOauth = asyncHandler(async (req, res) => {
  * @param {int} statusCode - integer of status code ex 404
  */
 const sendTokenResponse = (user, statusCode, res) => {
-  const token = user.getSginedJWTToken();
+  const token = user.getSignedJWTToken();
   const options = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -132,7 +132,7 @@ const sendTokenResponse = (user, statusCode, res) => {
  * @param {int} statusCode - integer of status code ex 404
  */
 const sendTokenResponseOauth = (user, statusCode, res) => {
-  const token = user.getSginedJWTToken();
+  const token = user.getSignedJWTToken();
   const options = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000

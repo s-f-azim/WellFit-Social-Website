@@ -5,18 +5,32 @@ import Course from '../models/Course.js';
 /**
  * @async
  * @desc Get all courses
- * @route GET /api/courses?location[city,zipcode,street]&price&avgRating&tags
+ * @route GET /api/courses?select=fields&&location[city,zipcode,street]&price&avgRating&tags
  * @access public
  */
 const getCourses = asyncHandler(async (req, res) => {
   let query;
-  let queryStr = JSON.stringify(req.query);
+  const reqQuery = { ...req.query };
+  const removeFields = ['select'];
+  removeFields.forEach((param) => delete reqQuery[param]);
+  let queryStr = JSON.stringify(reqQuery);
   queryStr = queryStr.replace(
     /\b(gt|gte|lte|lt|in)\b/g,
     (match) => `$${match}`
   );
-  console.log(queryStr);
   query = Course.find(JSON.parse(queryStr));
+  // check if select given
+  if (req.query.select) {
+    const fields = req.query.select.split(',').join(' ');
+    query = query.select(fields);
+  }
+  // check if sort is given
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(',').join(' ');
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort('createdAt');
+  }
   const courses = await query;
   res.status(200).send({ success: true, count: courses.length, data: courses });
 });

@@ -40,7 +40,7 @@ const setupDatabase = async () => {
     const user = new User(u);
     // eslint-disable-next-line no-await-in-loop
     await user.save();
-    tokens.push(user.getSginedJWTToken());
+    tokens.push(user.getSignedJWTToken());
   }
 };
 
