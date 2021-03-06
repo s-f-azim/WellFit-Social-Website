@@ -3,6 +3,7 @@ import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import JWT from 'jsonwebtoken';
 import ErrorResponse from '../utils/errorResponse.js';
+import geocoder from '../utils/geocoder.js';
 
 // create user schema
 const UserSchema = new mongoose.Schema(
@@ -10,6 +11,7 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       unique: true,
+      index: true,
       required: [true, 'Please add an email address'],
       validate(value) {
         if (!validator.isEmail(value)) throw new Error('Email is Invalid');
@@ -39,18 +41,23 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       enum: ['Male', 'Female', 'Non-Binary', 'Prefer not to say'],
     },
-    location: {
+    address: {
       type: String,
-      trim: true,
-      enum: [
-        'Europe',
-        'Asia',
-        'North America',
-        'South America',
-        'Australia',
-        'Africa',
-        'Prefer not to say',
-      ],
+    },
+    location: {
+      type: {
+        type: String,
+        enum: ['Point'],
+      },
+      coordinates: {
+        type: [Number],
+        index: '2dsphere',
+      },
+      formattedAddress: String,
+      street: String,
+      city: String,
+      zipcode: String,
+      country: String,
     },
 
     birthday: {
@@ -211,6 +218,30 @@ UserSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 10);
   }
+  next();
+});
+// Geocode and create location field
+UserSchema.pre('save', async function (next) {
+  const loc = await geocoder.geocode(this.address);
+  const {
+    longitude,
+    latitude,
+    formattedAddress,
+    streetName,
+    city,
+    zipcode,
+    countryCode,
+  } = loc[0];
+  this.location = {
+    type: 'Point',
+    coordinates: [longitude, latitude],
+    formattedAddress: formattedAddress,
+    street: streetName,
+    city: city,
+    zipcode: zipcode,
+    country: countryCode,
+  };
+  this.address = undefined;
   next();
 });
 

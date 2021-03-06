@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
+import geocoder from '../utils/geocoder.js';
 
 /**
  * @async
@@ -46,6 +47,20 @@ const getUsers = asyncHandler(async (req, res) => {
   res
     .status(200)
     .send({ success: true, count: users.length, pagination, data: users });
+});
+const getUsersWithinRadius = asyncHandler(async (req, res) => {
+  const { zipcode, distance } = req.params;
+  // get lat/lng from geocoder
+  const loc = await geocoder.geocode(zipcode);
+  const { latitude, longitude } = loc[0];
+  // Calc radius using radians
+  const radius = distance / 6378;
+  const users = await User.find({
+    location: {
+      $geoWithin: { $centerSphere: [[longitude, latitude], radius] },
+    },
+  });
+  res.status(200).send({ success: true, count: users.length, data: users });
 });
 
 /**
@@ -192,6 +207,8 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
 };
 
 export {
+  getUsers,
+  getUsersWithinRadius,
   createUser,
   loginUser,
   getUser,
