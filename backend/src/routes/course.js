@@ -3,17 +3,22 @@ import {
   createCourse,
   updateCourse,
   getCoursesWithinRadius,
+  getCourses,
 } from '../controllers/courses.js';
 import passport from '../../config/passport-setup.js';
 
 const router = new express.Router();
 
+router.route('/').get(getCourses);
+
 router
   .route('/create')
   .post(passport.authenticate('jwt', { session: false }), createCourse);
+
 router
   .route('/update/:id')
   .patch(passport.authenticate('jwt', { session: false }), updateCourse);
+
 router.route('/radius/:zipcode/:distance').get(getCoursesWithinRadius);
 
 export default router;
