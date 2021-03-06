@@ -136,6 +136,5 @@ it('Should get all users', async () => {
     .get('/api/users/radius/kt26qw/1')
     .send()
     .expect(200);
-  console.log(response);
   expect(response.body.count).toBe(1);
 });
