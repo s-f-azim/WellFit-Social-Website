@@ -66,25 +66,26 @@ const UserSchema = new mongoose.Schema(
     tags: {
       type: [String],
       enum: [
-        '#GetFit',
-        '#Cardio',
-        '#Cycling',
-        '#FitFam',
-        '#FitLife',
-        '#Fitness',
-        '#FitnessMotivation',
-        '#FitnessAddict', 
-        '#GetStrong',
-        '#LiftHeavy',
-        '#GirlsWhoLift',
-        '#GymLife',
-        '#GymTime',
-        '#NoPainNoGain',
-        '#PersonalTrainer',
-        '#Sweat',
-        '#Weights',
-        '#WeightLifting',
-        '#Workout'],
+        'GetFit',
+        'Cardio',
+        'Cycling',
+        'FitFam',
+        'FitLife',
+        'Fitness',
+        'FitnessMotivation',
+        'FitnessAddict',
+        'GetStrong',
+        'LiftHeavy',
+        'GirlsWhoLift',
+        'GymLife',
+        'GymTime',
+        'NoPainNoGain',
+        'PersonalTrainer',
+        'Sweat',
+        'Weights',
+        'WeightLifting',
+        'Workout',
+      ],
     },
     trainerType: {
       type: String,
@@ -191,6 +192,12 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+// connect the creator of courses to the user (ex user.courses)
+UserSchema.virtual('courses', {
+  ref: 'Course',
+  localField: '_id',
+  foreignField: 'creators',
+});
 
 // change the json to not send specified fields
 UserSchema.methods.toJSON = function () {
