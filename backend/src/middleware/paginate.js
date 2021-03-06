@@ -1,7 +1,7 @@
 import asyncHandler from './async.js';
 import geocoder from '../utils/geocoder.js';
-const paginateAndFilter = (model) => {
-  return asyncHandler(async (req, res, next) => {
+
+const paginateAndFilter = (model) => asyncHandler(async (req, res, next) => {
     let query;
     let reqQuery = { ...req.query };
     const removeFields = ['select', 'sort', 'page', 'limit'];
@@ -65,5 +65,4 @@ const paginateAndFilter = (model) => {
     res.pagination = pagination;
     next();
   });
-};
 export default paginateAndFilter;

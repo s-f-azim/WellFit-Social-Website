@@ -99,10 +99,10 @@ CourseSchema.pre('save', async function (next) {
   this.location = {
     type: 'Point',
     coordinates: [longitude, latitude],
-    formattedAddress: formattedAddress,
+    formattedAddress,
     street: streetName,
-    city: city,
-    zipcode: zipcode,
+    city,
+    zipcode,
     country: countryCode,
   };
   this.address = undefined;
