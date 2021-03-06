@@ -5,10 +5,17 @@ import { useAuth } from '../services/auth';
 // eslint-disable-next-line no-unused-vars
 export default function Home() {
   const user = useAuth();
-  console.log(user.user.role);
   return (
     <>
-      {user ? user.user.role === 'admin' ? <AdminDashboard /> : <LandingPage /> : <LandingPage />}
+      {user && user.user ? (
+        user.user.role === 'admin' ? (
+          <AdminDashboard />
+        ) : (
+          <LandingPage />
+        )
+      ) : (
+        <LandingPage />
+      )}
     </>
   );
 }
