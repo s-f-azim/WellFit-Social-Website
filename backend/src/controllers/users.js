@@ -24,14 +24,12 @@ const getUsers = asyncHandler(async (req, res) => {
  * @access public
  */
 const getUsersWithinRadius = asyncHandler(async (req, res) => {
-  res
-    .status(200)
-    .send({
-      success: true,
-      count: res.results.length,
-      pagination: res.pagination,
-      data: res.results,
-    });
+  res.status(200).send({
+    success: true,
+    count: res.results.length,
+    pagination: res.pagination,
+    data: res.results,
+  });
 });
 
 /**
@@ -100,7 +98,7 @@ const logoutUser = asyncHandler(async (req, res) => {
  *
  * @async
  * @desc delete user from the db
- * @route DELETE /api/users/settings
+ * @route DELETE /api/users/delete
  *
  */
 const deleteUser = asyncHandler(async (req, res) => {

@@ -24,7 +24,13 @@ const getCourses = asyncHandler(async (req, res) => {
  * @access private
  */
 const createCourse = asyncHandler(async (req, res) => {
-  const course = await Course.create(req.body);
+  let { creators } = req.body;
+  creators = creators ? [req.user._id, ...creators] : [req.user._id];
+  delete req.body.creators;
+  const course = await Course.create({
+    creators,
+    ...req.body,
+  });
   res.status(201).send({ success: true, data: course });
 });
 
@@ -50,14 +56,34 @@ const updateCourse = asyncHandler(async (req, res) => {
  * @access public
  */
 const getCoursesWithinRadius = asyncHandler(async (req, res) => {
-  res
-    .status(200)
-    .send({
-      success: true,
-      count: res.results.length,
-      pagination: res.pagination,
-      data: res.results,
-    });
+  res.status(200).send({
+    success: true,
+    count: res.results.length,
+    pagination: res.pagination,
+    data: res.results,
+  });
 });
 
-export { getCourses, updateCourse, createCourse, getCoursesWithinRadius };
+/**
+ *
+ * @async
+ * @desc delete course from the db
+ * @route DELETE /api/courses/delete/:id
+ *
+ */
+const deleteCourse = asyncHandler(async (req, res) => {
+  const course = await Course.findOne({
+    _id: req.params.id,
+    creators: { $all: [req.user._id] },
+  });
+  await course.delete();
+  res.status(200).send({ success: true });
+});
+
+export {
+  getCourses,
+  updateCourse,
+  createCourse,
+  getCoursesWithinRadius,
+  deleteCourse,
+};

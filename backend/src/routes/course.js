@@ -4,6 +4,7 @@ import {
   updateCourse,
   getCoursesWithinRadius,
   getCourses,
+  deleteCourse,
 } from '../controllers/courses.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -24,5 +25,9 @@ router
 router
   .route('/radius/:zipcode/:distance')
   .get(paginate(Course), getCoursesWithinRadius);
+
+router
+  .route('/delete/:id')
+  .delete(passport.authenticate('jwt', { session: false }), deleteCourse);
 
 export default router;
