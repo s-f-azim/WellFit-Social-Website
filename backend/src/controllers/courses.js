@@ -11,7 +11,7 @@ import Course from '../models/Course.js';
 const getCourses = asyncHandler(async (req, res) => {
   let query;
   const reqQuery = { ...req.query };
-  const removeFields = ['select'];
+  const removeFields = ['select', 'sort', 'page', 'limit'];
   removeFields.forEach((param) => delete reqQuery[param]);
   let queryStr = JSON.stringify(reqQuery);
   queryStr = queryStr.replace(
@@ -31,8 +31,25 @@ const getCourses = asyncHandler(async (req, res) => {
   } else {
     query = query.sort('createdAt');
   }
+  // Pagination
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 20;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const total = await Course.countDocuments();
+  query = query.skip(startIndex).limit(limit);
   const courses = await query;
-  res.status(200).send({ success: true, count: courses.length, data: courses });
+  const pagination = {};
+  if (endIndex < total) {
+    pagination.next = { page: page + 1, limit };
+  }
+  if (startIndex > 0) {
+    pagination.prev = { page: page - 1, limit };
+  }
+
+  res
+    .status(200)
+    .send({ success: true, count: courses.length, pagination, data: courses });
 });
 
 /**
