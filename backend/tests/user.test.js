@@ -49,7 +49,7 @@ it('Should logout a user', async () => {
 });
 
 // assert non logged in user cant edit their information
-it('Should not  edit profile when not logged in', async () => {
+it('Should not edit profile when not logged in', async () => {
   await request(app).patch('/api/users/editProfile').send().expect(401);
 });
 // assert only logged in user can edit their information
@@ -61,7 +61,7 @@ it('Should not edit profile when not logged in', async () => {
     .expect(200);
 });
 // assert update a user attribute
-it("Should update a user's valid attribute", async () => {
+it('Should update a user\'s valid attribute', async () => {
   await request(app)
     .patch('/api/users/editProfile')
     .send({ email: 'testtttttttt@test.com' })
@@ -72,7 +72,7 @@ it("Should update a user's valid attribute", async () => {
 });
 
 // assert update a user attribute
-it("Should not update a user's invalid attribute", async () => {
+it('Should not update a user\'s invalid attribute', async () => {
   await request(app)
     .patch('/api/users/editProfile')
     .send({ size: 'large' })

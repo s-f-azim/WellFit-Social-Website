@@ -31,7 +31,6 @@ it('Should create a new course', async () => {
   expect(course).not.toBeNull;
   expect(await Course.countDocuments()).toBe(count + 1);
 });
-
 // assert creating a new course when not logged in
 it('Should not create a new course when not logged in', async () => {
   await request(app)
@@ -79,7 +78,6 @@ it('Should not delete a course when not logged in', async () => {
     .send()
     .expect(401);
 });
-
 // assert can't delete user when not logged in
 it('Should not delete a course by someone who dont own the course', async () => {
   await request(app)
@@ -88,9 +86,8 @@ it('Should not delete a course by someone who dont own the course', async () => 
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(500);
 });
-
 // assert update a course attribute
-it("Should update a course's valid attribute", async () => {
+it('Should update a course\'s valid attribute', async () => {
   await request(app)
     .patch(`/api/courses/update/${courseOne._id}`)
     .send({ title: 'test course' })
@@ -100,23 +97,40 @@ it("Should update a course's valid attribute", async () => {
   expect(course.title).toBe('test course');
 });
 // assert update a course attribute when not logged in
-it("Should not update a course's valid attribute when not logged in", async () => {
+it('Should not update a course\'s valid attribute when not logged in', async () => {
   await request(app)
     .patch(`/api/courses/update/${courseOne._id}`)
     .send({ title: 'test course' })
     .expect(401);
 });
 // assert update a course attribute by someone who isnt the owner
-it("Should not update a course's valid attribute by someone who isnt the owner", async () => {
+it('Should not update a course\'s valid attribute by someone who isnt the owner', async () => {
   await request(app)
     .patch(`/api/courses/update/${courseTwo._id}`)
     .send({ title: 'test course' })
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(500);
 });
-
 // assert get all courses
 it('Should get all courses', async () => {
   const response = await request(app).get('/api/courses').send().expect(200);
   expect(response.body.count).toBe(2);
+});
+// assert get courses with filters and select specific fields
+it('Should get all courses with select and filters', async () => {
+  const response = await request(app)
+    .get('/api/courses?slug=lose-it&&select=title')
+    .send()
+    .expect(200);
+  expect(response.body.count).toBe(1);
+  expect(response.body.data[0].description).toEqual(undefined);
+  expect(response.body.data[0].title).toEqual(courseTwo.title);
+});
+// assert get courses within radius
+it('Should get all courses within range', async () => {
+  const response = await request(app)
+    .get('/api/courses/radius/kt26qw/1')
+    .send()
+    .expect(200);
+  expect(response.body.count).toBe(1);
 });
