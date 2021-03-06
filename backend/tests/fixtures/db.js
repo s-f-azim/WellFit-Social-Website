@@ -30,7 +30,11 @@ const userTwo = {
 };
 
 // create courses
+
+const courseOneId = new mongoose.Types.ObjectId();
+
 const courseOne = {
+  _id: courseOneId,
   title: 'Lose weight',
   description: 'The fastest way to lose weight',
   address: 'kt2 6qw',
@@ -38,7 +42,11 @@ const courseOne = {
   price: 10,
   tags: ['GetFit', 'FitFam'],
 };
+
+const courseTwoId = new mongoose.Types.ObjectId();
+
 const courseTwo = {
+  _id: courseTwoId,
   title: 'Lose it',
   description: 'lose your weight today',
   address: 'E20 1GS',

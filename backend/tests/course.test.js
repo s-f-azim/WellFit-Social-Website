@@ -1,7 +1,13 @@
 import request from 'supertest';
 import Course from '../src/models/Course.js';
 import app from '../src/app.js';
-import { tokens, userOne, setupDatabase } from './fixtures/db.js';
+import {
+  tokens,
+  userOne,
+  setupDatabase,
+  courseOne,
+  courseTwo,
+} from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
@@ -55,4 +61,62 @@ it('Should not create a new course with invalid data', async () => {
       tags: ['test'],
     })
     .expect(400);
+});
+// assert delete a course
+it('Should delete a course when logged in and own the course', async () => {
+  await request(app)
+    .delete(`/api/courses/delete/${courseOne._id}`)
+    .send()
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(200);
+  const courseExits = await Course.exists({ _id: courseOne._id });
+  expect(courseExits).toEqual(false);
+});
+// assert can't delete user when not logged in
+it('Should not delete a course when not logged in', async () => {
+  await request(app)
+    .delete(`/api/courses/delete/${courseOne._id}`)
+    .send()
+    .expect(401);
+});
+
+// assert can't delete user when not logged in
+it('Should not delete a course by someone who dont own the course', async () => {
+  await request(app)
+    .delete(`/api/courses/delete/${courseTwo._id}`)
+    .send()
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(500);
+});
+
+// assert update a course attribute
+it("Should update a course's valid attribute", async () => {
+  await request(app)
+    .patch(`/api/courses/update/${courseOne._id}`)
+    .send({ title: 'test course' })
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(200);
+  const course = await Course.findById(courseOne._id);
+  expect(course.title).toBe('test course');
+});
+// assert update a course attribute when not logged in
+it("Should not update a course's valid attribute when not logged in", async () => {
+  await request(app)
+    .patch(`/api/courses/update/${courseOne._id}`)
+    .send({ title: 'test course' })
+    .expect(401);
+});
+// assert update a course attribute by someone who isnt the owner
+it("Should not update a course's valid attribute by someone who isnt the owner", async () => {
+  await request(app)
+    .patch(`/api/courses/update/${courseTwo._id}`)
+    .send({ title: 'test course' })
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(500);
+});
+
+// assert get all courses
+it('Should get all courses', async () => {
+  const response = await request(app).get('/api/courses').send().expect(200);
+  expect(response.body.count).toBe(2);
 });
