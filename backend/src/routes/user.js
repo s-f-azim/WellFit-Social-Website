@@ -13,11 +13,15 @@ import {
   instagramOauth,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
+import paginate from '../middleware/paginate.js';
+import User from '../models/User.js';
 
 const router = new express.Router();
 
-router.route('/').get(getUsers);
-router.route('/radius/:zipcode/:distance').get(getUsersWithinRadius);
+router.route('/').get(paginate(User), getUsers);
+router
+  .route('/radius/:zipcode/:distance')
+  .get(paginate(User), getUsersWithinRadius);
 router.route('/signup').post(createUser);
 
 router.route('/login').post(loginUser);
