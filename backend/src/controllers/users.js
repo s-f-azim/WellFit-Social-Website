@@ -1,7 +1,6 @@
 /* eslint-disable no-use-before-define */
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
-import geocoder from '../utils/geocoder.js';
 
 /**
  * @async

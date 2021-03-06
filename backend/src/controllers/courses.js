@@ -1,4 +1,3 @@
-import geocoder from '../utils/geocoder.js';
 import asyncHandler from '../middleware/async.js';
 import Course from '../models/Course.js';
 
