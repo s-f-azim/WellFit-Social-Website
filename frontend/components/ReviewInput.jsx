@@ -1,11 +1,11 @@
 import { Card, Form, Rate, Input, Button } from 'antd';
-import { createReview } from '../utils/user';
+import { createReview } from '../utils/review';
 
 const { TextArea } = Input;
 
-const ReviewInput = ({ userId }) => {
+const ReviewInput = ({ reviewedId }) => {
   const onFinish = async (values) => {
-    await createReview(userId, values);
+    await createReview(reviewedId, values);
   };
 
   return (

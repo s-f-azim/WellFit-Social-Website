@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 import asyncHandler from '../middleware/async.js';
 import Review from '../models/Review.js';
+import User from '../models/User.js';
 
 /**
  * @async
@@ -9,7 +10,7 @@ import Review from '../models/Review.js';
  * @access private
  */
 const createReview = asyncHandler(async (req, res) => {
-  if (req.user._id.toString() === req.params.userId) {
+  if (req.user._id.toString() === req.params.reviewedId) {
     return res.status(400).send({ error: 'Please do not review yourself' });
   }
 
@@ -28,9 +29,14 @@ const createReview = asyncHandler(async (req, res) => {
  * @access public
  */
 const getReviews = asyncHandler(async (req, res) => {
-  /* User.findById(req.params.id, 'reviews', (err, user) => {
-    res.status(200).json({ success: true, data: { reviews: user.reviews } });
-  }); */
+  User.findById(req.params.reviewedId, 'reviews')
+    .populate({
+      path: 'reviews',
+      populate: { path: 'reviewer' },
+    })
+    .exec((err, user) => {
+      res.status(200).json({ success: true, data: { reviews: user.reviews } });
+    });
 });
 
 /**
@@ -40,15 +46,16 @@ const getReviews = asyncHandler(async (req, res) => {
  * @access private
  */
 const deleteReview = asyncHandler(async (req, res) => {
-  /* await User.findByIdAndUpdate(req.params.id, {
-    $pull: {
-      reviews: {
-        author: req.user,
-      },
+  Review.findOneAndDelete(
+    {
+      reviewed: req.params.reviewedId,
+      reviewer: req.user._id,
     },
-  });
-
-  res.status(200).send({ success: true }); */
+    (err, review) => {
+      if (err) res.status(400).send({ success: false });
+      res.status(200).send({ success: true });
+    }
+  );
 });
 
 export { createReview, getReviews, deleteReview };

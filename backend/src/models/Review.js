@@ -2,8 +2,6 @@ import mongoose from 'mongoose';
 
 const ReviewSchema = new mongoose.Schema(
   {
-    _id: false,
-
     reviewed: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
@@ -16,7 +14,7 @@ const ReviewSchema = new mongoose.Schema(
     rate: {
       type: Number,
       required: [true, 'Please add a rating'],
-      min: 0,
+      min: 1,
       max: 5,
     },
     comment: {

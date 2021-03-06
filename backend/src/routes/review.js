@@ -13,9 +13,9 @@ router
   .post(passport.authenticate('jwt', { session: false }), createReview);
 
 router
-  .route('/:reviewerId')
+  .route('/')
   .delete(passport.authenticate('jwt', { session: false }), deleteReview);
 
-router.route('/:reviewerId').get(getReviews);
+router.route('/').get(getReviews);
 
 export default router;

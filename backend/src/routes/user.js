@@ -2,8 +2,9 @@ import express from 'express';
 import {
   createUser,
   loginUser,
-  getUser,
   logoutUser,
+  getUser,
+  updateUser,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -13,17 +14,26 @@ import passport from '../../config/passport-setup.js';
 const router = new express.Router();
 
 router.route('/signup').post(createUser);
+
 router.route('/login').post(loginUser);
+
 router.route('/logout').get(logoutUser);
+
 router
   .route('/profile')
   .get(passport.authenticate('jwt', { session: false }), getUser);
+
+router
+  .route('/editProfile')
+  .patch(passport.authenticate('jwt', { session: false }), updateUser);
+
 router.route('/oauth/google').get(
   passport.authenticate('google', {
     scope: ['profile', 'email'],
     session: false,
   })
 );
+
 router
   .route('/oauth/google/redirect')
   .get(passport.authenticate('google', { session: false }), googleOauth);

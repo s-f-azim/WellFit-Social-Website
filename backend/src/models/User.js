@@ -104,7 +104,7 @@ const UserSchema = new mongoose.Schema(
       },
     ],
 
-    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    // reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
 
     googleId: {
       type: String,
@@ -118,6 +118,12 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+UserSchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'reviewed',
+});
 
 // change the json to not send specified fields
 UserSchema.methods.toJSON = function () {

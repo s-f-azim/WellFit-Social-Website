@@ -1,7 +1,14 @@
-import { List, Rate } from 'antd';
+import { List, Rate, Button } from 'antd';
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
+import { deleteReview } from '../utils/review';
 
 const ReviewList = ({ reviews }) => {
-  const a = 0;
+  const { user } = useContext(UserContext);
+
+  const handleDeleteClick = (reviewedId) => {
+    deleteReview(reviewedId);
+  };
 
   return (
     <>
@@ -13,8 +20,18 @@ const ReviewList = ({ reviews }) => {
         }}
         dataSource={reviews}
         renderItem={(review) => (
-          <List.Item key={review.author._id} extra={<Rate disabled defaultValue={review.rate} />}>
-            <List.Item.Meta title={review.author.name} />
+          <List.Item
+            key={review.reviewer._id}
+            extra={
+              <>
+                <Button type="primary" onClick={() => handleDeleteClick(review.reviewed)} danger>
+                  DELETE
+                </Button>
+                <Rate disabled defaultValue={review.rate} />
+              </>
+            }
+          >
+            <List.Item.Meta title={review.reviewer.name} />
             {review.comment}
           </List.Item>
         )}

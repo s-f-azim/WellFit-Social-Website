@@ -1,7 +1,7 @@
 import { Row, Col } from 'antd';
 import ReviewList from '../components/ReviewList';
 import ReviewInput from '../components/ReviewInput';
-import { getReviews } from '../utils/user';
+import { getReviews } from '../utils/review';
 
 export default function ReviewPage({ reviews }) {
   return (
@@ -13,14 +13,14 @@ export default function ReviewPage({ reviews }) {
       </Row>
       <Row style={{ height: '100vh' }} align="middle">
         <Col lg={{ span: 14, offset: 5 }}>
-          <ReviewInput userId="6040d829ce76ca180a0fc398" />
+          <ReviewInput reviewedId="6043978a8a117f2a1e98df14" />
         </Col>
       </Row>
     </>
   );
 }
 
-export async function getStaticProps() {
-  const reviews = await getReviews('6040d829ce76ca180a0fc398');
+export async function getServerSideProps() {
+  const reviews = await getReviews('6043978a8a117f2a1e98df14');
   return { props: { reviews } };
 }
