@@ -5,7 +5,7 @@ import Course from '../models/Course.js';
 /**
  * @async
  * @desc Get all courses
- * @route GET /api/courses?select=fields&&location[city,zipcode,street]&price&avgRating&tags
+ * @route GET /api/courses?select=fields&&location[city,zipcode,street]&&price&&avgRating&&tags
  * @access public
  */
 const getCourses = asyncHandler(async (req, res) => {

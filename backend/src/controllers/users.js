@@ -4,6 +4,52 @@ import User from '../models/User.js';
 
 /**
  * @async
+ * @desc Get all users
+ * @route POST /api/users?select=fields&&location[city,zipcode,street]&&tags&&sort
+ * @access public
+ */
+const getUsers = asyncHandler(async (req, res) => {
+  let query;
+  const reqQuery = { ...req.query };
+  const removeFields = ['select', 'sort', 'page', 'limit'];
+  removeFields.forEach((param) => delete reqQuery[param]);
+  let queryStr = JSON.stringify(reqQuery);
+  query = User.find(JSON.parse(queryStr));
+  // check if select given
+  if (req.query.select) {
+    const fields = req.query.select.split(',').join(' ');
+    query = query.select(fields);
+  }
+  // check if sort is given
+  if (req.query.sort) {
+    const sortBy = req.query.sort.split(',').join(' ');
+    query = query.sort(sortBy);
+  } else {
+    query = query.sort('createdAt');
+  }
+  // Pagination
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 20;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const total = await User.countDocuments();
+  query = query.skip(startIndex).limit(limit);
+  const users = await query;
+  const pagination = {};
+  if (endIndex < total) {
+    pagination.next = { page: page + 1, limit };
+  }
+  if (startIndex > 0) {
+    pagination.prev = { page: page - 1, limit };
+  }
+
+  res
+    .status(200)
+    .send({ success: true, count: users.length, pagination, data: users });
+});
+
+/**
+ * @async
  * @desc create a user
  * @route POST /api/users/signup
  * @access public
