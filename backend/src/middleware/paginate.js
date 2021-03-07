@@ -60,7 +60,7 @@ const paginateAndFilter = (model) =>
     const total = await model.countDocuments();
     query = query.skip(startIndex).limit(limit);
     const results = await query;
-    const pagination = {};
+    const pagination = { total };
     if (endIndex < total) {
       pagination.next = { page: page + 1, limit };
     }
