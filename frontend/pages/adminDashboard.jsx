@@ -1,11 +1,12 @@
-import { Card, Row, Statistic, Tabs } from 'antd';
+import { Card, Row, Col, Statistic, Tabs } from 'antd';
 import {
   FundProjectionScreenOutlined,
   BarChartOutlined,
-  UserAddOutlined,
+  CheckCircleOutlined,
   StopOutlined,
   BugOutlined,
   MailOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import { getUsers } from '../actions/user';
 
@@ -25,7 +26,7 @@ const AdminDashboard = ({ count }) => {
 
   const verifiedTitle = (
     <p>
-      <UserAddOutlined /> Verify users
+      <CheckCircleOutlined /> Verify users
     </p>
   );
 
@@ -53,7 +54,14 @@ const AdminDashboard = ({ count }) => {
         <Card title={title}>
           <Tabs size="large" defaultActiveKey="1" tabPosition="left">
             <TabPane key="1" tab={statisticsTitle}>
-              <Statistic title="Registered users" value={count} />
+              <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                <Col span={6}>
+                  <Statistic prefix={<UserOutlined />} title="Registered users" value={count} />
+                </Col>
+                <Col span={6}>
+                  <Statistic prefix={<UserOutlined />} title="Registered users" value={count} />
+                </Col>
+              </Row>
             </TabPane>
             <TabPane key="2" tab={verifiedTitle}>
               hi

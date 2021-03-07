@@ -7,7 +7,7 @@
   .ant-card-bordered {
     border: 2px solid #000000;
     border-radius: 8px;
-    margin: 100px;
+    margin: 50px;
   }
 
   .ant-card-head {
@@ -16,5 +16,16 @@
 
   .ant-card-head-title {
     padding: 10px 0;
+  }
+
+  .ant-statistic {
+    border: 2px solid #000000;
+    padding: 6px;
+    background-color: white;
+    border-radius: 4px;
+  }
+
+  .ant-tabs-tab-active {
+    background-color: #dfdfdf;
   }
 }
