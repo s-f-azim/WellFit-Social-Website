@@ -1,8 +1,13 @@
 .adminDashboard {
+  .ant-card {
+    background: #f0f0f0;
+    width: 100%;
+  }
+
   .ant-card-bordered {
     border: 2px solid #000000;
     border-radius: 8px;
-    margin: 10px;
+    margin: 100px;
   }
 
   .ant-card-head {

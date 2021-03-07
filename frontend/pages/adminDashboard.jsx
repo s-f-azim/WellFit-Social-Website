@@ -1,20 +1,57 @@
-import { Card, Row, Statistic } from 'antd';
-import { FundProjectionScreenOutlined } from '@ant-design/icons';
+import { Card, Row, Statistic, Tabs } from 'antd';
+import { FundProjectionScreenOutlined, BarChartOutlined, UserAddOutlined } from '@ant-design/icons';
 import { getUsers } from '../actions/user';
 
+const { TabPane } = Tabs;
+
 const AdminDashboard = ({ count }) => {
-  console.log(count);
   const title = (
     <h1>
       <FundProjectionScreenOutlined /> Administrative Dashboard
     </h1>
   );
+  const statisticsTitle = (
+    <p>
+      <BarChartOutlined /> Statistics
+    </p>
+  );
+
+  const verifiedTitle = (
+    <p>
+      <UserAddOutlined /> Verify users
+    </p>
+  );
+
+  const banTitle = (
+    <p>
+      <UserAddOutlined /> Ban users
+    </p>
+  );
+
+  const bugTitle = (
+    <p>
+      <UserAddOutlined /> Bug reports
+    </p>
+  );
 
   return (
     <div className="adminDashboard">
-      <Row type="flex" justify="center">
+      <Row type="flex">
         <Card title={title}>
-          <Statistic title="Active Users" value={count} />
+          <Tabs size="large" defaultActiveKey="1" tabPosition="left">
+            <TabPane key="1" tab={statisticsTitle}>
+              <Statistic title="Registered users" value={count} />
+            </TabPane>
+            <TabPane key="2" tab={verifiedTitle}>
+              hi
+            </TabPane>
+            <TabPane key="3" tab={banTitle}>
+              hi
+            </TabPane>
+            <TabPane key="4" tab={bugTitle}>
+              hi
+            </TabPane>
+          </Tabs>
         </Card>
       </Row>
     </div>
