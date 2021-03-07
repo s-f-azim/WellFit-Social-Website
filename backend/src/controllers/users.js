@@ -145,6 +145,22 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
   res.redirect(`${process.env.CLIENT_URL}`);
 };
 
+/**
+ * @async
+ * @desc Get suggested instructors for user based on random tag selected, client gender preference 
+ * @param {User} user - a user
+ */
+const getSuggestedInstructors = asyncHandler( async (req, res)=> {
+  const users = await User.find({
+                  $or: [
+                    {tags: req.user.tags[Math.floor(Math.random() * req.user.tags.length)]},
+                    {gender}
+                  ]
+                })
+                .limit(3);
+  res.status(200).send({success: true, data: users});
+})
+
 export {
   createUser,
   loginUser,
@@ -155,4 +171,5 @@ export {
   googleOauth,
   facebookOauth,
   instagramOauth,
+  getSuggestedInstructors,
 };
