@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../services/auth';
 import { Space, Button, Row, Card, Col } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
+import Animate from 'rc-animate';
+
 
 const Profile = () => {
   const router = useRouter();
@@ -14,48 +16,66 @@ const Profile = () => {
 
   const { Meta } = Card;
 
-  
-
   const Suggestions = () => { //List of suggested instructors
     //Set up initial list
     const p1 =  {_id: 1, name: "Jon", followers: 10};
     const p2 = {_id: 2, name: "Oi", followers:2400};
-    const initialList = [p1, p2];
-    const [list, setList] = useState(initialList);
-    
-    const handleRemove = (id) => { //removes suggested instructor
-      setList(list.filter((item) => item._id !== id));
+    var list = [p1, p2];
+    const [showState, setShowState] = useState(true);
+
+    const handleRemove = (id) => { //Handles removing suggestions box
+      list = list.filter(item => item._id !== id);
+      if (list.length === 0) setShowState(false);
     };
 
     const Suggestion = (props) => { //Suggested instructor element
+      const [showState, setShowState] = useState(true);
       return (
-        <Card 
-            type ="inner"
-            style={{width :300}}
-            actions={[
-                <CloseOutlined key="close" onClick={() => handleRemove(props.user._id)}/> 
-            ]}
-        >
-            <Meta
-                title={props.user.name}
-                description={props.user.followers}
-            />
-        </Card>
+        <Animate transitionName="fade"> 
+          {
+            showState ? 
+            <Card 
+              type ="inner"
+              style={{width :300}}
+              actions={[
+                  <CloseOutlined 
+                    key="close" 
+                    onClick={() => {
+                      setShowState(false);
+                      handleRemove(props.user._id);
+                    }}/> 
+              ]}
+            >
+              <Meta
+                  title={props.user.name}
+                  description={props.user.followers}
+              />
+            </Card> : null
+
+          }
+          
+
+        </Animate>
+        
       );
     };
     
     return (
-      <Card title="Suggested Instructors">
-        <Space direction="vertical" size="middle">
-            {list.map((item) =>
-              <Suggestion key={item._id} user={item} />)}
-        </Space>
-      </Card>
+      <Animate transitionName="fade">
+        {
+          showState ? 
+            <Card title="Suggested Instructors">
+              <Space direction="vertical" size="middle">
+                  {list.map((item) =>
+                    <Suggestion key={item._id} user={item} />)}
+              </Space>
+            </Card> : null
+        }
+      </Animate>
+      
     );
     
   }
-
-  
 
   return (
     <div>
