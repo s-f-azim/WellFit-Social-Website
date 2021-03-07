@@ -152,10 +152,13 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
  */
 const getSuggestedInstructors = asyncHandler( async (req, res)=> {
   const users = await User.find({
-                  $or: [
-                    {tags: req.user.tags[Math.floor(Math.random() * req.user.tags.length)]},
-                    {gender}
-                  ]
+                  $and : [{role: "instructor"},
+                          {$or: [
+                            {tags: req.user.tags[Math.floor(Math.random() * req.user.tags.length)]},
+                            {gender: req.user.gender},
+                          ]}
+                          ]
+                  
                 })
                 .limit(3);
   res.status(200).send({success: true, data: users});
