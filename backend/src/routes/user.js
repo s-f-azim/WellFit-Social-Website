@@ -11,10 +11,13 @@ import {
   googleOauth,
   facebookOauth,
   instagramOauth,
+  uploadImages,
+  deleteImages,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
 import User from '../models/User.js';
+import upload from '../middleware/multer.js';
 
 const router = new express.Router();
 
@@ -31,6 +34,16 @@ router.route('/logout').get(logoutUser);
 router
   .route('/editProfile')
   .patch(passport.authenticate('jwt', { session: false }), updateUser);
+router
+  .route('/avatar')
+  .post(
+    passport.authenticate('jwt', { session: false }),
+    upload.array('images', 10),
+    uploadImages
+  );
+router
+  .route('/avatar')
+  .delete(passport.authenticate('jwt', { session: false }), deleteImages);
 
 router
   .route('/me')
