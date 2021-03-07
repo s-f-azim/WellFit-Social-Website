@@ -1,5 +1,11 @@
 import { Card, Row, Statistic, Tabs } from 'antd';
-import { FundProjectionScreenOutlined, BarChartOutlined, UserAddOutlined } from '@ant-design/icons';
+import {
+  FundProjectionScreenOutlined,
+  BarChartOutlined,
+  UserAddOutlined,
+  StopOutlined,
+  BugOutlined,
+} from '@ant-design/icons';
 import { getUsers } from '../actions/user';
 
 const { TabPane } = Tabs;
@@ -24,13 +30,13 @@ const AdminDashboard = ({ count }) => {
 
   const banTitle = (
     <p>
-      <UserAddOutlined /> Ban users
+      <StopOutlined /> Ban users
     </p>
   );
 
   const bugTitle = (
     <p>
-      <UserAddOutlined /> Bug reports
+      <BugOutlined /> Bug reports
     </p>
   );
 
