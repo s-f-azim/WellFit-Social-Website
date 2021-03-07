@@ -5,7 +5,7 @@ import User from '../models/User.js';
 /**
  * @async
  * @desc Get all users
- * @route POST /api/users?select=fields&&location[city,zipcode,street]&&tags&&sort
+ * @route GET /api/users?select=fields&&location[city,zipcode,street]&&tags&&sort
  * @access public
  */
 const getUsers = asyncHandler(async (req, res) => {

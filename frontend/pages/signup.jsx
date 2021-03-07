@@ -35,7 +35,6 @@ const Signup = () => {
   const { login, signup } = useAuth();
   const onFinish = async (values) => {
     const { role, email, fName, lName, password } = values;
-    console.log(values);
     try {
       const response = await signup(role, email, fName, lName, password);
       if (response.data.success) {
