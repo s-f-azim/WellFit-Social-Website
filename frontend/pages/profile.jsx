@@ -4,6 +4,7 @@ import { useAuth } from '../services/auth';
 import { Space, Button, Row, Card, Col } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import Animate from 'rc-animate';
+import { getSuggestedInstructors } from '../actions/user.js';
 
 
 const Profile = () => {
@@ -15,19 +16,29 @@ const Profile = () => {
   }, []);
 
   const { Meta } = Card;
-
+  
   const Suggestions = () => { //List of suggested instructors
-    //Set up initial list
-    const p1 =  {_id: 1, name: "Jon", followers: 10};
-    const p2 = {_id: 2, name: "Oi", followers:2400};
-    var list = [p1, p2];
-    const [showState, setShowState] = useState(true);
+    const [showState, setShowState] = useState(false);
+    const [list, setList] = useState({});
+    var suggestionsDisplayed = list.length;
+    //Fetches suggested instructors once after initial render
+    useEffect( async () => {
+      try {
+        const response = await getSuggestedInstructors();
+        if (response.data.success && response.data.data.length !== 0) {
+          setList(response.data.data);
+          setShowState(true);
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }, []);
 
-    const handleRemove = (id) => { //Handles removing suggestions box
-      list = list.filter(item => item._id !== id);
-      if (list.length === 0) setShowState(false);
+
+    const handleRemove = () => { //Handles removing suggestions box
+      if (--suggestionsDisplayed === 0) setShowState(false);
     };
-
+  
     const Suggestion = (props) => { //Suggested instructor element
       const [showState, setShowState] = useState(true);
       return (
@@ -41,18 +52,19 @@ const Profile = () => {
                   <CloseOutlined 
                     key="close" 
                     onClick={() => {
-                      setShowState(false);
-                      handleRemove(props.user._id);
-                    }}/> 
+                      setShowState(false); //remove individual suggestion
+                      handleRemove();
+                      }}
+                    /> 
               ]}
             >
               <Meta
                   title={props.user.name}
-                  description={props.user.followers}
+                  description={props.user.email}
               />
-            </Card> : null
+            </Card> : null }
 
-          }
+          
           
 
         </Animate>

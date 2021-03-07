@@ -9,6 +9,7 @@ import {
   googleOauth,
   facebookOauth,
   instagramOauth,
+  getSuggestedInstructors,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 
@@ -58,5 +59,9 @@ router
 router
   .route('/oauth/facebook/redirect')
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
+
+router
+  .route("/profile")
+  .get(passport.authenticate("jwt", { session: false } ), getSuggestedInstructors);
 
 export default router;

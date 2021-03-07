@@ -8,4 +8,7 @@ const updateUser = (values) =>
 const deleteUser = () => 
     api.delete('/users/delete');
 
-export { updateUser as default, deleteUser };
+const getSuggestedInstructors = () =>
+    api.get('users/profile');
+
+export { updateUser as default, deleteUser, getSuggestedInstructors };
