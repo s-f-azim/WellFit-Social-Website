@@ -1,4 +1,4 @@
-import mutler from 'multer';
+import multer from 'multer';
 import ErrorResponse from '../utils/errorResponse.js';
 
 const upload = multer({
@@ -6,7 +6,7 @@ const upload = multer({
     fileSize: 1000000,
   },
   fileFilter(req, file, cb) {
-    if (!file.orginalname.match(/\.(jpg|jpeg|png)$/))
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/))
       return cb(
         new ErrorResponse(
           'Please upload a picture in the format of jpg/jpeg/png',
