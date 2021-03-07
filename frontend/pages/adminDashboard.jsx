@@ -5,6 +5,7 @@ import {
   UserAddOutlined,
   StopOutlined,
   BugOutlined,
+  MailOutlined,
 } from '@ant-design/icons';
 import { getUsers } from '../actions/user';
 
@@ -40,6 +41,12 @@ const AdminDashboard = ({ count }) => {
     </p>
   );
 
+  const contactTitle = (
+    <p>
+      <MailOutlined /> contact users
+    </p>
+  );
+
   return (
     <div className="adminDashboard">
       <Row type="flex">
@@ -55,6 +62,9 @@ const AdminDashboard = ({ count }) => {
               hi
             </TabPane>
             <TabPane key="4" tab={bugTitle}>
+              hi
+            </TabPane>
+            <TabPane key="5" tab={contactTitle}>
               hi
             </TabPane>
           </Tabs>
