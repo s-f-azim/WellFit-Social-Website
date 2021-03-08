@@ -59,7 +59,7 @@ const SearchBar = () => {
                 return (
                     <Col xs={24} md={8}>
                         <Card key={key} title={val.name} extra={<a href="#">Profile</a>} style={{ width: "90%" , marginTop: "2rem"}}>
-                            <p> Gender: Female/Male/Diverse</p>
+                            <p> Gender: {val.gender}</p>
                             <p> Age: {val.age}</p>
                             <p> Tags: {val.tags.map((val) => {return(<>{val} </>);})}</p>
                         </Card>
