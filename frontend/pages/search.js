@@ -34,10 +34,10 @@ const Search = () => {
     }
     return(
     <>
+    
         <Input type="text" value={q} onChange={e => handleChange(e.target.value)} placeholder="Search me..." />
-        <p>
 
-        <Row style={{marginTop: "2rem"}}>
+        <Row style={{marginTop: "2rem", marginLeft: "2rem"}}>
         {
             data.map((val,key ) => {
                 return (
@@ -51,7 +51,6 @@ const Search = () => {
                 );
             })}
         </Row>
-        </p>
     </>);
 };
 
