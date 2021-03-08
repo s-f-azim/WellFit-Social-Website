@@ -4,6 +4,20 @@ import Course from '../models/Course.js';
 
 /**
  * @async
+ * @desc get course by ID
+ * @route GET /api/courses/:id
+ * @access public
+ */
+const getCourse = asyncHandler(async (req, res) => {
+  const course = Course.findById(req.params.id);
+  res.status(200).send({
+    success: true,
+    data: course,
+  });
+});
+
+/**
+ * @async
  * @desc Get all courses
  * @route GET /api/courses?select=fields&&location[city,zipcode,street]&&price&&avgRating&&tags
  * @access public
@@ -126,4 +140,5 @@ export {
   deleteCourse,
   uploadImages,
   deleteImages,
+  getCourse,
 };

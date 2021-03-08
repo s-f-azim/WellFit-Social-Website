@@ -13,6 +13,7 @@ import {
   instagramOauth,
   uploadImages,
   deleteImages,
+  getProfile,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -22,6 +23,9 @@ import upload from '../middleware/multer.js';
 const router = new express.Router();
 
 router.route('/').get(paginate(User), getUsers);
+
+router.route('/:id').get(getUser);
+
 router
   .route('/radius/:zipcode/:distance')
   .get(paginate(User), getUsersWithinRadius);
@@ -47,7 +51,7 @@ router
 
 router
   .route('/me')
-  .get(passport.authenticate('jwt', { session: false }), getUser);
+  .get(passport.authenticate('jwt', { session: false }), getProfile);
 
 router.route('/oauth/google').get(
   passport.authenticate('google', {

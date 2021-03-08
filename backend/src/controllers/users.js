@@ -4,6 +4,20 @@ import User from '../models/User.js';
 
 /**
  * @async
+ * @desc get user by ID
+ * @route GET /api/users/:id
+ * @access public
+ */
+const getUser = asyncHandler(async (req, res) => {
+  const user = User.findById(req.params.id);
+  res.status(200).send({
+    success: true,
+    data: res.results,
+  });
+});
+
+/**
+ * @async
  * @desc Get all users
  * @route POST /api/users?select=fields&&location[city,zipcode,street]&&tags&&sort
  * @access public
@@ -59,7 +73,7 @@ const loginUser = asyncHandler(async (req, res) => {
  * @route GET /api/users/me
  * @access private
  */
-const getUser = asyncHandler(async (req, res) => {
+const getProfile = asyncHandler(async (req, res) => {
   res.status(200).send({ success: true, data: req.user });
 });
 
@@ -209,6 +223,7 @@ export {
   getUsersWithinRadius,
   createUser,
   loginUser,
+  getProfile,
   getUser,
   logoutUser,
   updateUser,
