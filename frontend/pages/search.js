@@ -1,5 +1,8 @@
 import { useRouter } from 'next/router';
 import { Space, Form, Input, Alert, Button, Row, Col, Card, Select } from 'antd';
+const { Search } = Input;
+
+
 import { InstagramOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
 import { setState, useState, useContext } from 'react';
 import API from '../config';
@@ -19,7 +22,7 @@ const test = [ { name: 'Oskar' }, { name: 'Oskar2' } ];
 
 
 
-const Search = () => {
+const SearchBar = () => {
 
     const [q, setQuery] = useState('');
     const [data, setData] = useState(users);
@@ -35,7 +38,7 @@ const Search = () => {
     return(
     <>
         <div style={{display: "inline-flex", alignItems: "center", justifyContent: "center", height: "100%", width: "100%", flexDirection: "column"}}>
-            <Input type="text" value={q} onChange={e => handleChange(e.target.value)} placeholder="Search me..." style={{ width: "90%"}}/>
+            <Search type="text" enterButton="Search" size="large" value={q} onChange={e => handleChange(e.target.value)} placeholder="Search me..." style={{ width: "90%"}}/>
             
             <div id="filterrow" style={{display: "inline-block", paddingTop: "2rem"} }>
                 <Select style={{marginLeft: "1rem", marginRight: "1rem"}} placeholder="Gender"></Select>
@@ -62,4 +65,4 @@ const Search = () => {
     </>);
 };
 
-export default Search;
+export default SearchBar;
