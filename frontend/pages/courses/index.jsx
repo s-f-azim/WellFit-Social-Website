@@ -1,5 +1,6 @@
 import { Card, Row, Col } from 'antd';
 import Image from 'next/image';
+import Link from 'next/link';
 import api from '../../services/api';
 
 const Courses = ({ courses }) => {
@@ -16,27 +17,29 @@ const Courses = ({ courses }) => {
       ]}
     >
       {courses.map((course) => (
-        <Col key={course._id}>
-          <Card
-            style={{ width: 300 }}
-            cover={
-              <Image
-                src={
-                  course.photos[0]
-                    ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString(
-                        'base64'
-                      )}`
-                    : '/not-found.png'
-                }
-                width={300}
-                height={300}
-              />
-            }
-          >
-            <Card.Meta title={course.title} description={course.description} />
-            <h1> {course.price === 0 ? 'Free' : `${course.price} $`}</h1>
-          </Card>
-        </Col>
+        <Link href={`/courses/${course._id}`} key={course._id}>
+          <Col key={course._id}>
+            <Card
+              style={{ width: 300 }}
+              cover={
+                <Image
+                  src={
+                    course.photos[0]
+                      ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString(
+                          'base64'
+                        )}`
+                      : '/not-found.png'
+                  }
+                  width={300}
+                  height={300}
+                />
+              }
+            >
+              <Card.Meta title={course.title} description={course.description} />
+              <h1> {course.price === 0 ? 'Free' : `${course.price} $`}</h1>
+            </Card>
+          </Col>
+        </Link>
       ))}
     </Row>
   );
