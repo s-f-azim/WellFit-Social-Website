@@ -13,9 +13,15 @@ export default function Review({ reviewUser }) {
 
   useEffect(() => {
     reviews = reviewUser.reviews;
+    console.log('Review', user);
     if (user) {
-      setReview(reviews.find((r) => r.reviewer === user._id));
-      reviews = reviews.filter((r) => r.reviewer !== user._id);
+      setReview(
+        reviews.find(({ reviewer }) => {
+          console.log(reviewer._id, user._id);
+          return reviewer._id === user._id;
+        })
+      );
+      reviews = reviews.filter(({ reviewer }) => reviewer._id !== user._id);
     }
   }, []);
 
@@ -23,7 +29,7 @@ export default function Review({ reviewUser }) {
     <>
       <Card>
         <ReviewList>
-          {review && <ReviewList review={review} showMenu onDelete={setReview(null)} />}
+          {review && <ReviewListItem review={review} showMenu onDelete={() => setReview(null)} />}
           {reviews.map((r) => (
             <ReviewListItem review={r} showMenu={false} />
           ))}

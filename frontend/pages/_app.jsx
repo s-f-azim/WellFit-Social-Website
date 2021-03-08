@@ -9,13 +9,13 @@ import UserContext from '../contexts/UserContext';
 
 function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null);
-  const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
+  const providerValue = { user, setUser };
 
   useEffect(() => {
     if (getCookie('user') && getCookie('user') !== null) {
       setUser(JSON.parse(getCookie('user')));
     }
-  });
+  }, []);
 
   return (
     <>

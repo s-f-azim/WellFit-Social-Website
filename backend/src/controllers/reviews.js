@@ -14,11 +14,13 @@ const createReview = asyncHandler(async (req, res) => {
     return res.status(400).send({ error: 'Please do not review yourself' });
   }
 
-  const review = await Review.create({
+  let review = await Review.create({
     reviewed: req.params.reviewedId,
     reviewer: req.user._id,
     ...req.body,
   });
+  review = await review.populate('reviewer').execPopulate();
+
   return res.status(200).send({ success: true, data: { review } });
 });
 
