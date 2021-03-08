@@ -6,8 +6,6 @@ const { Search } = Input;
 import { InstagramOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
 import { setState, useState, useContext } from 'react';
 import API from '../config';
-import { signin, authenticate } from '../utils/auth';
-import UserContext from '../contexts/UserContext';
 import axios from 'axios';
 
 
@@ -28,11 +26,13 @@ const SearchBar = () => {
     const [data, setData] = useState(users);
     let search = "";
     const searchName = () => {
-        axios.get(`http://localhost:4000/api/users/instructors?q=${q}`).then(({data}) => {
-            setData(data)
+        axios.get(`http://localhost:4000/api/users`).then(({data}) => {
+            setData(data.data)
         })
     }
+    const users2=console.log(data);
     const handleChange = i => {
+        searchName();
         setQuery(i);
     }
     return(
