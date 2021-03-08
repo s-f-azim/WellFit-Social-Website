@@ -16,6 +16,23 @@ const getUsers = asyncHandler(async (req, res) => {
     data: res.results,
   });
 });
+
+const getInstructors = asyncHandler(async (req, res) => {
+  let instr = await User.find({role: 'instructor'});
+  if(req.query.q) {
+    instr = instr.filter(inst => inst.name.toLowerCase().includes(req.query.q.toLowerCase()));
+  }
+  if(req.query.age) {
+    instr = instr.filter(inst => 
+      inst.age === parseInt(req.query.age));
+  }
+  if(req.query.gender) {
+    instr = instr.filter(inst => {
+      if(inst.gender) {
+        return inst.gender.toLowerCase() === req.query.gender.toLowerCase()} ;});
+  }
+  res.send(instr);
+});
 /**
  * @async
  * @desc  get a users within a radius
@@ -176,6 +193,7 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
 
 export {
   getUsers,
+  getInstructors,
   getUsersWithinRadius,
   createUser,
   loginUser,

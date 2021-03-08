@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   getUsers,
+  getInstructors,
   getUsersWithinRadius,
   createUser,
   loginUser,
@@ -19,6 +20,7 @@ import User from '../models/User.js';
 const router = new express.Router();
 
 router.route('/').get(paginate(User), getUsers);
+router.route('/instructors').get(getInstructors);
 router
   .route('/radius/:zipcode/:distance')
   .get(paginate(User), getUsersWithinRadius);

@@ -59,6 +59,9 @@ const UserSchema = new mongoose.Schema(
       zipcode: String,
       country: String,
     },
+    age: {
+      type: Number,
+    },
 
     birthday: {
       type: Date,

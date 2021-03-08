@@ -24,22 +24,19 @@ const SearchBar = () => {
 
     const [q, setQuery] = useState('');
     const [data, setData] = useState(users);
-    let search = "";
-    const searchName = () => {
-        axios.get(`http://localhost:4000/api/users`).then(({data}) => {
-            setData(data.data)
+    const searchName = (q) => {
+        axios.get(`http://localhost:4000/api/users/instructors/?q=${q}`).then(({data}) => {
+            setData(data);
         })
     }
-    const users2=console.log(data);
     const handleChange = i => {
-        searchName();
         setQuery(i);
     }
     return(
     <>
         <div style={{display: "inline-flex", alignItems: "center", justifyContent: "center", height: "100%", width: "100%", flexDirection: "column"}}>
-            <Search type="text" enterButton="Search" size="large" value={q} onChange={e => handleChange(e.target.value)} placeholder="Search me..." style={{ width: "90%"}}/>
-            
+            <Search type="text" enterButton="Search" size="large" onSearch={searchName(q)} onChange={e => setQuery(e.target.value)} placeholder="Search me..." style={{ width: "90%"}}/>
+            {/* TODO: ADD LINK TO PROFILE! */}
             <div id="filterrow" style={{display: "inline-block", paddingTop: "2rem"} }>
                 <Select style={{marginLeft: "1rem", marginRight: "1rem"}} placeholder="Gender"></Select>
                 <Select style={{marginLeft: "1rem", marginRight: "1rem"}} placeholder="Age"></Select>
