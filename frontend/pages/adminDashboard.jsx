@@ -15,7 +15,7 @@ const { TabPane } = Tabs;
 const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount }) => {
   const title = (
     <h1>
-      <FundProjectionScreenOutlined /> Administrative Dashboard
+      <FundProjectionScreenOutlined /> Admin Dashboard
     </h1>
   );
   const statisticsTitle = (
@@ -50,28 +50,30 @@ const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount })
 
   return (
     <div className="adminDashboard">
-      <Row type="flex">
+      <Row justify="center" type="flex">
         <Card title={title}>
-          <Tabs size="large" defaultActiveKey="1" tabPosition="left">
+          <Tabs size="small" defaultActiveKey="1" tabPosition="left">
             <TabPane key="1" tab={statisticsTitle}>
-              <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                <Col>
-                  <Statistic prefix={<UserOutlined />} title="No. users" value={userCount} />
-                </Col>
-                <Col>
-                  <Statistic prefix={<UserOutlined />} title="No. clients" value={clientCount} />
-                </Col>
-                <Col>
-                  <Statistic
-                    prefix={<UserOutlined />}
-                    title="No. instructors"
-                    value={instructorCount}
-                  />
-                </Col>
-                <Col>
-                  <Statistic prefix={<UserOutlined />} title="No. admins" value={adminCount} />
-                </Col>
-              </Row>
+              <Col span={16}>
+                <Statistic prefix={<UserOutlined />} title="No. users" value={userCount} />
+                <br />
+              </Col>
+              <Col span={16}>
+                <Statistic prefix={<UserOutlined />} title="No. clients" value={clientCount} />
+                <br />
+              </Col>
+              <Col span={16}>
+                <Statistic
+                  prefix={<UserOutlined />}
+                  title="No. instructors"
+                  value={instructorCount}
+                />
+                <br />
+              </Col>
+              <Col span={16}>
+                <Statistic prefix={<UserOutlined />} title="No. admins" value={adminCount} />
+                <br />
+              </Col>
             </TabPane>
             <TabPane key="2" tab={verifiedTitle}>
               hi

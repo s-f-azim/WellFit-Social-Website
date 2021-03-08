@@ -6,12 +6,14 @@
 
   .ant-card-bordered {
     border: 2px solid #000000;
-    border-radius: 8px;
-    margin: 50px;
+    border-radius: 5px;
   }
 
   .ant-card-head {
     border-bottom: 1px solid #000000;
+  }
+
+  .ant-card-body {
   }
 
   .ant-card-head-title {
@@ -19,7 +21,7 @@
   }
 
   .ant-statistic {
-    border: 2px solid #000000;
+    border: 1px solid #000000;
     padding: 6px;
     background-color: white;
     border-radius: 4px;
@@ -27,5 +29,19 @@
 
   .ant-tabs-tab-active {
     background-color: #dfdfdf;
+  }
+
+  .ant-col.ant-col-16 {
+    margin: 5px;
+  }
+  .ant-col-16 {
+    display: inline-block;
+    flex: 0 0 66.66666667%;
+    max-width: 66.66666667%;
+  }
+
+  .ant-row {
+    display: grid;
+    flex-flow: row wrap;
   }
 }
