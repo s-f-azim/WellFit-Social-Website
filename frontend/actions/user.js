@@ -9,4 +9,10 @@ const deleteUser = () => api.delete('/users/delete');
 
 const getUsers = () => api.get('/users');
 
-export { updateUser as default, deleteUser, getUsers };
+const getAdmins = () => api.get('users?role=admin');
+
+const getClients = () => api.get('users?role=client');
+
+const getInstructors = () => api.get('users?role=instructor');
+
+export { updateUser as default, deleteUser, getUsers, getAdmins, getClients, getInstructors };

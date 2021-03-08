@@ -8,11 +8,11 @@ import {
   MailOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { getUsers } from '../actions/user';
+import { getUsers, getAdmins, getClients, getInstructors } from '../actions/user';
 
 const { TabPane } = Tabs;
 
-const AdminDashboard = ({ count }) => {
+const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount }) => {
   const title = (
     <h1>
       <FundProjectionScreenOutlined /> Administrative Dashboard
@@ -55,11 +55,21 @@ const AdminDashboard = ({ count }) => {
           <Tabs size="large" defaultActiveKey="1" tabPosition="left">
             <TabPane key="1" tab={statisticsTitle}>
               <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                <Col span={6}>
-                  <Statistic prefix={<UserOutlined />} title="Registered users" value={count} />
+                <Col>
+                  <Statistic prefix={<UserOutlined />} title="No. users" value={userCount} />
                 </Col>
-                <Col span={6}>
-                  <Statistic prefix={<UserOutlined />} title="Registered users" value={count} />
+                <Col>
+                  <Statistic prefix={<UserOutlined />} title="No. clients" value={clientCount} />
+                </Col>
+                <Col>
+                  <Statistic
+                    prefix={<UserOutlined />}
+                    title="No. instructors"
+                    value={instructorCount}
+                  />
+                </Col>
+                <Col>
+                  <Statistic prefix={<UserOutlined />} title="No. admins" value={adminCount} />
                 </Col>
               </Row>
             </TabPane>
@@ -83,11 +93,16 @@ const AdminDashboard = ({ count }) => {
 };
 
 export async function getStaticProps() {
-  const response = await getUsers();
-
+  const getUsersRes = await getUsers();
+  const getAdminsRes = await getAdmins();
+  const getClientsRes = await getClients();
+  const getInstructorsRes = await getInstructors();
   return {
     props: {
-      count: response.data.count,
+      userCount: getUsersRes.data.count,
+      adminCount: getAdminsRes.data.count,
+      clientCount: getClientsRes.data.count,
+      instructorCount: getInstructorsRes.data.count,
     },
   };
 }

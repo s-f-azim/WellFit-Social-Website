@@ -97,11 +97,7 @@ const logoutUser = asyncHandler(async (req, res) => {
  *
  * @async
  * @desc delete user from the db
-<<<<<<< HEAD
- * @route DELETE /api/users/settings
-=======
  * @route DELETE /api/users/delete
->>>>>>> main
  *
  */
 const deleteUser = asyncHandler(async (req, res) => {
