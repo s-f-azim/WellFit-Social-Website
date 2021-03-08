@@ -44,7 +44,7 @@ const getInstructors = asyncHandler(async (req, res) => {
       if(inst.gender) {
         return inst.gender.toLowerCase() === req.query.gender.toLowerCase()} ;});
   }
-  res.send(instr);
+  res.status(200).send(instr);
 });
 /**
  * @async

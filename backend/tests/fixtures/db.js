@@ -29,6 +29,92 @@ const userTwo = {
   bio: 'I have many balls',
 };
 
+// create Instructors 
+const instructorOneId = new mongoose.Types.ObjectId();
+
+const instructorOne = {
+  _id: instructorOneId,
+  email: 'testEmail32@test.com',
+  password: '12345678',
+  name: 'testinstructor1',
+  gender: 'Male',
+  birthday: new Date(),
+  nickname: 'testicles',
+  bio: 'I have no balls',
+  role: 'instructor'
+};
+
+const instructorTwoId = new mongoose.Types.ObjectId();
+
+const instructorTwo = {
+  _id: instructorTwoId,
+  email: 'test20@test.com',
+  password: 'password@123',
+  name: 'testinstructor2',
+  gender: 'Female',
+  birthday: new Date(),
+  nickname: 'Notesticles',
+  bio: 'I have many balls',
+  role: 'instructor'
+};
+
+const instructorThreeId = new mongoose.Types.ObjectId();
+
+const instructorThree = {
+  _id: instructorThreeId,
+  email: 'test6@test.com',
+  password: '12345678',
+  name: 'testinstructor3',
+  gender: 'Non-Binary',
+  birthday: new Date(),
+  nickname: 'testicles',
+  bio: 'I have no balls',
+  role: 'instructor'
+};
+
+const instructorFourId = new mongoose.Types.ObjectId();
+
+const instructorFour = {
+  _id: instructorFourId,
+  email: 'test7@test.com',
+  password: 'password@123',
+  name: 'testinstructor4',
+  gender: 'Female',
+  birthday: new Date(),
+  nickname: 'Notesticles',
+  bio: 'I have many balls',
+  role: 'instructor'
+};
+
+const instructorFiveId = new mongoose.Types.ObjectId();
+
+const instructorFive = {
+  _id: instructorFiveId,
+  email: 'test8@test.com',
+  password: '12345678',
+  name: 'testinstructor5',
+  gender: 'Female',
+  birthday: new Date(),
+  nickname: 'testicles',
+  bio: 'I have no balls',
+  role: 'instructor'
+};
+
+const instructorSixId = new mongoose.Types.ObjectId();
+
+const instructorSix = {
+  _id: instructorSixId,
+  email: 'test71@test.com',
+  password: 'password@123',
+  name: 'testinstructor6',
+  gender: 'Female',
+  birthday: new Date(),
+  nickname: 'Notesticles',
+  bio: 'I have many balls',
+  role: 'instructor'
+};
+
+
 // create courses
 
 const courseOneId = new mongoose.Types.ObjectId();
@@ -55,12 +141,13 @@ const courseTwo = {
   tags: ['Cardio'],
 };
 
-const users = [userOne, userTwo];
+const users = [userOne, userTwo, instructorOne, instructorTwo, instructorThree, instructorFour, instructorFive, instructorSix];
+const instructors = [];
 const courses = [courseOne, courseTwo];
 // token
 const tokens = [];
 const setupDatabase = async () => {
-  await User.deleteMany();
+  await User.deleteMany({});
   await Course.deleteMany();
   // seed users
   // eslint-disable-next-line no-restricted-syntax
@@ -81,6 +168,12 @@ const setupDatabase = async () => {
 export {
   userOne,
   userTwo,
+  instructorOne,
+  instructorTwo,
+  instructorThree,
+  instructorFour,
+  instructorFive,
+  instructorSix,
   courseOne,
   courseTwo,
   setupDatabase,

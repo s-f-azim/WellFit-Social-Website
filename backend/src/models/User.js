@@ -44,6 +44,9 @@ const UserSchema = new mongoose.Schema(
     address: {
       type: String,
     },
+    role: {
+      type: String,
+    },
     location: {
       type: {
         type: String,
