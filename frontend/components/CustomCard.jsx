@@ -22,7 +22,7 @@ const CustomCard = () => {
 
         <Row style={{ maxHeight: '40rem' }}>
           <Col className="card-image">
-            <Image src="/jogging.svg" layout="fill" />
+            <Image src="/jogging.svg" height={100} width={100} layout="responsive" />
           </Col>
           <Col>
             <p>Tags: GetFit</p>
