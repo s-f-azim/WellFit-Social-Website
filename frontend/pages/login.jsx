@@ -33,7 +33,7 @@ const Login = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   // normal login handler
   const onFinish = async (values) => {
     const { email, password } = values;
@@ -41,6 +41,7 @@ const Login = () => {
       const response = await signin(email, password);
       if (response.data.success) {
         setUser(response.data.data);
+        console.log(user);
         authenticate(response.data, () => {
           router.push('/');
         });

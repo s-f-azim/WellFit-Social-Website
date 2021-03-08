@@ -1,7 +1,14 @@
 import request from 'supertest';
 import Review from '../src/models/Review.js';
+import User from '../src/models/User.js';
 import app from '../src/app.js';
-import { tokens, userOne, userTwo, setupDatabase } from './fixtures/db.js';
+import {
+  tokens,
+  userOne,
+  userTwo,
+  userThree,
+  setupDatabase,
+} from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
@@ -17,6 +24,8 @@ it('Should add a review with valid data', async () => {
     .expect(200);
 
   expect(await Review.countDocuments()).toBe(count + 1);
+  // const user = await User.findById(userTwo._id, 'reviews');
+  // expect(user.reviews.length).not.toHaveLength(0);
 });
 
 it('Should not add a review with invalid data', async () => {
@@ -56,6 +65,25 @@ it('Should not allow to review same user more than once', async () => {
     .expect(400);
 
   expect(await Review.countDocuments()).toBe(count);
+});
+
+it('Should allow many users to review same user', async () => {
+  const count = await Review.countDocuments();
+  const review = { rate: 5, comment: 'test' };
+
+  await request(app)
+    .post(`/api/users/${userThree._id}/reviews`)
+    .send(review)
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(200);
+
+  await request(app)
+    .post(`/api/users/${userThree._id}/reviews`)
+    .send(review)
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(200);
+
+  expect(await Review.countDocuments()).toBe(count + 2);
 });
 
 it('Should get reviews', async () => {

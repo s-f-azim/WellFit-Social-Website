@@ -3,9 +3,10 @@ import { createReview } from '../utils/review';
 
 const { TextArea } = Input;
 
-const ReviewInput = ({ reviewedId }) => {
+const ReviewInput = ({ reviewedId, onSubmit }) => {
   const onFinish = async (values) => {
-    await createReview(reviewedId, values);
+    const review = await createReview(reviewedId, values);
+    onSubmit(review);
   };
 
   return (

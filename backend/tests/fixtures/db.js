@@ -4,6 +4,7 @@ import Review from '../../src/models/Review.js';
 
 const userOneId = new mongoose.Types.ObjectId();
 const userTwoId = new mongoose.Types.ObjectId();
+const userThreeId = new mongoose.Types.ObjectId();
 
 const reviewOneId = new mongoose.Types.ObjectId();
 
@@ -32,6 +33,18 @@ const userTwo = {
   bio: 'I have many balls',
 };
 
+const userThree = {
+  _id: userThreeId,
+  email: 'test3@test.com',
+  password: 'password@123',
+  name: 'testUser3',
+  gender: 'Female',
+  location: 'Europe',
+  birthday: new Date(),
+  nickname: 'Notesticles',
+  bio: 'I have many balls',
+};
+
 const reviewOne = {
   _id: reviewOneId,
   reviewed: userOneId,
@@ -40,7 +53,7 @@ const reviewOne = {
   comment: 'reviewOne',
 };
 
-const users = [userOne, userTwo];
+const users = [userOne, userTwo, userThree];
 const reviews = [reviewOne];
 // token
 const tokens = [];
@@ -66,4 +79,4 @@ const setupDatabase = async () => {
   }
 };
 
-export { userOne, userTwo, setupDatabase, userOneId, tokens };
+export { userOne, userTwo, userThree, setupDatabase, userOneId, tokens };

@@ -1,26 +1,24 @@
 import { Row, Col } from 'antd';
-import ReviewList from '../components/ReviewList';
-import ReviewInput from '../components/ReviewInput';
+import Review from '../components/Review';
 import { getReviews } from '../utils/review';
 
-export default function ReviewPage({ reviews }) {
+export default function ReviewPage({ reviewUser }) {
   return (
     <>
       <Row style={{ height: '100vh' }} align="middle">
         <Col lg={{ span: 14, offset: 5 }}>
-          <ReviewList reviews={reviews} />
-        </Col>
-      </Row>
-      <Row style={{ height: '100vh' }} align="middle">
-        <Col lg={{ span: 14, offset: 5 }}>
-          <ReviewInput reviewedId="6043978a8a117f2a1e98df14" />
+          <Review reviewUser={reviewUser} />
         </Col>
       </Row>
     </>
   );
 }
 
-export async function getServerSideProps() {
-  const reviews = await getReviews('6043978a8a117f2a1e98df14');
-  return { props: { reviews } };
+export async function getStaticProps() {
+  const reviews = await getReviews('6044bd0315a05e2266f11abe');
+  const reviewUser = {
+    _id: '6044bd0315a05e2266f11abe',
+    reviews,
+  };
+  return { props: { reviewUser } };
 }

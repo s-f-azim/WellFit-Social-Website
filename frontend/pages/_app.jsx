@@ -1,14 +1,22 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import 'antd/dist/antd.css';
 import Head from 'next/head';
 import Layout from '../components/Layout';
 import '../styles/main.scss';
+import { getCookie } from '../utils/auth';
 
 import UserContext from '../contexts/UserContext';
 
 function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState(null);
   const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
+
+  useEffect(() => {
+    if (getCookie('user') && getCookie('user') !== null) {
+      setUser(JSON.parse(getCookie('user')));
+    }
+  });
+
   return (
     <>
       <Head>

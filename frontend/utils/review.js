@@ -4,14 +4,16 @@ import { getCookie } from './auth';
 
 axios.defaults.withCredentials = true;
 
-const createReview = (reviewedId, review) =>
-  axios.post(
+const createReview = async (reviewedId, review) => {
+  const res = await axios.post(
     `${API}/users/${reviewedId}/reviews`,
     {
       ...review,
     },
     { headers: { Authorization: `Bearer ${getCookie('token')}` } }
   );
+  return res.data.data.review;
+};
 
 const getReviews = async (reviewedId) => {
   const res = await axios.get(`${API}/users/${reviewedId}/reviews`);
@@ -19,7 +21,7 @@ const getReviews = async (reviewedId) => {
 };
 
 const deleteReview = async (reviewedId) => {
-  await axios.delete(
+  axios.delete(
     `${API}/users/${reviewedId}/reviews`,
     {},
     {
