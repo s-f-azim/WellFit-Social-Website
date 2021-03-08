@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Space, Form, Input, Alert, Button, Row, Col, Card } from 'antd';
+import { Space, Form, Input, Alert, Button, Row, Col, Card, Select } from 'antd';
 import { InstagramOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
 import { setState, useState, useContext } from 'react';
 import API from '../config';
@@ -34,8 +34,16 @@ const Search = () => {
     }
     return(
     <>
-    
-        <Input type="text" value={q} onChange={e => handleChange(e.target.value)} placeholder="Search me..." />
+        <div style={{display: "inline-flex", alignItems: "center", justifyContent: "center", height: "100%", width: "100%", flexDirection: "column"}}>
+            <Input type="text" value={q} onChange={e => handleChange(e.target.value)} placeholder="Search me..." style={{ width: "90%"}}/>
+            
+            <div id="filterrow" style={{display: "inline-block", paddingTop: "2rem"} }>
+                <Select style={{marginLeft: "1rem", marginRight: "1rem"}} placeholder="Gender"></Select>
+                <Select style={{marginLeft: "1rem", marginRight: "1rem"}} placeholder="Age"></Select>
+                <Select style={{marginLeft: "1rem", marginRight: "1rem"}} placeholder="Tags"></Select>
+            </div>
+        </div>
+        
 
         <Row style={{marginTop: "2rem", marginLeft: "2rem"}}>
         {
