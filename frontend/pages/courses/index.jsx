@@ -47,7 +47,7 @@ const Courses = ({ courses }) => {
 
 export async function getStaticProps() {
   const response = await api.get('/courses');
-  return { props: { courses: response.data.data } };
+  return { props: { courses: response.data.data }, revalidate: 60 * 2 };
 }
 
 export default Courses;
