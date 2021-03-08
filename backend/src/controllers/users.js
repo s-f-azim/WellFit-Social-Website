@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
+import Course from '../models/Course.js';
 
 /**
  * @async
@@ -18,7 +19,7 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 /**
  * @async
- * @desc  get a users within a radius
+ * @desc  get all users within a radius
  * @route GET /api/users/radius/:zipcode/:distance
  * @access public
  */
@@ -107,6 +108,39 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc add specified course to user's wish list
+ * @route PATCH /api/users/addtowishlist/:id
+ * @access private
+ */
+const addToWishList = asyncHandler(async (req, res) => {
+  if (Course.findById(req.params.id)) {
+    if (!req.user.wishList.includes(req.params.id)) {
+      req.user.wishList.push(req.params.id);
+      const updatedUser = await req.user.save();
+      sendTokenResponse(updatedUser, 200, res);
+    }
+  }
+});
+
+/**
+ * @async
+ * @desc remove specified course from user's wish list
+ * @route PATCH /api/users/removefromwishlist/:id
+ * @access private
+ */
+const removeFromWishList = asyncHandler(async (req, res) => {
+  if (Course.findById(req.params.id)) {
+    const index = req.user.wishList.indexOf(req.params.id);
+    if (index > -1) {
+      req.user.following.splice(index, 1);
+      const updatedUser = await req.user.save();
+      sendTokenResponse(updatedUser, 200, res);
+    }
+  }
+});
+
+/**
+ * @async
  * @desc google login user using oauth
  * @route GET /api/users/google/redirect
  * @access private
@@ -183,6 +217,9 @@ export {
   logoutUser,
   updateUser,
   deleteUser,
+  getWishList,
+  addToWishList,
+  removeFromWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,

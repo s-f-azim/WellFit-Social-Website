@@ -8,6 +8,9 @@ import {
   logoutUser,
   updateUser,
   deleteUser,
+  getWishList,
+  addToWishList,
+  removeFromWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -72,5 +75,13 @@ router
 router
   .route('/oauth/facebook/redirect')
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
+
+router
+  .route('/addToWishList/:id')
+  .patch(passport.authenticate('jwt', { session: false }), addToWishList);
+
+router
+  .route('/removeFromWishList/:id')
+  .patch(passport.authenticate('jwt', { session: false }), removeFromWishList);
 
 export default router;
