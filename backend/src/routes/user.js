@@ -8,7 +8,6 @@ import {
   logoutUser,
   updateUser,
   deleteUser,
-  getWishList,
   addToWishList,
   removeFromWishList,
   googleOauth,
