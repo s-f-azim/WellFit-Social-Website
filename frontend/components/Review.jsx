@@ -1,18 +1,17 @@
 /* eslint-disable no-underscore-dangle */
-import { Card, Button } from 'antd';
-import { useState, useContext, useEffect } from 'react';
+import { Card, Space } from 'antd';
+import { useState, useEffect } from 'react';
 import { ReviewList, ReviewListItem } from './ReviewList';
 import ReviewInput from './ReviewInput';
 
-import UserContext from '../contexts/UserContext';
+import { useAuth } from '../services/auth';
 
 export default function Review({ reviewUser }) {
-  const { user } = useContext(UserContext);
+  const { user } = useAuth();
   const [review, setReview] = useState();
-  let reviews = [];
+  let { reviews } = reviewUser;
 
   useEffect(() => {
-    reviews = reviewUser.reviews;
     console.log('Review', user);
     if (user) {
       setReview(
@@ -27,7 +26,7 @@ export default function Review({ reviewUser }) {
 
   return (
     <>
-      <Card>
+      <div>
         <ReviewList>
           {review && <ReviewListItem review={review} showMenu onDelete={() => setReview(null)} />}
           {reviews.map((r) => (
@@ -35,7 +34,7 @@ export default function Review({ reviewUser }) {
           ))}
         </ReviewList>
         {user && !review && <ReviewInput reviewedId={reviewUser._id} onSubmit={setReview} />}
-      </Card>
+      </div>
     </>
   );
 }

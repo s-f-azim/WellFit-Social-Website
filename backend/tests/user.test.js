@@ -49,7 +49,7 @@ it('Should logout a user', async () => {
 });
 
 // assert non logged in user cant edit their information
-it('Should not  edit profile when not logged in', async () => {
+it('Should not edit profile when not logged in', async () => {
   await request(app).patch('/api/users/editProfile').send().expect(401);
 });
 // assert only logged in user can edit their information
@@ -80,4 +80,62 @@ it("Should not update a user's invalid attribute", async () => {
     .expect(200);
   const user = await User.findById(userOne._id);
   expect(user.size).toEqual(undefined);
+});
+
+// assert delete a user
+it('Should delete a logged in user', async () => {
+  await request(app)
+    .delete('/api/users/delete')
+    .send()
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(200);
+  const userExists = await User.exists({ _id: userOne._id });
+  expect(userExists).toEqual(false);
+});
+// assert can't delete user when not logged in
+it('Should not delete a user when not logged in', async () => {
+  await request(app).delete('/api/users/delete').send().expect(401);
+});
+
+// assert get all users
+it('Should get all users', async () => {
+  const count = await User.countDocuments();
+  const response = await request(app).get('/api/users').send().expect(200);
+  expect(response.body.count).toBe(count);
+});
+
+// assert get users with filters
+it('Should get all users', async () => {
+  const response = await request(app)
+    .get('/api/users?name=testUser1')
+    .send()
+    .expect(200);
+  expect(response.body.count).toBe(1);
+});
+// assert get users with filters and select specific fields
+it('Should get all users', async () => {
+  const response = await request(app)
+    .get('/api/users?name=testUser1&&select=name')
+    .send()
+    .expect(200);
+  expect(response.body.count).toBe(1);
+  expect(response.body.data[0].email).toEqual(undefined);
+  expect(response.body.data[0].name).toEqual(userOne.name);
+});
+// assert get users within radius
+it('Should get all users', async () => {
+  await request(app)
+    .post('/api/users/signup')
+    .send({
+      email: 'testEmail1@test.com',
+      password: '12345678',
+      name: 'test',
+      address: 'kt2 6qw',
+    })
+    .expect(201);
+  const response = await request(app)
+    .get('/api/users/radius/kt26qw/1')
+    .send()
+    .expect(200);
+  expect(response.body.count).toBe(1);
 });

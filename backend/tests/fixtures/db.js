@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import User from '../../src/models/User.js';
 import Review from '../../src/models/Review.js';
+import Course from '../../src/models/Course.js';
 
 const userOneId = new mongoose.Types.ObjectId();
 const userTwoId = new mongoose.Types.ObjectId();
@@ -8,13 +9,13 @@ const userThreeId = new mongoose.Types.ObjectId();
 
 const reviewOneId = new mongoose.Types.ObjectId();
 
+// create users
 const userOne = {
   _id: userOneId,
   email: 'testEmail@test.com',
   password: '12345678',
   name: 'testUser1',
   gender: 'Male',
-  location: 'Africa',
   birthday: new Date(),
   nickname: 'testicles',
   bio: 'I have no balls',
@@ -27,7 +28,6 @@ const userTwo = {
   password: 'password@123',
   name: 'testUser2',
   gender: 'Female',
-  location: 'Europe',
   birthday: new Date(),
   nickname: 'Notesticles',
   bio: 'I have many balls',
@@ -53,14 +53,41 @@ const reviewOne = {
   comment: 'reviewOne',
 };
 
+// create courses
+
+const courseOneId = new mongoose.Types.ObjectId();
+
+const courseOne = {
+  _id: courseOneId,
+  title: 'Lose weight',
+  description: 'The fastest way to lose weight',
+  address: 'kt2 6qw',
+  creators: [userTwoId, userOneId],
+  price: 10,
+  tags: ['GetFit', 'FitFam'],
+};
+
+const courseTwoId = new mongoose.Types.ObjectId();
+
+const courseTwo = {
+  _id: courseTwoId,
+  title: 'Lose it',
+  description: 'lose your weight today',
+  address: 'E20 1GS',
+  creators: [userOneId],
+  price: 0,
+  tags: ['Cardio'],
+};
+
 const users = [userOne, userTwo, userThree];
 const reviews = [reviewOne];
+const courses = [courseOne, courseTwo];
 // token
 const tokens = [];
 const setupDatabase = async () => {
   await User.deleteMany();
   await Review.deleteMany();
-
+  await Course.deleteMany();
   // seed users
 
   // eslint-disable-next-line no-restricted-syntax
@@ -68,7 +95,13 @@ const setupDatabase = async () => {
     const user = new User(u);
     // eslint-disable-next-line no-await-in-loop
     await user.save();
-    tokens.push(user.getSginedJWTToken());
+    tokens.push(user.getSignedJWTToken());
+  }
+  // eslint-disable-next-line no-restricted-syntax
+  for (const c of courses) {
+    const course = new Course(c);
+    // eslint-disable-next-line no-await-in-loop
+    await course.save();
   }
 
   // eslint-disable-next-line no-restricted-syntax
@@ -79,4 +112,13 @@ const setupDatabase = async () => {
   }
 };
 
-export { userOne, userTwo, userThree, setupDatabase, userOneId, tokens };
+export {
+  userOne,
+  userTwo,
+  userThree,
+  courseOne,
+  courseTwo,
+  setupDatabase,
+  userOneId,
+  tokens,
+};

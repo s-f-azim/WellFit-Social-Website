@@ -9,6 +9,7 @@ import errorHandler from './middleware/error.js';
 import ErrorResponse from './utils/errorResponse.js';
 import userRoutes from './routes/user.js';
 import reviewRoutes from './routes/review.js';
+import courseRoutes from './routes/course.js';
 import passport from '../config/passport-setup.js';
 
 // connect to the database
@@ -40,6 +41,7 @@ app.use(cors({ credentials: true, origin: `${process.env.CLIENT_URL}` }));
 // routes
 app.use('/api/users', userRoutes);
 app.use('/api/users/:reviewedId/reviews', reviewRoutes);
+app.use('/api/courses', courseRoutes);
 
 // 404 if the route doesn't match
 // eslint-disable-next-line no-unused-vars

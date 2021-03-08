@@ -1,10 +1,14 @@
 import { useRouter } from 'next/router';
-import { Space, Form, Input, Alert, Button, Row, Card } from 'antd';
-import { InstagramOutlined, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
-import { useState, useContext } from 'react';
-import API from '../config';
-import { signin, authenticate } from '../utils/auth';
-import UserContext from '../contexts/UserContext';
+import { Space, Form, Input, Alert, Button, Row, Card, notification } from 'antd';
+import {
+  InstagramOutlined,
+  GoogleOutlined,
+  FacebookOutlined,
+  SmileOutlined,
+} from '@ant-design/icons';
+import { useState } from 'react';
+import { useAuth } from '../services/auth';
+import API from '../services/api';
 
 const formItemLayout = {
   labelCol: {
@@ -33,19 +37,18 @@ const Login = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
-  const { user, setUser } = useContext(UserContext);
+  const { login } = useAuth();
   // normal login handler
   const onFinish = async (values) => {
     const { email, password } = values;
     try {
-      const response = await signin(email, password);
-      if (response.data.success) {
-        setUser(response.data.data);
-        console.log(user);
-        authenticate(response.data, () => {
-          router.push('/');
-        });
-      }
+      const something = await login(email, password);
+      notification.open({
+        message: 'Welcome back!',
+        duration: 2,
+        icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
+      });
+      router.push('/');
     } catch (err) {
       setHasError(true);
     }

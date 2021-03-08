@@ -1,9 +1,7 @@
 /* eslint-disable no-underscore-dangle */
-import { List, Rate, Button, Menu, Dropdown } from 'antd';
+import { List, Rate, Button, Menu, Dropdown, Card } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import { useContext } from 'react';
-import UserContext from '../contexts/UserContext';
-import { deleteReview } from '../utils/review';
+import { deleteReview } from '../actions/review';
 
 const ReviewListItem = ({ review, showMenu, onDelete }) => {
   const handleDeleteClick = (reviewedId) => {
@@ -50,15 +48,17 @@ const ReviewListItem = ({ review, showMenu, onDelete }) => {
 
 const ReviewList = ({ children }) => (
   <>
-    <List
-      itemLayout="vertical"
-      size="large"
-      pagination={{
-        pageSize: 3,
-      }}
-    >
-      {children}
-    </List>
+    <Card>
+      <List
+        itemLayout="vertical"
+        size="large"
+        pagination={{
+          pageSize: 3,
+        }}
+      >
+        {children}
+      </List>
+    </Card>
   </>
 );
 

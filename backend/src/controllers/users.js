@@ -4,6 +4,35 @@ import User from '../models/User.js';
 
 /**
  * @async
+ * @desc Get all users
+ * @route POST /api/users?select=fields&&location[city,zipcode,street]&&tags&&sort
+ * @access public
+ */
+const getUsers = asyncHandler(async (req, res) => {
+  res.status(200).send({
+    success: true,
+    count: res.results.length,
+    pagination: res.pagination,
+    data: res.results,
+  });
+});
+/**
+ * @async
+ * @desc  get a users within a radius
+ * @route GET /api/users/radius/:zipcode/:distance
+ * @access public
+ */
+const getUsersWithinRadius = asyncHandler(async (req, res) => {
+  res.status(200).send({
+    success: true,
+    count: res.results.length,
+    pagination: res.pagination,
+    data: res.results,
+  });
+});
+
+/**
+ * @async
  * @desc create a user
  * @route POST /api/users/signup
  * @access public
@@ -27,7 +56,7 @@ const loginUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc get user profile
- * @route GET /api/users/profile
+ * @route GET /api/users/me
  * @access private
  */
 const getUser = asyncHandler(async (req, res) => {
@@ -65,60 +94,14 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 /**
+ *
  * @async
- * @desc create a review for another user
- * @route POST /api/users/review/:id
- * @access private
+ * @desc delete user from the db
+ * @route DELETE /api/users/delete
+ *
  */
-const createReview = asyncHandler(async (req, res) => {
-  if (req.user._id.toString() === req.params.id) {
-    return res.status(400).send({ error: 'Please do not review yourself' });
-  }
-
-  const otherUser = await User.findById(req.params.id);
-
-  if (
-    otherUser.reviews.some((review) => review.author._id.equals(req.user._id))
-  ) {
-    return res.status(400).send({ error: 'You already reviewed this user' });
-  }
-
-  otherUser.reviews.push({
-    author: req.user,
-    ...req.body,
-  });
-
-  await otherUser.save();
-  return res.status(200).send({ success: true });
-});
-
-/**
- * @async
- * @desc get user profile
- * @route GET /api/users/profile
- * @access public
- */
-const getReviews = asyncHandler(async (req, res) => {
-  User.findById(req.params.id, 'reviews', (err, user) => {
-    res.status(200).json({ success: true, data: { reviews: user.reviews } });
-  });
-});
-
-/**
- * @async
- * @desc delete a review
- * @route DELETE /api/users/review/:id
- * @access private
- */
-const deleteReview = asyncHandler(async (req, res) => {
-  await User.findByIdAndUpdate(req.params.id, {
-    $pull: {
-      reviews: {
-        author: req.user,
-      },
-    },
-  });
-
+const deleteUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndDelete(req.user._id);
   res.status(200).send({ success: true });
 });
 
@@ -135,7 +118,7 @@ const googleOauth = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc facebook login user using oauth
- * @route GET /api/users/faceboo/redirect
+ * @route GET /api/users/facebook/redirect
  * @access private
  */
 const facebookOauth = asyncHandler(async (req, res) => {
@@ -158,7 +141,7 @@ const instagramOauth = asyncHandler(async (req, res) => {
  * @param {int} statusCode - integer of status code ex 404
  */
 const sendTokenResponse = (user, statusCode, res) => {
-  const token = user.getSginedJWTToken();
+  const token = user.getSignedJWTToken();
   const options = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -171,13 +154,14 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie('token', token, options)
     .send({ success: true, token, data: user });
 };
+
 /**
  * @desc get the token from the user model and create a cookie
  * @param {User} user - a user
  * @param {int} statusCode - integer of status code ex 404
  */
 const sendTokenResponseOauth = (user, statusCode, res) => {
-  const token = user.getSginedJWTToken();
+  const token = user.getSignedJWTToken();
   const options = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -189,15 +173,16 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
   res.cookie('token', token, options);
   res.redirect(`${process.env.CLIENT_URL}`);
 };
+
 export {
+  getUsers,
+  getUsersWithinRadius,
   createUser,
   loginUser,
   getUser,
   logoutUser,
   updateUser,
-  createReview,
-  getReviews,
-  deleteReview,
+  deleteUser,
   googleOauth,
   facebookOauth,
   instagramOauth,

@@ -3,6 +3,7 @@ import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import JWT from 'jsonwebtoken';
 import ErrorResponse from '../utils/errorResponse.js';
+import geocoder from '../utils/geocoder.js';
 
 // create user schema
 const UserSchema = new mongoose.Schema(
@@ -10,6 +11,7 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       unique: true,
+      index: true,
       required: [true, 'Please add an email address'],
       validate(value) {
         if (!validator.isEmail(value)) throw new Error('Email is Invalid');
@@ -43,18 +45,24 @@ const UserSchema = new mongoose.Schema(
       enum: ['Male', 'Female', 'Non-Binary', 'Prefer not to say'],
     },
 
-    location: {
+    address: {
       type: String,
-      trim: true,
-      enum: [
-        'Europe',
-        'Asia',
-        'North America',
-        'South America',
-        'Australia',
-        'Africa',
-        'Prefer not to say',
-      ],
+    },
+
+    location: {
+      type: {
+        type: String,
+        enum: ['Point'],
+      },
+      coordinates: {
+        type: [Number],
+        index: '2dsphere',
+      },
+      formattedAddress: String,
+      street: String,
+      city: String,
+      zipcode: String,
+      country: String,
     },
 
     birthday: {
@@ -104,6 +112,124 @@ const UserSchema = new mongoose.Schema(
       },
     ],
 
+    tags: {
+      type: [String],
+      enum: [
+        'GetFit',
+        'Cardio',
+        'Cycling',
+        'FitFam',
+        'FitLife',
+        'Fitness',
+        'FitnessMotivation',
+        'FitnessAddict',
+        'GetStrong',
+        'LiftHeavy',
+        'GirlsWhoLift',
+        'GymLife',
+        'GymTime',
+        'NoPainNoGain',
+        'PersonalTrainer',
+        'Sweat',
+        'Weights',
+        'WeightLifting',
+        'Workout',
+      ],
+    },
+    trainerType: {
+      type: String,
+      enum: [
+        'Physique trainer',
+        'Performance trainer',
+        'Lifestyle trainer',
+        'Other',
+      ],
+    },
+    qualifications: {
+      type: [String],
+    },
+    speciality: {
+      type: String,
+    },
+    customerStories: {
+      type: [String],
+    },
+    communicationModes: {
+      type: [String],
+      enum: [
+        'Email',
+        'Phone calls',
+        'Text messages',
+        'Whatsapp',
+        'Social Media',
+        'In person preferred',
+        'Messaging app',
+        'Other',
+      ],
+    },
+    communicationFrequency: {
+      type: String,
+      enum: [
+        'Daily',
+        'Three-Four times a week',
+        'Twice a week',
+        'Weekly',
+        'Twice a month',
+        'Monthly',
+        'Other',
+      ],
+    },
+    priceRange: {
+      type: Number,
+    },
+    paymentFrequency: {
+      type: String,
+      enum: [
+        'One time',
+        'Twice a week',
+        'Weekly',
+        'Twice a month',
+        'Monthly',
+        'Other',
+      ],
+    },
+    paymentOptions: {
+      type: [String],
+      enum: [
+        'Paypal',
+        'Wired (bank) transfer',
+        'Cash',
+        'Other banking app',
+        'Check',
+        'Other',
+      ],
+    },
+    serviceFormat: {
+      type: [String],
+      enum: [
+        'Non-client-specific videos',
+        'In person sessions',
+        'PDFs, Excel sheets or others',
+        'Physical product',
+        'Audio content',
+        'Text based content',
+        'Other',
+      ],
+    },
+    clientGenderPreference: {
+      type: String,
+      enum: ['Male', 'Female', 'Non-Binary', 'Any'],
+    },
+    clientFitness: {
+      type: [Number],
+    },
+    clientHypertrophy: {
+      type: [Number],
+    },
+    clientStrength: {
+      type: [Number],
+    },
+
     googleId: {
       type: String,
     },
@@ -116,6 +242,12 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+// connect the creator of courses to the user (ex user.courses)
+UserSchema.virtual('courses', {
+  ref: 'Course',
+  localField: '_id',
+  foreignField: 'creators',
+});
 
 UserSchema.virtual('reviews', {
   ref: 'Review',
@@ -137,6 +269,32 @@ UserSchema.pre('save', async function (next) {
   }
   next();
 });
+// Geocode and create location field
+UserSchema.pre('save', async function (next) {
+  if (this.isModified('address')) {
+    const loc = await geocoder.geocode(this.address);
+    const {
+      longitude,
+      latitude,
+      formattedAddress,
+      streetName,
+      city,
+      zipcode,
+      countryCode,
+    } = loc[0];
+    this.location = {
+      type: 'Point',
+      coordinates: [longitude, latitude],
+      formattedAddress,
+      street: streetName,
+      city,
+      zipcode,
+      country: countryCode,
+    };
+    this.address = undefined;
+  }
+  next();
+});
 
 // check that given email and password exists
 UserSchema.statics.checkCredentials = async ({ email, password }) => {
@@ -153,7 +311,7 @@ UserSchema.statics.checkCredentials = async ({ email, password }) => {
 };
 
 // Sign JWT and return the token
-UserSchema.methods.getSginedJWTToken = function () {
+UserSchema.methods.getSignedJWTToken = function () {
   return JWT.sign({ id: this._id }, process.env.JWT_SECRET);
 };
 

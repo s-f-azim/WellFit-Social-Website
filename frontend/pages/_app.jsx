@@ -1,36 +1,41 @@
-import { useState, useEffect, useMemo } from 'react';
+import { BackTop } from 'antd';
+import NProgress from 'nprogress';
+import { ArrowUpOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
-import Head from 'next/head';
-import Layout from '../components/Layout';
 import '../styles/main.scss';
-import { getCookie } from '../utils/auth';
-
-import UserContext from '../contexts/UserContext';
+import Head from 'next/head';
+import Router from 'next/router';
+import Layout from '../components/Layout';
+import { AuthProvider } from '../services/auth';
+import { CookiesProvider } from 'react-cookie';
+Router.onRouteChangeStart = () => NProgress.start();
+Router.onRouteChangeComplete = () => NProgress.done();
+Router.onRouteChangeError = () => NProgress.done();
 
 function MyApp({ Component, pageProps }) {
-  const [user, setUser] = useState(null);
-  const providerValue = { user, setUser };
-
-  useEffect(() => {
-    if (getCookie('user') && getCookie('user') !== null) {
-      setUser(JSON.parse(getCookie('user')));
-    }
-  }, []);
-
   return (
     <>
       <Head>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="stylesheet" type="text/css" href="/nprogress.css" />
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,700&display=swap"
           rel="stylesheet"
         />
       </Head>
-      <UserContext.Provider value={providerValue}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </UserContext.Provider>
+      <CookiesProvider>
+        <AuthProvider>
+          <Layout>
+            <BackTop>
+              <div>
+                Top
+                <ArrowUpOutlined />
+              </div>
+            </BackTop>
+            <Component {...pageProps} />
+          </Layout>
+        </AuthProvider>
+      </CookiesProvider>
     </>
   );
 }

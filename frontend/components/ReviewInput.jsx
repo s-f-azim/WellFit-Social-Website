@@ -1,5 +1,5 @@
 import { Card, Form, Rate, Input, Button } from 'antd';
-import { createReview } from '../utils/review';
+import { createReview } from '../actions/review';
 
 const { TextArea } = Input;
 

@@ -1,18 +1,27 @@
 import express from 'express';
 import {
+  getUsers,
+  getUsersWithinRadius,
   createUser,
   loginUser,
   logoutUser,
   getUser,
   updateUser,
+  deleteUser,
   googleOauth,
   facebookOauth,
   instagramOauth,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
+import paginate from '../middleware/paginate.js';
+import User from '../models/User.js';
 
 const router = new express.Router();
 
+router.route('/').get(paginate(User), getUsers);
+router
+  .route('/radius/:zipcode/:distance')
+  .get(paginate(User), getUsersWithinRadius);
 router.route('/signup').post(createUser);
 
 router.route('/login').post(loginUser);
@@ -20,12 +29,12 @@ router.route('/login').post(loginUser);
 router.route('/logout').get(logoutUser);
 
 router
-  .route('/profile')
-  .get(passport.authenticate('jwt', { session: false }), getUser);
-
-router
   .route('/editProfile')
   .patch(passport.authenticate('jwt', { session: false }), updateUser);
+
+router
+  .route('/me')
+  .get(passport.authenticate('jwt', { session: false }), getUser);
 
 router.route('/oauth/google').get(
   passport.authenticate('google', {
@@ -55,6 +64,10 @@ router.route('/oauth/facebook').get(
     scope: ['email'],
   })
 );
+
+router
+  .route('/delete')
+  .delete(passport.authenticate('jwt', { session: false }), deleteUser);
 
 router
   .route('/oauth/facebook/redirect')
