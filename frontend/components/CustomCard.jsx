@@ -20,7 +20,7 @@ const CustomCard = () => {
 
         <br />
 
-        <Row style={{ maxHeight: '40rem' }}>
+        <Row style={{ maxHeight: '15rem' }}>
           <Col className="card-image">
             <Image src="/jogging.svg" height={100} width={100} layout="responsive" />
           </Col>
@@ -41,9 +41,21 @@ const CustomCard = () => {
         onCancel={() => setVisible(false)}
         width={1000}
       >
-        <p>some contents...</p>
-        <p>some contents...</p>
-        <p>some contents...</p>
+        <Row>
+          <Col className="card-image">
+            <Image src="/jogging.svg" height={100} width={100} layout="responsive" />
+          </Col>
+          <Col>
+            <p>Tags: GetFit</p>
+            <p>Price: £50.00</p>
+            <p>Location: England</p>
+            <p>Creators: One two three</p>
+            <p>
+              Description:
+              11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+            </p>
+          </Col>
+        </Row>
       </Modal>
     </>
   );

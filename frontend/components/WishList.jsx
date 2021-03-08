@@ -1,4 +1,4 @@
-import { Space } from 'antd';
+import { Space, Row, Col } from 'antd';
 import CustomCard from './CustomCard';
 import { useAuth } from '../services/auth';
 
@@ -6,13 +6,38 @@ const WishList = () => {
   const { user } = useAuth();
 
   return (
-    <div>
-      <Space direction="vertical" size="large">
+    <div style={{ width: '100%' }}>
+      <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {user.wishList.length === 0 ? (
           <p> Your wish list is currently empty.</p>
         ) : (
           <>
-            <CustomCard />
+            <Row type="flex" justify="center" align="middle">
+              <Col>
+                <CustomCard />
+              </Col>
+              <Col style={{ width: '2rem' }}></Col>
+              <Col>
+                <CustomCard />
+              </Col>
+              <Col style={{ width: '2rem' }}></Col>
+              <Col>
+                <CustomCard />
+              </Col>
+            </Row>
+            <Row type="flex" justify="center" align="middle">
+              <Col>
+                <CustomCard />
+              </Col>
+              <Col style={{ width: '2rem' }}></Col>
+              <Col>
+                <CustomCard />
+              </Col>
+              <Col style={{ width: '2rem' }}></Col>
+              <Col>
+                <CustomCard />
+              </Col>
+            </Row>
             <br />
             <br />
             <br />
