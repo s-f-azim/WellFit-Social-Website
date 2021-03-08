@@ -23,11 +23,21 @@ const getInstructors = asyncHandler(async (req, res) => {
     instr = instr.filter(inst => inst.name.toLowerCase().includes(req.query.q.toLowerCase()));
   }
   if(req.query.age) {
+    if(parseInt(req.query.age)===0) {
+      instr = instr;    
+    } else if(parseInt(req.query.age)>=62) {
+      instr = instr.filter(inst => {
+        if(inst.age) {
+          return (inst.age >=62);
+        }
+      })
+    } else {
     instr = instr.filter(inst => {
       if(inst.age) {
         return (inst.age >= parseInt(req.query.age)-5 && inst.age <= parseInt(req.query.age)+5);
       }
     });
+    }
   }
   if(req.query.gender) {
     instr = instr.filter(inst => {

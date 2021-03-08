@@ -25,9 +25,10 @@ const SearchBar = () => {
 
     const [q, setQuery] = useState('');
     const [gender, setGender] = useState('');
+    const [age, setAge] = useState(0);
     const [data, setData] = useState(users);
     const searchName = (q, gender) => {
-        axios.get(`http://localhost:4000/api/users/instructors/?q=${q}&&gender=${gender}`).then(({data}) => {
+        axios.get(`http://localhost:4000/api/users/instructors/?q=${q}&&gender=${gender}&&age=${age}`).then(({data}) => {
             setData(data);
         })
     }
@@ -47,7 +48,14 @@ const SearchBar = () => {
                     <Option value="">All Genders</Option>
                 </Select>
 
-                <Select style={{marginLeft: "1rem", marginRight: "1rem"}} placeholder="Age"></Select>
+                <Select defaultValue="All Ages" style={{marginLeft: "1rem", marginRight: "1rem"}} placeholder="Age" onChange={setAge}>
+                    <Option value="0">All Ages</Option> 
+                    <Option value="23">18-28</Option>
+                    <Option value="34">29-39</Option>
+                    <Option value="45">40-50</Option>
+                    <Option value="56">51-61</Option>
+                    <Option value="62">62+</Option>
+                </Select>
                 <Select style={{marginLeft: "1rem", marginRight: "1rem"}} placeholder="Tags"></Select>
             </div>
         </div>
