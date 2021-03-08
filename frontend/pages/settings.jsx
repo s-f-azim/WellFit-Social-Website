@@ -8,9 +8,10 @@ const settingsPage = () => {
   const router = useRouter();
   const { user, setUser } = useAuth();
   // redirect to home page if user not logged in or user deleted
-  useEffect(() => {
+  // -> why is it necessary? breaks refreshing the age...
+  /* useEffect(() => {
     if (!user) router.push('/');
-  }, []);
+  }, []); */
 
   const onDeleteClick = async () => {
     const response = await deleteUser();
@@ -21,13 +22,15 @@ const settingsPage = () => {
   };
 
   return (
-    <Row type="flex" justify="center" align="middle">
-      <Card>
-        <Button onClick={onDeleteClick} type="primary" danger>
-          Delete
-        </Button>
-      </Card>
-    </Row>
+    <div className="settings">
+      <Row type="flex" justify="center" align="middle">
+        <Card>
+          <Button onClick={onDeleteClick} type="primary" danger>
+            Delete
+          </Button>
+        </Card>
+      </Row>
+    </div>
   );
 };
 
