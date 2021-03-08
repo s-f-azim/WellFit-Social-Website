@@ -196,6 +196,10 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
+    wishList: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Course',
+    },
   },
   { timestamps: true }
 );
