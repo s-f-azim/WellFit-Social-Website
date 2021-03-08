@@ -104,7 +104,6 @@ CourseSchema.pre('save', async function (next) {
     zipcode,
     country: countryCode,
   };
-  this.address = undefined;
   next();
 });
 // Create course slug from the name

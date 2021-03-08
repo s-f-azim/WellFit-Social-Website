@@ -91,14 +91,14 @@ const uploadImages = asyncHandler(async (req, res) => {
   req.files.forEach((file) => formattedImages.push(file.buffer));
   formattedImages.map(
     async (image) =>
-      await sharp(image).resize({ width: 250, height: 250 }).png().toBuffer()
+      await sharp(image).resize({ width: 300, height: 300 }).png().toBuffer()
   );
   const course = await Course.findOne({
     _id: req.params.id,
     creators: { $all: [req.user._id] },
   });
   course.photos = formattedImages;
-  await course.update();
+  await course.save();
   res.status(201).send({ success: true, data: course });
 });
 
