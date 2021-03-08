@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import { Button, Row, Card } from 'antd';
-import { useEffect } from 'react';
+import { Button, Row, Card, Modal } from 'antd';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../services/auth';
 import { deleteUser } from '../actions/user';
 
@@ -13,7 +13,7 @@ const settingsPage = () => {
     if (!user) router.push('/');
   }, []); */
 
-  const onDeleteClick = async () => {
+  const deleteAccount = async () => {
     const response = await deleteUser();
     if (response.data.success) {
       setUser(null);
@@ -21,13 +21,41 @@ const settingsPage = () => {
     }
   };
 
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+  const showAlert = () => {
+    setIsAlertVisible(true);
+  };
+
+  const handleOk = () => {
+    deleteAccount();
+  };
+
+  const handleCancel = () => {
+    setIsAlertVisible(false);
+  };
+
   return (
     <div className="settings">
-      <Row type="flex" justify="center" align="middle">
+      <Row type="flex" justify="center">
         <Card>
-          <Button onClick={onDeleteClick} type="primary" danger>
-            Delete
+          <Button onClick={showAlert} type="primary" danger>
+            Delete my account
           </Button>
+          <Modal
+            closable={false}
+            okText="CONFIRM"
+            okButtonProps={{ style: { background: 'red', border: 'red' } }}
+            title="Are you sure?"
+            visible={isAlertVisible}
+            onCancel={handleCancel}
+            onOk={handleOk}
+          >
+            <p>
+              This action is irreversible, your account will be completely destroyed and to use our
+              services again, you will have to create a new one.
+            </p>
+          </Modal>
         </Card>
       </Row>
     </div>
