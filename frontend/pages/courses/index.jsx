@@ -1,53 +1,63 @@
-import { Card, Row, Col } from 'antd';
+import { Card, Row, Col, Pagination } from 'antd';
 import Image from 'next/image';
 import Link from 'next/link';
 import api from '../../services/api';
 
-const Courses = ({ courses }) => {
+const Courses = ({ courses, total }) => {
   console.log(courses);
   return (
-    <Row
-      type="flex"
-      align="middle"
-      justify="center"
-      style={{ marginTop: '5rem' }}
-      gutter={[
-        { xs: 8, sm: 16, md: 24, lg: 32 },
-        { xs: 8, sm: 16, md: 24, lg: 32 },
-      ]}
-    >
-      {courses.map((course) => (
-        <Link href={`/courses/${course._id}`} key={course._id}>
-          <Col key={course._id}>
-            <Card
-              style={{ width: 300 }}
-              cover={
-                <Image
-                  src={
-                    course.photos[0]
-                      ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString(
-                          'base64'
-                        )}`
-                      : '/not-found.png'
-                  }
-                  width={300}
-                  height={300}
-                />
-              }
-            >
-              <Card.Meta title={course.title} description={course.description} />
-              <h1> {course.price === 0 ? 'Free' : `${course.price} $`}</h1>
-            </Card>
-          </Col>
-        </Link>
-      ))}
-    </Row>
+    <>
+      <Row
+        type="flex"
+        align="middle"
+        justify="center"
+        style={{ marginTop: '5rem' }}
+        gutter={[
+          { xs: 8, sm: 16, md: 24, lg: 32 },
+          { xs: 8, sm: 16, md: 24, lg: 32 },
+        ]}
+      >
+        {courses.map((course) => (
+          <Link href={`/courses/${course._id}`} key={course._id}>
+            <Col key={course._id}>
+              <Card
+                style={{ width: 300 }}
+                cover={
+                  <Image
+                    src={
+                      course.photos[0]
+                        ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString(
+                            'base64'
+                          )}`
+                        : '/not-found.png'
+                    }
+                    width={300}
+                    height={300}
+                  />
+                }
+              >
+                <Card.Meta title={course.title} description={course.description} />
+                <h1> {course.price === 0 ? 'Free' : `${course.price} $`}</h1>
+              </Card>
+            </Col>
+          </Link>
+        ))}
+      </Row>
+      <Row type="flex" justify="center" align="middle" style={{ marginTop: '2rem' }}>
+        <Pagination defaultCurrent={1} total={{ total } / 20 > 0 ? total / 20 : 20} pageSize={20} />
+      </Row>
+    </>
   );
 };
 
-export async function getStaticProps() {
-  const response = await api.get('/courses');
-  return { props: { courses: response.data.data }, revalidate: 60 * 2 };
+export async function getStaticProps({ params }) {
+  const currentPage = params ? params.page : undefined;
+  const currentPageNumber = currentPage || 1;
+  const response = await api.get(`/courses?page=${currentPageNumber}`);
+  return {
+    props: { courses: response.data.data, total: response.data.pagination.total },
+    revalidate: 60 * 2,
+  };
 }
 
 export default Courses;

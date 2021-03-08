@@ -5,6 +5,4 @@ const course = () => {
 
 export const getStaticProps = async();
 
-export const getStaticProps = async();
-
 export default course;
