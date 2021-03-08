@@ -1,0 +1,31 @@
+.ant-card {
+  min-width: 44rem;
+  max-width: 44rem;
+  min-height: 19rem;
+  max-height: 19rem;
+}
+
+.card-title {
+  min-width: 91.6%;
+}
+
+.card-image {
+  min-width: 41.6%;
+}
+
+@media screen and (max-width: 1024px) {
+  .ant-card {
+    min-width: 20rem;
+    max-width: 20rem;
+    min-height: 35rem;
+    max-height: 35rem;
+  }
+
+  .card-title {
+    min-width: 85%;
+  }
+
+  .card-image {
+    min-width: 100%;
+  }
+}
