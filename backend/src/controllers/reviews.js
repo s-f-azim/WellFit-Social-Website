@@ -53,7 +53,7 @@ const deleteReview = asyncHandler(async (req, res) => {
       reviewed: req.params.reviewedId,
       reviewer: req.user._id,
     },
-    (err, review) => {
+    (err) => {
       if (err) res.status(400).send({ success: false });
       res.status(200).send({ success: true });
     }

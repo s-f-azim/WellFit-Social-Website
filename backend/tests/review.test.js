@@ -1,6 +1,5 @@
 import request from 'supertest';
 import Review from '../src/models/Review.js';
-import User from '../src/models/User.js';
 import app from '../src/app.js';
 import {
   tokens,
