@@ -8,7 +8,12 @@
     flex-flow: row wrap;
   }
 
-  .settingCard {
+  .settingCard .ant-card-head {
     border: 0px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .ant-card-head {
+    border-bottom: 1px solid black;
   }
 }

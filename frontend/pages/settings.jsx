@@ -57,7 +57,7 @@ const settingsPage = () => {
   return (
     <div className="settings">
       <Row type="flex" justify="left">
-        <Card size="default" title={settingsTitle}>
+        <Card className="mainCard" size="default" title={settingsTitle}>
           <Tabs size="small" defaultActiveKey="1" tabPosition="left">
             <TabPane key="1" tab="General">
               <Card className="settingCard" title={myAccount}>
