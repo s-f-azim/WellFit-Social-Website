@@ -1,6 +1,32 @@
-.menu {
+.profile-tabs {
   border: solid;
   border-width: 0.1rem;
   border-radius: 1rem;
   padding-bottom: 0.8rem;
+}
+
+.tab {
+  width: 25rem;
+}
+
+.button > * {
+  font-size: 2rem;
+}
+
+@media screen and (max-width: 1024px) {
+  .profile-tabs {
+    border: solid;
+    border-width: 0.1rem;
+    border-radius: 1rem;
+    padding-bottom: 0rem;
+    margin-left: 1rem;
+  }
+
+  .tab {
+    width: 5rem;
+  }
+
+  .button > * {
+    font-size: 1rem;
+  }
 }

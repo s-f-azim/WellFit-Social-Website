@@ -28,22 +28,22 @@ const Profile = () => {
   return (
     <Row type="flex" justify="center" align="middle">
       <div style={{ width: '80rem' }}>
-        <Row type="flex" justify="center" align="middle" className="menu">
-          <Col type="flex" justify="center" align="middle" style={{ width: '25rem' }}>
-            <Button type="link" size="large" onClick={displayFavourites}>
-              <h1>Favourites</h1>
+        <Row type="flex" justify="center" align="middle" className="profile-tabs">
+          <Col type="flex" justify="center" align="middle" className="tab">
+            <Button type="link" size="large" onClick={displayFavourites} className="button">
+              Favourites
             </Button>
           </Col>
           <Col style={{ width: '2rem' }}></Col>
-          <Col type="flex" justify="center" align="middle" style={{ width: '25rem' }}>
-            <Button type="link" size="large" onClick={displayFollowing}>
-              <h1>Following</h1>
+          <Col type="flex" justify="center" align="middle" className="tab">
+            <Button type="link" size="large" onClick={displayFollowing} className="button">
+              Following
             </Button>
           </Col>
           <Col style={{ width: '2rem' }}></Col>
-          <Col type="flex" justify="center" align="middle" style={{ width: '25rem' }}>
-            <Button type="link" size="large" onClick={displayWishList}>
-              <h1>Wish List</h1>
+          <Col type="flex" justify="center" align="middle" className="tab">
+            <Button type="link" size="large" onClick={displayWishList} className="button">
+              Wish List
             </Button>
           </Col>
         </Row>

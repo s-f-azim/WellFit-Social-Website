@@ -13,28 +13,28 @@ const WishList = () => {
         ) : (
           <>
             <Row type="flex" justify="center" align="middle">
-              <Col>
+              <Col className="card-col">
                 <CustomCard />
               </Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col>
+              <Col className="card-col">
                 <CustomCard />
               </Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col>
+              <Col className="card-col">
                 <CustomCard />
               </Col>
             </Row>
             <Row type="flex" justify="center" align="middle">
-              <Col>
+              <Col className="card-col">
                 <CustomCard />
               </Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col>
+              <Col className="card-col">
                 <CustomCard />
               </Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col>
+              <Col className="card-col">
                 <CustomCard />
               </Col>
             </Row>

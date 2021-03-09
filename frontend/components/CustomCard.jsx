@@ -1,4 +1,4 @@
-import { Card, Row, Col, Modal, Button } from 'antd';
+import { Card, Row, Col, Modal } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { useState } from 'react';
