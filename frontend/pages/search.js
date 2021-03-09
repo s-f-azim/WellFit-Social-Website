@@ -20,6 +20,7 @@ const getData = async () => {
 }
 const test = [ { name: 'Oskar' }, { name: 'Oskar2' } ];
 
+{/* TODO : EXTERNAL STYLESHEET AND REFACTOR CODE */}
 
 
 const SearchBar = () => {
