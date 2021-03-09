@@ -19,9 +19,14 @@ const searchPage = () => {
         ]}
       >
         {categories.map((category) => (
-          <Col className="category-container">
-            <Image src={category.photo} height={450} width={450} objectFit="contain" />
-            <Typography.Title>{category.name}</Typography.Title>
+          <Col>
+            <Card
+              title={
+                <Typography.Title style={{ textAlign: 'center' }}>{category.name}</Typography.Title>
+              }
+              style={{ width: 450, height: 450 }}
+              cover={<Image src={category.photo} height={450} width={450} objectFit="contain" />}
+            ></Card>
           </Col>
         ))}
       </Row>
