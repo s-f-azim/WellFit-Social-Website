@@ -133,7 +133,8 @@ it('Should delete a logged in user', async () => {
 
 it('Should not delete a user when not logged in', async () => {
   await request(app).delete('/api/users/delete').send().expect(401);
-  
+});
+
 // assert delete a user
 it('Should delete a logged in user', async () => {
   await request(app)
