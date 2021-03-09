@@ -2,7 +2,7 @@ import request from 'supertest';
 import User from '../src/models/User.js';
 import app from '../src/app.js';
 import {
-  tokens, userOne, setupDatabase,
+  tokens, userOne, userTwo, setupDatabase,
 } from './fixtures/db.js';
 
 // setup db for each test
@@ -111,15 +111,20 @@ it("Should not delete a user when not logged in", async () => {
     .expect(401);
 });
 
-it("Should query a similar instructor corresponding to one of the user tags", async () => {
+/**
+ * @test getSuggestedInstructors 
+ * @desc Testing querying for suggested instructors for users to follow
+ */
+it("Should query similar instructors based on tags and client gender preference", async () => {
   const response = await request(app)
       .get("/api/users/profile")
       .send()
       .set("Cookie", [`token=${tokens[0]}`])
       .expect(200);
-  expect(
-    response.body.data.some(
-      user => user.name === 'testUser2' || user.name === 'testUser3'
+  expect( //check if every user matches query criteria
+    response.body.data.every(
+      user => user.tags.some(t => userOne.tags.includes(t)) || 
+              user.gender === userOne.clientGenderPreference 
       )).toBeTruthy();
 
 });
@@ -130,10 +135,29 @@ it("Should not include other instructors not relevevant to the query", async () 
       .send()
       .set("Cookie", [`token=${tokens[0]}`])
       .expect(200);
-      expect(
-        response.body.data.some(
-          user => user.name === 'testUser4'
-          )).toBeFalsy();
+  expect( //check if some user does not match query criteria
+    response.body.data.some(
+      user => user.tags.every(t => !userOne.tags.includes(t)) && 
+              user.gender !== userOne.clientGenderPreference
+      )).toBeFalsy();
 });
 
+it("Should not return the user logged in themselves if they are an instructor", async () => {
+  const response = await request(app)
+      .get("/api/users/profile")
+      .send()
+      .set("Cookie", [`token=${tokens[1]}`])
+      .expect(200);
+  expect(response.body.data.some(
+    user => user._id === userTwo._id))
+    .toBeFalsy();
+});
 
+it("Should not return more than 3 suggested instructors", async () => {
+  const response = await request(app)
+      .get("/api/users/profile")
+      .send()
+      .set("Cookie", [`token=${tokens[1]}`])
+      .expect(200);
+  expect(response.body.data.length <= 3);
+});

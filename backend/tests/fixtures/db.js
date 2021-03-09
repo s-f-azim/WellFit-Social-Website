@@ -46,7 +46,7 @@ const userThree = {
   birthday: new Date(),
   nickname: 'FitnessGuru',
   bio: 'I love fitness',
-  tags: ['#Cardio'],
+  tags: ['#Sweat'],
   role: 'instructor'
 };
 
@@ -62,7 +62,7 @@ const userFour = {
   birthday: new Date(),
   nickname: 'FitnessGeeza',
   bio: 'I dont mind fitness',
-  tags: ['#Workout'],
+  tags: ['#Workout', '#Sweat'],
   role: 'instructor'
 };
 
