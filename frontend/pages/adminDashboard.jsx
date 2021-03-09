@@ -50,7 +50,7 @@ const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount })
 
   return (
     <div className="adminDashboard">
-      <Row justify="center" type="flex">
+      <Row justify="left" type="flex">
         <Card title={title}>
           <Tabs size="small" defaultActiveKey="1" tabPosition="left">
             <TabPane key="1" tab={statisticsTitle}>

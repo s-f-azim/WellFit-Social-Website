@@ -1,5 +1,12 @@
 import { Router, useRouter } from 'next/router';
-import { SettingOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  SettingOutlined,
+  UserOutlined,
+  BugOutlined,
+  CheckCircleOutlined,
+  StopOutlined,
+  MailOutlined,
+} from '@ant-design/icons';
 import { Button, Row, Card, Modal, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../services/auth';
@@ -20,6 +27,30 @@ const settingsPage = () => {
   const myAccount = (
     <h3>
       <UserOutlined /> My account
+    </h3>
+  );
+
+  const bugReport = (
+    <h3>
+      <BugOutlined /> report a bug
+    </h3>
+  );
+
+  const verifyMe = (
+    <h3>
+      <CheckCircleOutlined /> Verify my profile
+    </h3>
+  );
+
+  const UserReport = (
+    <h3>
+      <StopOutlined /> report a user
+    </h3>
+  );
+
+  const feedback = (
+    <h3>
+      <BugOutlined /> Give us some feedback!
     </h3>
   );
 
@@ -93,16 +124,16 @@ const settingsPage = () => {
               privacy
             </TabPane>
             <TabPane key="3" tab="Miscellaneous">
-              <Card className="settingCard" title="Send a bug report">
+              <Card className="settingCard" title={bugReport}>
                 bug report
               </Card>
-              <Card className="settingCard" title="Request profile verification">
+              <Card className="settingCard" title={verifyMe}>
                 Verify me
               </Card>
-              <Card className="settingCard" title="Report a user or product">
+              <Card className="settingCard" title={UserReport}>
                 Report something
               </Card>
-              <Card className="settingCard" title="Give us feedback">
+              <Card className="settingCard" title={feedback}>
                 suggest something!
               </Card>
             </TabPane>

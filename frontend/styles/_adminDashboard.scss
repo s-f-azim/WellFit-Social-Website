@@ -1,12 +1,11 @@
 .adminDashboard {
   .ant-card {
-    background: #f0f0f0;
+    background: #ffffff;
     width: 100%;
   }
 
   .ant-card-bordered {
-    border: 1px solid #000000;
-    border-radius: 5px;
+    border: 0px solid #f0f0f0;
   }
 
   .ant-card-head {
@@ -25,7 +24,7 @@
   }
 
   .ant-tabs-tab-active {
-    background-color: #dfdfdf;
+    background-color: #f0f0f0;
   }
 
   .ant-col.ant-col-16 {
