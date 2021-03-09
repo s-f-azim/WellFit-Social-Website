@@ -5,7 +5,10 @@
 @import './profileTopBar.scss';
 @import './signup.scss';
 @import './login.scss';
+@import './questionnaire.scss';
+@import './preferences.scss';
 @import './_searchQuestions.scss';
+
 body,
 ::before,
 ::after {
@@ -25,6 +28,7 @@ body {
   font-family: sans-serif, system-ui;
   text-rendering: optimizeSpeed;
 }
+
 .ant-menu-item {
   line-height: 64px;
 }
@@ -42,9 +46,6 @@ body {
   justify-content: center;
   width: 100%;
   align-self: center;
-}
-.ant-form-item-label {
-  margin-right: 1.2rem;
 }
 
 .ant-alert.ant-alert-info {

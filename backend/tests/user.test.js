@@ -152,8 +152,9 @@ it('Should not delete a user when not logged in', async () => {
 
 // assert get all users
 it('Should get all users', async () => {
+  const count = await User.countDocuments();
   const response = await request(app).get('/api/users').send().expect(200);
-  expect(response.body.count).toBe(4);
+  expect(response.body.count).toBe(count);
 });
 
 // assert get users with filters
