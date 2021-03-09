@@ -1,4 +1,4 @@
-import { Card, Row, Col, Modal } from 'antd';
+import { Card, Row, Col, Modal, Space } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -25,7 +25,13 @@ const CustomCard = () => {
             <Image src="/jogging.svg" height={100} width={100} layout="responsive" />
           </Col>
           <Col>
-            <p>Tags: GetFit</p>
+            <p>
+              Tags:{' '}
+              <Space direction="horizontal">
+                <div className="emphasised-item">GetFit</div>
+                <div className="emphasised-item">FitnessMotivation</div>
+              </Space>
+            </p>
             <p>Price: £50.00</p>
             <p>Location: England</p>
             <p>Creators: One two three</p>

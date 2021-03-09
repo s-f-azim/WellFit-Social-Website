@@ -13,6 +13,11 @@
   min-width: 41.6%;
 }
 
+.emphasised-item {
+  border-radius: 1rem;
+  background-color: #f5f5f5;
+}
+
 @media screen and (max-width: 1024px) {
   .ant-card {
     min-width: 20rem;
