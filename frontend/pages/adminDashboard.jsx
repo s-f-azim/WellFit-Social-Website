@@ -101,10 +101,10 @@ export async function getStaticProps() {
   const getInstructorsRes = await getInstructors();
   return {
     props: {
-      userCount: getUsersRes.data.count,
-      adminCount: getAdminsRes.data.count,
-      clientCount: getClientsRes.data.count,
-      instructorCount: getInstructorsRes.data.count,
+      userCount: getUsersRes.data.pagination.total,
+      adminCount: getAdminsRes.data.pagination.adminTotal,
+      clientCount: getClientsRes.data.pagination.clientTotal,
+      instructorCount: getInstructorsRes.data.pagination.instructorTotal,
     },
   };
 }

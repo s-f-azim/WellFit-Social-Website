@@ -1,7 +1,8 @@
 import asyncHandler from './async.js';
 import geocoder from '../utils/geocoder.js';
 
-const paginateAndFilter = (model) => asyncHandler(async (req, res, next) => {
+const paginateAndFilter = (model) =>
+  asyncHandler(async (req, res, next) => {
     let query;
     let reqQuery = { ...req.query };
     const removeFields = ['select', 'sort', 'page', 'limit'];
@@ -52,6 +53,9 @@ const paginateAndFilter = (model) => asyncHandler(async (req, res, next) => {
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
     const total = await model.countDocuments();
+    const instructorTotal = await model.countDocuments({ role: 'instructor' });
+    const clientTotal = await model.countDocuments({ role: 'client' });
+    const adminTotal = await model.countDocuments({ role: 'admin' });
     query = query.skip(startIndex).limit(limit);
     const results = await query;
     const pagination = {};
@@ -61,6 +65,10 @@ const paginateAndFilter = (model) => asyncHandler(async (req, res, next) => {
     if (startIndex > 0) {
       pagination.prev = { page: page - 1, limit };
     }
+    pagination.total = total;
+    pagination.instructorTotal = instructorTotal;
+    pagination.clientTotal = clientTotal;
+    pagination.adminTotal = adminTotal;
     res.results = results;
     res.pagination = pagination;
     next();
