@@ -4,9 +4,6 @@ import Review from '../../src/models/Review.js';
 import Course from '../../src/models/Course.js';
 
 const userOneId = new mongoose.Types.ObjectId();
-const userTwoId = new mongoose.Types.ObjectId();
-const userThreeId = new mongoose.Types.ObjectId();
-
 const reviewOneId = new mongoose.Types.ObjectId();
 
 // create users
@@ -20,7 +17,12 @@ const userOne = {
   nickname: 'testicles',
   bio: 'I have no balls',
   reviews: [reviewOneId],
+  tags: ['Sweat', 'Cardio'],
+  clientGenderPreference: 'Female',
+  role: 'client'
 };
+
+const userTwoId = new mongoose.Types.ObjectId();
 
 const userTwo = {
   _id: userTwoId,
@@ -31,18 +33,40 @@ const userTwo = {
   birthday: new Date(),
   nickname: 'Notesticles',
   bio: 'I have many balls',
+  tags: ['Sweat'],
+  role: 'instructor'
 };
+
+const userThreeId = new mongoose.Types.ObjectId();
 
 const userThree = {
   _id: userThreeId,
   email: 'test3@test.com',
-  password: 'password@123',
+  password: 'password123',
   name: 'testUser3',
-  gender: 'Female',
+  gender: 'Male',
   location: 'Europe',
   birthday: new Date(),
-  nickname: 'Notesticles',
-  bio: 'I have many balls',
+  nickname: 'FitnessGuru',
+  bio: 'I love fitness',
+  tags: ['Sweat'],
+  role: 'instructor'
+};
+
+const userFourId = new mongoose.Types.ObjectId();
+
+const userFour = {
+  _id: userFourId,
+  email: 'test4@test.com',
+  password: 'password123',
+  name: 'testUser4',
+  gender: 'Male',
+  location: 'Europe',
+  birthday: new Date(),
+  nickname: 'FitnessGeeza',
+  bio: 'I dont mind fitness',
+  tags: ['Workout', 'Sweat'],
+  role: 'instructor'
 };
 
 const reviewOne = {
@@ -79,8 +103,8 @@ const courseTwo = {
   tags: ['Cardio'],
 };
 
-const users = [userOne, userTwo, userThree];
 const reviews = [reviewOne];
+const users = [userOne, userTwo, userThree, userFour];
 const courses = [courseOne, courseTwo];
 // token
 const tokens = [];
