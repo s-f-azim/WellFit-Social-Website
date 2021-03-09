@@ -9,10 +9,10 @@ import User from '../models/User.js';
  * @access public
  */
 const getUser = asyncHandler(async (req, res) => {
-  const user = User.findById(req.params.id);
+  const user = await User.findById(req.params.id);
   res.status(200).send({
     success: true,
-    data: res.results,
+    data: user,
   });
 });
 

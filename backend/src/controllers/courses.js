@@ -9,7 +9,8 @@ import Course from '../models/Course.js';
  * @access public
  */
 const getCourse = asyncHandler(async (req, res) => {
-  const course = Course.findById(req.params.id);
+  console.log(req.params);
+  const course = await Course.findById(req.params.id);
   res.status(200).send({
     success: true,
     data: course,
