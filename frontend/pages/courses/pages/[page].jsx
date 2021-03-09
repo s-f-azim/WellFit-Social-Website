@@ -11,7 +11,7 @@ export async function getStaticProps({ params }) {
 export const getStaticPaths = async () => {
   const { data } = await api.get(`/courses?limit=${Number.MAX_SAFE_INTEGER}`);
   const { total } = data.pagination;
-  const numberOfPages = Math.ceil(total / 20);
+  const numberOfPages = Math.ceil(total / 12);
   const paths = Array(numberOfPages)
     .fill('')
     .map((_, index) => {
