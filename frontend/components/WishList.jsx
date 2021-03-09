@@ -1,5 +1,5 @@
 import { Space, Row, Col } from 'antd';
-import CustomCard from './CustomCard';
+import CourseCard from './CourseCard';
 import { useAuth } from '../services/auth';
 
 const WishList = () => {
@@ -13,30 +13,18 @@ const WishList = () => {
         ) : (
           <>
             <Row type="flex" justify="center" align="middle">
-              <Col className="card-col">
-                <CustomCard />
-              </Col>
+              <Col className="card-col">{/*<CourseCard />*/}</Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col className="card-col">
-                <CustomCard />
-              </Col>
+              <Col className="card-col">{/*<CourseCard />*/}</Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col className="card-col">
-                <CustomCard />
-              </Col>
+              <Col className="card-col">{/*<CourseCard />*/}</Col>
             </Row>
             <Row type="flex" justify="center" align="middle">
-              <Col className="card-col">
-                <CustomCard />
-              </Col>
+              <Col className="card-col">{/*<CourseCard />*/}</Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col className="card-col">
-                <CustomCard />
-              </Col>
+              <Col className="card-col">{/*<CourseCard />*/}</Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col className="card-col">
-                <CustomCard />
-              </Col>
+              <Col className="card-col">{/*<CourseCard />*/}</Col>
             </Row>
             <br />
             <br />

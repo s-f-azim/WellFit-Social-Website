@@ -20,7 +20,7 @@ const Courses = ({ courses, total }) => {
       >
         {courses.map((course) => (
           <Col key={course._id}>
-            <CourseCard content={course} />
+            <CourseCard content={course} isWish={false} />
           </Col>
         ))}
       </Row>

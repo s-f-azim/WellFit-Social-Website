@@ -3,7 +3,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-const CourseCard = ({ content }) => {
+const CourseCard = ({ content, isWish }) => {
   const [visible, setVisible] = useState(false);
   return (
     <>
@@ -17,7 +17,11 @@ const CourseCard = ({ content }) => {
             <h1> {content.title}</h1>
           </Col>
           <Col>
-            <DeleteOutlined style={{ fontSize: '2rem', color: 'black' }} />
+            {isWish === true ? (
+              <DeleteOutlined style={{ fontSize: '2rem', color: 'black' }} />
+            ) : (
+              <div style={{ minWidth: '2rem' }}></div>
+            )}
           </Col>
         </Row>
         <br />
