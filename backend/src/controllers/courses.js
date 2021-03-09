@@ -106,7 +106,7 @@ const uploadImages = asyncHandler(async (req, res) => {
   req.files.forEach((file) => formattedImages.push(file.buffer));
   formattedImages.map(
     async (image) =>
-      await sharp(image).resize({ width: 300, height: 300 }).png().toBuffer()
+      await sharp(image).resize({ width: 600, height: 600 }).png().toBuffer()
   );
   const course = await Course.findOne({
     _id: req.params.id,
