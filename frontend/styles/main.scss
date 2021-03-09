@@ -5,10 +5,11 @@
 @import './profileTopBar.scss';
 @import './signup.scss';
 @import './login.scss';
-@import './_searchQuestions.scss';
 @import './profile.scss';
-@import './customCard.scss';
 @import './wishList.scss';
+@import './customCard.scss';
+@import './courseCard.scss';
+@import './searchCourse.scss';
 body,
 ::before,
 ::after {
@@ -17,7 +18,9 @@ body,
   min-width: 0;
   position: relative;
   overflow-wrap: break-word;
+  word-wrap: break-word;
   box-sizing: border-box;
+  white-space: normal;
 }
 html:focus-within {
   scroll-behavior: smooth;

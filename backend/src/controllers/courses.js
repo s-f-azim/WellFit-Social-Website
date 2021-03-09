@@ -1,5 +1,21 @@
+import sharp from 'sharp';
 import asyncHandler from '../middleware/async.js';
 import Course from '../models/Course.js';
+
+/**
+ * @async
+ * @desc get course by ID
+ * @route GET /api/courses/:id
+ * @access public
+ */
+const getCourse = asyncHandler(async (req, res) => {
+  console.log(req.params);
+  const course = await Course.findById(req.params.id);
+  res.status(200).send({
+    success: true,
+    data: course,
+  });
+});
 
 /**
  * @async
@@ -79,10 +95,51 @@ const deleteCourse = asyncHandler(async (req, res) => {
   res.status(200).send({ success: true });
 });
 
+/**
+ * @async
+ * @desc upload images
+ * @route POST /api/courses/:id/images
+ * @access private
+ */
+const uploadImages = asyncHandler(async (req, res) => {
+  let formattedImages = [];
+  req.files.forEach((file) => formattedImages.push(file.buffer));
+  formattedImages.map(
+    async (image) =>
+      await sharp(image).resize({ width: 600, height: 600 }).png().toBuffer()
+  );
+  const course = await Course.findOne({
+    _id: req.params.id,
+    creators: { $all: [req.user._id] },
+  });
+  course.photos = formattedImages;
+  await course.save();
+  res.status(201).send({ success: true, data: course });
+});
+
+/**
+ * @async
+ * @desc delete images
+ * @route DELETE /api/courses/:id/images
+ * @access private
+ */
+const deleteImages = asyncHandler(async (req, res) => {
+  const course = await Course.findOne({
+    _id: req.params.id,
+    creators: { $all: [req.user._id] },
+  });
+  course.photos = undefined;
+  await course.update();
+  res.status(200).send({ success: true });
+});
+
 export {
   getCourses,
   updateCourse,
   createCourse,
   getCoursesWithinRadius,
   deleteCourse,
+  uploadImages,
+  deleteImages,
+  getCourse,
 };

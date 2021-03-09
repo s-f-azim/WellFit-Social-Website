@@ -200,6 +200,9 @@ const UserSchema = new mongoose.Schema(
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'Course',
     },
+    photos: {
+      type: [Buffer],
+    },
   },
   { timestamps: true }
 );
