@@ -1,4 +1,4 @@
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import {
   SettingOutlined,
   UserOutlined,
@@ -6,15 +6,18 @@ import {
   CheckCircleOutlined,
   StopOutlined,
   MailOutlined,
+  WarningOutlined,
+  CheckOutlined,
+  DownCircleOutlined,
 } from '@ant-design/icons';
-import { Button, Row, Card, Modal, Tabs } from 'antd';
-import { useEffect, useState } from 'react';
+import { Button, Row, Card, Modal, Tabs, Form, Alert, notification, Space, Input } from 'antd';
+import { useState } from 'react';
 import { useAuth } from '../services/auth';
 import { deleteUser } from '../actions/user';
 
 const settingsPage = () => {
   const router = useRouter();
-  const { user, setUser } = useAuth();
+  const { setUser } = useAuth();
 
   const { TabPane } = Tabs;
 
@@ -50,7 +53,7 @@ const settingsPage = () => {
 
   const feedback = (
     <h3>
-      <BugOutlined /> Give us some feedback!
+      <MailOutlined /> Give us some feedback!
     </h3>
   );
 
@@ -85,6 +88,22 @@ const settingsPage = () => {
     setIsAlertVisible(false);
   };
 
+  const [hasError, setHasError] = useState(false);
+  const [form] = Form.useForm();
+
+  const onBugReport = async (values) => {
+    try {
+      notification.open({
+        message: 'Report submitted, thanks for helping us!',
+        duration: 3,
+        icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+      });
+      router.push('/settings');
+    } catch (err) {
+      setHasError(true);
+    }
+  };
+
   return (
     <div className="settings">
       <Row type="flex" justify="left">
@@ -92,16 +111,13 @@ const settingsPage = () => {
           <Tabs size="small" defaultActiveKey="1" tabPosition="left">
             <TabPane key="1" tab="General">
               <Card className="settingCard" title={myAccount}>
-                <Button
-                  onClick={editProfile}
-                  type="primary"
-                  style={{ background: '#03dbfc', border: '#03dbfc' }}
-                >
+                <Button onClick={editProfile} type="primary">
                   Edit profile information
                 </Button>
                 <br />
                 <br />
                 <Button onClick={showAlert} type="primary" danger>
+                  <WarningOutlined />
                   Delete my account
                 </Button>
                 <Modal
@@ -125,7 +141,24 @@ const settingsPage = () => {
             </TabPane>
             <TabPane key="3" tab="Miscellaneous">
               <Card className="settingCard" title={bugReport}>
-                bug report
+                <Form form={form} name="Update my info" onFinish={onBugReport} scrollToFirstError>
+                  <Space direction="vertical" size="middle">
+                    {hasError && (
+                      <Alert type="error" message="something went wrong, please try again" banner />
+                    )}
+                    <h3>
+                      Please describe the bug below <DownCircleOutlined />
+                    </h3>
+                    <Form.Item name="report">
+                      <Input.TextArea showCount maxLength={300} />
+                    </Form.Item>
+                    <Form.Item>
+                      <Button type="primary" htmlType="submit">
+                        Submit bug report
+                      </Button>
+                    </Form.Item>
+                  </Space>
+                </Form>
               </Card>
               <Card className="settingCard" title={verifyMe}>
                 Verify me
