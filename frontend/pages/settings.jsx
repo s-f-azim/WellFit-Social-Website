@@ -92,6 +92,20 @@ const settingsPage = () => {
             <TabPane key="2" tab="Privacy">
               privacy
             </TabPane>
+            <TabPane key="3" tab="Miscellaneous">
+              <Card className="settingCard" title="Send a bug report">
+                bug report
+              </Card>
+              <Card className="settingCard" title="Request profile verification">
+                Verify me
+              </Card>
+              <Card className="settingCard" title="Report a user or product">
+                Report something
+              </Card>
+              <Card className="settingCard" title="Give us feedback">
+                suggest something!
+              </Card>
+            </TabPane>
           </Tabs>
         </Card>
       </Row>
