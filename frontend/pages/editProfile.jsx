@@ -35,28 +35,26 @@ const tailFormItemLayout = {
 };
 
 const tags = [
-  '#GetFit',
-  '#Cardio',
-  '#Cycling',
-  '#FitFam',
-  '#FitLife',
-  '#Fitness',
-  '#FitnessMotivation',
-  '#FitnessAddict',
-  '#GetStrong',
-  '#LiftHeavy',
-  '#GirlsWhoLift',
-  '#GymLife',
-  '#GymTime',
-  '#NoPainNoGain',
-  '#PersonalTrainer',
-  '#Sweat',
-  '#Weights',
-  '#WeightLifting',
-  '#Workout',
+  'GetFit',
+  'Cardio',
+  'Cycling',
+  'FitFam',
+  'FitLife',
+  'Fitness',
+  'FitnessMotivation',
+  'FitnessAddict',
+  'GetStrong',
+  'LiftHeavy',
+  'GirlsWhoLift',
+  'GymLife',
+  'GymTime',
+  'NoPainNoGain',
+  'PersonalTrainer',
+  'Sweat',
+  'Weights',
+  'WeightLifting',
+  'Workout',
 ];
-
-// const childTags = tags.map(x => <Option value={x}>{x}</Option>);
 
 const infoAlertText = (
   <p>

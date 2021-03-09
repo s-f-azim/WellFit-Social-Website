@@ -4,6 +4,35 @@ import User from '../models/User.js';
 
 /**
  * @async
+ * @desc Get all users
+ * @route POST /api/users?select=fields&&location[city,zipcode,street]&&tags&&sort
+ * @access public
+ */
+const getUsers = asyncHandler(async (req, res) => {
+  res.status(200).send({
+    success: true,
+    count: res.results.length,
+    pagination: res.pagination,
+    data: res.results,
+  });
+});
+/**
+ * @async
+ * @desc  get a users within a radius
+ * @route GET /api/users/radius/:zipcode/:distance
+ * @access public
+ */
+const getUsersWithinRadius = asyncHandler(async (req, res) => {
+  res.status(200).send({
+    success: true,
+    count: res.results.length,
+    pagination: res.pagination,
+    data: res.results,
+  });
+});
+
+/**
+ * @async
  * @desc create a user
  * @route POST /api/users/signup
  * @access public
@@ -108,7 +137,7 @@ const logoutUser = asyncHandler(async (req, res) => {
  *
  * @async
  * @desc delete user from the db
- * @route DELETE /api/users/settings
+ * @route DELETE /api/users/delete
  *
  */
 const deleteUser = asyncHandler(async (req, res) => {
@@ -152,7 +181,7 @@ const instagramOauth = asyncHandler(async (req, res) => {
  * @param {int} statusCode - integer of status code ex 404
  */
 const sendTokenResponse = (user, statusCode, res) => {
-  const token = user.getSginedJWTToken();
+  const token = user.getSignedJWTToken();
   const options = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -172,7 +201,7 @@ const sendTokenResponse = (user, statusCode, res) => {
  * @param {int} statusCode - integer of status code ex 404
  */
 const sendTokenResponseOauth = (user, statusCode, res) => {
-  const token = user.getSginedJWTToken();
+  const token = user.getSignedJWTToken();
   const options = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -186,6 +215,8 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
 };
 
 export {
+  getUsers,
+  getUsersWithinRadius,
   createUser,
   loginUser,
   getUser,

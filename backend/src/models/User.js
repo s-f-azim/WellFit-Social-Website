@@ -3,6 +3,7 @@ import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import JWT from 'jsonwebtoken';
 import ErrorResponse from '../utils/errorResponse.js';
+import geocoder from '../utils/geocoder.js';
 
 // create user schema
 const UserSchema = new mongoose.Schema(
@@ -10,6 +11,7 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       unique: true,
+      index: true,
       required: [true, 'Please add an email address'],
       validate(value) {
         if (!validator.isEmail(value)) throw new Error('Email is Invalid');
@@ -39,18 +41,23 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       enum: ['Male', 'Female', 'Non-Binary', 'Prefer not to say'],
     },
-    location: {
+    address: {
       type: String,
-      trim: true,
-      enum: [
-        'Europe',
-        'Asia',
-        'North America',
-        'South America',
-        'Australia',
-        'Africa',
-        'Prefer not to say',
-      ],
+    },
+    location: {
+      type: {
+        type: String,
+        enum: ['Point'],
+      },
+      coordinates: {
+        type: [Number],
+        index: '2dsphere',
+      },
+      formattedAddress: String,
+      street: String,
+      city: String,
+      zipcode: String,
+      country: String,
     },
 
     birthday: {
@@ -66,25 +73,25 @@ const UserSchema = new mongoose.Schema(
     tags: {
       type: [String],
       enum: [
-        '#GetFit',
-        '#Cardio',
-        '#Cycling',
-        '#FitFam',
-        '#FitLife',
-        '#Fitness',
-        '#FitnessMotivation',
-        '#FitnessAddict',
-        '#GetStrong',
-        '#LiftHeavy',
-        '#GirlsWhoLift',
-        '#GymLife',
-        '#GymTime',
-        '#NoPainNoGain',
-        '#PersonalTrainer',
-        '#Sweat',
-        '#Weights',
-        '#WeightLifting',
-        '#Workout',
+        'GetFit',
+        'Cardio',
+        'Cycling',
+        'FitFam',
+        'FitLife',
+        'Fitness',
+        'FitnessMotivation',
+        'FitnessAddict',
+        'GetStrong',
+        'LiftHeavy',
+        'GirlsWhoLift',
+        'GymLife',
+        'GymTime',
+        'NoPainNoGain',
+        'PersonalTrainer',
+        'Sweat',
+        'Weights',
+        'WeightLifting',
+        'Workout',
       ],
     },
     trainerType: {
@@ -196,6 +203,12 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+// connect the creator of courses to the user (ex user.courses)
+UserSchema.virtual('courses', {
+  ref: 'Course',
+  localField: '_id',
+  foreignField: 'creators',
+});
 
 // change the json to not send specified fields
 UserSchema.methods.toJSON = function () {
@@ -208,6 +221,32 @@ UserSchema.methods.toJSON = function () {
 UserSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
+});
+// Geocode and create location field
+UserSchema.pre('save', async function (next) {
+  if (this.isModified('address')) {
+    const loc = await geocoder.geocode(this.address);
+    const {
+      longitude,
+      latitude,
+      formattedAddress,
+      streetName,
+      city,
+      zipcode,
+      countryCode,
+    } = loc[0];
+    this.location = {
+      type: 'Point',
+      coordinates: [longitude, latitude],
+      formattedAddress,
+      street: streetName,
+      city,
+      zipcode,
+      country: countryCode,
+    };
+    this.address = undefined;
   }
   next();
 });
@@ -226,7 +265,7 @@ UserSchema.statics.checkCredentials = async ({ email, password }) => {
   return user;
 };
 // Sign JWT and return the token
-UserSchema.methods.getSginedJWTToken = function () {
+UserSchema.methods.getSignedJWTToken = function () {
   return JWT.sign({ id: this._id }, process.env.JWT_SECRET);
 };
 
