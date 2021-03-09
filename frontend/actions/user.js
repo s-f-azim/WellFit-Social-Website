@@ -1,14 +1,15 @@
 import api from '../services/api';
 
 const updateUser = (values) =>
-    api.patch('/users/editProfile', {
-        ...values,
-    });
+  api.patch('/users/editProfile', {
+    ...values,
+  });
 
-const deleteUser = () => 
-    api.delete('/users/delete');
+const deleteUser = () => api.delete('/users/delete');
 
-const getSuggestedInstructors = () =>
-    api.get('users/profile');
+const getSuggestedInstructors = () => api.get('users/profile');
 
-export { updateUser as default, deleteUser, getSuggestedInstructors };
+const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
+
+export { updateUser as default, deleteUser, 
+  addingFollowUser, getSuggestedInstructors };

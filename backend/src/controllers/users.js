@@ -4,6 +4,35 @@ import User from '../models/User.js';
 
 /**
  * @async
+ * @desc Get all users
+ * @route POST /api/users?select=fields&&location[city,zipcode,street]&&tags&&sort
+ * @access public
+ */
+const getUsers = asyncHandler(async (req, res) => {
+  res.status(200).send({
+    success: true,
+    count: res.results.length,
+    pagination: res.pagination,
+    data: res.results,
+  });
+});
+/**
+ * @async
+ * @desc  get a users within a radius
+ * @route GET /api/users/radius/:zipcode/:distance
+ * @access public
+ */
+const getUsersWithinRadius = asyncHandler(async (req, res) => {
+  res.status(200).send({
+    success: true,
+    count: res.results.length,
+    pagination: res.pagination,
+    data: res.results,
+  });
+});
+
+/**
+ * @async
  * @desc create a user
  * @route POST /api/users/signup
  * @access public
@@ -52,6 +81,46 @@ const updateUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc add following user profile
+ * @route PATCH /api/users/follow
+ * @access private
+ */
+const followUser = asyncHandler(async (req, res) => {
+  if (User.findOne({ _id: req.params.id })) {
+    if (
+      !req.user.following.includes(req.params.id) &&
+      req.user._id + ' ' !== req.params.id + ' '
+    ) {
+      req.user.following.push(req.params.id);
+    } else {
+      const index = req.user.following.indexOf(req.params.id);
+      if (index > -1) {
+        req.user.following.splice(index, 1);
+      }
+    }
+    const updatedUser = await req.user.save();
+    sendTokenResponse(updatedUser, 200, res);
+  }
+});
+
+/**
+ * @async
+ * @desc get user following list
+ * @route GET /api/users/followList
+ * @access private
+ */
+const getFollowing = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page || '1', 10);
+  const limit = 2;
+  const startIndex = (page - 1) * limit;
+  const lastIndex = limit * page;
+  const followings = await User.findById(req.user._id).populate('following');
+  const results = followings.following.slice(startIndex, lastIndex);
+  res.status(200).send({ success: true, data: results });
+});
+
+/**
+ * @async
  * @desc logout the user and delete the cookie
  * @route GET /api/users/logout
  * @access private
@@ -65,18 +134,18 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 /**
- * 
+ *
  * @async
- * @desc delete user from the db 
- * @route DELETE /api/users/settings
- * 
+ * @desc delete user from the db
+ * @route DELETE /api/users/delete
+ *
  */
 const deleteUser = asyncHandler(async (req, res) => {
   await User.findByIdAndDelete(req.user._id);
-  res.status(200).send( {success: true} );
+  res.status(200).send({ success: true });
 });
 
-/** 
+/**
  * @async
  * @desc google login user using oauth
  * @route GET /api/users/google/redirect
@@ -112,7 +181,7 @@ const instagramOauth = asyncHandler(async (req, res) => {
  * @param {int} statusCode - integer of status code ex 404
  */
 const sendTokenResponse = (user, statusCode, res) => {
-  const token = user.getSginedJWTToken();
+  const token = user.getSignedJWTToken();
   const options = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -132,7 +201,7 @@ const sendTokenResponse = (user, statusCode, res) => {
  * @param {int} statusCode - integer of status code ex 404
  */
 const sendTokenResponseOauth = (user, statusCode, res) => {
-  const token = user.getSginedJWTToken();
+  const token = user.getSignedJWTToken();
   const options = {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
@@ -167,6 +236,8 @@ const getSuggestedInstructors = asyncHandler( async (req, res)=> {
 })
 
 export {
+  getUsers,
+  getUsersWithinRadius,
   createUser,
   loginUser,
   getUser,
@@ -177,4 +248,6 @@ export {
   facebookOauth,
   instagramOauth,
   getSuggestedInstructors,
+  followUser,
+  getFollowing,
 };
