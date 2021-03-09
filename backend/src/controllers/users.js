@@ -218,6 +218,7 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
  * @async
  * @desc Get suggested instructors for user based on random tag selected, client gender preference 
  * @param {User} user - a user
+ * @route GET /api/users/profile
  */
 const getSuggestedInstructors = asyncHandler( async (req, res)=> {
   const users = 
