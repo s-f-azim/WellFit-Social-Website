@@ -155,6 +155,7 @@ const getSuggestedInstructors = asyncHandler( async (req, res)=> {
     await User.find({
       $and : [
         {role: "instructor"},
+        {_id: { $ne: req.user._id}},
         {$or: [
           {tags: req.user.tags[Math.floor(Math.random() * req.user.tags.length)]},
           {gender: req.user.clientGenderPreference}

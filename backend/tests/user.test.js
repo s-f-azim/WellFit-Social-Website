@@ -110,3 +110,30 @@ it("Should not delete a user when not logged in", async () => {
     .send()
     .expect(401);
 });
+
+it("Should query a similar instructor corresponding to one of the user tags", async () => {
+  const response = await request(app)
+      .get("/api/users/profile")
+      .send()
+      .set("Cookie", [`token=${tokens[0]}`])
+      .expect(200);
+  expect(
+    response.body.data.some(
+      user => user.name === 'testUser2' || user.name === 'testUser3'
+      )).toBeTruthy();
+
+});
+
+it("Should not include other instructors not relevevant to the query", async () => {
+  const response = await request(app)
+      .get("/api/users/profile")
+      .send()
+      .set("Cookie", [`token=${tokens[0]}`])
+      .expect(200);
+      expect(
+        response.body.data.some(
+          user => user.name === 'testUser4'
+          )).toBeFalsy();
+});
+
+

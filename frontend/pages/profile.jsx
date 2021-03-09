@@ -20,7 +20,7 @@ const Profile = () => {
   const Suggestions = () => { //List of suggested instructors
     const [showState, setShowState] = useState(false);
     const [list, setList] = useState({});
-    var suggestionsDisplayed = list.length;
+    let suggestionsDisplayed = list.length;
     //Fetches suggested instructors once after initial render
     useEffect( async () => {
       try {
