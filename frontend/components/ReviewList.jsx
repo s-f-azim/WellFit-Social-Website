@@ -3,7 +3,23 @@ import { List, Rate, Button, Menu, Dropdown, Card } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { deleteReview } from '../actions/review';
 
-const ReviewListItem = ({ review, showMenu, onDelete }) => {
+const ReviewList = ({ children }) => (
+  <>
+    <Card>
+      <List
+        itemLayout="vertical"
+        size="large"
+        pagination={{
+          pageSize: 3,
+        }}
+      >
+        {children}
+      </List>
+    </Card>
+  </>
+);
+
+ReviewList.Item = ({ review, showMenu, onDelete }) => {
   const handleDeleteClick = (reviewedId) => {
     deleteReview(reviewedId);
     onDelete();
@@ -46,20 +62,4 @@ const ReviewListItem = ({ review, showMenu, onDelete }) => {
   );
 };
 
-const ReviewList = ({ children }) => (
-  <>
-    <Card>
-      <List
-        itemLayout="vertical"
-        size="large"
-        pagination={{
-          pageSize: 3,
-        }}
-      >
-        {children}
-      </List>
-    </Card>
-  </>
-);
-
-export { ReviewList, ReviewListItem };
+export default ReviewList;
