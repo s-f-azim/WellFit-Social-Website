@@ -196,6 +196,11 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
+
+    role: {
+      type: String,
+      enum: ['admin', 'instructor', 'client'],
+    },
     twitterId: {
       type: String,
     },

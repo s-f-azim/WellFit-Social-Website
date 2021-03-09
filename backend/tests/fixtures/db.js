@@ -14,6 +14,9 @@ const userOne = {
   birthday: new Date(),
   nickname: 'testicles',
   bio: 'I have no balls',
+  tags: ['Sweat', 'Cardio'],
+  clientGenderPreference: 'Female',
+  role: 'client'
 };
 
 const userTwoId = new mongoose.Types.ObjectId();
@@ -27,6 +30,40 @@ const userTwo = {
   birthday: new Date(),
   nickname: 'Notesticles',
   bio: 'I have many balls',
+  tags: ['Sweat'],
+  role: 'instructor'
+};
+
+const userThreeId = new mongoose.Types.ObjectId();
+
+const userThree = {
+  _id: userThreeId,
+  email: 'test3@test.com',
+  password: 'password123',
+  name: 'testUser3',
+  gender: 'Male',
+  location: 'Europe',
+  birthday: new Date(),
+  nickname: 'FitnessGuru',
+  bio: 'I love fitness',
+  tags: ['Sweat'],
+  role: 'instructor'
+};
+
+const userFourId = new mongoose.Types.ObjectId();
+
+const userFour = {
+  _id: userFourId,
+  email: 'test4@test.com',
+  password: 'password123',
+  name: 'testUser4',
+  gender: 'Male',
+  location: 'Europe',
+  birthday: new Date(),
+  nickname: 'FitnessGeeza',
+  bio: 'I dont mind fitness',
+  tags: ['Workout', 'Sweat'],
+  role: 'instructor'
 };
 
 // create courses
@@ -55,7 +92,7 @@ const courseTwo = {
   tags: ['Cardio'],
 };
 
-const users = [userOne, userTwo];
+const users = [userOne, userTwo, userThree, userFour];
 const courses = [courseOne, courseTwo];
 // token
 const tokens = [];
