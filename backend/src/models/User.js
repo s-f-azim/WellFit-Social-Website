@@ -196,6 +196,10 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
+    twitterId: {
+      type: String,
+    },
+    following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );
