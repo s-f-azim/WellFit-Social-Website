@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { Space, Form, Input, Alert, Button, Row, Col, Card, Select } from 'antd';
 const {Option} = Select;
 const { Search } = Input;
@@ -63,10 +64,11 @@ const SearchBar = () => {
 
         <Row style={{marginTop: "2rem", marginLeft: "2rem"}}>
         {
+            
             data.map((val,key ) => {
                 return (
                     <Col xs={24} md={8}>
-                        <Card key={key} title={val.name} extra={<a href="#">Profile</a>} style={{ width: "90%" , marginTop: "2rem"}}>
+                        <Card key={key} title={val.name} cover={ <Image alt="Avatar" layout="responsive" width="440px" height="440px" src={val.avatar ? val.avatar : '/alex-suprun-ZHvM3XIOHoE-unsplash-2.jpg'} />} extra={<a href="#">Profile</a>} style={{ width: "90%" , marginTop: "2rem"}}>
                             <p> Gender: {val.gender}</p>
                             <p> Age: {val.age}</p>
                             <p> Tags: {val.tags.map((val) => {return(<>{val} </>);})}</p>
