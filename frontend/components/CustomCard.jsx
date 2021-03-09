@@ -41,11 +41,11 @@ const CustomCard = () => {
         onCancel={() => setVisible(false)}
         width={1000}
       >
-        <Row>
-          <Col className="card-image">
-            <Image src="/jogging.svg" height={100} width={100} layout="responsive" />
+        <Row justify="center" align="middle">
+          <Col className="card-image" span={6}>
+            <Image src="/jogging.svg" height={300} width={300} layout="responsive" />
           </Col>
-          <Col>
+          <Col span={14}>
             <p>Tags: GetFit</p>
             <p>Price: £50.00</p>
             <p>Location: England</p>
