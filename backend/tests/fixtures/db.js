@@ -36,12 +36,13 @@ const instructorOne = {
   _id: instructorOneId,
   email: 'testEmail32@test.com',
   password: '12345678',
-  name: 'testinstructor1',
+  name: 'Alex',
   gender: 'Male',
   birthday: new Date(),
   nickname: 'testicles',
   bio: 'I have no balls',
-  role: 'instructor'
+  role: 'instructor',
+  age: 19
 };
 
 const instructorTwoId = new mongoose.Types.ObjectId();
@@ -50,12 +51,13 @@ const instructorTwo = {
   _id: instructorTwoId,
   email: 'test20@test.com',
   password: 'password@123',
-  name: 'testinstructor2',
+  name: 'Dave',
   gender: 'Female',
   birthday: new Date(),
   nickname: 'Notesticles',
   bio: 'I have many balls',
-  role: 'instructor'
+  role: 'instructor',
+  age: 73
 };
 
 const instructorThreeId = new mongoose.Types.ObjectId();
@@ -64,12 +66,13 @@ const instructorThree = {
   _id: instructorThreeId,
   email: 'test6@test.com',
   password: '12345678',
-  name: 'testinstructor3',
+  name: 'Emilia',
   gender: 'Non-Binary',
   birthday: new Date(),
   nickname: 'testicles',
   bio: 'I have no balls',
-  role: 'instructor'
+  role: 'instructor',
+  age: 20
 };
 
 const instructorFourId = new mongoose.Types.ObjectId();
@@ -78,12 +81,13 @@ const instructorFour = {
   _id: instructorFourId,
   email: 'test7@test.com',
   password: 'password@123',
-  name: 'testinstructor4',
+  name: 'Mandela',
   gender: 'Female',
   birthday: new Date(),
   nickname: 'Notesticles',
   bio: 'I have many balls',
-  role: 'instructor'
+  role: 'instructor',
+  age: 45
 };
 
 const instructorFiveId = new mongoose.Types.ObjectId();
@@ -92,12 +96,13 @@ const instructorFive = {
   _id: instructorFiveId,
   email: 'test8@test.com',
   password: '12345678',
-  name: 'testinstructor5',
+  name: 'Anna',
   gender: 'Female',
   birthday: new Date(),
   nickname: 'testicles',
   bio: 'I have no balls',
-  role: 'instructor'
+  role: 'instructor',
+  age: 32
 };
 
 const instructorSixId = new mongoose.Types.ObjectId();
@@ -106,12 +111,13 @@ const instructorSix = {
   _id: instructorSixId,
   email: 'test71@test.com',
   password: 'password@123',
-  name: 'testinstructor6',
+  name: 'Kate',
   gender: 'Female',
   birthday: new Date(),
   nickname: 'Notesticles',
   bio: 'I have many balls',
-  role: 'instructor'
+  role: 'instructor',
+  age: 33
 };
 
 
@@ -141,8 +147,8 @@ const courseTwo = {
   tags: ['Cardio'],
 };
 
-const users = [userOne, userTwo, instructorOne, instructorTwo, instructorThree, instructorFour, instructorFive, instructorSix];
-const instructors = [];
+const users = [userOne, userTwo];
+const instructors = [instructorOne, instructorTwo, instructorThree, instructorFour, instructorFive, instructorSix];
 const courses = [courseOne, courseTwo];
 // token
 const tokens = [];
@@ -164,6 +170,16 @@ const setupDatabase = async () => {
     await course.save();
   }
 };
+const instTokens = [];
+const setupInstructors = async () => {
+  await User.deleteMany({});
+  for (const i of instructors) {
+    const user = new User(i);
+    // eslint-disable-next-line no-await-in-loop
+    await user.save();
+    instTokens.push(user.getSignedJWTToken());
+  }
+}
 
 export {
   userOne,
@@ -177,6 +193,7 @@ export {
   courseOne,
   courseTwo,
   setupDatabase,
+  setupInstructors,
   userOneId,
   tokens,
 };
