@@ -98,7 +98,7 @@ const settingsPage = () => {
         duration: 3,
         icon: <CheckOutlined style={{ color: '#33FF49' }} />,
       });
-      router.push('/settings');
+      form.resetFields();
     } catch (err) {
       setHasError(true);
     }
@@ -150,7 +150,7 @@ const settingsPage = () => {
                       Please describe the bug below <DownCircleOutlined />
                     </h3>
                     <Form.Item name="report">
-                      <Input.TextArea showCount maxLength={300} />
+                      <Input.TextArea allowClear showCount maxLength={300} />
                     </Form.Item>
                     <Form.Item>
                       <Button type="primary" htmlType="submit">
