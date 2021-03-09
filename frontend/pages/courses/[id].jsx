@@ -1,6 +1,7 @@
-import { Row, Col, Button, Space, Divider, Rate } from 'antd';
+import { Row, Col, Button, Typography, Space, Divider, Rate } from 'antd';
 import Image from 'next/image';
 import api from '../../services/api';
+const columnStyle = { width: 350, height: 'auto' };
 
 const course = ({ course }) => {
   <Image
@@ -20,12 +21,13 @@ const course = ({ course }) => {
         { xs: 8, sm: 26, md: 44, lg: 52 },
         { xs: 8, sm: 6, md: 14, lg: 22 },
       ]}
+      style={{ margin: '2rem' }}
     >
       <Col md={10}>
         <Image
           src={
             course.photos[0]
-              ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
+              ? `data:image/png;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
               : '/image-not-found.svg'
           }
           width={600}
@@ -33,18 +35,29 @@ const course = ({ course }) => {
         />
       </Col>
       <Col md={6}>
-        <Space direction="vertical">
-          <h1 style={{ fontSize: '4rem', fontFamily: 'Poppins' }}>something</h1>
+        <Space direction="vertical" wrap={true}>
+          <Typography.Title
+            level={1}
+            style={{ fontSize: '2.3rem', fontFamily: 'Poppins', ...columnStyle }}
+          >
+            {course.title}
+          </Typography.Title>
           <Divider />
           <Rate disabled defaultValue={4} />
           <Divider />
-          <h1>{course.price > 0 ? `Price: $${course.price}` : 'Free'}</h1>
+          <Typography.Title level={2}>
+            {course.price > 0 ? `Price: $${course.price}` : 'Free'}
+          </Typography.Title>
           <Divider />
-          <h1 style={{ color: 'grey' }}>{course.description}</h1>
+          <Typography.Paragraph style={{ fontSize: '1.4rem', color: 'grey' }}>
+            Description: {course.description}
+          </Typography.Paragraph>
           <Divider />
-          {course.tags.map((tag) => (
-            <h3>{`#${tag}`}</h3>
-          ))}
+          <Space>
+            {course.tags.map((tag) => (
+              <h3>{`#${tag}`}</h3>
+            ))}
+          </Space>
           <Button type="primary" shape="round" size="large">
             Would like to buy it
           </Button>
