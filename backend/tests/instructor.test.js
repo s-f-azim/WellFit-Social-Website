@@ -96,3 +96,33 @@ it('Should get all male instructors with a in their name between 25-35', async (
     .get('/api/users/instructors?q=a&&gender=Male&&age=20');
   expect(response.body.data.length).toBe(1);
 });
+// assert get all instructors with filter tags = Cycling
+it('Should get all instructors with tag Cycling', async () => {
+  const response = await request(app)
+    .get('/api/users/instructors?tags=Cycling');
+  expect(response.body.data.length).toBe(2);
+});
+// assert get all instructors with filter tags = Cycling, Sweat
+it('Should get all instructors with tag Cycling', async () => {
+  const response = await request(app)
+    .get('/api/users/instructors?tags=Cycling,Sweat');
+  expect(response.body.data.length).toBe(1);
+});
+// assert no instructors returned with invalid tag
+it('Should return no Instructors with invalid tag', async () => {
+  const response = await request(app)
+    .get('/api/users/instructors?tags=GymLife');
+  expect(response.body.data.length).toBe(0);
+});
+// assert get all instructors
+it('Should return no Instructors with invalid tag', async () => {
+  const response = await request(app)
+    .get('/api/users/instructors?tags=');
+  expect(response.body.data.length).toBe(6);
+});
+// assert get one instructor
+it('Should return one instructor with all filters set', async () => {
+  const response = await request(app)
+    .get('/api/users/instructors?q=a&&gender=Male&&age=20tags=Cardio');
+  expect(response.body.data.length).toBe(1);
+});

@@ -20,7 +20,6 @@ const getData = async () => {
 }
 const test = [ { name: 'Oskar' }, { name: 'Oskar2' } ];
 
-{/* TODO : EXTERNAL STYLESHEET AND REFACTOR CODE */}
 
 
 const SearchBar = () => {
@@ -55,15 +54,6 @@ const SearchBar = () => {
         <Option key={183} value={'WeightLifting'}>WeightLifting</Option>,
         <Option key={193} value={'Workout'}>Workout</Option>
     ];
-    const Children = [];
-    
-    const handleChange = (q) => {
-        console.log(q);
-        setTags(q);
-    }
-    const printTags = () => {
-        console.log(stags);
-    }
 
     return(
     <>
@@ -86,7 +76,7 @@ const SearchBar = () => {
                     <Option value="56">51-61</Option>
                     <Option value="62">62+</Option>
                 </Select>
-                <Select style={{marginLeft: "1rem", marginRight: "1rem", marginTop: "1rem"}} mode="multiple" placeholder="Tags" onChange={handleChange}>
+                <Select style={{marginLeft: "1rem", marginRight: "1rem", marginTop: "1rem", display: "inline-block", width: "50%"}} mode="multiple" placeholder="Tags" onChange={setTags}>
                     {tags}
                 </Select>
             </div>

@@ -16,9 +16,13 @@ const getUsers = asyncHandler(async (req, res) => {
     data: res.results,
   });
 });
-
+/**
+ * @async
+ * @desc Get all instructors
+ * @route GET /api/users?q=&&gender=&&age=&&tags=
+ * @access public
+ */
 const getInstructors = asyncHandler(async (req, res) => {
-  let quer = "/"+req.query.q+"/i";
   const s = req.query.q;
   const regex = new RegExp(s, 'i');
   let instr = await User.find({role: 'instructor', name: {$regex: regex}, ...req.query.gender ? {gender: req.query.gender} : {}, ...req.query.tags ? {tags: {$all : req.query.tags.split(",")}} : {}});

@@ -42,7 +42,8 @@ const instructorOne = {
   nickname: 'testicles',
   bio: 'I have no balls',
   role: 'instructor',
-  age: 19
+  age: 19,
+  tags: ['Cardio']
 };
 
 const instructorTwoId = new mongoose.Types.ObjectId();
@@ -72,7 +73,8 @@ const instructorThree = {
   nickname: 'testicles',
   bio: 'I have no balls',
   role: 'instructor',
-  age: 20
+  age: 20,
+  tags: ['Cycling', 'Sweat']
 };
 
 const instructorFourId = new mongoose.Types.ObjectId();
@@ -87,7 +89,8 @@ const instructorFour = {
   nickname: 'Notesticles',
   bio: 'I have many balls',
   role: 'instructor',
-  age: 45
+  age: 45,
+  tags: ['Cycling']
 };
 
 const instructorFiveId = new mongoose.Types.ObjectId();
