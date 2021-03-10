@@ -145,8 +145,8 @@ const addToWishList = asyncHandler(async (req, res) => {
  * @access private
  */
 const getWishList = asyncHandler(async (req, res) => {
-  const something = await User.findById(req.user._id).populate('wishlist');
-  res.status(200).send({ success: true, data: something });
+  const user = await User.findById(req.user._id).populate('wishlist').exec();
+  res.status(200).send({ success: true, data: user.wishlist });
 });
 
 /**
