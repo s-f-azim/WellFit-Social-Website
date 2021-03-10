@@ -9,6 +9,7 @@ import {
   WarningOutlined,
   CheckOutlined,
   DownCircleOutlined,
+  EditOutlined,
 } from '@ant-design/icons';
 import { Button, Row, Card, Modal, Tabs, Form, Alert, notification, Space, Input } from 'antd';
 import { useState } from 'react';
@@ -128,22 +129,25 @@ const settingsPage = () => {
           <Tabs size="small" defaultActiveKey="1" tabPosition="left">
             <TabPane key="1" tab="General">
               <Card className="settingCard" title={myAccount}>
-                <Button onClick={editCredentials} type="primary">
+                <Button onClick={editCredentials} type="text">
+                  <EditOutlined />
                   Change my password or email
                 </Button>
                 <br />
                 <br />
-                <Button onClick={editBasic} type="primary">
+                <Button onClick={editBasic} type="text">
+                  <EditOutlined />
                   Edit my basic profile information
                 </Button>
                 <br />
                 <br />
-                <Button onClick={editInDepth} type="primary">
+                <Button onClick={editInDepth} type="text">
+                  <EditOutlined />
                   Edit my in-depth profile information
                 </Button>
                 <br />
                 <br />
-                <Button onClick={showAlert} type="primary" danger>
+                <Button onClick={showAlert} type="text" danger>
                   <WarningOutlined />
                   Delete my account
                 </Button>

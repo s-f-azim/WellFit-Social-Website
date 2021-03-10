@@ -111,7 +111,7 @@ const Navbar = () => {
     <>
       <nav className="topheader" style={{ backgroundColor: 'white' }}>
         <Title level={1} className="logo-text">
-          <a href="/"> InstaFit </a>
+          <a href="/"> QuickFit </a>
         </Title>
         {user === null ? (
           <LoggedOutMenu />
