@@ -25,23 +25,33 @@ const getUsers = asyncHandler(async (req, res) => {
 const getInstructors = asyncHandler(async (req, res) => {
   const s = req.query.q;
   const regex = new RegExp(s, 'i');
-  let instr = await User.find({role: 'instructor', name: {$regex: regex}, ...req.query.gender ? {gender: req.query.gender} : {}, ...req.query.tags ? {tags: {$all : req.query.tags.split(",")}} : {}});
-  
-  if(req.query.age) {
-    if(parseInt(req.query.age)===0) {
-      instr = instr;    
-    } else if(parseInt(req.query.age)>=62) {
-      instr = instr.filter(inst => {
-        if(inst.age) {
-          return (inst.age >=62);
-        }
-      })
-    } else {
-    instr = instr.filter(inst => {
-      if(inst.age) {
-        return (inst.age >= parseInt(req.query.age)-5 && inst.age <= parseInt(req.query.age)+5);
+  let instr = await User.find({
+    role: 'instructor',
+    name: { $regex: regex },
+    ...(req.query.gender ? { gender: req.query.gender } : {}),
+    ...(req.query.tags ? { tags: { $all: req.query.tags.split(',') } } : {}),
+  });
+
+  if (req.query.age) {
+    if (parseInt(req.query.age, 10) !== 0) {
+      if (parseInt(req.query.age, 10) >= 62) {
+        instr = instr.filter((inst) => {
+          if (inst.age) {
+            return inst.age >= 62;
+          }
+          return true;
+        });
+      } else {
+        instr = instr.filter((inst) => {
+          if (inst.age) {
+            return (
+              inst.age >= parseInt(req.query.age, 10) - 5 &&
+              inst.age <= parseInt(req.query.age, 10) + 5
+            );
+          }
+          return true;
+        });
       }
-    });
     }
   }
 
@@ -49,7 +59,7 @@ const getInstructors = asyncHandler(async (req, res) => {
     success: true,
     count: instr.length,
     data: instr,
-  });;
+  });
 });
 /**
  * @async

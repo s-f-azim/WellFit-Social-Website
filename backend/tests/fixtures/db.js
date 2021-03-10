@@ -29,7 +29,7 @@ const userTwo = {
   bio: 'I have many balls',
 };
 
-// create Instructors 
+// create Instructors
 const instructorOneId = new mongoose.Types.ObjectId();
 
 const instructorOne = {
@@ -43,7 +43,7 @@ const instructorOne = {
   bio: 'I have no balls',
   role: 'instructor',
   age: 19,
-  tags: ['Cardio']
+  tags: ['Cardio'],
 };
 
 const instructorTwoId = new mongoose.Types.ObjectId();
@@ -58,7 +58,7 @@ const instructorTwo = {
   nickname: 'Notesticles',
   bio: 'I have many balls',
   role: 'instructor',
-  age: 73
+  age: 73,
 };
 
 const instructorThreeId = new mongoose.Types.ObjectId();
@@ -74,7 +74,7 @@ const instructorThree = {
   bio: 'I have no balls',
   role: 'instructor',
   age: 20,
-  tags: ['Cycling', 'Sweat']
+  tags: ['Cycling', 'Sweat'],
 };
 
 const instructorFourId = new mongoose.Types.ObjectId();
@@ -90,7 +90,7 @@ const instructorFour = {
   bio: 'I have many balls',
   role: 'instructor',
   age: 45,
-  tags: ['Cycling']
+  tags: ['Cycling'],
 };
 
 const instructorFiveId = new mongoose.Types.ObjectId();
@@ -105,7 +105,7 @@ const instructorFive = {
   nickname: 'testicles',
   bio: 'I have no balls',
   role: 'instructor',
-  age: 32
+  age: 32,
 };
 
 const instructorSixId = new mongoose.Types.ObjectId();
@@ -120,9 +120,8 @@ const instructorSix = {
   nickname: 'Notesticles',
   bio: 'I have many balls',
   role: 'instructor',
-  age: 33
+  age: 33,
 };
-
 
 // create courses
 
@@ -151,7 +150,14 @@ const courseTwo = {
 };
 
 const users = [userOne, userTwo];
-const instructors = [instructorOne, instructorTwo, instructorThree, instructorFour, instructorFive, instructorSix];
+const instructors = [
+  instructorOne,
+  instructorTwo,
+  instructorThree,
+  instructorFour,
+  instructorFive,
+  instructorSix,
+];
 const courses = [courseOne, courseTwo];
 // token
 const tokens = [];
@@ -182,7 +188,7 @@ const setupInstructors = async () => {
     await user.save();
     instTokens.push(user.getSignedJWTToken());
   }
-}
+};
 
 export {
   userOne,
