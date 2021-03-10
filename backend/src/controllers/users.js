@@ -18,10 +18,11 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 
 const getInstructors = asyncHandler(async (req, res) => {
-  let instr = await User.find({role: 'instructor'});
-  if(req.query.q) {
-    instr = instr.filter(inst => inst.name.toLowerCase().includes(req.query.q.toLowerCase()));
-  }
+  let quer = "/"+req.query.q+"/i";
+  const s = req.query.q;
+  const regex = new RegExp(s, 'i');
+  let instr = await User.find({role: 'instructor', name: {$regex: regex}, ...req.query.gender ? {gender: req.query.gender} : {}, ...req.query.tags ? {tags: {$all : req.query.tags.split(",")}} : {}});
+  
   if(req.query.age) {
     if(parseInt(req.query.age)===0) {
       instr = instr;    
@@ -39,12 +40,12 @@ const getInstructors = asyncHandler(async (req, res) => {
     });
     }
   }
-  if(req.query.gender) {
-    instr = instr.filter(inst => {
-      if(inst.gender) {
-        return inst.gender.toLowerCase() === req.query.gender.toLowerCase()} ;});
-  }
-  res.status(200).send(instr);
+
+  res.status(200).send({
+    success: true,
+    count: instr.length,
+    data: instr,
+  });;
 });
 /**
  * @async
