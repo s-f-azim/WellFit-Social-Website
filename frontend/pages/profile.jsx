@@ -105,4 +105,15 @@ const Profile = () => {
   );
 };
 
+import api from '../services/api';
+export async function getStaticProps({ params }) {
+  const response = await api.get('/courses/60453035d6c2c80dd7f2371b');
+  console.log('test');
+  console.log(response.data.data);
+  return {
+    props: { courses: response.data.data },
+    revalidate: 60 * 2,
+  };
+}
+
 export default Profile;

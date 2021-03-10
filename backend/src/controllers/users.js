@@ -122,6 +122,21 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc get the courses from the wish list of the user
+ * @route GET /api/users/getwishlist/
+ * @access private
+ */
+const getWishListCourses = asyncHandler(async (req, res) => {
+  const wishList = req.user.wishList;
+  let courses = [];
+  wishList.forEach((courseID) => {
+    courses.push(Course.findById(courseID));
+  });
+  sendTokenResponse(courses, 200, res);
+});
+
+/**
+ * @async
  * @desc add specified course to user's wish list
  * @route PATCH /api/users/addtowishlist/:id
  * @access private
@@ -262,6 +277,7 @@ export {
   logoutUser,
   updateUser,
   deleteUser,
+  getWishListCourses,
   addToWishList,
   removeFromWishList,
   googleOauth,
