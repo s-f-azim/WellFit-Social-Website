@@ -122,26 +122,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
-<<<<<<< HEAD
- * @desc add specified course to user's wish list if it already exists remove it
-=======
- * @desc get the courses from the wish list of the user
- * @route GET /api/users/getwishlist/
- * @access private
- */
-const getWishListCourses = asyncHandler(async (req, res) => {
-  const wishList = req.user.wishList;
-  let courses = [];
-  wishList.forEach((courseID) => {
-    courses.push(Course.findById(courseID));
-  });
-  sendTokenResponse(courses, 200, res);
-});
-
-/**
- * @async
- * @desc add specified course to user's wish list
->>>>>>> 2572a7f1ee941eb43ea89a169740d34908d3cb66
+ * @desc add specified course to user's wish list - if it already exists, remove it
  * @route PATCH /api/users/addtowishlist/:id
  * @access private
  */
@@ -157,6 +138,7 @@ const addToWishList = asyncHandler(async (req, res) => {
   const updatedUser = await req.user.save();
   sendTokenResponse(updatedUser, 200, res);
 });
+
 /**
  * @async
  * @desc get all wishlist
@@ -167,23 +149,6 @@ const getWishList = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id).populate('wishlist').exec();
   res.status(200).send({ success: true, data: user.wishlist });
 });
-
-/**
- * @async
- * @desc remove specified course from user's wish list
- * @route PATCH /api/users/removefromwishlist/:id
- * @access private
- */
-/* const removeFromWishList = asyncHandler(async (req, res) => {
-  if (Course.findById(req.params.id)) {
-    const index = req.user.wishList.indexOf(req.params.id);
-    if (index > -1) {
-      req.user.wishList.splice(index, 1);
-    }
-  }
-  const updatedUser = await req.user.save();
-  sendTokenResponse(updatedUser, 200, res);
-}); */
 
 /**
  * @async
@@ -294,12 +259,11 @@ export {
   logoutUser,
   updateUser,
   deleteUser,
-  getWishListCourses,
+  getWishList,
   addToWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,
   uploadImages,
   deleteImages,
-  getWishList,
 };

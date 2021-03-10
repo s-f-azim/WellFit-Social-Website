@@ -5,7 +5,7 @@ const WishList = ({ user }) => {
   return (
     <div style={{ width: '100%' }}>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        {user.wishList.length === 0 ? (
+        {user.wishlist.length === 0 ? (
           <p> Your wish list is currently empty.</p>
         ) : (
           <>
@@ -27,10 +27,10 @@ const WishList = ({ user }) => {
             <br />
             <br />
             <div style={{ display: 'inline-block' }}>
-              Your wishlist contains {user.wishList.length} course(s)
+              Your wishlist contains {user.wishlist.length} course(s)
             </div>
             <br />
-            The id of the first course is: {user.wishList[0]}
+            The id of the first course is: {user.wishlist[0]}
             <br />
           </>
         )}

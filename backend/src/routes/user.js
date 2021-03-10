@@ -8,7 +8,7 @@ import {
   logoutUser,
   updateUser,
   deleteUser,
-  getWishListCourses,
+  getWishList,
   addToWishList,
   googleOauth,
   facebookOauth,
@@ -16,7 +16,6 @@ import {
   uploadImages,
   deleteImages,
   getProfile,
-  getWishList,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -90,10 +89,6 @@ router
 router
   .route('/oauth/facebook/redirect')
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
-
-router
-  .route('/getWishList')
-  .get(passport.authenticate('jwt', { session: false }), getWishListCourses);
 
 router
   .route('/addToWishList/:id')
