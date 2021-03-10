@@ -122,18 +122,31 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
- * @desc add specified course to user's wish list
+ * @desc add specified course to user's wish list if it already exists remove it
  * @route PATCH /api/users/addtowishlist/:id
  * @access private
  */
 const addToWishList = asyncHandler(async (req, res) => {
   if (Course.findById(req.params.id)) {
-    if (!req.user.wishList.includes(req.params.id)) {
-      req.user.wishList.push(req.params.id);
+    const index = req.user.wishlist.indexOf(req.params.id);
+    if (index === -1) {
+      req.user.wishlist.push(req.params.id);
+    } else {
+      req.user.wishlist.splice(index, 1);
     }
   }
   const updatedUser = await req.user.save();
   sendTokenResponse(updatedUser, 200, res);
+});
+/**
+ * @async
+ * @desc get all wishlist
+ * @route GET /api/users/wishlist
+ * @access private
+ */
+const getWishList = asyncHandler(async (req, res) => {
+  const something = await User.findById(req.user._id).populate('wishlist');
+  res.status(200).send({ success: true, data: something });
 });
 
 /**
@@ -142,7 +155,7 @@ const addToWishList = asyncHandler(async (req, res) => {
  * @route PATCH /api/users/removefromwishlist/:id
  * @access private
  */
-const removeFromWishList = asyncHandler(async (req, res) => {
+/* const removeFromWishList = asyncHandler(async (req, res) => {
   if (Course.findById(req.params.id)) {
     const index = req.user.wishList.indexOf(req.params.id);
     if (index > -1) {
@@ -151,7 +164,7 @@ const removeFromWishList = asyncHandler(async (req, res) => {
   }
   const updatedUser = await req.user.save();
   sendTokenResponse(updatedUser, 200, res);
-});
+}); */
 
 /**
  * @async
@@ -263,10 +276,10 @@ export {
   updateUser,
   deleteUser,
   addToWishList,
-  removeFromWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,
   uploadImages,
   deleteImages,
+  getWishList,
 };

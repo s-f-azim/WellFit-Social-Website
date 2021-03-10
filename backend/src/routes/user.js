@@ -9,13 +9,13 @@ import {
   updateUser,
   deleteUser,
   addToWishList,
-  removeFromWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,
   uploadImages,
   deleteImages,
   getProfile,
+  getWishList,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -25,8 +25,6 @@ import upload from '../middleware/multer.js';
 const router = new express.Router();
 
 router.route('/').get(paginate(User), getUsers);
-
-router.route('/:id').get(getUser);
 
 router
   .route('/radius/:zipcode/:distance')
@@ -97,7 +95,8 @@ router
   .patch(passport.authenticate('jwt', { session: false }), addToWishList);
 
 router
-  .route('/removeFromWishList/:id')
-  .patch(passport.authenticate('jwt', { session: false }), removeFromWishList);
+  .route('/wishlist')
+  .get(passport.authenticate('jwt', { session: false }), getWishList);
 
+router.route('/:id').get(getUser);
 export default router;

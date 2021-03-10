@@ -9,12 +9,11 @@ import Course from '../models/Course.js';
  * @access public
  */
 const getCourse = asyncHandler(async (req, res) => {
-  console.log(req.params);
-  const course = await Course.findById(req.params.id);
-  res.status(200).send({
-    success: true,
-    data: course,
-  });
+    const course = await Course.findById(req.params.id);
+    res.status(200).send({
+        success: true,
+        data: course,
+    });
 });
 
 /**
@@ -24,12 +23,12 @@ const getCourse = asyncHandler(async (req, res) => {
  * @access public
  */
 const getCourses = asyncHandler(async (req, res) => {
-  res.status(200).send({
-    success: true,
-    count: res.results.length,
-    pagination: res.pagination,
-    data: res.results,
-  });
+    res.status(200).send({
+        success: true,
+        count: res.results.length,
+        pagination: res.pagination,
+        data: res.results,
+    });
 });
 
 /**
@@ -39,14 +38,14 @@ const getCourses = asyncHandler(async (req, res) => {
  * @access private
  */
 const createCourse = asyncHandler(async (req, res) => {
-  let { creators } = req.body;
-  creators = creators ? [req.user._id, ...creators] : [req.user._id];
-  delete req.body.creators;
-  const course = await Course.create({
-    creators,
-    ...req.body,
-  });
-  res.status(201).send({ success: true, data: course });
+    let { creators } = req.body;
+    creators = creators ? [req.user._id, ...creators] : [req.user._id];
+    delete req.body.creators;
+    const course = await Course.create({
+        creators,
+        ...req.body,
+    });
+    res.status(201).send({ success: true, data: course });
 });
 
 /**
@@ -56,12 +55,12 @@ const createCourse = asyncHandler(async (req, res) => {
  * @access private
  */
 const updateCourse = asyncHandler(async (req, res) => {
-  const course = await Course.findOne({
-    _id: req.params.id,
-    creators: { $all: [req.user._id] },
-  });
-  await course.updateOne({ ...req.body }, { runValidators: true });
-  res.status(200).send({ success: true, data: course });
+    const course = await Course.findOne({
+        _id: req.params.id,
+        creators: { $all: [req.user._id] },
+    });
+    await course.updateOne({ ...req.body }, { runValidators: true });
+    res.status(200).send({ success: true, data: course });
 });
 
 /**
@@ -71,12 +70,12 @@ const updateCourse = asyncHandler(async (req, res) => {
  * @access public
  */
 const getCoursesWithinRadius = asyncHandler(async (req, res) => {
-  res.status(200).send({
-    success: true,
-    count: res.results.length,
-    pagination: res.pagination,
-    data: res.results,
-  });
+    res.status(200).send({
+        success: true,
+        count: res.results.length,
+        pagination: res.pagination,
+        data: res.results,
+    });
 });
 
 /**
@@ -87,12 +86,12 @@ const getCoursesWithinRadius = asyncHandler(async (req, res) => {
  *
  */
 const deleteCourse = asyncHandler(async (req, res) => {
-  const course = await Course.findOne({
-    _id: req.params.id,
-    creators: { $all: [req.user._id] },
-  });
-  await course.delete();
-  res.status(200).send({ success: true });
+    const course = await Course.findOne({
+        _id: req.params.id,
+        creators: { $all: [req.user._id] },
+    });
+    await course.delete();
+    res.status(200).send({ success: true });
 });
 
 /**
@@ -102,19 +101,19 @@ const deleteCourse = asyncHandler(async (req, res) => {
  * @access private
  */
 const uploadImages = asyncHandler(async (req, res) => {
-  let formattedImages = [];
-  req.files.forEach((file) => formattedImages.push(file.buffer));
-  formattedImages.map(
-    async (image) =>
-      await sharp(image).resize({ width: 600, height: 600 }).png().toBuffer()
-  );
-  const course = await Course.findOne({
-    _id: req.params.id,
-    creators: { $all: [req.user._id] },
-  });
-  course.photos = formattedImages;
-  await course.save();
-  res.status(201).send({ success: true, data: course });
+    let formattedImages = [];
+    req.files.forEach((file) => formattedImages.push(file.buffer));
+    formattedImages.map(
+        async (image) =>
+            await sharp(image).resize({ width: 600, height: 600 }).png().toBuffer()
+    );
+    const course = await Course.findOne({
+        _id: req.params.id,
+        creators: { $all: [req.user._id] },
+    });
+    course.photos = formattedImages;
+    await course.save();
+    res.status(201).send({ success: true, data: course });
 });
 
 /**
@@ -124,22 +123,22 @@ const uploadImages = asyncHandler(async (req, res) => {
  * @access private
  */
 const deleteImages = asyncHandler(async (req, res) => {
-  const course = await Course.findOne({
-    _id: req.params.id,
-    creators: { $all: [req.user._id] },
-  });
-  course.photos = undefined;
-  await course.update();
-  res.status(200).send({ success: true });
+    const course = await Course.findOne({
+        _id: req.params.id,
+        creators: { $all: [req.user._id] },
+    });
+    course.photos = undefined;
+    await course.update();
+    res.status(200).send({ success: true });
 });
 
 export {
-  getCourses,
-  updateCourse,
-  createCourse,
-  getCoursesWithinRadius,
-  deleteCourse,
-  uploadImages,
-  deleteImages,
-  getCourse,
+    getCourses,
+    updateCourse,
+    createCourse,
+    getCoursesWithinRadius,
+    deleteCourse,
+    uploadImages,
+    deleteImages,
+    getCourse,
 };

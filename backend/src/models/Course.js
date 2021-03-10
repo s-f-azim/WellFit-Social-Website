@@ -84,13 +84,6 @@ const CourseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// connect courses to the wishlist of the user
-CourseSchema.virtual('users', {
-  ref: 'User',
-  localField: '_id',
-  foreignField: 'wishlist',
-});
-
 // Geocode and create location field
 CourseSchema.pre('save', async function (next) {
   const loc = await geocoder.geocode(this.address);

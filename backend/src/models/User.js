@@ -196,10 +196,7 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
-    wishList: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'Course',
-    },
+    wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
     photos: {
       type: [Buffer],
     },
