@@ -1,6 +1,6 @@
-import { Button, Form, Row, Card, Col, Modal, Typography, Carousel, Steps } from 'antd';
+import { Button, Form, Row, Card, Col, Modal, Typography, Carousel, Steps, Input } from 'antd';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 
 const formItemLayout = {
   labelCol: {
@@ -14,11 +14,30 @@ const formItemLayout = {
 };
 
 const SearchCard = ({ category }) => {
+  const ref = useRef();
   const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState(0);
-  const next = () => setCurrent(current + 1);
-  const previous = () => setCurrent(current - 1);
+  const onFinish = useCallback((values) => {
+    console.log('hmm', values);
+  }, []);
+  const closePopup = useCallback(() => {
+    form.resetFields();
+    setCurrent(0);
+    setVisible(false);
+  }, [form]);
+  const next = () => {
+    setCurrent(current + 1);
+    ref.current.next();
+  };
+  const previous = () => {
+    setCurrent(current - 1);
+    ref.current.prev();
+  };
+  const handleOk = () => {
+    setVisible(false);
+    form.submit();
+  };
   return (
     <>
       <Col>
@@ -32,12 +51,26 @@ const SearchCard = ({ category }) => {
         ></Card>
       </Col>
       <Modal
-        title="Course 1"
+        title={category.name}
         centered
         visible={visible}
-        onOk={() => setVisible(false)}
-        onCancel={() => setVisible(false)}
+        onOk={handleOk}
+        onCancel={closePopup}
         width={1000}
+        footer={[
+          <Button key="previous" onClick={previous} disabled={current === -2}>
+            Previous
+          </Button>,
+          current !== 5 ? (
+            <Button key="next" type="primary" onClick={next}>
+              Next
+            </Button>
+          ) : (
+            <Button key="submit" type="primary" onClick={handleOk}>
+              Search
+            </Button>
+          ),
+        ]}
       >
         <Steps current={current}>
           {[0, 1, 2, 3, 4].map((item) => (
@@ -45,12 +78,27 @@ const SearchCard = ({ category }) => {
           ))}
         </Steps>
         <Form
+          style={{ marginTop: '2rem' }}
+          id="searchForm"
           {...formItemLayout}
           form={form}
-          name="register"
+          name="search"
+          layout="vertical"
           onFinish={onFinish}
           scrollToFirstError
-        ></Form>
+        >
+          <Form.Item label="name">
+            <Input />
+          </Form.Item>
+          <Carousel ref={ref} dots={false}>
+            <Form.Item label="name">
+              <Input />
+            </Form.Item>
+            <Form.Item label="another">
+              <Input />
+            </Form.Item>
+          </Carousel>
+        </Form>
       </Modal>
     </>
   );
