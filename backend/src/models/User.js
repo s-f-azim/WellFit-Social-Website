@@ -200,6 +200,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
     },
     following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+    follower: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );
