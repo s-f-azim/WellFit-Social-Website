@@ -122,7 +122,26 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
+<<<<<<< HEAD
  * @desc add specified course to user's wish list if it already exists remove it
+=======
+ * @desc get the courses from the wish list of the user
+ * @route GET /api/users/getwishlist/
+ * @access private
+ */
+const getWishListCourses = asyncHandler(async (req, res) => {
+  const wishList = req.user.wishList;
+  let courses = [];
+  wishList.forEach((courseID) => {
+    courses.push(Course.findById(courseID));
+  });
+  sendTokenResponse(courses, 200, res);
+});
+
+/**
+ * @async
+ * @desc add specified course to user's wish list
+>>>>>>> 2572a7f1ee941eb43ea89a169740d34908d3cb66
  * @route PATCH /api/users/addtowishlist/:id
  * @access private
  */
@@ -275,6 +294,7 @@ export {
   logoutUser,
   updateUser,
   deleteUser,
+  getWishListCourses,
   addToWishList,
   googleOauth,
   facebookOauth,

@@ -14,28 +14,25 @@ const Profile = () => {
   }, []);
 
   function resetButtons() {
+    ReactDOM.render(<></>, document.getElementById('favourites'));
     ReactDOM.render(
-      <Button
-        id="favourites"
-        type="link"
-        size="large"
-        onClick={displayFavourites}
-        className="button"
-      >
+      <Button type="link" size="large" onClick={displayFavourites} className="button">
         Favourites
       </Button>,
       document.getElementById('favourites')
     );
 
+    ReactDOM.render(<></>, document.getElementById('following'));
     ReactDOM.render(
-      <Button id="following" type="link" size="large" onClick={displayFollowing} className="button">
+      <Button type="link" size="large" onClick={displayFollowing} className="button">
         Following
       </Button>,
       document.getElementById('following')
     );
 
+    ReactDOM.render(<></>, document.getElementById('wishlist'));
     ReactDOM.render(
-      <Button id="wishlist" type="link" size="large" onClick={displayWishList} className="button">
+      <Button type="link" size="large" onClick={displayWishList} className="button">
         Wish List
       </Button>,
       document.getElementById('wishlist')
@@ -45,13 +42,7 @@ const Profile = () => {
   function displayFavourites() {
     resetButtons();
     ReactDOM.render(
-      <Button
-        id="favourites"
-        type="link"
-        size="large"
-        onClick={displayFavourites}
-        className="clicked-button"
-      >
+      <Button type="link" size="large" onClick={displayFavourites} className="clicked-button">
         Favourites
       </Button>,
       document.getElementById('favourites')
@@ -62,13 +53,7 @@ const Profile = () => {
   function displayFollowing() {
     resetButtons();
     ReactDOM.render(
-      <Button
-        id="following"
-        type="link"
-        size="large"
-        onClick={displayFollowing}
-        className="clicked-button"
-      >
+      <Button type="link" size="large" onClick={displayFollowing} className="clicked-button">
         Following
       </Button>,
       document.getElementById('following')
@@ -79,13 +64,7 @@ const Profile = () => {
   function displayWishList() {
     resetButtons();
     ReactDOM.render(
-      <Button
-        id="wishlist"
-        type="link"
-        size="large"
-        onClick={displayWishList}
-        className="clicked-button"
-      >
+      <Button type="link" size="large" onClick={displayWishList} className="clicked-button">
         Wish List
       </Button>,
       document.getElementById('wishlist')
@@ -97,38 +76,20 @@ const Profile = () => {
     <Row type="flex" justify="center" align="middle">
       <div style={{ width: '80rem' }}>
         <Row type="flex" justify="center" align="middle" className="profile-tabs">
-          <Col type="flex" justify="center" align="middle" className="tab">
-            <Button
-              id="favourites"
-              type="link"
-              size="large"
-              onClick={displayFavourites}
-              className="button"
-            >
+          <Col id="favourites" type="flex" justify="center" align="middle" className="tab">
+            <Button type="link" size="large" onClick={displayFavourites} className="button">
               Favourites
             </Button>
           </Col>
           <Col style={{ width: '2rem' }}></Col>
-          <Col type="flex" justify="center" align="middle" className="tab">
-            <Button
-              id="following"
-              type="link"
-              size="large"
-              onClick={displayFollowing}
-              className="button"
-            >
+          <Col id="following" type="flex" justify="center" align="middle" className="tab">
+            <Button type="link" size="large" onClick={displayFollowing} className="button">
               Following
             </Button>
           </Col>
           <Col style={{ width: '2rem' }}></Col>
-          <Col type="flex" justify="center" align="middle" className="tab">
-            <Button
-              id="wishlist"
-              type="link"
-              size="large"
-              onClick={displayWishList}
-              className="button"
-            >
+          <Col id="wishlist" type="flex" justify="center" align="middle" className="tab">
+            <Button type="link" size="large" onClick={displayWishList} className="button">
               Wish List
             </Button>
           </Col>
@@ -143,5 +104,16 @@ const Profile = () => {
     </Row>
   );
 };
+
+import api from '../services/api';
+export async function getStaticProps({ params }) {
+  const response = await api.get('/courses/60453035d6c2c80dd7f2371b');
+  console.log('test');
+  console.log(response.data.data);
+  return {
+    props: { courses: response.data.data },
+    revalidate: 60 * 2,
+  };
+}
 
 export default Profile;
