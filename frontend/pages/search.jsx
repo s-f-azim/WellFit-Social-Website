@@ -152,10 +152,10 @@ const SearchBar = () => {
       </div>
 
       <Row style={{ marginTop: '2rem', marginLeft: '2rem' }}>
-        {data.map((val, i) => (
+        {data.map((val) => (
           <Col xs={24} md={8}>
             <Card
-              key={i}
+              key={parseInt(val, 3)}
               title={val.name}
               cover={
                 <Image
