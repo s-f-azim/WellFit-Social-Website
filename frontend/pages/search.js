@@ -38,7 +38,22 @@ const SearchBar = () => {
         [<Option key={13} value={"GetFit"}>GetFit</Option>,
         <Option key={23} value={"Cardio"}>Cardio</Option>,
         <Option key={33} value={"Sweat"}>Sweat</Option>,
-        <Option key={43} value={"Cycling"}>Cycling</Option>
+        <Option key={43} value={"Cycling"}>Cycling</Option>,
+        <Option key={53} value={'FitFam'}>FitFam</Option>,
+        <Option key={63} value={'FitLife'}>FitLife</Option>,
+        <Option key={73} value={'Fitness'}>Fitness</Option>,
+        <Option key={83} value={'FitnessMotivation'}>FitnessMotivation</Option>,
+        <Option key={93} value={'FitnessAddict'}>FitnessAddict</Option>,
+        <Option key={103} value={'GetStrong'}>GetStrong</Option>,
+        <Option key={113} value={'LiftHeavy'}>LiftHeavy</Option>,
+        <Option key={123} value={'GirlsWhoLift'}>GirlsWhoLift</Option>,
+        <Option key={133} value={'GymLife'}>GymLife</Option>,
+        <Option key={143} value={'GymTime'}>GymTime</Option>,
+        <Option key={153} value={'NoPainNoGain'}>NoPainNoGain</Option>,
+        <Option key={163} value={'PersonalTrainer'}>PersonalTrainer</Option>,
+        <Option key={173} value={'Weights'}>Weights</Option>,
+        <Option key={183} value={'WeightLifting'}>WeightLifting</Option>,
+        <Option key={193} value={'Workout'}>Workout</Option>
     ];
     const Children = [];
     
@@ -52,10 +67,10 @@ const SearchBar = () => {
 
     return(
     <>
-        <div style={{display: "inline-flex", alignItems: "center", justifyContent: "center", height: "100%", width: "100%", flexDirection: "column"}}>
+        <div style={{display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column"}}>
             <Search type="text" enterButton="Search" size="large" onSearch={searchName(q, gender)} onChange={e => setQuery(e.target.value)} placeholder="Search me..." style={{ width: "90%"}}/>
             {/* TODO: ADD LINK TO PROFILE! */}
-            <div id="filterrow" style={{display: "inline-block", paddingTop: "2rem"} }>
+            <div id="filterrow" style={{display: "block", paddingTop: "2rem", width: "80%"} }>
                 <Select defaultValue="All Genders" style={{marginLeft: "1rem", marginRight: "1rem"}} placeholder="Gender" onChange={setGender}>
                     <Option value="Female">Female</Option>
                     <Option value="Male">Male</Option>
@@ -71,12 +86,12 @@ const SearchBar = () => {
                     <Option value="56">51-61</Option>
                     <Option value="62">62+</Option>
                 </Select>
-                <Select style={{marginLeft: "1rem", marginRight: "1rem", width: "50%"}} mode="multiple" placeholder="Tags" onChange={handleChange}>
+                <Select style={{marginLeft: "1rem", marginRight: "1rem", marginTop: "1rem"}} mode="multiple" placeholder="Tags" onChange={handleChange}>
                     {tags}
                 </Select>
             </div>
         </div>
-        
+         
 
         <Row style={{marginTop: "2rem", marginLeft: "2rem"}}>
         {
