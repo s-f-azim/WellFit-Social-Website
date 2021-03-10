@@ -97,8 +97,8 @@ const followUser = asyncHandler(async (req, res) => {
   } else {
     const index = followingUser.following.indexOf(followeeUser._id);
     const followerIndex = followeeUser.follower.indexOf(followingUser._id);
-    index > -1 && followingUser.following.splice(index, 1);
-    followerIndex > -1 && followeeUser.follower.splice(index, 1);
+    if (index > -1) followingUser.following.splice(index, 1);
+    if (followerIndex > -1) followeeUser.follower.splice(index, 1);
   }
   await followeeUser.save();
   await followingUser.save();
@@ -236,25 +236,28 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
 
 /**
  * @async
- * @desc Get suggested instructors for user based on random tag selected, client gender preference 
+ * @desc Get suggested instructors for user based on random tag selected, client gender preference
  * @param {User} user - a user
  * @route GET /api/users/profile
  */
-const getSuggestedInstructors = asyncHandler( async (req, res)=> {
-  const users = 
-    await User.find({
-      $and : [
-        {role: "instructor"},
-        {_id: { $ne: req.user._id}},
-        {$or: [
-          {tags: req.user.tags[Math.floor(Math.random() * req.user.tags.length)]},
-          {gender: req.user.clientGenderPreference}
-        ]}
-              ]
-    })
-    .limit(3);
+const getSuggestedInstructors = asyncHandler(async (req, res) => {
+  const users = await User.find({
+    $and: [
+      { role: 'instructor' },
+      { _id: { $ne: req.user._id } },
+      {
+        $or: [
+          {
+            tags:
+              req.user.tags[Math.floor(Math.random() * req.user.tags.length)],
+          },
+          { gender: req.user.clientGenderPreference },
+        ],
+      },
+    ],
+  }).limit(3);
   res.status(200).send({ success: true, data: users });
-})
+});
 
 export {
   getUsers,
