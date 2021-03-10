@@ -7,7 +7,7 @@ const { Option } = Select;
 const { Search } = Input;
 
 const users = [
-  { name: 'Oskar', age: 19, tags: ['abs', 'core', 'cardio'] },
+  { name: 'Oskar', gender: 'Male', age: 19, tags: ['abs', 'core', 'cardio'] },
   { name: 'Oskar6', age: 19, tags: ['abs', 'core', 'cardio'] },
   { name: 'Oskar5', age: 19, tags: ['abs', 'core', 'cardio'] },
   { name: 'Oskar2', age: 19, tags: ['abs', 'test2', 'cardio'] },
@@ -22,15 +22,12 @@ const SearchBar = () => {
   const [stags, setTags] = useState([]);
   const [data, setData] = useState(users);
   const searchName = (qP, genderP) => {
-    axios
-      .get(
-        `http://localhost:4000/api/users/instructors/?q=${qP}&&gender=${genderP}&&age=${age}&&tags=${stags.join(
-          ','
-        )}`
-      )
-      .then(({ result }) => {
-        setData(result.data);
-      });
+    const searchq = `http://localhost:4000/api/users/instructors?q=${qP}&&gender=${genderP}&&age=${age}&&tags=${stags.join(
+      ','
+    )}`;
+    axios.get(searchq).then((result) => {
+      setData(result.data.data);
+    });
   };
   const tags = [
     <Option key={13} value="GetFit">
@@ -155,10 +152,10 @@ const SearchBar = () => {
       </div>
 
       <Row style={{ marginTop: '2rem', marginLeft: '2rem' }}>
-        {data.map((val) => (
+        {data.map((val, i) => (
           <Col xs={24} md={8}>
             <Card
-              key={parseInt(val, 3)}
+              key={i}
               title={val.name}
               cover={
                 <Image
