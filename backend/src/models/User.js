@@ -268,6 +268,13 @@ UserSchema.virtual('reviews', {
   foreignField: 'reviewed',
 });
 
+// connect the creator of requests to the user
+UserSchema.virtual('requests', {
+  ref: 'Request',
+  localField: '_id',
+  foreignField: 'author',
+});
+
 // change the json to not send specified fields
 UserSchema.methods.toJSON = function () {
   const userObject = this.toObject();
