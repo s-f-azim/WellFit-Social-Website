@@ -20,7 +20,7 @@ const RequestSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// create course model
+// create request model
 const Request = mongoose.model('Request', RequestSchema);
 
 export default Request;

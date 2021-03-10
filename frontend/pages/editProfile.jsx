@@ -1,5 +1,5 @@
 import { CheckOutlined } from '@ant-design/icons';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import {
   Space,
@@ -76,6 +76,7 @@ const editProfilePage = () => {
   };
 
   const router = useRouter();
+  const tabID = () => (router.query.tab ? router.query.tab : '1');
   const { user, setUser } = useAuth();
 
   const [hasError, setHasError] = useState(false);
@@ -106,7 +107,7 @@ const editProfilePage = () => {
   return (
     <Row type="flex" justify="center" align="middle">
       <Card>
-        <Tabs defaultActiveKey="1">
+        <Tabs defaultActiveKey={tabID}>
           <TabPane tab="Basic Info" key="1">
             <Form form={form} name="Update my info" onFinish={onFinish} scrollToFirstError>
               <Space direction="vertical" size="middle">

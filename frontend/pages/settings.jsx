@@ -70,8 +70,25 @@ const settingsPage = () => {
     }
   };
 
-  const editProfile = () => {
-    router.push('/editProfile');
+  const editCredentials = () => {
+    router.push({
+      pathname: '/editProfile',
+      query: { tab: '3' },
+    });
+  };
+
+  const editBasic = () => {
+    router.push({
+      pathname: '/editProfile',
+      query: { tab: '1' },
+    });
+  };
+
+  const editInDepth = () => {
+    router.push({
+      pathname: '/editProfile',
+      query: { tab: '2' },
+    });
   };
 
   const [isAlertVisible, setIsAlertVisible] = useState(false);
@@ -111,8 +128,18 @@ const settingsPage = () => {
           <Tabs size="small" defaultActiveKey="1" tabPosition="left">
             <TabPane key="1" tab="General">
               <Card className="settingCard" title={myAccount}>
-                <Button onClick={editProfile} type="primary">
-                  Edit profile information
+                <Button onClick={editCredentials} type="primary">
+                  Change my password or email
+                </Button>
+                <br />
+                <br />
+                <Button onClick={editBasic} type="primary">
+                  Edit my basic profile information
+                </Button>
+                <br />
+                <br />
+                <Button onClick={editInDepth} type="primary">
+                  Edit my in-depth profile information
                 </Button>
                 <br />
                 <br />
