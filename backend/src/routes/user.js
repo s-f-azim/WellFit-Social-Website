@@ -4,13 +4,14 @@ import {
   getUsersWithinRadius,
   createUser,
   loginUser,
-  getUser,
   logoutUser,
+  getUser,
   updateUser,
   deleteUser,
   googleOauth,
   facebookOauth,
   instagramOauth,
+  getSuggestedInstructors,
   followUser,
   getFollowing,
   getFollower,
@@ -76,6 +77,9 @@ router
   .route('/oauth/facebook/redirect')
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
 
+router
+  .route("/profile")
+  .get(passport.authenticate("jwt", { session: false } ), getSuggestedInstructors);
 router
   .route('/follow/:id')
   .patch(passport.authenticate('jwt', { session: false }), followUser);

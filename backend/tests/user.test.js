@@ -152,8 +152,9 @@ it('Should not delete a user when not logged in', async () => {
 
 // assert get all users
 it('Should get all users', async () => {
+  const count = await User.countDocuments();
   const response = await request(app).get('/api/users').send().expect(200);
-  expect(response.body.count).toBe(2);
+  expect(response.body.count).toBe(count);
 });
 
 // assert get users with filters
@@ -190,4 +191,55 @@ it('Should get all users', async () => {
     .send()
     .expect(200);
   expect(response.body.count).toBe(1);
+});
+
+/**
+ * @test getSuggestedInstructors 
+ * @desc Testing querying for suggested instructors for users to follow
+ */
+it("Should query similar instructors based on tags and client gender preference", async () => {
+  const response = await request(app)
+      .get("/api/users/profile")
+      .send()
+      .set("Cookie", [`token=${tokens[0]}`])
+      .expect(200);
+  expect( //check if every user matches query criteria
+    response.body.data.every(
+      user => user.tags.some(t => userOne.tags.includes(t)) || 
+              user.gender === userOne.clientGenderPreference 
+      )).toBeTruthy();
+
+});
+
+it("Should not include other instructors not relevevant to the query", async () => {
+  const response = await request(app)
+      .get("/api/users/profile")
+      .send()
+      .set("Cookie", [`token=${tokens[0]}`])
+      .expect(200);
+  expect( //check if some user does not match query criteria
+    response.body.data.some(
+      user => user.tags.every(t => !userOne.tags.includes(t)) && 
+              user.gender !== userOne.clientGenderPreference
+      )).toBeFalsy();
+});
+
+it("Should not return the user logged in themselves if they are an instructor", async () => {
+  const response = await request(app)
+      .get("/api/users/profile")
+      .send()
+      .set("Cookie", [`token=${tokens[1]}`])
+      .expect(200);
+  expect(response.body.data.some(
+    user => user._id === userTwo._id))
+    .toBeFalsy();
+});
+
+it("Should not return more than 3 suggested instructors", async () => {
+  const response = await request(app)
+      .get("/api/users/profile")
+      .send()
+      .set("Cookie", [`token=${tokens[1]}`])
+      .expect(200);
+  expect(response.body.data.length <= 3);
 });

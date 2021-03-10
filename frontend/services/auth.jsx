@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
-import api from '../services/api';
 import { useCookies } from 'react-cookie';
+import api from './api';
 
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
