@@ -1,10 +1,7 @@
 import { Space, Row, Col } from 'antd';
 import CourseCard from './CourseCard';
-import { useAuth } from '../services/auth';
 
-const WishList = () => {
-  const { user } = useAuth();
-
+const WishList = ({ user }) => {
   return (
     <div style={{ width: '100%' }}>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
@@ -12,34 +9,35 @@ const WishList = () => {
           <p> Your wish list is currently empty.</p>
         ) : (
           <>
-            <Row type="flex" justify="center" align="middle">
-              <Col className="card-col">{/*<CourseCard />*/}</Col>
+            <Row type="flex" justify="center" align="middle" style={{ textAlign: 'center' }}>
+              <Col className="card-col">{/*<CourseCard />*/}1</Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col className="card-col">{/*<CourseCard />*/}</Col>
+              <Col className="card-col">{/*<CourseCard />*/}2</Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col className="card-col">{/*<CourseCard />*/}</Col>
+              <Col className="card-col">{/*<CourseCard />*/}3</Col>
             </Row>
-            <Row type="flex" justify="center" align="middle">
-              <Col className="card-col">{/*<CourseCard />*/}</Col>
+            <Row type="flex" justify="center" align="middle" style={{ textAlign: 'center' }}>
+              <Col className="card-col">{/*<CourseCard />*/}4</Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col className="card-col">{/*<CourseCard />*/}</Col>
+              <Col className="card-col">{/*<CourseCard />*/}5</Col>
               <Col style={{ width: '2rem' }}></Col>
-              <Col className="card-col">{/*<CourseCard />*/}</Col>
+              <Col className="card-col">{/*<CourseCard />*/}6</Col>
             </Row>
             <br />
             <br />
             <br />
-            The length of the wishlist is {user.wishList.length}
+            <div style={{ display: 'inline-block' }}>
+              Your wishlist contains {user.wishList.length} course(s)
+            </div>
             <br />
-            The id of the course is: {user.wishList[0]}
+            The id of the first course is: {user.wishList[0]}
             <br />
           </>
         )}
+        {user.name}
       </Space>
     </div>
   );
 };
-
-//border: 'solid', borderWidth: '0.1rem'
 
 export default WishList;

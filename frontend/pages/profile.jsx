@@ -22,7 +22,7 @@ const Profile = () => {
   }
 
   function displayWishList() {
-    ReactDOM.render(<WishList />, document.getElementById('content'));
+    ReactDOM.render(<WishList user={user} />, document.getElementById('content'));
   }
 
   return (
@@ -52,7 +52,6 @@ const Profile = () => {
         <br />
         <Row type="flex" justify="center" align="middle">
           <div id="content"></div>
-          <WishList />
         </Row>
       </div>
     </Row>
