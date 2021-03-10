@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema(
         if (!validator.isEmail(value)) throw new Error('Email is Invalid');
       },
     },
+
     password: {
       type: String,
       required: [
@@ -41,14 +42,17 @@ const UserSchema = new mongoose.Schema(
       required: [true, 'please enter your last name'],
       minlength: 2,
     },
+
     gender: {
       type: String,
       trim: true,
       enum: ['Male', 'Female', 'Non-Binary', 'Prefer not to say'],
     },
+
     address: {
       type: String,
     },
+
     location: {
       type: {
         type: String,
@@ -72,9 +76,46 @@ const UserSchema = new mongoose.Schema(
     nickname: {
       type: String,
     },
+
     bio: {
       type: String,
     },
+
+    weight: {
+      type: Number,
+      min: 0,
+    },
+
+    height: {
+      type: Number,
+      min: 0,
+    },
+
+    preferredGender: {
+      type: String,
+      enum: ['male', 'female', 'any'],
+    },
+
+    fitnessLevel: {
+      type: String,
+      enum: ['beginner', 'intermediate', 'advanced'],
+    },
+
+    trainingDuration: {
+      type: Number,
+      min: 0,
+      validate: {
+        validator: Number.isInteger,
+      },
+    },
+
+    trainingEquipment: [
+      {
+        type: String,
+        enum: ['dumbbells', 'barbells', 'resistanceBands', 'treadmill'],
+      },
+    ],
+
     tags: {
       type: [String],
       enum: [
@@ -192,6 +233,7 @@ const UserSchema = new mongoose.Schema(
     clientStrength: {
       type: [Number],
     },
+
     googleId: {
       type: String,
     },
@@ -201,11 +243,15 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
+
     role: {
       type: String,
-      enum: ['client', 'instructor', 'admin'],
-      required: [true, 'Please select a role'],
+      enum: ['admin', 'instructor', 'client'],
     },
+    twitterId: {
+      type: String,
+    },
+    following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );
@@ -214,6 +260,12 @@ UserSchema.virtual('courses', {
   ref: 'Course',
   localField: '_id',
   foreignField: 'creators',
+});
+
+UserSchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'reviewed',
 });
 
 // change the json to not send specified fields
@@ -270,6 +322,7 @@ UserSchema.statics.checkCredentials = async ({ email, password }) => {
   }
   return user;
 };
+
 // Sign JWT and return the token
 UserSchema.methods.getSignedJWTToken = function () {
   return JWT.sign({ id: this._id }, process.env.JWT_SECRET);

@@ -52,6 +52,7 @@
   .logout:hover {
     & > * {
       color: red;
+      cursor: pointer;
     }
   }
 }

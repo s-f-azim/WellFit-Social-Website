@@ -15,4 +15,17 @@ const getClients = () => api.get('users?role=client');
 
 const getInstructors = () => api.get('users?role=instructor');
 
-export { updateUser as default, deleteUser, getUsers, getAdmins, getClients, getInstructors };
+const getSuggestedInstructors = () => api.get('users/profile');
+
+const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
+
+export {
+  updateUser as default,
+  deleteUser,
+  getUsers,
+  getAdmins,
+  getClients,
+  getInstructors,
+  addingFollowUser,
+  getSuggestedInstructors,
+};

@@ -8,13 +8,16 @@ import connectDb from '../config/db.js';
 import errorHandler from './middleware/error.js';
 import ErrorResponse from './utils/errorResponse.js';
 import userRoutes from './routes/user.js';
+import reviewRoutes from './routes/review.js';
 import courseRoutes from './routes/course.js';
 import passport from '../config/passport-setup.js';
+
 // connect to the database
 connectDb();
 
 // create the app and setup
 const app = express();
+
 app.use(express.json());
 
 // cookie parser
@@ -37,6 +40,7 @@ app.use(cors({ credentials: true, origin: `${process.env.CLIENT_URL}` }));
 
 // routes
 app.use('/api/users', userRoutes);
+app.use('/api/users/:reviewedId/reviews', reviewRoutes);
 app.use('/api/courses', courseRoutes);
 
 // 404 if the route doesn't match
@@ -44,6 +48,7 @@ app.use('/api/courses', courseRoutes);
 app.all('*', (_, res) => {
   throw new ErrorResponse('Resource not found on this server', 404);
 });
+
 // setup middleware
 app.use(errorHandler);
 
