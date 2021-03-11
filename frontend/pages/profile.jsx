@@ -14,7 +14,6 @@ const Profile = () => {
   }, []);
 
   function resetButtons() {
-    ReactDOM.render(<></>, document.getElementById('favourites'));
     ReactDOM.render(
       <Button type="link" size="large" onClick={displayFavourites} className="button">
         Favourites
@@ -22,7 +21,6 @@ const Profile = () => {
       document.getElementById('favourites')
     );
 
-    ReactDOM.render(<></>, document.getElementById('following'));
     ReactDOM.render(
       <Button type="link" size="large" onClick={displayFollowing} className="button">
         Following
@@ -30,7 +28,6 @@ const Profile = () => {
       document.getElementById('following')
     );
 
-    ReactDOM.render(<></>, document.getElementById('wishlist'));
     ReactDOM.render(
       <Button type="link" size="large" onClick={displayWishList} className="button">
         Wish List
