@@ -14,11 +14,11 @@ import {
 import { Button, Row, Card, Modal, Tabs, Form, Alert, notification, Space, Input } from 'antd';
 import { useState } from 'react';
 import { useAuth } from '../services/auth';
-import { deleteUser } from '../actions/user';
+import { createRequest } from '../actions/request';
 
 const settingsPage = () => {
   const router = useRouter();
-  const { setUser } = useAuth();
+  const { user, setUser } = useAuth();
 
   const { TabPane } = Tabs;
 
@@ -110,7 +110,9 @@ const settingsPage = () => {
   const [form] = Form.useForm();
 
   const onBugReport = async (values) => {
+    const { report } = values;
     try {
+      const response = await createRequest(user, 'bug', report);
       notification.open({
         message: 'Report submitted, thanks for helping us!',
         duration: 3,
@@ -172,7 +174,7 @@ const settingsPage = () => {
             </TabPane>
             <TabPane key="3" tab="Miscellaneous">
               <Card className="settingCard" title={bugReport}>
-                <Form form={form} name="Update my info" onFinish={onBugReport} scrollToFirstError>
+                <Form form={form} name="Update my info" onFinish={onBugReport}>
                   <Space direction="vertical" size="middle">
                     {hasError && (
                       <Alert type="error" message="something went wrong, please try again" banner />
