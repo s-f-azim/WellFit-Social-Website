@@ -1,17 +1,28 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useAuth } from '../services/auth';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, notification } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
 import WishList from '../components/WishList';
 import ReactDOM from 'react-dom';
+import api from '../services/api';
 
 const Profile = () => {
   const router = useRouter();
   const { user } = useAuth();
+  let courses;
+
   // redirect to home page if user not logged in
   useEffect(() => {
     if (!user) router.push('/');
   }, []);
+
+  const fetchWishList = async () => {
+    const response = await api.get('/users/wishlist');
+    courses = response.data.data;
+  };
+
+  fetchWishList();
 
   function resetButtons() {
     ReactDOM.render(
@@ -59,6 +70,7 @@ const Profile = () => {
   }
 
   function displayWishList() {
+    fetchWishList();
     resetButtons();
     ReactDOM.render(
       <Button type="link" size="large" onClick={displayWishList} className="clicked-button">
@@ -66,12 +78,13 @@ const Profile = () => {
       </Button>,
       document.getElementById('wishlist')
     );
-    ReactDOM.render(<WishList user={user} />, document.getElementById('content'));
+    ReactDOM.render(<WishList courses={courses} />, document.getElementById('content'));
+    console.log(courses);
   }
 
   return (
     <Row type="flex" justify="center" align="middle">
-      <div style={{ width: '80rem' }}>
+      <div style={{ width: '83rem' }}>
         <Row type="flex" justify="center" align="middle" className="profile-tabs">
           <Col id="favourites" type="flex" justify="center" align="middle" className="tab">
             <Button type="link" size="large" onClick={displayFavourites} className="button">
@@ -101,16 +114,5 @@ const Profile = () => {
     </Row>
   );
 };
-
-import api from '../services/api';
-export async function getStaticProps({ params }) {
-  const response = await api.get('/courses/60453035d6c2c80dd7f2371b');
-  console.log('test');
-  console.log(response.data.data);
-  return {
-    props: { courses: response.data.data },
-    revalidate: 60 * 2,
-  };
-}
 
 export default Profile;
