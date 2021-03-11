@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 const RequestSchema = new mongoose.Schema(
   {
     author: {
-      type: [mongoose.Schema.Types.ObjectId],
+      type: mongoose.Schema.Types.ObjectId,
       required: [true, 'Please enter the author of the request'],
       ref: 'User',
     },
-    reqType: {
+    type: {
       type: String,
       enum: ['verify', 'bug', 'message', 'report'],
       required: [true, 'Please select a request type'],
