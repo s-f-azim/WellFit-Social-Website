@@ -1,24 +1,32 @@
-import { Card, Row, Col, Modal, Space, Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Modal, Space, Button, notification } from 'antd';
+import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import api from '../services/api';
+
 const CourseCard = ({ content, isWish }) => {
   const [visible, setVisible] = useState(false);
+
+  function removeFromWishList() {
+    api.patch(`/users/addToWishList/${content._id}`, {});
+    notification.open({
+      message: 'Wish list updated!',
+      duration: 2,
+      icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+    });
+  }
+
   return (
     <>
-      <Card
-        className="course-card"
-        onClick={() => setVisible(true)}
-        style={{ borderColor: 'black', borderRadius: '1rem' }}
-      >
+      <Card className="course-card" style={{ borderColor: 'black', borderRadius: '1rem' }}>
         <Row>
           <Col className="card-title">
-            <h1> {content.title}</h1>
+            <h1 onClick={() => setVisible(true)}> {content.title}</h1>
           </Col>
           <Col>
             {isWish === true ? (
-              <DeleteOutlined style={{ fontSize: '2rem', color: 'black' }} />
+              <DeleteOutlined className="delete-icon" onClick={() => removeFromWishList()} />
             ) : (
               <div style={{ minWidth: '2rem' }}></div>
             )}

@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useAuth } from '../services/auth';
-import { Button, Row, Col, notification } from 'antd';
-import { CheckOutlined } from '@ant-design/icons';
+import { Button, Row, Col } from 'antd';
 import WishList from '../components/WishList';
 import ReactDOM from 'react-dom';
 import api from '../services/api';
