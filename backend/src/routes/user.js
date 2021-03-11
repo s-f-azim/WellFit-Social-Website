@@ -4,8 +4,8 @@ import {
   getUsersWithinRadius,
   createUser,
   loginUser,
-  getUser,
   logoutUser,
+  getUser,
   updateUser,
   deleteUser,
   getWishList,
@@ -16,6 +16,9 @@ import {
   uploadImages,
   deleteImages,
   getProfile,
+  getSuggestedInstructors,
+  followUser,
+  getFollowing,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -97,6 +100,19 @@ router
 router
   .route('/wishlist')
   .get(passport.authenticate('jwt', { session: false }), getWishList);
+
+router
+  .route('/profile')
+  .get(
+    passport.authenticate('jwt', { session: false }),
+    getSuggestedInstructors
+  );
+router
+  .route('/follow/:id')
+  .patch(passport.authenticate('jwt', { session: false }), followUser);
+router
+  .route('/getFollowing')
+  .get(passport.authenticate('jwt', { session: false }), getFollowing);
 
 router.route('/:id').get(getUser);
 export default router;

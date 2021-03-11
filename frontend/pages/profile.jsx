@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../services/auth';
 import { Button, Row, Col } from 'antd';
 import WishList from '../components/WishList';
 import ReactDOM from 'react-dom';
 import api from '../services/api';
+import Suggestions from '../components/SuggestedInstructors';
 
 const Profile = () => {
   const router = useRouter();
@@ -82,35 +83,38 @@ const Profile = () => {
   }
 
   return (
-    <Row type="flex" justify="center" align="middle">
-      <div style={{ width: '83rem' }}>
-        <Row type="flex" justify="center" align="middle" className="profile-tabs">
-          <Col id="favourites" type="flex" justify="center" align="middle" className="tab">
-            <Button type="link" size="large" onClick={displayFavourites} className="button">
-              Favourites
-            </Button>
-          </Col>
-          <Col style={{ width: '2rem' }}></Col>
-          <Col id="following" type="flex" justify="center" align="middle" className="tab">
-            <Button type="link" size="large" onClick={displayFollowing} className="button">
-              Following
-            </Button>
-          </Col>
-          <Col style={{ width: '2rem' }}></Col>
-          <Col id="wishlist" type="flex" justify="center" align="middle" className="tab">
-            <Button type="link" size="large" onClick={displayWishList} className="button">
-              Wish List
-            </Button>
-          </Col>
-        </Row>
-        <br />
-        <br />
-        <br />
-        <Row type="flex" justify="center" align="middle">
-          <div id="content"></div>
-        </Row>
-      </div>
-    </Row>
+    <>
+      <Suggestions />
+      <Row type="flex" justify="center" align="middle">
+        <div style={{ width: '83rem' }}>
+          <Row type="flex" justify="center" align="middle" className="profile-tabs">
+            <Col id="favourites" type="flex" justify="center" align="middle" className="tab">
+              <Button type="link" size="large" onClick={displayFavourites} className="button">
+                Favourites
+              </Button>
+            </Col>
+            <Col style={{ width: '2rem' }}></Col>
+            <Col id="following" type="flex" justify="center" align="middle" className="tab">
+              <Button type="link" size="large" onClick={displayFollowing} className="button">
+                Following
+              </Button>
+            </Col>
+            <Col style={{ width: '2rem' }}></Col>
+            <Col id="wishlist" type="flex" justify="center" align="middle" className="tab">
+              <Button type="link" size="large" onClick={displayWishList} className="button">
+                Wish List
+              </Button>
+            </Col>
+          </Row>
+          <br />
+          <br />
+          <br />
+          <Row type="flex" justify="center" align="middle">
+            <div id="content"></div>
+          </Row>
+        </div>
+      </Row>
+    </>
   );
 };
 

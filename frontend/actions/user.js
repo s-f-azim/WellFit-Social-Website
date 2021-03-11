@@ -7,6 +7,8 @@ const updateUser = (values) =>
 
 const deleteUser = () => api.delete('/users/delete');
 
-const addToWishList = (courseId) => api.patch(`/users/addToWishList/:${courseId}`, {});
+const getSuggestedInstructors = () => api.get('users/profile');
 
-export { updateUser as default, deleteUser, addToWishList };
+const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
+
+export { updateUser as default, deleteUser, addingFollowUser, getSuggestedInstructors };
