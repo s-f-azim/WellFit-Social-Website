@@ -27,8 +27,6 @@ const router = new express.Router();
 
 router.route('/').get(paginate(User), getUsers);
 
-router.route('/:id').get(getUser);
-
 router
   .route('/radius/:zipcode/:distance')
   .get(paginate(User), getUsersWithinRadius);
@@ -105,5 +103,7 @@ router
 router
   .route('/getFollowing')
   .get(passport.authenticate('jwt', { session: false }), getFollowing);
+
+router.route('/:id').get(getUser);
 
 export default router;
