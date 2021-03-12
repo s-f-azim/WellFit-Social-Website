@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAuth } from '../services/auth';
 import { Button, Row, Col } from 'antd';
 import WishList from '../components/WishList';
