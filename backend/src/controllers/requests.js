@@ -31,5 +31,18 @@ const getRequests = asyncHandler(async (req, res) => {
   });
 });
 
+/**
+ *
+ * @async
+ * @desc delete a request from db
+ * @route DELETE /api/requests/delete
+ *
+ */
+const deleteRequest = asyncHandler(async (req, res) => {
+  console.log('controller');
+  await Request.findByIdAndDelete(req.id);
+  res.status(200).send({ success: true });
+});
+
 // eslint-disable-next-line import/prefer-default-export
-export { createRequest, getRequests };
+export { createRequest, getRequests, deleteRequest };

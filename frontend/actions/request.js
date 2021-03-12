@@ -13,4 +13,9 @@ const getRequests = async () => {
   return res.data.data;
 };
 
-export { createRequest, getRequests };
+const deleteRequest = async (id) => {
+  console.log('got action');
+  api.delete(`/requests/delete/${id}`);
+};
+
+export { createRequest, getRequests, deleteRequest };

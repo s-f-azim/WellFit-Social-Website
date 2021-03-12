@@ -77,8 +77,11 @@ router
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
 
 router
-  .route("/profile")
-  .get(passport.authenticate("jwt", { session: false } ), getSuggestedInstructors);
+  .route('/profile')
+  .get(
+    passport.authenticate('jwt', { session: false }),
+    getSuggestedInstructors
+  );
 router
   .route('/follow/:id')
   .patch(passport.authenticate('jwt', { session: false }), followUser);

@@ -9,7 +9,8 @@ import {
   UserOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-import { getUsers, getAdmins, getClients, getInstructors, deleteUser } from '../actions/user';
+import { getUsers, getAdmins, getClients, getInstructors } from '../actions/user';
+import { deleteRequest } from '../actions/request';
 import { getRequests } from '../actions/request';
 import { useState } from 'react';
 
@@ -63,6 +64,10 @@ const AdminDashboard = ({
 
   const getRequestAuthor = (id) => {
     return users.filter((user) => user._id === id);
+  };
+
+  const onDeleteBug = (id) => {
+    deleteRequest(id);
   };
 
   return (
@@ -121,7 +126,7 @@ const AdminDashboard = ({
                       <b>Report #{bugReports.indexOf(report) + 1}</b>
                       <CloseOutlined
                         style={{ color: 'red', margin: '7px' }}
-                        /*onClick={deleteReport(report.id)}*/
+                        onClick={onDeleteBug(report.id)}
                       />
                     </h3>
                     <h3>
