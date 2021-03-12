@@ -23,7 +23,6 @@ const WishList = () => {
               type="flex"
               align="middle"
               justify="center"
-              style={{ minHeight: '65vh' }}
               gutter={[
                 { xs: 30, sm: 16, md: 24, lg: 32 },
                 { xs: 30, sm: 16, md: 24, lg: 32 },

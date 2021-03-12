@@ -17,6 +17,9 @@ const Profile = () => {
     if (!user) router.push('/');
   }, []);
 
+  /**
+   * Change the appearance of each button to its original appearance.
+   */
   function resetButtons() {
     ReactDOM.render(
       <Button type="link" size="large" onClick={displayFavourites} className="button">
@@ -40,6 +43,11 @@ const Profile = () => {
     );
   }
 
+  /**
+   * Reset each button to its original state and then change the "Favourites" button to make it
+   * clear that it is the one currently selected. Also, load the user's  favourites iinto the
+   * div with id 'content'.
+   */
   function displayFavourites() {
     resetButtons();
     ReactDOM.render(
@@ -75,7 +83,7 @@ const Profile = () => {
 
   return (
     <>
-      <Row type="flex" justify="center" align="middle">
+      <Row type="flex" justify="center" align="middle" style={{ marginTop: '5%' }}>
         <div style={{ width: '83rem' }}>
           <Row type="flex" justify="center">
             <Col>
@@ -87,30 +95,33 @@ const Profile = () => {
                       )}`
                     : '/image-not-found.svg'
                 }
-                width={100}
-                height={100}
+                width={300}
+                height={300}
               />
             </Col>
             <Col span={1}></Col>
             <Col className="profile-info">
-              <p>
-                <h2>{user.name}</h2>
-              </p>
-              <Space direction="horizontal" size="large">
+              <p style={{ fontSize: '3rem' }}>{user.name}</p>
+              <Space direction="horizontal" size="large" style={{ fontSize: '1.5rem' }}>
                 <p>Followers: 37</p>
                 <p>Following: {user.following.length}</p>
               </Space>
-              <p>{user.bio ? user.bio : <></>}</p>
+              <p style={{ fontSize: '1.5rem' }}>{user.bio ? user.bio : <></>}</p>
             </Col>
           </Row>
         </div>
       </Row>
+
+      <Row>
+        <Col style={{ minHeight: '3rem' }}></Col>
+      </Row>
+
       <Row type="flex" justify="center">
         <Suggestions />
       </Row>
 
       <Row>
-        <Col style={{ minHeight: '5rem' }}></Col>
+        <Col style={{ minHeight: '3rem' }}></Col>
       </Row>
       <Row type="flex" justify="center" align="middle">
         <div style={{ width: '83rem' }}>
@@ -120,13 +131,11 @@ const Profile = () => {
                 Favourites
               </Button>
             </Col>
-            <Col style={{ width: '2rem' }}></Col>
             <Col id="following" type="flex" justify="center" align="middle" className="tab">
               <Button type="link" size="large" onClick={displayFollowing} className="button">
                 Following
               </Button>
             </Col>
-            <Col style={{ width: '2rem' }}></Col>
             <Col id="wishlist" type="flex" justify="center" align="middle" className="tab">
               <Button type="link" size="large" onClick={displayWishList} className="button">
                 Wish List
