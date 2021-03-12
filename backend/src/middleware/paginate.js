@@ -1,6 +1,7 @@
 import asyncHandler from './async.js';
 import geocoder from '../utils/geocoder.js';
 
+// custom paginate middleware that does pagination and also filtering
 const paginateAndFilter = (model) =>
   asyncHandler(async (req, res, next) => {
     let query;
