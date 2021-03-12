@@ -1,4 +1,4 @@
-import { Card, Row, Col, Statistic, Tabs, Button, Modal } from 'antd';
+import { Card, Row, Col, Statistic, Tabs, Button, Modal, List } from 'antd';
 import {
   FundProjectionScreenOutlined,
   BarChartOutlined,
@@ -107,19 +107,28 @@ const AdminDashboard = ({
               hi
             </TabPane>
             <TabPane key="4" tab={bugTitle}>
-              <Button onClick={showAlert} type="text">
-                Request #{bugReports[0].type}
-              </Button>
-              <Modal
-                closable={false}
-                okText="Close"
-                title="Report #1"
-                cancelButtonProps={{ style: { display: 'none' } }}
-                visible={isAlertVisible}
-                onOk={handleOk}
-              >
-                <p>content of report</p>
-              </Modal>
+              <List
+                header={
+                  <h2>
+                    <BugOutlined /> Bug reports
+                  </h2>
+                }
+                itemLayout="horizontal"
+                dataSource={bugReports}
+                renderItem={(report) => (
+                  <List.Item>
+                    <h3>
+                      <b>Report #{bugReports.indexOf(report) + 1}</b>
+                    </h3>
+                    <h3>
+                      <b>Author: </b>
+                      {report.author}
+                    </h3>
+                    <b>Content: </b>
+                    {report.content}
+                  </List.Item>
+                )}
+              />
             </TabPane>
             <TabPane key="5" tab={contactTitle}>
               hi
