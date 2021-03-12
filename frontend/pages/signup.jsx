@@ -4,6 +4,7 @@ import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useAuth } from '../services/auth';
 
+// basic form styling
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -45,7 +46,6 @@ const Signup = () => {
         router.push('/');
       }
     } catch (err) {
-      console.log(err);
       setHasError(true);
     }
   };

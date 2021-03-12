@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { useAuth } from '../services/auth';
 import API from '../services/api';
 
+// layout and styling for form
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -42,7 +43,7 @@ const Login = () => {
   const onFinish = async (values) => {
     const { email, password } = values;
     try {
-      const something = await login(email, password);
+      await login(email, password);
       notification.open({
         message: 'Welcome back!',
         duration: 2,

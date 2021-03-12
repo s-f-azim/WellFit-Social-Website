@@ -1,5 +1,6 @@
 import geocoder from 'node-geocoder';
 
+// geocoder config
 const options = {
   provider: process.env.GEOCODER_PROVIDER,
   httpAdapter: 'https',
