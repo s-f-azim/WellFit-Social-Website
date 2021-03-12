@@ -104,6 +104,7 @@ const deleteCourse = asyncHandler(async (req, res) => {
 const uploadImages = asyncHandler(async (req, res) => {
   let formattedImages = [];
   req.files.forEach((file) => formattedImages.push(file.buffer));
+  /* eslint-disable no-return-await */
   formattedImages.map(
     async (image) =>
       await sharp(image).resize({ width: 600, height: 600 }).png().toBuffer()
