@@ -13,7 +13,7 @@ const createRequest = asyncHandler(async (req, res) => {
     type: req.params.type,
     content: req.params.content,
   });
-  res.status(200).send({ success: true, data: { request } });
+  return res.status(200).send({ success: true, data: { request } });
 });
 
 // eslint-disable-next-line import/prefer-default-export
