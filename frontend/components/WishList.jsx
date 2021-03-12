@@ -42,6 +42,8 @@ const WishList = () => {
       ) : (
         <LoadingOutlined style={{ fontSize: '2rem' }} />
       )}
+      <br />
+      <br />
     </div>
   );
 };

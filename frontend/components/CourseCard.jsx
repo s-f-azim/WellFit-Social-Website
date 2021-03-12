@@ -28,8 +28,10 @@ const CourseCard = ({ content, isWish }) => {
       <div id={courseID}>
         <Card className="course-card" style={{ borderColor: 'black', borderRadius: '1rem' }}>
           <Row>
-            <Col className="card-title">
-              <h1 onClick={() => setVisible(true)}> {content.title}</h1>
+            <Col className="card-title-col">
+              <h1 className="title" onClick={() => setVisible(true)}>
+                {content.title}
+              </h1>
             </Col>
             <Col id="delete-icon">
               {isWish === true ? (
@@ -55,6 +57,9 @@ const CourseCard = ({ content, isWish }) => {
               />
             </Col>
             <Col>
+              <p>{content.location.city}</p>
+              <p>£{content.price}</p>
+              <p>creators</p> {/* to-do:  grab the creators from the database*/}
               <p>
                 <Space direction="horizontal">
                   {content.tags.map((tag) => (
@@ -62,14 +67,11 @@ const CourseCard = ({ content, isWish }) => {
                   ))}
                 </Space>
               </p>
-              <p>{content.price}</p>
-              <p>{content.location.city}</p>
-              <p>something</p>
             </Col>
           </Row>
         </Card>
         <Modal
-          title="Course 1"
+          title={content.title}
           centered
           visible={visible}
           onOk={() => setVisible(false)}
@@ -81,8 +83,8 @@ const CourseCard = ({ content, isWish }) => {
             </Link>,
           ]}
         >
-          <Row justify="center" align="middle">
-            <Col className="card-image" span={6}>
+          <Row justify="center" align="middle" className="course-card">
+            <Col className="card-modal-image">
               <Image
                 src={
                   content.photos[0]
@@ -95,15 +97,18 @@ const CourseCard = ({ content, isWish }) => {
                 height={200}
               />
             </Col>
-            <Col span={14}>
-              <p>Tags: GetFit</p>
-              <p>Price: £50.00</p>
-              <p>Location: England</p>
-              <p>Creators: One two three</p>
+            <Col>
+              <p>{content.location.city}</p>
+              <p>{content.price}</p>
+              <p>creators</p> {/* to-do:  grab the creators from the database*/}
               <p>
-                Description:
-                11CGMEi42cQxgyQcn4zAGMVHFK3vKrnk111CGMEi42cQxgyQcn4zAGMVHFK3vKrnk111CGMEi42cQxgyQcn4zAGMVHFK3vKrnk111CGMEi42cQxgyQcn4zAGMVHFK3vKrnk111CGMEi42cQxgyQcn4zAGMVHFK3vKrnk1111111111111
+                <Space direction="horizontal">
+                  {content.tags.map((tag) => (
+                    <div className="emphasised-item">{tag}</div>
+                  ))}
+                </Space>
               </p>
+              <p>{content.description}</p>
             </Col>
           </Row>
         </Modal>
