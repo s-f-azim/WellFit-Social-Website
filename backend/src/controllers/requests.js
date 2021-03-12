@@ -1,5 +1,5 @@
 import asyncHandler from '../middleware/async.js';
-import Request from '../models/Course.js';
+import Request from '../models/Request.js';
 
 /**
  * @async
@@ -9,11 +9,11 @@ import Request from '../models/Course.js';
  */
 const createRequest = asyncHandler(async (req, res) => {
   const request = await Request.create({
-    author: req.params.user,
-    type: req.params.type,
-    content: req.params.content,
+    author: req.user._id,
+    type: req.body.type,
+    content: req.body.content,
   });
-  return res.status(200).send({ success: true, data: { request } });
+  res.status(200).send({ success: true, data: request });
 });
 
 // eslint-disable-next-line import/prefer-default-export
