@@ -14,16 +14,21 @@ const Profile = () => {
   let courses;
 
   // redirect to home page if user not logged in
-  useEffect(() => {
-    if (!user) router.push('/');
+  useEffect(async () => {
+    if (!user) {
+      router.push('/');
+    } else {
+      const response = await api.get('/users/wishlist');
+      courses = response.data.data;
+    }
   }, []);
 
-  const fetchWishList = async () => {
-    const response = await api.get('/users/wishlist');
-    courses = response.data.data;
-  };
+  // const fetchWishList = async () => {
+  //   const response = await api.get('/users/wishlist');
+  //   courses = response.data.data;
+  // };
 
-  fetchWishList();
+  // fetchWishList();
 
   function resetButtons() {
     ReactDOM.render(
@@ -71,7 +76,6 @@ const Profile = () => {
   }
 
   function displayWishList() {
-    fetchWishList();
     resetButtons();
     ReactDOM.render(
       <Button type="link" size="large" onClick={displayWishList} className="clicked-button">
@@ -80,7 +84,6 @@ const Profile = () => {
       document.getElementById('wishlist')
     );
     ReactDOM.render(<WishList courses={courses} />, document.getElementById('content'));
-    console.log(courses);
   }
 
   return (
@@ -115,8 +118,10 @@ const Profile = () => {
           </Row>
         </div>
       </Row>
+      <Row type="flex" justify="center">
+        <Suggestions />
+      </Row>
 
-      <Suggestions />
       <Row>
         <Col style={{ minHeight: '5rem' }}></Col>
       </Row>
