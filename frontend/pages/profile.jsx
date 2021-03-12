@@ -23,13 +23,6 @@ const Profile = () => {
     }
   }, []);
 
-  // const fetchWishList = async () => {
-  //   const response = await api.get('/users/wishlist');
-  //   courses = response.data.data;
-  // };
-
-  // fetchWishList();
-
   function resetButtons() {
     ReactDOM.render(
       <Button type="link" size="large" onClick={displayFavourites} className="button">
