@@ -9,11 +9,12 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { getUsers, getAdmins, getClients, getInstructors } from '../actions/user';
+import { getRequests } from '../actions/request';
 import { useState } from 'react';
 
 const { TabPane } = Tabs;
 
-const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount }) => {
+const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount, bugReports }) => {
   const title = (
     <h1>
       <FundProjectionScreenOutlined /> Admin Dashboard
@@ -52,6 +53,7 @@ const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount })
   const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   const showAlert = () => {
+    console.log(bugReports);
     setIsAlertVisible(true);
   };
 
@@ -94,7 +96,7 @@ const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount })
             </TabPane>
             <TabPane key="4" tab={bugTitle}>
               <Button onClick={showAlert} type="text">
-                Request
+                Request #{bugReports.length}
               </Button>
               <Modal
                 closable={false}
@@ -122,12 +124,14 @@ export async function getStaticProps() {
   const getAdminsRes = await getAdmins();
   const getClientsRes = await getClients();
   const getInstructorsRes = await getInstructors();
+  const getRequestsRes = await getRequests();
   return {
     props: {
       userCount: getUsersRes.data.pagination.total,
       adminCount: getAdminsRes.data.pagination.adminTotal,
       clientCount: getClientsRes.data.pagination.clientTotal,
       instructorCount: getInstructorsRes.data.pagination.instructorTotal,
+      bugReports: getRequestsRes,
     },
   };
 }

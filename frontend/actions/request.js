@@ -1,7 +1,6 @@
 import api from '../services/api';
 
 const createRequest = async (type, content) => {
-  //fix here, pass a review id somewhere...
   const res = await api.post(`/requests/create`, {
     type,
     content,
@@ -9,4 +8,9 @@ const createRequest = async (type, content) => {
   return res.data.data.request;
 };
 
-export { createRequest };
+const getRequests = async () => {
+  const res = await api.get(`/requests`);
+  return res.data.data;
+};
+
+export { createRequest, getRequests };

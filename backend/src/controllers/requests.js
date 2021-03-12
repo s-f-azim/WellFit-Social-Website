@@ -16,5 +16,20 @@ const createRequest = asyncHandler(async (req, res) => {
   res.status(200).send({ success: true, data: request });
 });
 
+/**
+ * @async
+ * @desc Get all requests
+ * @route GET /api/requests
+ * @access public
+ */
+const getRequests = asyncHandler(async (req, res) => {
+  res.status(200).send({
+    success: true,
+    count: res.results.length,
+    pagination: res.pagination,
+    data: res.results,
+  });
+});
+
 // eslint-disable-next-line import/prefer-default-export
-export { createRequest };
+export { createRequest, getRequests };
