@@ -1,4 +1,4 @@
-import { Card, Row, Col, Statistic, Tabs } from 'antd';
+import { Card, Row, Col, Statistic, Tabs, Button, Modal } from 'antd';
 import {
   FundProjectionScreenOutlined,
   BarChartOutlined,
@@ -9,6 +9,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { getUsers, getAdmins, getClients, getInstructors } from '../actions/user';
+import { useState } from 'react';
 
 const { TabPane } = Tabs;
 
@@ -48,6 +49,16 @@ const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount })
     </p>
   );
 
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+  const showAlert = () => {
+    setIsAlertVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsAlertVisible(false);
+  };
+
   return (
     <div className="adminDashboard">
       <Row justify="left" type="flex">
@@ -82,7 +93,19 @@ const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount })
               hi
             </TabPane>
             <TabPane key="4" tab={bugTitle}>
-              hi
+              <Button onClick={showAlert} type="text">
+                Request
+              </Button>
+              <Modal
+                closable={false}
+                okText="Close"
+                title="Report #1"
+                cancelButtonProps={{ style: { display: 'none' } }}
+                visible={isAlertVisible}
+                onOk={handleOk}
+              >
+                <p>content of report</p>
+              </Modal>
             </TabPane>
             <TabPane key="5" tab={contactTitle}>
               hi
