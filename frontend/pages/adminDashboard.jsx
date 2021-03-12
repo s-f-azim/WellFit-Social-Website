@@ -7,8 +7,9 @@ import {
   BugOutlined,
   MailOutlined,
   UserOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
-import { getUsers, getAdmins, getClients, getInstructors } from '../actions/user';
+import { getUsers, getAdmins, getClients, getInstructors, deleteUser } from '../actions/user';
 import { getRequests } from '../actions/request';
 import { useState } from 'react';
 
@@ -61,7 +62,6 @@ const AdminDashboard = ({
   );
 
   const getRequestAuthor = (id) => {
-    console.log(users.filter((user) => user._id === id));
     return users.filter((user) => user._id === id);
   };
 
@@ -91,6 +91,14 @@ const AdminDashboard = ({
                 <Statistic prefix={<UserOutlined />} title="No. admins" value={adminCount} />
                 <br />
               </Col>
+              <Col span={16}>
+                <Statistic
+                  prefix={<BugOutlined />}
+                  title="No. Bug reports"
+                  value={bugReports.length}
+                />
+                <br />
+              </Col>
             </TabPane>
             <TabPane key="2" tab={verifiedTitle}>
               hi
@@ -111,6 +119,10 @@ const AdminDashboard = ({
                   <List.Item>
                     <h3>
                       <b>Report #{bugReports.indexOf(report) + 1}</b>
+                      <CloseOutlined
+                        style={{ color: 'red', margin: '7px' }}
+                        /*onClick={deleteReport(report.id)}*/
+                      />
                     </h3>
                     <h3>
                       <b>Author: </b>

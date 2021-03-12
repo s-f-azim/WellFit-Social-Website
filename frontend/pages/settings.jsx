@@ -15,6 +15,7 @@ import { Button, Row, Card, Modal, Tabs, Form, Alert, notification, Space, Input
 import { useState } from 'react';
 import { useAuth } from '../services/auth';
 import { createRequest } from '../actions/request';
+import { deleteUser } from '../actions/user';
 
 const settingsPage = () => {
   const router = useRouter();
