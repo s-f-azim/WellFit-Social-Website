@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useAuth } from '../services/auth';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Space } from 'antd';
 import WishList from '../components/WishList';
 import ReactDOM from 'react-dom';
 import api from '../services/api';
 import Suggestions from '../components/SuggestedInstructors';
+import Image from 'next/image';
 
 const Profile = () => {
   const router = useRouter();
@@ -84,7 +85,41 @@ const Profile = () => {
 
   return (
     <>
+      <Row type="flex" justify="center" align="middle">
+        <div style={{ width: '83rem' }}>
+          <Row type="flex" justify="center">
+            <Col>
+              <Image
+                src={
+                  user.photos[0]
+                    ? `data:image/png;base64,${Buffer.from(content.photos[0].data).toString(
+                        'base64'
+                      )}`
+                    : '/image-not-found.svg'
+                }
+                width={100}
+                height={100}
+              />
+            </Col>
+            <Col span={1}></Col>
+            <Col className="profile-info">
+              <p>
+                <h2>{user.name}</h2>
+              </p>
+              <Space direction="horizontal" size="large">
+                <p>Followers: 37</p>
+                <p>Following: {user.following.length}</p>
+              </Space>
+              <p>{user.bio ? user.bio : <></>}</p>
+            </Col>
+          </Row>
+        </div>
+      </Row>
+
       <Suggestions />
+      <Row>
+        <Col style={{ minHeight: '5rem' }}></Col>
+      </Row>
       <Row type="flex" justify="center" align="middle">
         <div style={{ width: '83rem' }}>
           <Row type="flex" justify="center" align="middle" className="profile-tabs">

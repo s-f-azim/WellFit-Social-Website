@@ -22,6 +22,10 @@
   padding-right: 0.5rem;
 }
 
+.profile-info {
+  width: 20.8%;
+}
+
 @media screen and (max-width: 1024px) {
   .profile-tabs {
     border: solid;
@@ -47,5 +51,9 @@
     border-radius: 1rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+  }
+
+  .profile-info {
+    width: 41.6%;
   }
 }
