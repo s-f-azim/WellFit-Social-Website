@@ -28,10 +28,9 @@ function MyApp({ Component, pageProps }) {
         <AuthProvider>
           <Layout>
             <BackTop>
-              <div>
-                Top
+              <h1>
                 <ArrowUpOutlined />
-              </div>
+              </h1>
             </BackTop>
             <Component {...pageProps} />
           </Layout>

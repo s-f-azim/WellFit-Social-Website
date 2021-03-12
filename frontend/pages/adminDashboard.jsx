@@ -16,6 +16,7 @@ const { TabPane } = Tabs;
 
 const AdminDashboard = ({
   userCount,
+  users,
   adminCount,
   clientCount,
   instructorCount,
@@ -59,18 +60,9 @@ const AdminDashboard = ({
     </p>
   );
 
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
-
-  const showAlert = () => {
-    console.log(bugReports);
-    console.log(verifyRequests);
-    console.log(contentReports);
-    console.log(Messages);
-    setIsAlertVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsAlertVisible(false);
+  const getRequestAuthor = (id) => {
+    console.log(users.filter((user) => user._id === id));
+    return users.filter((user) => user._id === id);
   };
 
   return (
@@ -122,8 +114,9 @@ const AdminDashboard = ({
                     </h3>
                     <h3>
                       <b>Author: </b>
-                      {report.author}
+                      {getRequestAuthor(report.author)[0].email}
                     </h3>
+
                     <b>Content: </b>
                     {report.content}
                   </List.Item>
@@ -165,6 +158,7 @@ export async function getStaticProps() {
   return {
     props: {
       userCount: getUsersRes.data.pagination.total,
+      users: getUsersRes.data.data,
       adminCount: getAdminsRes.data.pagination.adminTotal,
       clientCount: getClientsRes.data.pagination.clientTotal,
       instructorCount: getInstructorsRes.data.pagination.instructorTotal,

@@ -183,7 +183,7 @@ const settingsPage = () => {
                       Please describe the bug below <DownCircleOutlined />
                     </h3>
                     <Form.Item name="report">
-                      <Input.TextArea allowClear showCount maxLength={300} />
+                      <Input.TextArea allowClear showCount maxLength={150} />
                     </Form.Item>
                     <Form.Item>
                       <Button type="primary" htmlType="submit">
