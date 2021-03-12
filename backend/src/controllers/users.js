@@ -2,6 +2,7 @@
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
 import Course from '../models/Course.js';
+import sharp from 'sharp';
 
 /**
  * @async
@@ -229,6 +230,7 @@ const instagramOauth = asyncHandler(async (req, res) => {
 const uploadImages = asyncHandler(async (req, res) => {
   let formattedImages = [];
   req.files.forEach((file) => formattedImages.push(file.buffer));
+  /* eslint-disable no-return-await */
   formattedImages.map(
     async (image) =>
       await sharp(image).resize({ width: 250, height: 250 }).png().toBuffer()
