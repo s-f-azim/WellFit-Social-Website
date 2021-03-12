@@ -1,8 +1,8 @@
 import api from '../services/api';
 
-const createRequest = async (author, type, content) => {
-  const res = await api.post(`/requests`, {
-    author,
+const createRequest = async (type, content) => {
+  //fix here, pass a review id somewhere...
+  const res = await api.post(`/requests/create`, {
     type,
     content,
   });

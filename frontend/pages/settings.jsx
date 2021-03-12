@@ -112,7 +112,7 @@ const settingsPage = () => {
   const onBugReport = async (values) => {
     const { report } = values;
     try {
-      const response = await createRequest(user, 'bug', report);
+      const response = await createRequest('bug', report);
       notification.open({
         message: 'Report submitted, thanks for helping us!',
         duration: 3,
