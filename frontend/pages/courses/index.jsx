@@ -1,6 +1,4 @@
 import { Card, Row, Col, Pagination } from 'antd';
-import Image from 'next/image';
-import Link from 'next/link';
 import Router from 'next/router';
 import CourseCard from '../../components/CourseCard';
 import api from '../../services/api';
