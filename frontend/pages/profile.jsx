@@ -4,7 +4,6 @@ import { useAuth } from '../services/auth';
 import { Button, Row, Col, Space } from 'antd';
 import WishList from '../components/WishList';
 import ReactDOM from 'react-dom';
-import api from '../services/api';
 import Suggestions from '../components/SuggestedInstructors';
 import Image from 'next/image';
 
@@ -15,12 +14,7 @@ const Profile = () => {
 
   // redirect to home page if user not logged in
   useEffect(async () => {
-    if (!user) {
-      router.push('/');
-    } else {
-      const response = await api.get('/users/wishlist');
-      courses = response.data.data;
-    }
+    if (!user) router.push('/');
   }, []);
 
   function resetButtons() {
@@ -76,7 +70,7 @@ const Profile = () => {
       </Button>,
       document.getElementById('wishlist')
     );
-    ReactDOM.render(<WishList courses={courses} />, document.getElementById('content'));
+    ReactDOM.render(<WishList />, document.getElementById('content'));
   }
 
   return (
