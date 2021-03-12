@@ -14,7 +14,16 @@ import { useState } from 'react';
 
 const { TabPane } = Tabs;
 
-const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount, bugReports }) => {
+const AdminDashboard = ({
+  userCount,
+  adminCount,
+  clientCount,
+  instructorCount,
+  bugReports,
+  verifyRequests,
+  contentReports,
+  Messages,
+}) => {
   const title = (
     <h1>
       <FundProjectionScreenOutlined /> Admin Dashboard
@@ -54,6 +63,9 @@ const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount, b
 
   const showAlert = () => {
     console.log(bugReports);
+    console.log(verifyRequests);
+    console.log(contentReports);
+    console.log(Messages);
     setIsAlertVisible(true);
   };
 
@@ -96,7 +108,7 @@ const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount, b
             </TabPane>
             <TabPane key="4" tab={bugTitle}>
               <Button onClick={showAlert} type="text">
-                Request #{bugReports.length}
+                Request #{bugReports[0].type}
               </Button>
               <Modal
                 closable={false}
@@ -119,6 +131,22 @@ const AdminDashboard = ({ userCount, adminCount, clientCount, instructorCount, b
   );
 };
 
+function isBugReport(request) {
+  return request.type === 'bug';
+}
+
+function isVerifyRequest(request) {
+  return request.type === 'verify';
+}
+
+function isContentReport(request) {
+  return request.type === 'report';
+}
+
+function isMessage(request) {
+  return request.type === 'message';
+}
+
 export async function getStaticProps() {
   const getUsersRes = await getUsers();
   const getAdminsRes = await getAdmins();
@@ -131,7 +159,10 @@ export async function getStaticProps() {
       adminCount: getAdminsRes.data.pagination.adminTotal,
       clientCount: getClientsRes.data.pagination.clientTotal,
       instructorCount: getInstructorsRes.data.pagination.instructorTotal,
-      bugReports: getRequestsRes,
+      bugReports: getRequestsRes.filter(isBugReport),
+      verifyRequests: getRequestsRes.filter(isVerifyRequest),
+      contentReports: getRequestsRes.filter(isContentReport),
+      Messages: getRequestsRes.filter(isMessage),
     },
   };
 }
