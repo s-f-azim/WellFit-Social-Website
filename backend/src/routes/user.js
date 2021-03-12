@@ -4,8 +4,8 @@ import {
   getUsersWithinRadius,
   createUser,
   loginUser,
-  getUser,
   logoutUser,
+  getUser,
   updateUser,
   deleteUser,
   googleOauth,
@@ -14,6 +14,9 @@ import {
   uploadImages,
   deleteImages,
   getProfile,
+  getSuggestedInstructors,
+  followUser,
+  getFollowing,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -89,5 +92,18 @@ router
 router
   .route('/oauth/facebook/redirect')
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
+
+router
+  .route('/profile')
+  .get(
+    passport.authenticate('jwt', { session: false }),
+    getSuggestedInstructors
+  );
+router
+  .route('/follow/:id')
+  .patch(passport.authenticate('jwt', { session: false }), followUser);
+router
+  .route('/getFollowing')
+  .get(passport.authenticate('jwt', { session: false }), getFollowing);
 
 export default router;

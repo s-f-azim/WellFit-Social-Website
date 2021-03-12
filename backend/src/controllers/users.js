@@ -95,6 +95,46 @@ const updateUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc add following user profile
+ * @route PATCH /api/users/follow
+ * @access private
+ */
+const followUser = asyncHandler(async (req, res) => {
+  if (User.findOne({ _id: req.params.id })) {
+    if (
+      !req.user.following.includes(req.params.id) &&
+      req.user._id + ' ' !== req.params.id + ' '
+    ) {
+      req.user.following.push(req.params.id);
+    } else {
+      const index = req.user.following.indexOf(req.params.id);
+      if (index > -1) {
+        req.user.following.splice(index, 1);
+      }
+    }
+    const updatedUser = await req.user.save();
+    sendTokenResponse(updatedUser, 200, res);
+  }
+});
+
+/**
+ * @async
+ * @desc get user following list
+ * @route GET /api/users/followList
+ * @access private
+ */
+const getFollowing = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page || '1', 10);
+  const limit = 2;
+  const startIndex = (page - 1) * limit;
+  const lastIndex = limit * page;
+  const followings = await User.findById(req.user._id).populate('following');
+  const results = followings.following.slice(startIndex, lastIndex);
+  res.status(200).send({ success: true, data: results });
+});
+
+/**
+ * @async
  * @desc logout the user and delete the cookie
  * @route GET /api/users/logout
  * @access private
@@ -218,6 +258,31 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
   res.redirect(`${process.env.CLIENT_URL}`);
 };
 
+/**
+ * @async
+ * @desc Get suggested instructors for user based on random tag selected, client gender preference
+ * @param {User} user - a user
+ * @route GET /api/users/profile
+ */
+const getSuggestedInstructors = asyncHandler(async (req, res) => {
+  const users = await User.find({
+    $and: [
+      { role: 'instructor' },
+      { _id: { $ne: req.user._id } },
+      {
+        $or: [
+          {
+            tags:
+              req.user.tags[Math.floor(Math.random() * req.user.tags.length)],
+          },
+          { gender: req.user.clientGenderPreference },
+        ],
+      },
+    ],
+  }).limit(3);
+  res.status(200).send({ success: true, data: users });
+});
+
 export {
   getUsers,
   getUsersWithinRadius,
@@ -233,4 +298,7 @@ export {
   instagramOauth,
   uploadImages,
   deleteImages,
+  getSuggestedInstructors,
+  followUser,
+  getFollowing,
 };
