@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
+import sharp from 'sharp';
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
-import sharp from 'sharp';
 
 /**
  * @async
@@ -42,7 +42,7 @@ const getInstructors = asyncHandler(async (req, res) => {
   const regex = new RegExp(s, 'i');
   let instr = await User.find({
     role: 'instructor',
-    name: { $regex: regex },
+    ...(req.query.q ? { name: { $regex: regex } } : {}),
     ...(req.query.gender ? { gender: req.query.gender } : {}),
     ...(req.query.tags ? { tags: { $all: req.query.tags.split(',') } } : {}),
   });
@@ -242,7 +242,7 @@ const instagramOauth = asyncHandler(async (req, res) => {
  * @access private
  */
 const uploadImages = asyncHandler(async (req, res) => {
-  let formattedImages = [];
+  const formattedImages = [];
   req.files.forEach((file) => formattedImages.push(file.buffer));
   /* eslint-disable no-return-await */
   formattedImages.map(
