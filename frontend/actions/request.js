@@ -14,7 +14,6 @@ const getRequests = async () => {
 };
 
 const deleteRequest = async (id) => {
-  console.log('got action');
   api.delete(`/requests/delete/${id}`);
 };
 

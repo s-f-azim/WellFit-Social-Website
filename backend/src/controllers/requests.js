@@ -35,12 +35,11 @@ const getRequests = asyncHandler(async (req, res) => {
  *
  * @async
  * @desc delete a request from db
- * @route DELETE /api/requests/delete
+ * @route DELETE /api/requests/delete/:id
  *
  */
 const deleteRequest = asyncHandler(async (req, res) => {
-  console.log('controller');
-  await Request.findByIdAndDelete(req.id);
+  await Request.findByIdAndDelete(req.params.id);
   res.status(200).send({ success: true });
 });
 

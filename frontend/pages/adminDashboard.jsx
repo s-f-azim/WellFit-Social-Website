@@ -66,8 +66,12 @@ const AdminDashboard = ({
     return users.filter((user) => user._id === id);
   };
 
-  const onDeleteBug = (id) => {
-    deleteRequest(id);
+  const [reports, setReports] = useState(bugReports);
+
+  const onDeleteBug = async (report) => {
+    await deleteRequest(report._id);
+    reports.splice(reports.indexOf(report), 1);
+    setReports([...reports]);
   };
 
   return (
@@ -119,14 +123,14 @@ const AdminDashboard = ({
                   </h2>
                 }
                 itemLayout="horizontal"
-                dataSource={bugReports}
+                dataSource={reports}
                 renderItem={(report) => (
                   <List.Item>
                     <h3>
-                      <b>Report #{bugReports.indexOf(report) + 1}</b>
+                      <b>Report #{reports.indexOf(report) + 1}</b>
                       <CloseOutlined
                         style={{ color: 'red', margin: '7px' }}
-                        onClick={onDeleteBug(report.id)}
+                        onClick={() => onDeleteBug(report)}
                       />
                     </h3>
                     <h3>
