@@ -50,7 +50,7 @@ const CourseCard = ({ content, isWish }) => {
               </Col>
             </Row>
             <br />
-            <Row style={{ maxHeight: '15rem' }}>
+            <Row style={{ maxHeight: '50%' }}>
               <Col className="card-image">
                 <Image
                   src={

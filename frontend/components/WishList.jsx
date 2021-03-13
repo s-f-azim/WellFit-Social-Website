@@ -29,7 +29,7 @@ const WishList = () => {
               ]}
             >
               {courses.map((course) => (
-                <Col key={course._id}>
+                <Col key={course._id} md={8}>
                   <CourseCard content={course} isWish={true} />
                 </Col>
               ))}
