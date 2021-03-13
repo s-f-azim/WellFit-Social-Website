@@ -1,11 +1,10 @@
 import { useRouter } from 'next/router';
-import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, Select, notification } from 'antd';
+import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, notification } from 'antd';
+import { signup } from '../services/auth';
 import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { useAuth } from '../services/auth';
 
-const { Option } = Select;
-
+// basic form styling
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -32,7 +31,6 @@ const Signup = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
-  const { login, signup } = useAuth();
   const onFinish = async (values) => {
     const { role, email, fName, lName, password } = values;
     try {
@@ -43,11 +41,9 @@ const Signup = () => {
           duration: 2,
           icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
         });
-        await login(email, password);
-        router.push('/');
+        router.push('/login');
       }
     } catch (err) {
-      console.log(err);
       setHasError(true);
     }
   };

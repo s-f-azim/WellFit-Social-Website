@@ -10,21 +10,15 @@ import {
   CheckOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-import { useAuth } from '../services/auth';
+import { logout } from '../services/auth';
+import { signOut } from 'next-auth/client';
 
-const ProfileBar = ({ profileOpen, setProfileOpen }) => {
-  // eslint-disable-next-line no-unused-vars
-  const { user, logout } = useAuth();
-  // eslint-disable-next-line no-unused-vars
+const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
   const router = useRouter();
   const signout = async () => {
-    notification.open({
-      message: 'Logged out successfully',
-      duration: 2,
-      icon: <CheckOutlined style={{ color: '#00FF00' }} />,
-    });
-    setProfileOpen(false);
-    logout();
+    const response = await logout();
+    signOut({ redirect: false });
+    router.push('/');
   };
   return (
     <div className={`profile-bar ${profileOpen ? 'active' : ''}`}>
@@ -42,7 +36,7 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
         icon={<AntDesignOutlined />}
       />
       <h1 className="item" onClick={() => setProfileOpen(false)}>
-        <Link href="/profile">{user.fName}</Link>
+        <Link href="/profile">{session.user.name}</Link>
       </h1>
       <div className="item">
         <HistoryOutlined />

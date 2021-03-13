@@ -1,6 +1,6 @@
 import { CheckOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import {
   Space,
   Form,
@@ -17,8 +17,7 @@ import {
 } from 'antd';
 import updateUser from '../actions/user';
 import InstQuest from '../components/InstQuest';
-import { useAuth } from '../services/auth';
-
+import { useSession, getSession } from 'next-auth/client';
 const { Option } = Select;
 
 const tailFormItemLayout = {
@@ -65,219 +64,226 @@ const infoAlertText = (
 );
 
 const editProfilePage = () => {
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [session, loading] = useSession();
 
-  const showAlert = () => {
-    setIsAlertVisible(true);
-  };
+  if (typeof window !== 'undefined' && loading) return null;
 
-  const handleOk = () => {
-    setIsAlertVisible(false);
-  };
+  if (session) {
+    const user = session.user;
+    const [isAlertVisible, setIsAlertVisible] = useState(false);
 
-  const router = useRouter();
-  const tabID = () => (router.query.tab ? router.query.tab : '1');
-  const { user, setUser } = useAuth();
+    const showAlert = () => {
+      setIsAlertVisible(true);
+    };
 
-  const [hasError, setHasError] = useState(false);
-  const [form] = Form.useForm();
+    const handleOk = () => {
+      setIsAlertVisible(false);
+    };
 
-  const onFinish = async (values) => {
-    try {
-      const response = await updateUser(values);
-      if (response.data.success) {
-        notification.open({
-          message: 'Information updated!',
-          duration: 2,
-          icon: <CheckOutlined style={{ color: '#33FF49' }} />,
-        });
-        setUser(response.data.data);
-        router.push('/');
+    const [hasError, setHasError] = useState(false);
+    const [form] = Form.useForm();
+
+    const onFinish = async (values) => {
+      try {
+        const response = await updateUser(values);
+        if (response.data.success) {
+          notification.open({
+            message: 'Information updated!',
+            duration: 2,
+            icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+          });
+          session.user = response.data.data;
+          Router.push('/');
+        }
+      } catch (err) {
+        console.log(err);
+        setHasError(true);
       }
-    } catch (err) {
-      setHasError(true);
-    }
-  };
-  let date = new Date();
-  date.setFullYear(date.getFullYear() - 16);
-  date = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    };
+    let date = new Date();
+    date.setFullYear(date.getFullYear() - 16);
+    date = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 
-  const { TabPane } = Tabs;
+    const { TabPane } = Tabs;
 
-  return (
-    <Row type="flex" justify="center" align="middle">
-      <Card>
-        <Tabs defaultActiveKey={tabID}>
-          <TabPane tab="Basic Info" key="1">
-            <Form form={form} name="Update my info" onFinish={onFinish} scrollToFirstError>
-              <Space direction="vertical" size="middle">
-                {hasError && (
-                  <Alert type="error" message="something went wrong, please try again" banner />
-                )}
-                <h1>Add/Edit basic profile information</h1>
-                <Alert
-                  message="This helps professionals know about you right away"
-                  type="info"
-                  showIcon
-                />
-                <Form.Item name="gender" label="Gender">
-                  <Select
-                    defaultValue={user.gender ? user.gender : null}
-                    placeholder="Select your gender"
-                  >
-                    <Option value="Male">Male</Option>
-                    <Option value="Female">Female</Option>
-                    <Option value="Non-Binary"> Non-Binary</Option>
-                    <Option value="Prefer not to say">Prefer not to say</Option>
-                  </Select>
-                </Form.Item>
-
-                <Form.Item name="location" label="Location">
-                  <Select
-                    defaultValue={user.location ? user.location : null}
-                    placeholder="Select your location"
-                  >
-                    <Option value="Europe">Europe</Option>
-                    <Option value="Asia">Asia</Option>
-                    <Option value="North America">North America</Option>
-                    <Option value="South America">South America</Option>
-                    <Option value="Australia">Australia</Option>
-                    <Option value="Africa">Africa</Option>
-                  </Select>
-                </Form.Item>
-
-                <Form.Item
-                  name="birthday"
-                  label="Birthday"
-                  rules={[
-                    {
-                      type: 'object',
-                      message: 'Please select your birthday',
-                    },
-                  ]}
-                >
-                  <DatePicker
-                    defaultPickerValue={user.birtdhay ? user.birthday : null}
-                    disabledDate={(d) => !d || d.isAfter(date)}
+    return (
+      <Row type="flex" justify="center" align="middle">
+        <Card>
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="Basic Info" key="1">
+              <Form form={form} name="Update my info" onFinish={onFinish} scrollToFirstError>
+                <Space direction="vertical" size="middle">
+                  {hasError && (
+                    <Alert type="error" message="something went wrong, please try again" banner />
+                  )}
+                  <h1>Add/Edit basic profile information</h1>
+                  <Alert
+                    message="This helps professionals know about you right away"
+                    type="info"
+                    showIcon
                   />
-                </Form.Item>
+                  <Form.Item name="gender" label="Gender">
+                    <Select
+                      defaultValue={user.gender ? user.gender : null}
+                      placeholder="Select your gender"
+                    >
+                      <Option value="Male">Male</Option>
+                      <Option value="Female">Female</Option>
+                      <Option value="Non-Binary"> Non-Binary</Option>
+                      <Option value="Prefer not to say">Prefer not to say</Option>
+                    </Select>
+                  </Form.Item>
 
-                <Form.Item name="nickname" label="Nickname">
-                  <Input defaultValue={user.nickname ? user.nickname : null} />
-                </Form.Item>
+                  <Form.Item name="location" label="Location">
+                    <Select
+                      defaultValue={user.location ? user.location : null}
+                      placeholder="Select your location"
+                    >
+                      <Option value="Europe">Europe</Option>
+                      <Option value="Asia">Asia</Option>
+                      <Option value="North America">North America</Option>
+                      <Option value="South America">South America</Option>
+                      <Option value="Australia">Australia</Option>
+                      <Option value="Africa">Africa</Option>
+                    </Select>
+                  </Form.Item>
 
-                <Form.Item name="bio" label="Bio">
-                  <Input.TextArea
-                    showCount
-                    maxLength={300}
-                    defaultValue={user.bio ? user.bio : null}
-                  />
-                </Form.Item>
-
-                <Form.Item name="tags" label="Tags">
-                  <Select
-                    mode="tags"
-                    style={{ display: 'flex', flexFlow: 'column wrap', flexGrow: '2' }}
-                    placeholder="Select your interests"
+                  <Form.Item
+                    name="birthday"
+                    label="Birthday"
                     rules={[
                       {
-                        type: 'string',
+                        type: 'object',
+                        message: 'Please select your birthday',
                       },
                     ]}
                   >
-                    {tags.map((x) => (
-                      <Option value={x}>{x}</Option>
-                    ))}
-                  </Select>
-                </Form.Item>
+                    <DatePicker
+                      defaultPickerValue={user.birtdhay ? user.birthday : null}
+                      disabledDate={(d) => !d || d.isAfter(date)}
+                    />
+                  </Form.Item>
 
-                <Form.Item {...tailFormItemLayout}>
+                  <Form.Item name="nickname" label="Nickname">
+                    <Input defaultValue={user.nickname ? user.nickname : null} />
+                  </Form.Item>
+
+                  <Form.Item name="bio" label="Bio">
+                    <Input.TextArea maxLength={300} defaultValue={user.bio ? user.bio : null} />
+                  </Form.Item>
+
+                  <Form.Item name="tags" label="Tags">
+                    <Select
+                      mode="tags"
+                      style={{ display: 'flex', flexFlow: 'column wrap', flexGrow: '2' }}
+                      placeholder="Select your interests"
+                      rules={[
+                        {
+                          type: 'string',
+                        },
+                      ]}
+                    >
+                      {tags.map((x) => (
+                        <Option value={x}>{x}</Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+
+                  <Form.Item {...tailFormItemLayout}>
+                    <Button type="primary" htmlType="submit">
+                      Update my info
+                    </Button>
+                  </Form.Item>
+                </Space>
+              </Form>
+            </TabPane>
+
+            <TabPane tab="Detailed info" key="2">
+              <h1>
+                Add/Edit in-depth profile information
+                <>
+                  <Button type="primary" shape="circle" onClick={showAlert}>
+                    ?
+                  </Button>
+                  <Modal
+                    closable={false}
+                    cancelButtonProps={{ style: { display: 'none' } }}
+                    title="This info is optional"
+                    visible={isAlertVisible}
+                    onOk={handleOk}
+                  >
+                    {infoAlertText}
+                  </Modal>
+                </>
+              </h1>
+              <InstQuest session={session} />
+            </TabPane>
+
+            <TabPane tab="Credentials" key="3">
+              <Form form={form} name="Edit my info" onFinish={onFinish} scrollToFirstError>
+                <Space direction="vertical" size="middle">
+                  {hasError && (
+                    <Alert
+                      type="error"
+                      message="Make sure both passwords match and are over 8 characters"
+                      banner
+                    />
+                  )}
+                  <h1>Change your email or password</h1>
+                </Space>
+                <Form.Item
+                  name="email"
+                  label="New email"
+                  rules={[
+                    {
+                      type: 'email',
+                      message: 'Invalid Email',
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item name="password" label="New password" hasFeedback>
+                  <Input.Password />
+                </Form.Item>
+                <Form.Item
+                  name="confirm"
+                  label="Confirm Password"
+                  dependencies={['password']}
+                  hasFeedback
+                  rules={[
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue('password') === value) {
+                          return Promise.resolve();
+                        }
+                        // eslint-disable-next-line prefer-promise-reject-errors
+                        return Promise.reject('Sorry the passwords do not match');
+                      },
+                    }),
+                  ]}
+                >
+                  <Input.Password />
+                </Form.Item>
+                <Form.Item {...tailFormItemLayout} className="submit">
                   <Button type="primary" htmlType="submit">
-                    Update my info
+                    Confirm
                   </Button>
                 </Form.Item>
-              </Space>
-            </Form>
-          </TabPane>
-
-          <TabPane tab="Detailed info" key="2">
-            <h1>
-              Add/Edit in-depth profile information
-              <>
-                <Button type="primary" shape="circle" onClick={showAlert}>
-                  ?
-                </Button>
-                <Modal
-                  closable={false}
-                  cancelButtonProps={{ style: { display: 'none' } }}
-                  title="This info is optional"
-                  visible={isAlertVisible}
-                  onOk={handleOk}
-                >
-                  {infoAlertText}
-                </Modal>
-              </>
-            </h1>
-            <InstQuest />
-          </TabPane>
-
-          <TabPane tab="Credentials" key="3">
-            <Form form={form} name="Edit my info" onFinish={onFinish} scrollToFirstError>
-              <Space direction="vertical" size="middle">
-                {hasError && (
-                  <Alert
-                    type="error"
-                    message="Make sure both passwords match and are over 8 characters"
-                    banner
-                  />
-                )}
-                <h1>Change your email or password</h1>
-              </Space>
-              <Form.Item
-                name="email"
-                label="New email"
-                rules={[
-                  {
-                    type: 'email',
-                    message: 'Invalid Email',
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item name="password" label="New password" hasFeedback>
-                <Input.Password />
-              </Form.Item>
-              <Form.Item
-                name="confirm"
-                label="Confirm Password"
-                dependencies={['password']}
-                hasFeedback
-                rules={[
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue('password') === value) {
-                        return Promise.resolve();
-                      }
-                      // eslint-disable-next-line prefer-promise-reject-errors
-                      return Promise.reject('Sorry the passwords do not match');
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
-              <Form.Item {...tailFormItemLayout} className="submit">
-                <Button type="primary" htmlType="submit">
-                  Confirm
-                </Button>
-              </Form.Item>
-            </Form>
-          </TabPane>
-        </Tabs>
-      </Card>
-    </Row>
-  );
+              </Form>
+            </TabPane>
+          </Tabs>
+        </Card>
+      </Row>
+    );
+  }
+  return <p>Access Denied</p>;
 };
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  return {
+    props: { session },
+  };
+}
 
 export default editProfilePage;
