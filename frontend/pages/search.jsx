@@ -6,15 +6,6 @@ import axios from 'axios';
 const { Option } = Select;
 const { Search } = Input;
 
-const users = [
-  { name: 'Oskar', gender: 'Male', age: 19, tags: ['abs', 'core', 'cardio'] },
-  { name: 'Oskar6', age: 19, tags: ['abs', 'core', 'cardio'] },
-  { name: 'Oskar5', age: 19, tags: ['abs', 'core', 'cardio'] },
-  { name: 'Oskar2', age: 19, tags: ['abs', 'test2', 'cardio'] },
-  { name: 'Oskar3', age: 19, tags: ['abs', 'test3', 'cardio'] },
-  { name: 'Oskar4', age: 19, tags: ['abs', 'test4', 'cardio'] },
-];
-
 const SearchBar = () => {
   const [q, setQuery] = useState('');
   const [gender, setGender] = useState('');
