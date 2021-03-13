@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Input, Row, Col, Card, Select } from 'antd';
 import { useState } from 'react';
-import axios from 'axios';
+import { getInstructors } from '../actions/user';
 
 const { Option } = Select;
 const { Search } = Input;
@@ -9,76 +9,41 @@ const { Search } = Input;
 const SearchBar = () => {
   const [q, setQuery] = useState('');
   const [gender, setGender] = useState('');
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState('');
   const [stags, setTags] = useState([]);
-  const [data, setData] = useState(users);
-  const searchName = (qP, genderP) => {
-    const searchq = `http://localhost:4000/api/users/instructors?q=${qP}&&gender=${genderP}&&age=${age}&&tags=${stags.join(
-      ','
-    )}`;
-    axios.get(searchq).then((result) => {
-      setData(result.data.data);
-    });
+  const [data, setData] = useState([]);
+  const searchName = async () => {
+    console.log(`${age} ${q} ${gender} ` + ` TAGS : ${stags}`);
+    const response = await getInstructors(q, gender, age, stags);
+    setData(response.data.data);
   };
+  /* can be replaced by data/tags  */
   const tags = [
-    <Option key={13} value="GetFit">
-      GetFit
-    </Option>,
-    <Option key={23} value="Cardio">
-      Cardio
-    </Option>,
-    <Option key={33} value="Sweat">
-      Sweat
-    </Option>,
-    <Option key={43} value="Cycling">
-      Cycling
-    </Option>,
-    <Option key={53} value="FitFam">
-      FitFam
-    </Option>,
-    <Option key={63} value="FitLife">
-      FitLife
-    </Option>,
-    <Option key={73} value="Fitness">
-      Fitness
-    </Option>,
-    <Option key={83} value="FitnessMotivation">
-      FitnessMotivation
-    </Option>,
-    <Option key={93} value="FitnessAddict">
-      FitnessAddict
-    </Option>,
-    <Option key={103} value="GetStrong">
-      GetStrong
-    </Option>,
-    <Option key={113} value="LiftHeavy">
-      LiftHeavy
-    </Option>,
-    <Option key={123} value="GirlsWhoLift">
-      GirlsWhoLift
-    </Option>,
-    <Option key={133} value="GymLife">
-      GymLife
-    </Option>,
-    <Option key={143} value="GymTime">
-      GymTime
-    </Option>,
-    <Option key={153} value="NoPainNoGain">
-      NoPainNoGain
-    </Option>,
-    <Option key={163} value="PersonalTrainer">
-      PersonalTrainer
-    </Option>,
-    <Option key={173} value="Weights">
-      Weights
-    </Option>,
-    <Option key={183} value="WeightLifting">
-      WeightLifting
-    </Option>,
-    <Option key={193} value="Workout">
-      Workout
-    </Option>,
+    'GetFit',
+    'Cardio',
+    'Cycling',
+    'FitFam',
+    'FitLife',
+    'Fitness',
+    'FitnessMotivation',
+    'FitnessAddict',
+    'GetStrong',
+    'LiftHeavy',
+    'GirlsWhoLift',
+    'GymLife',
+    'GymTime',
+    'NoPainNoGain',
+    'PersonalTrainer',
+    'Sweat',
+    'Weights',
+    'WeightLifting',
+    'Workout',
   ];
+  const tagsOption = tags.map((tag) => (
+    <Option key={tag.id} value={tag}>
+      {tag}
+    </Option>
+  ));
   return (
     <>
       <div
@@ -93,7 +58,7 @@ const SearchBar = () => {
           type="text"
           enterButton="Search"
           size="large"
-          onSearch={searchName(q, gender)}
+          onSearch={searchName}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search me..."
           style={{ width: '90%' }}
@@ -137,7 +102,7 @@ const SearchBar = () => {
             placeholder="Tags"
             onChange={setTags}
           >
-            {tags}
+            {tagsOption}
           </Select>
         </div>
       </div>
