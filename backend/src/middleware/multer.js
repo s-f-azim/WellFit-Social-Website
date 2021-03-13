@@ -1,6 +1,7 @@
 import multer from 'multer';
 import ErrorResponse from '../utils/errorResponse.js';
 
+// multer config for uploading files
 const upload = multer({
   limits: {
     fileSize: 1000000,

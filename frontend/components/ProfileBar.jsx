@@ -9,13 +9,14 @@ import {
   LogoutOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-import { useAuth } from '../services/auth';
+import { logout } from '../services/auth';
+import { signOut } from 'next-auth/client';
 
-const ProfileBar = ({ profileOpen, setProfileOpen }) => {
-  const { user, logout } = useAuth();
+const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
   const router = useRouter();
   const signout = async () => {
     const response = await logout();
+    signOut({ redirect: false });
     router.push('/');
   };
   return (
@@ -34,7 +35,7 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
         icon={<AntDesignOutlined />}
       />
       <h1 className="item" onClick={() => setProfileOpen(false)}>
-        <Link href="/profile">{user.name}</Link>
+        <Link href="/profile">{session.user.name}</Link>
       </h1>
       <div className="item">
         <HistoryOutlined />

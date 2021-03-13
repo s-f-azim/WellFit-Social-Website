@@ -7,6 +7,7 @@ import api from '../services/api';
 import ReactDOM from 'react-dom';
 
 const CourseCard = ({ content, isWish }) => {
+  // state for the modal pop up
   const [visible, setVisible] = useState(false);
   const [showState, setShowState] = useState(false);
   const [creators, setCreators] = useState({});

@@ -39,6 +39,7 @@ const Courses = ({ courses, total }) => {
   );
 };
 
+// check if a page were given and prerender the page
 export async function getStaticProps({ params }) {
   const currentPage = params ? params.page : undefined;
   const currentPageNumber = currentPage || 1;

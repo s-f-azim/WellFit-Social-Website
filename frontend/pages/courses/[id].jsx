@@ -67,12 +67,16 @@ const course = ({ course }) => {
   );
 };
 
+// check if the id was given and prerender the page using the above template
+// this is using incremental static regeneration to rehydrate the page every 10 minutes
 export const getStaticProps = async ({ params }) => {
-  console.log('hmm');
   const courseId = params ? params.id : undefined;
   const response = await api.get(`/courses/${courseId}`);
   return { props: { course: response.data.data }, revalidate: 60 * 10 };
 };
+
+// create all the pages possible for each individual course and make it static to improve performance significantly
+// each page will be at url/courses/id
 export const getStaticPaths = async () => {
   const { data } = await api.get(`/courses?limit=${Number.MAX_SAFE_INTEGER}`);
   console.log(data);
