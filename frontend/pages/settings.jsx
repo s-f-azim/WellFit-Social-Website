@@ -59,11 +59,6 @@ const settingsPage = () => {
     </h3>
   );
 
-  // redirect to home page if user not logged in or user deleted
-  /* useEffect(() => {
-    if (!user) router.push('/');
-  }, []); */
-
   const deleteAccount = async () => {
     const response = await deleteUser();
     if (response.data.success) {
@@ -130,7 +125,7 @@ const settingsPage = () => {
       <Row type="flex" justify="left">
         <Card className="mainCard" size="default" title={settingsTitle}>
           <Tabs size="small" defaultActiveKey="1" tabPosition="left">
-            <TabPane key="1" tab="General">
+            <TabPane key="1" tab="Account settings">
               <Card className="settingCard" title={myAccount}>
                 <Button onClick={editCredentials} type="text">
                   <EditOutlined />
@@ -170,10 +165,7 @@ const settingsPage = () => {
                 </Modal>
               </Card>
             </TabPane>
-            <TabPane key="2" tab="Privacy">
-              privacy
-            </TabPane>
-            <TabPane key="3" tab="Miscellaneous">
+            <TabPane key="2" tab="Contact us">
               <Card className="settingCard" title={bugReport}>
                 <Form form={form} name="Update my info" onFinish={onBugReport}>
                   <Space direction="vertical" size="middle">
