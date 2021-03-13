@@ -1,7 +1,5 @@
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
-import axios from 'axios';
-import API from '../../../config';
 import api from '../../../services/api';
 
 const providers = [
@@ -24,7 +22,7 @@ const providers = [
         );
 
         if (user) {
-          return { status: 'success', data: user.data };
+          return { success: 'success', data: user.data };
         }
       } catch (e) {
         console.log(e);
@@ -37,14 +35,16 @@ const callbacks = {
   async jwt(token, user) {
     if (user) {
       token.accessToken = user.data.token;
+      api.defaults.headers.Authorization = `Bearer ${user.data.token}`;
+      token.user = user.data.data;
     }
-
-    return token;
+    return Promise.resolve(token);
   },
 
   async session(session, token) {
     session.accessToken = token.accessToken;
-    return session;
+    session.user = token.user;
+    return Promise.resolve(session);
   },
 };
 
