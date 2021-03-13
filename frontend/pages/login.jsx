@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { signIn } from 'next-auth/client';
 import { Space, Form, Input, Alert, Button, Row, Card, notification } from 'antd';
 import {
   InstagramOutlined,
@@ -43,7 +44,14 @@ const Login = () => {
   const onFinish = async (values) => {
     const { email, password } = values;
     try {
-      await login(email, password);
+      // await login(email, password);
+      const res = await signIn('credentials', {
+        email,
+        password,
+        callbackURl: `http://localhost:8000/`,
+        redirect: false,
+      });
+      if (res?.error) throw new error('Unable to login');
       notification.open({
         message: 'Welcome back!',
         duration: 2,
