@@ -5,28 +5,31 @@
     min-height: 18rem;
   }
 
+  .title {
+    float: left;
+  }
+
   .title:hover {
     width: min-content;
     cursor: pointer;
-  }
-
-  .card-title-col {
-    min-width: 85%;
+    float: left;
   }
 
   .card-image {
-    min-width: 41.6%;
+    padding-right: 4rem;
   }
 
   .delete-icon {
     font-size: 2rem;
     color: black;
+    float: right;
   }
 
   .delete-icon:hover {
     font-size: 2rem;
     color: black;
     cursor: pointer;
+    float: right;
   }
 
   .emphasised-item {

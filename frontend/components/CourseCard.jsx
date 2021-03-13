@@ -35,21 +35,17 @@ const CourseCard = ({ content, isWish }) => {
       {showState ? (
         <div id={content._id}>
           <Card className="course-card" style={{ borderColor: 'black', borderRadius: '1rem' }}>
-            <Row>
-              <Col className="card-title-col">
-                <h1 className="title" onClick={() => setVisible(true)}>
-                  {content.title}
-                </h1>
-              </Col>
-              <Col id="delete-icon">
-                {isWish === true ? (
-                  <DeleteOutlined className="delete-icon" onClick={() => removeFromWishList()} />
-                ) : (
-                  <div style={{ minWidth: '2rem' }}></div>
-                )}
-              </Col>
-            </Row>
-            <br />
+            <div style={{ paddingBottom: '5rem' }}>
+              <h1 className="title" onClick={() => setVisible(true)}>
+                {content.title}
+              </h1>
+              {isWish === true ? (
+                <DeleteOutlined className="delete-icon" onClick={() => removeFromWishList()} />
+              ) : (
+                <div style={{ minWidth: '2rem' }}></div>
+              )}
+            </div>
+
             <Row style={{ maxHeight: '50%' }}>
               <Col className="card-image">
                 <Image
