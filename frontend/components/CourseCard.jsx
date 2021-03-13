@@ -61,9 +61,10 @@ const CourseCard = ({ content, isWish }) => {
                 />
               </Col>
               <Col>
-                <p>{content.location.city}</p>
-                <p>£{content.price}</p>
+                <p>Location: {content.location.city}</p>
+                <p>Price: £{content.price}</p>
                 <p>
+                  Creators:{' '}
                   <Space direction="horizontal">
                     {creators.map((creator) => (
                       <div>{creator.name}</div>
@@ -71,6 +72,7 @@ const CourseCard = ({ content, isWish }) => {
                   </Space>
                 </p>
                 <p>
+                  Tags:{' '}
                   <Space direction="horizontal">
                     {content.tags.map((tag) => (
                       <div className="emphasised-item">{tag}</div>
@@ -93,8 +95,8 @@ const CourseCard = ({ content, isWish }) => {
               </Link>,
             ]}
           >
-            <Row justify="center" align="middle" className="course-card">
-              <Col className="card-modal-image">
+            <Row justify="center" align="middle">
+              <Col>
                 <Image
                   src={
                     content.photos[0]
@@ -107,10 +109,12 @@ const CourseCard = ({ content, isWish }) => {
                   height={200}
                 />
               </Col>
+              <Col span={3}></Col>
               <Col>
-                <p>{content.location.city}</p>
-                <p>{content.price}</p>
+                <p>Location: {content.location.city}</p>
+                <p>Price: £{content.price}</p>
                 <p>
+                  Creators:{' '}
                   <Space direction="horizontal">
                     {creators.map((creator) => (
                       <div>{creator.name}</div>
@@ -118,13 +122,14 @@ const CourseCard = ({ content, isWish }) => {
                   </Space>
                 </p>
                 <p>
+                  Tags:{' '}
                   <Space direction="horizontal">
                     {content.tags.map((tag) => (
                       <div className="emphasised-item">{tag}</div>
                     ))}
                   </Space>
                 </p>
-                <p>{content.description}</p>
+                <p>Description: {content.description}</p>
               </Col>
             </Row>
           </Modal>

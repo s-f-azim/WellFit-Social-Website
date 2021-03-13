@@ -16,7 +16,7 @@
   }
 
   .card-image {
-    padding-right: 4rem;
+    padding-right: 2rem;
   }
 
   .delete-icon {
@@ -37,10 +37,6 @@
     background-color: #f5f5f5;
   }
 
-  .card-modal-image {
-    min-width: 30%;
-  }
-
   @media screen and (max-width: 1024px) {
     .ant-card {
       min-width: 20rem;
@@ -49,10 +45,6 @@
 
     .card-image {
       min-width: 100%;
-    }
-
-    .card-modal-image {
-      min-width: 40%;
     }
   }
 }
