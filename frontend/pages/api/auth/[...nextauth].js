@@ -1,3 +1,6 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-empty */
+/* eslint-disable consistent-return */
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import api from '../../../services/api';
@@ -20,7 +23,6 @@ const providers = [
             },
           }
         );
-
         if (user) {
           return { success: 'success', data: user.data };
         }
