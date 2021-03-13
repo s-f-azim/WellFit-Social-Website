@@ -243,6 +243,9 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
+    photos: {
+      type: [Buffer],
+    },
 
     role: {
       type: String,
