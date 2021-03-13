@@ -47,8 +47,15 @@ const CourseSchema = new mongoose.Schema(
       ],
     },
     address: {
-      type: String,
-      required: [true, 'Please add an address'],
+      street: {
+        type: String,
+      },
+      city: {
+        type: String,
+      },
+      postalCode: {
+        type: String,
+      },
     },
     isVirtual: Boolean,
     Gym: Boolean,
@@ -96,6 +103,8 @@ CourseSchema.pre('save', async function (next) {
     zipcode,
     countryCode,
   } = loc[0];
+  console.log(this.address);
+  console.log(loc[0]);
   this.location = {
     type: 'Point',
     coordinates: [longitude, latitude],
@@ -108,6 +117,7 @@ CourseSchema.pre('save', async function (next) {
   this.address = undefined;
   next();
 });
+
 // Create course slug from the name
 CourseSchema.pre('save', function (next) {
   this.slug = slugify(this.title, { lower: true });
