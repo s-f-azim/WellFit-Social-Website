@@ -18,6 +18,20 @@ const getCourse = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc get course creators by ID of the course
+ * @route GET /api/courses/:id/creators
+ * @access public
+ */
+const getCourseCreators = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.id).populate('creators');
+  res.status(200).send({
+    success: true,
+    data: course.creators,
+  });
+});
+
+/**
+ * @async
  * @desc Get all courses
  * @route GET /api/courses?select=fields&&location[city,zipcode,street]&&price&&avgRating&&tags
  * @access public
@@ -142,4 +156,5 @@ export {
   uploadImages,
   deleteImages,
   getCourse,
+  getCourseCreators,
 };

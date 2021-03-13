@@ -4,11 +4,13 @@ import geocoder from '../utils/geocoder.js';
 
 const CourseSchema = new mongoose.Schema(
   {
-    creators: {
-      type: [mongoose.Schema.Types.ObjectId],
-      required: [true, 'Please enter the authors of the package'],
-      ref: 'User',
-    },
+    creators: [
+      {
+        type: [mongoose.Schema.Types.ObjectId],
+        required: [true, 'Please enter the authors of the course'],
+        ref: 'User',
+      },
+    ],
     description: {
       type: String,
       required: [true, 'Please enter a description'],
