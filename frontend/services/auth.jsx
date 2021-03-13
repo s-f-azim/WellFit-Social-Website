@@ -5,13 +5,13 @@ import api from './api';
 
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
-  const { pathname, events } = useRouter();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cookies, setCookie, removeCookie] = useCookies(['token']);
   useEffect(() => {
     async function loadUserFromCookies() {
       const token = cookies;
+      console.log(token);
       if (token) {
         try {
           api.defaults.headers.Authorization = `Bearer ${token}`;
@@ -40,7 +40,11 @@ export const AuthProvider = ({ children }) => {
     removeCookie('token');
     setUser(null);
     delete api.defaults.headers.Authorization;
-    await api.get('users/logout');
+    try {
+      await api.get('users/logout');
+    } catch (err) {
+      return;
+    }
     Router.push('/');
   };
   const signup = async (name, email, password) =>

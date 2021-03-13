@@ -5,6 +5,8 @@
 @import './profileTopBar.scss';
 @import './signup.scss';
 @import './login.scss';
+@import './courseCard.scss';
+@import './searchCourse.scss';
 @import './questionnaire.scss';
 @import './preferences.scss';
 @import './_searchQuestions.scss';
@@ -17,7 +19,9 @@ body,
   min-width: 0;
   position: relative;
   overflow-wrap: break-word;
+  word-wrap: break-word;
   box-sizing: border-box;
+  white-space: normal;
 }
 html:focus-within {
   scroll-behavior: smooth;

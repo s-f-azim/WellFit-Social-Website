@@ -1,6 +1,21 @@
 /* eslint-disable no-use-before-define */
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
+import sharp from 'sharp';
+
+/**
+ * @async
+ * @desc get user by ID
+ * @route GET /api/users/:id
+ * @access public
+ */
+const getUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.status(200).send({
+    success: true,
+    data: user,
+  });
+});
 
 /**
  * @async
@@ -104,7 +119,7 @@ const loginUser = asyncHandler(async (req, res) => {
  * @route GET /api/users/me
  * @access private
  */
-const getUser = asyncHandler(async (req, res) => {
+const getProfile = asyncHandler(async (req, res) => {
   res.status(200).send({ success: true, data: req.user });
 });
 
@@ -221,6 +236,37 @@ const instagramOauth = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @async
+ * @desc upload images
+ * @route POST /api/users/avatar
+ * @access private
+ */
+const uploadImages = asyncHandler(async (req, res) => {
+  let formattedImages = [];
+  req.files.forEach((file) => formattedImages.push(file.buffer));
+  /* eslint-disable no-return-await */
+  formattedImages.map(
+    async (image) =>
+      await sharp(image).resize({ width: 250, height: 250 }).png().toBuffer()
+  );
+  req.user.photos = formattedImages;
+  await req.user.save();
+  sendTokenResponse(req.user, 200, res);
+});
+
+/**
+ * @async
+ * @desc delete images
+ * @route DELETE /api/users/avatar
+ * @access private
+ */
+const deleteImages = asyncHandler(async (req, res) => {
+  req.user.photos = undefined;
+  await req.user.update();
+  sendTokenResponse(req.user, 200, res);
+});
+
+/**
  * @desc get the token from the user model and create a cookie
  * @param {User} user - a user
  * @param {int} statusCode - integer of status code ex 404
@@ -290,6 +336,7 @@ export {
   getUsersWithinRadius,
   createUser,
   loginUser,
+  getProfile,
   getUser,
   logoutUser,
   updateUser,
@@ -297,6 +344,8 @@ export {
   googleOauth,
   facebookOauth,
   instagramOauth,
+  uploadImages,
+  deleteImages,
   getSuggestedInstructors,
   followUser,
   getFollowing,
