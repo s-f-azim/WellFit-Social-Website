@@ -40,7 +40,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
           </li>
           <li className="option">
             <Button type="link" className="menuButton" onClick={() => setProfileOpen(!profileOpen)}>
-              <UserOutlined /> {session.user.name}
+              <UserOutlined /> {session.user.fName}
             </Button>
           </li>
         </ul>
