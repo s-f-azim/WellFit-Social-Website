@@ -38,7 +38,7 @@ const Profile = () => {
 
   /**
    * Reset each button to its original state and then change the "Favourites" button to make it
-   * clear that it is the one currently selected. Also, load the user's  favourites into the
+   * clear that it is the one currently selected. Also, load the user's favourites into the
    * div with id 'content'.
    */
   function displayFavourites() {
