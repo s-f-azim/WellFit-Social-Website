@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { signIn } from 'next-auth/client';
+import { signIn, useSession } from 'next-auth/client';
 import { Space, Form, Input, Alert, Button, Row, Card, notification } from 'antd';
 import {
   InstagramOutlined,
@@ -8,7 +8,7 @@ import {
   SmileOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
-import { useAuth } from '../services/auth';
+import { login } from '../services/auth';
 import API from '../services/api';
 
 // layout and styling for form
@@ -39,7 +39,6 @@ const Login = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
-  const { login } = useAuth();
   // normal login handler
   const onFinish = async (values) => {
     const { email, password } = values;
@@ -48,10 +47,10 @@ const Login = () => {
       const res = await signIn('credentials', {
         email,
         password,
-        callbackURl: `http://localhost:8000/`,
         redirect: false,
       });
       if (res?.error) throw new error('Unable to login');
+      await login(email, password);
       notification.open({
         message: 'Welcome back!',
         duration: 2,

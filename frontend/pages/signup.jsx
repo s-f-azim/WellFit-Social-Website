@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, notification } from 'antd';
+import { signup } from '../services/auth';
 import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { useAuth } from '../services/auth';
 
 // basic form styling
 const formItemLayout = {
@@ -31,7 +31,6 @@ const Signup = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
-  const { login, signup } = useAuth();
   const onFinish = async (values) => {
     const { email, name, password } = values;
     try {
@@ -42,8 +41,7 @@ const Signup = () => {
           duration: 2,
           icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
         });
-        await login(email, password);
-        router.push('/');
+        router.push('/login');
       }
     } catch (err) {
       setHasError(true);

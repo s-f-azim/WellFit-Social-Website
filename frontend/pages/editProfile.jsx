@@ -1,5 +1,5 @@
 import { CheckOutlined } from '@ant-design/icons';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Router from 'next/router';
 import {
   Space,
@@ -63,7 +63,7 @@ const infoAlertText = (
   </p>
 );
 
-const editProfilePage = ({ updateSession }) => {
+const editProfilePage = () => {
   const [session, loading] = useSession();
 
   if (typeof window !== 'undefined' && loading) return null;
@@ -216,7 +216,7 @@ const editProfilePage = ({ updateSession }) => {
                   </Modal>
                 </>
               </h1>
-              <InstQuest />
+              <InstQuest session={session} />
             </TabPane>
 
             <TabPane tab="Credentials" key="3">

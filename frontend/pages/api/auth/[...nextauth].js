@@ -25,7 +25,7 @@ const providers = [
           return { success: 'success', data: user.data };
         }
       } catch (e) {
-        console.log(e);
+        return;
       }
     },
   }),
