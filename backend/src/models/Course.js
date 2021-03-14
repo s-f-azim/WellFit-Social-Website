@@ -49,7 +49,7 @@ const CourseSchema = new mongoose.Schema(
       type: String,
     },
     isVirtual: Boolean,
-    Gym: Boolean,
+    gym: Boolean,
     slug: String,
     location: {
       type: {

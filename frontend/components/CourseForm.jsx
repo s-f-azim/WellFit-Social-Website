@@ -1,5 +1,16 @@
 import { useState, useMemo } from 'react';
-import { Form, Input, InputNumber, Button, Select, Card, notification, Alert, Space } from 'antd';
+import {
+  Form,
+  Input,
+  InputNumber,
+  Button,
+  Select,
+  Card,
+  notification,
+  Alert,
+  Space,
+  Radio,
+} from 'antd';
 import { MinusCircleOutlined, PlusOutlined, CheckOutlined } from '@ant-design/icons';
 
 import { useSession } from 'next-auth/client';
@@ -66,6 +77,21 @@ const CourseForm = () => {
             <Input.TextArea rows={3} />
           </Form.Item>
 
+          <Form.Item
+            label="Price"
+            name="price"
+            rules={[
+              {
+                type: 'number',
+                min: 0,
+                message: 'Please input a valid price',
+              },
+              { required: true, message: 'Please input the description of the course' },
+            ]}
+          >
+            <InputNumber precision={2} />
+          </Form.Item>
+
           <Form.List name="creators">
             {(fields, { add, remove }) => (
               <>
@@ -121,21 +147,6 @@ const CourseForm = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item
-            label="Price"
-            name="price"
-            rules={[
-              {
-                type: 'number',
-                min: 0,
-                message: 'Please input a valid price',
-              },
-              { required: true, message: 'Please input the description of the course' },
-            ]}
-          >
-            <InputNumber precision={2} />
-          </Form.Item>
-
           <Form.Item label="Fitness level required" name="fitnessLevel">
             <Select allowClear>
               <Option value="beginner">Beginner</Option>
@@ -162,6 +173,20 @@ const CourseForm = () => {
             ]}
           >
             <InputNumber />
+          </Form.Item>
+
+          <Form.Item name="isVirtual" label="Virtual">
+            <Radio.Group>
+              <Radio value>Yes</Radio>
+              <Radio value={false}>No</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item name="gym" label="Requires gym access">
+            <Radio.Group>
+              <Radio value>Yes</Radio>
+              <Radio value={false}>No</Radio>
+            </Radio.Group>
           </Form.Item>
 
           <Form.Item label="Training equipment required" name="trainingEquipment">
