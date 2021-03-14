@@ -1,4 +1,4 @@
-import { CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined, QuestionOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import Router from 'next/router';
 import {
@@ -15,9 +15,10 @@ import {
   notification,
   Tabs,
 } from 'antd';
+import { useSession, getSession } from 'next-auth/client';
 import updateUser from '../actions/user';
 import InstQuest from '../components/InstQuest';
-import { useSession, getSession } from 'next-auth/client';
+
 const { Option } = Select;
 
 const tailFormItemLayout = {
@@ -69,7 +70,8 @@ const editProfilePage = () => {
   if (typeof window !== 'undefined' && loading) return null;
 
   if (session) {
-    const user = session.user;
+    console.log(session);
+    const { user } = session;
     const [isAlertVisible, setIsAlertVisible] = useState(false);
 
     const showAlert = () => {
@@ -134,7 +136,7 @@ const editProfilePage = () => {
                     </Select>
                   </Form.Item>
 
-                  <Form.Item name="location" label="Location">
+                  {/* <Form.Item name="location" label="Location">
                     <Select
                       defaultValue={user.location ? user.location : null}
                       placeholder="Select your location"
@@ -146,7 +148,7 @@ const editProfilePage = () => {
                       <Option value="Australia">Australia</Option>
                       <Option value="Africa">Africa</Option>
                     </Select>
-                  </Form.Item>
+                  </Form.Item> */}
 
                   <Form.Item
                     name="birthday"
@@ -200,10 +202,10 @@ const editProfilePage = () => {
 
             <TabPane tab="Detailed info" key="2">
               <h1>
-                Add/Edit in-depth profile information
+                Add/Edit in-depth profile information{' '}
                 <>
                   <Button type="primary" shape="circle" onClick={showAlert}>
-                    ?
+                    <QuestionOutlined />
                   </Button>
                   <Modal
                     closable={false}

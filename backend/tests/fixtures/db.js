@@ -11,7 +11,8 @@ const userOne = {
   _id: userOneId,
   email: 'testEmail@test.com',
   password: '12345678',
-  name: 'testUser1',
+  fName: 'testUser',
+  lName: '11',
   gender: 'Male',
   birthday: new Date(),
   nickname: 'testicles',
@@ -19,7 +20,7 @@ const userOne = {
   reviews: [reviewOneId],
   tags: ['Sweat', 'Cardio'],
   clientGenderPreference: 'Female',
-  role: 'client'
+  role: 'client',
 };
 
 const userTwoId = new mongoose.Types.ObjectId();
@@ -28,13 +29,14 @@ const userTwo = {
   _id: userTwoId,
   email: 'test2@test.com',
   password: 'password@123',
-  name: 'testUser2',
+  fName: 'testUser',
+  lName: '22',
   gender: 'Female',
   birthday: new Date(),
   nickname: 'Notesticles',
   bio: 'I have many balls',
   tags: ['Sweat'],
-  role: 'instructor'
+  role: 'instructor',
 };
 
 const userThreeId = new mongoose.Types.ObjectId();
@@ -43,14 +45,14 @@ const userThree = {
   _id: userThreeId,
   email: 'test3@test.com',
   password: 'password123',
-  name: 'testUser3',
-  gender: 'Male',
+  fName: 'testUser',
+  lName: '33',
   location: 'Europe',
   birthday: new Date(),
   nickname: 'FitnessGuru',
   bio: 'I love fitness',
   tags: ['Sweat'],
-  role: 'instructor'
+  role: 'instructor',
 };
 
 const userFourId = new mongoose.Types.ObjectId();
@@ -59,14 +61,14 @@ const userFour = {
   _id: userFourId,
   email: 'test4@test.com',
   password: 'password123',
-  name: 'testUser4',
-  gender: 'Male',
+  fName: 'testUser',
+  lName: '44',
   location: 'Europe',
   birthday: new Date(),
   nickname: 'FitnessGeeza',
   bio: 'I dont mind fitness',
   tags: ['Workout', 'Sweat'],
-  role: 'instructor'
+  role: 'instructor',
 };
 
 const reviewOne = {

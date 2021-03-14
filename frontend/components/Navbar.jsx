@@ -1,9 +1,11 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Button, Typography, Input } from 'antd';
 import { useState } from 'react';
 import { UserOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import ProfileBar from './ProfileBar';
+
 const { Search } = Input;
 const { Title } = Typography;
 
@@ -11,6 +13,10 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const onUserNameClick = () => {
+    setProfileOpen(!profileOpen);
+    closeMobileMenu();
+  };
 
   return (
     <>
@@ -34,8 +40,8 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
             </Link>
           </li>
           <li className="option">
-            <Button type="link" className="menuButton" onClick={() => setProfileOpen(!profileOpen)}>
-              <UserOutlined /> {session.user.name}
+            <Button type="link" className="menuButton" onClick={onUserNameClick}>
+              <UserOutlined /> {session.user.fName}
             </Button>
           </li>
         </ul>
@@ -104,7 +110,7 @@ const Navbar = () => {
     <>
       <nav className="topheader" style={{ backgroundColor: 'white' }}>
         <Title level={1} className="logo-text">
-          <a href="/"> InstaFit </a>
+          <a href="/"> QuickFit </a>
         </Title>
         {!session ? (
           <LoggedOutMenu />

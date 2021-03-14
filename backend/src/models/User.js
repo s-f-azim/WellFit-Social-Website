@@ -32,11 +32,15 @@ const UserSchema = new mongoose.Schema(
       ],
       minlength: 8,
     },
-
-    name: {
+    fName: {
       type: String,
-      required: [true, 'please enter your name'],
-      minlength: 3,
+      required: [true, 'please enter your first name'],
+      minlength: 2,
+    },
+    lName: {
+      type: String,
+      required: [true, 'please enter your last name'],
+      minlength: 2,
     },
 
     gender: {
@@ -265,6 +269,13 @@ UserSchema.virtual('reviews', {
   ref: 'Review',
   localField: '_id',
   foreignField: 'reviewed',
+});
+
+// connect the creator of requests to the user
+UserSchema.virtual('requests', {
+  ref: 'Request',
+  localField: '_id',
+  foreignField: 'author',
 });
 
 // change the json to not send specified fields
