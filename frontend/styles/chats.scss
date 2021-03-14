@@ -1,0 +1,23 @@
+.ant-row {
+  margin: 3rem;
+}
+.chat-card {
+  width: 80%;
+  .header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .user {
+    margin-top: 0.4rem;
+    border-radius: 1000rem;
+    padding: 0.7rem;
+    transition: 0.4s ease-in-out;
+    &:hover {
+      background: #e9ecef;
+    }
+    .action {
+      cursor: pointer;
+    }
+  }
+}
