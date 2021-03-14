@@ -6,6 +6,7 @@ import { useState } from 'react';
 const CourseCard = ({ content }) => {
   // state for the modal pop up
   const [visible, setVisible] = useState(false);
+
   return (
     <>
       <Card

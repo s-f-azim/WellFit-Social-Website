@@ -32,6 +32,7 @@ const Signup = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
+
   const onFinish = async (values) => {
     const { role, email, fName, lName, password } = values;
     try {

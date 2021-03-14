@@ -16,7 +16,7 @@ import { signOut } from 'next-auth/client';
 const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
   const router = useRouter();
   const signout = async () => {
-    const response = await logout();
+    await logout();
     signOut({ redirect: false });
     router.push('/');
   };
