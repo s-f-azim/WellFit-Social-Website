@@ -13,16 +13,16 @@ import {
 } from '@ant-design/icons';
 import { Button, Row, Card, Modal, Tabs, Form, Alert, notification, Space, Input } from 'antd';
 import { useState } from 'react';
+import { useSession, getSession } from 'next-auth/client';
 import { useAuth } from '../services/auth';
 import { createRequest } from '../actions/request';
 import { deleteUser } from '../actions/user';
-import { useSession, getSession } from 'next-auth/client';
 
 const settingsPage = () => {
   const [session, loading] = useSession();
 
   if (session) {
-    const user = session.user;
+    const { user } = session;
 
     const router = useRouter();
 

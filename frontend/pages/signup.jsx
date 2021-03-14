@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, notification, Select } from 'antd';
-import { signup } from '../services/auth';
 import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
+import { signup } from '../services/auth';
+
 const { Option } = Select;
 
 // basic form styling

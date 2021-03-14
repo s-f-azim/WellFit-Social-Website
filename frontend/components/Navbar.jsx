@@ -5,6 +5,7 @@ import { UserOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import ProfileBar from './ProfileBar';
+
 const { Search } = Input;
 const { Title } = Typography;
 
@@ -39,7 +40,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
             </Link>
           </li>
           <li className="option">
-            <Button type="link" className="menuButton" onClick={() => setProfileOpen(!profileOpen)}>
+            <Button type="link" className="menuButton" onClick={onUserNameClick}>
               <UserOutlined /> {session.user.fName}
             </Button>
           </li>

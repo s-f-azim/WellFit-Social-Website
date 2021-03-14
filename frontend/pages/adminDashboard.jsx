@@ -1,4 +1,4 @@
-import { Card, Row, Col, Statistic, Tabs, Button, Modal, List } from 'antd';
+import { Card, Row, Col, Statistic, Tabs, Button, Modal, List, notification } from 'antd';
 import {
   FundProjectionScreenOutlined,
   BarChartOutlined,
@@ -8,11 +8,11 @@ import {
   MailOutlined,
   UserOutlined,
   CloseOutlined,
+  CheckOutlined,
 } from '@ant-design/icons';
-import { getUsers, getAdmins, getClients, getInstructors } from '../actions/user';
-import { deleteRequest } from '../actions/request';
-import { getRequests } from '../actions/request';
 import { useState } from 'react';
+import { getUsers, getAdmins, getClients, getInstructors } from '../actions/user';
+import { deleteRequest, getRequests } from '../actions/request';
 
 const { TabPane } = Tabs;
 
@@ -62,9 +62,7 @@ const AdminDashboard = ({
     </p>
   );
 
-  const getRequestAuthor = (id) => {
-    return users.filter((user) => user._id === id);
-  };
+  const getRequestAuthor = (id) => users.filter((user) => user._id === id);
 
   const [reports, setReports] = useState(bugReports);
 
@@ -72,6 +70,11 @@ const AdminDashboard = ({
     await deleteRequest(report._id);
     reports.splice(reports.indexOf(report), 1);
     setReports([...reports]);
+    notification.open({
+      message: 'Deleted report',
+      duration: 2,
+      icon: <CheckOutlined style={{ color: '#70FF00' }} />,
+    });
   };
 
   return (

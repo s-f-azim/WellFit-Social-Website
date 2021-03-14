@@ -1,4 +1,4 @@
-import { CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined, QuestionOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import Router from 'next/router';
 import {
@@ -200,10 +200,10 @@ const editProfilePage = () => {
 
             <TabPane tab="Detailed info" key="2">
               <h1>
-                Add/Edit in-depth profile information
+                Add/Edit in-depth profile information{' '}
                 <>
                   <Button type="primary" shape="circle" onClick={showAlert}>
-                    ?
+                    <QuestionOutlined />
                   </Button>
                   <Modal
                     closable={false}

@@ -10,13 +10,19 @@ import {
   CheckOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-import { logout } from '../services/auth';
 import { signOut } from 'next-auth/client';
+import { logout } from '../services/auth';
 
 const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
   const router = useRouter();
   const signout = async () => {
+    setProfileOpen(false);
     await logout();
+    notification.open({
+      message: 'Signed out',
+      duration: 2,
+      icon: <CheckOutlined style={{ color: '#70FF00' }} />,
+    });
     signOut({ redirect: false });
     router.push('/');
   };
