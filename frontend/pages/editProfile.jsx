@@ -136,7 +136,7 @@ const editProfilePage = () => {
                     </Select>
                   </Form.Item>
 
-                  <Form.Item name="location" label="Location">
+                  {/* <Form.Item name="location" label="Location">
                     <Select
                       defaultValue={user.location ? user.location : null}
                       placeholder="Select your location"
@@ -148,7 +148,7 @@ const editProfilePage = () => {
                       <Option value="Australia">Australia</Option>
                       <Option value="Africa">Africa</Option>
                     </Select>
-                  </Form.Item>
+                  </Form.Item> */}
 
                   <Form.Item
                     name="birthday"

@@ -26,6 +26,11 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
     signOut({ redirect: false });
     router.push('/');
   };
+
+  const GoToeditProfile = () => {
+    setProfileOpen(false);
+    router.push('/editProfile');
+  };
   return (
     <div className={`profile-bar ${profileOpen ? 'active' : ''}`}>
       <CloseOutlined onClick={() => setProfileOpen(false)} />
@@ -48,11 +53,9 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
         <HistoryOutlined />
         <h1>Purchase history</h1>
       </div>
-      <div className="item">
+      <div className="item edit" onClick={GoToeditProfile}>
         <EditOutlined />
-        <h1 onClick={() => setProfileOpen(false)}>
-          <Link href="/editProfile">Edit profile</Link>
-        </h1>
+        <h1>Edit profile</h1>
       </div>
       <div className="item">
         <HistoryOutlined />
