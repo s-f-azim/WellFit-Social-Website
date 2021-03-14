@@ -5,6 +5,7 @@ import Course from '../../src/models/Course.js';
 
 const userOneId = new mongoose.Types.ObjectId();
 const reviewOneId = new mongoose.Types.ObjectId();
+const courseOneId = new mongoose.Types.ObjectId();
 
 // create users
 const userOne = {
@@ -19,7 +20,7 @@ const userOne = {
   reviews: [reviewOneId],
   tags: ['Sweat', 'Cardio'],
   clientGenderPreference: 'Female',
-  role: 'client'
+  role: 'client',
 };
 
 const userTwoId = new mongoose.Types.ObjectId();
@@ -34,7 +35,7 @@ const userTwo = {
   nickname: 'Notesticles',
   bio: 'I have many balls',
   tags: ['Sweat'],
-  role: 'instructor'
+  role: 'instructor',
 };
 
 const userThreeId = new mongoose.Types.ObjectId();
@@ -50,7 +51,7 @@ const userThree = {
   nickname: 'FitnessGuru',
   bio: 'I love fitness',
   tags: ['Sweat'],
-  role: 'instructor'
+  role: 'instructor',
 };
 
 const userFourId = new mongoose.Types.ObjectId();
@@ -66,7 +67,20 @@ const userFour = {
   nickname: 'FitnessGeeza',
   bio: 'I dont mind fitness',
   tags: ['Workout', 'Sweat'],
-  role: 'instructor'
+  role: 'instructor',
+};
+
+const userFiveId = new mongoose.Types.ObjectId();
+
+const userFive = {
+  _id: userFiveId,
+  email: 'test5@gmail.com',
+  password: '12345678',
+  name: 'test5',
+  gender: 'Male',
+  location: 'Europe',
+  birthday: new Date(),
+  wishlist: [courseOneId],
 };
 
 const reviewOne = {
@@ -78,8 +92,6 @@ const reviewOne = {
 };
 
 // create courses
-
-const courseOneId = new mongoose.Types.ObjectId();
 
 const courseOne = {
   _id: courseOneId,
@@ -104,7 +116,7 @@ const courseTwo = {
 };
 
 const reviews = [reviewOne];
-const users = [userOne, userTwo, userThree, userFour];
+const users = [userOne, userTwo, userThree, userFour, userFive];
 const courses = [courseOne, courseTwo];
 // token
 const tokens = [];
@@ -140,6 +152,8 @@ export {
   userOne,
   userTwo,
   userThree,
+  userFour,
+  userFive,
   courseOne,
   courseTwo,
   setupDatabase,
