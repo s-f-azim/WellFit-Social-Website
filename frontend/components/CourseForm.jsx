@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Form, Input, InputNumber, Button, Select, Card, notification, Alert, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined, CheckOutlined } from '@ant-design/icons';
 
@@ -12,7 +12,8 @@ const { Option } = Select;
 
 const CourseForm = () => {
   const [session] = useSession();
-  const { user } = session;
+  const user = useMemo(() => (session ? session.user : null), [session]);
+
   const [form] = Form.useForm();
   const [error, setError] = useState(null);
 
@@ -25,9 +26,9 @@ const CourseForm = () => {
         );
       }
       const response = await createCourse(values);
-      if (response.data.success) {
+      if (response.success) {
         notification.open({
-          message: 'Information updated!',
+          message: 'Course Created!',
           duration: 2,
           icon: <CheckOutlined style={{ color: '#33FF49' }} />,
         });
