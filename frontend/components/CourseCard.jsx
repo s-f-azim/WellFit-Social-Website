@@ -106,8 +106,8 @@ const CourseCard = ({ content, isWish }) => {
               </Link>,
             ]}
           >
-            <Row justify="center" align="middle">
-              <Col>
+            <Row justify="center" align="middle" className="course-card">
+              <Col className="modal-image">
                 <Image
                   src={
                     content.photos[0]
@@ -120,7 +120,6 @@ const CourseCard = ({ content, isWish }) => {
                   height={200}
                 />
               </Col>
-              <Col span={3}></Col>
               <Col>
                 <p>Location: {content.location.city}</p>
                 <p>Price: £{content.price}</p>
