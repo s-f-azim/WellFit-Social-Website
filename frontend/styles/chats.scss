@@ -1,4 +1,4 @@
-.ant-row {
+.chat-row {
   margin: 3rem;
 }
 .chat-card {
@@ -12,7 +12,7 @@
     margin-top: 0.4rem;
     border-radius: 1000rem;
     padding: 0.7rem;
-    transition: 0.4s ease-in-out;
+    transition: 0.4s all ease-in-out;
     &:hover {
       background: #e9ecef;
     }
@@ -20,4 +20,21 @@
       cursor: pointer;
     }
   }
+}
+.infinite-container {
+  margin-top: 0.5rem;
+  padding: 0.5rem 3rem;
+  height: 100%;
+  overflow: auto;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+}
+.loading-container {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+}
+.content-chat {
+  height: 65vh;
 }

@@ -1,17 +1,19 @@
-import { Input, List, message, Avatar } from 'antd';
-import { UserOutlined, SendOutlined } from '@ant-design/icons';
+import { Input, List, Spin, Avatar } from 'antd';
+import { UserOutlined, SendOutlined, LoadingOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { getUsers } from '../actions/user';
+import InfiniteScroll from 'react-infinite-scroller';
+import api from '../services/api';
 
-const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
-
+const loadingIcon = <LoadingOutlined spin />;
 const ChatList = () => {
-  const [users, setUsers] = useState();
-  // let users;
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  let total;
   useEffect(async () => {
-    const response = await getUsers();
-    console.log(response.data);
+    const response = await api.get('/users');
+    total = response.data.pagination.total;
     setUsers([...response.data.data]);
   }, []);
   const image = (user) => {
@@ -24,24 +26,53 @@ const ChatList = () => {
     }
     return <Avatar icon={<UserOutlined />} />;
   };
+  const handleScroll = async (params) => {
+    console.log('hmm');
+    setLoading(true);
+    if (users.length >= total) {
+      setLoading(false);
+      setHasMore(false);
+      return;
+    }
+    const response = await api.get(`/users?limit=${params}`);
+    setUsers([...response.data.data]);
+    setLoading(false);
+  };
+
   return (
     <>
       <Input style={{ borderRadius: '10000rem' }} />
-      <List
-        dataSource={users}
-        renderItem={(item) => (
-          <List.Item className="user" key={item._id}>
-            <List.Item.Meta
-              avatar={image(item)}
-              title={<a href="https://ant.design">{item.fName}</a>}
-              description={item.email}
-            />
-            <div className="action">
-              <SendOutlined />
-            </div>
-          </List.Item>
-        )}
-      ></List>
+      <div className="infinite-container">
+        <InfiniteScroll
+          initialLoad={false}
+          pageStart={0}
+          loadMore={() => handleScroll(users.length + 2)}
+          hasMore={!loading && hasMore}
+          useWindow={false}
+        >
+          <List
+            dataSource={users}
+            renderItem={(item) => (
+              <List.Item className="user" key={item._id}>
+                <List.Item.Meta
+                  avatar={image(item)}
+                  title={<a href="https://ant.design">{item.fName}</a>}
+                  description={item.email}
+                />
+                <div className="action">
+                  <SendOutlined />
+                </div>
+              </List.Item>
+            )}
+          >
+            {loading && hasMore && (
+              <div className="loading-container">
+                <Spin indicator={loadingIcon} />
+              </div>
+            )}
+          </List>
+        </InfiniteScroll>
+      </div>
     </>
   );
 };

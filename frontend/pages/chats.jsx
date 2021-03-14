@@ -6,7 +6,7 @@ import ChatList from '../components/ChatList';
 const Chats = () => {
   const [conversation, setConversation] = useState();
   return (
-    <Row justify="center" type="flex">
+    <Row className="chat-row" justify="center" type="flex">
       <Card
         className="chat-card"
         bordered={false}
@@ -16,7 +16,7 @@ const Chats = () => {
           </div>
         }
       >
-        <Col>
+        <Col className="content-chat">
           <ChatList />
         </Col>
         <Col></Col>
