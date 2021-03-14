@@ -15,9 +15,10 @@ import {
   notification,
   Tabs,
 } from 'antd';
+import { useSession, getSession } from 'next-auth/client';
 import updateUser from '../actions/user';
 import InstQuest from '../components/InstQuest';
-import { useSession, getSession } from 'next-auth/client';
+
 const { Option } = Select;
 
 const tailFormItemLayout = {
@@ -69,7 +70,8 @@ const editProfilePage = () => {
   if (typeof window !== 'undefined' && loading) return null;
 
   if (session) {
-    const user = session.user;
+    console.log(session);
+    const { user } = session;
     const [isAlertVisible, setIsAlertVisible] = useState(false);
 
     const showAlert = () => {
