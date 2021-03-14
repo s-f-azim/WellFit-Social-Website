@@ -18,7 +18,12 @@ it('Should signup a new user', async () => {
   const count = await User.countDocuments();
   const response = await request(app)
     .post('/api/users/signup')
-    .send({ email: 'testEmail1@test.com', password: '12345678', name: 'test' })
+    .send({
+      email: 'testEmail1@test.com',
+      password: '12345678',
+      fName: 'testUser',
+      lName: '11',
+    })
     .expect(201);
   // assert that the database was changed correctly
   const user = await User.findById(response.body.data._id);
@@ -33,7 +38,8 @@ it('Should not signup a new user', async () => {
     .send({
       email: 'testEmail@test.com',
       password: 'password12@',
-      name: 'testUser1',
+      fName: 'testUser',
+      lName: '22',
     })
     .expect(400);
   expect(await User.countDocuments()).toBe(count);
@@ -167,7 +173,7 @@ it('Should get all users', async () => {
 // assert get users with filters
 it('Should get all users', async () => {
   const response = await request(app)
-    .get('/api/users?name=testUser1')
+    .get('/api/users?lName=11')
     .send()
     .expect(200);
   expect(response.body.count).toBe(1);
@@ -175,12 +181,12 @@ it('Should get all users', async () => {
 // assert get users with filters and select specific fields
 it('Should get all users', async () => {
   const response = await request(app)
-    .get('/api/users?name=testUser1&&select=name')
+    .get('/api/users?lName=11&&select=fName')
     .send()
     .expect(200);
   expect(response.body.count).toBe(1);
   expect(response.body.data[0].email).toEqual(undefined);
-  expect(response.body.data[0].name).toEqual(userOne.name);
+  expect(response.body.data[0].fName).toEqual(userOne.fName);
 });
 // assert get users within radius
 it('Should get all users', async () => {
@@ -189,7 +195,8 @@ it('Should get all users', async () => {
     .send({
       email: 'testEmail1@test.com',
       password: '12345678',
-      name: 'test',
+      fName: 'testUser',
+      lName: '11',
       address: 'kt2 6qw',
     })
     .expect(201);
@@ -211,7 +218,7 @@ it('Should query similar instructors based on tags and client gender preference'
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
   expect(
-    //check if every user matches query criteria
+    // check if every user matches query criteria
     response.body.data.every(
       (user) =>
         user.tags.some((t) => userOne.tags.includes(t)) ||
@@ -227,7 +234,7 @@ it('Should not include other instructors not relevevant to the query', async () 
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
   expect(
-    //check if some user does not match query criteria
+    // check if some user does not match query criteria
     response.body.data.some(
       (user) =>
         user.tags.every((t) => !userOne.tags.includes(t)) &&

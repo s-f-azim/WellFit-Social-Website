@@ -18,9 +18,11 @@ export const logout = async () => {
   }
   Router.push('/');
 };
-export const signup = async (name, email, password) =>
+export const signup = async (role, email, fName, lName, password) =>
   await api.post('/users/signup', {
-    name,
+    role,
     email,
+    fName,
+    lName,
     password,
   });

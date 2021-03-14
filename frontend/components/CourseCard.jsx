@@ -78,7 +78,9 @@ const CourseCard = ({ content, isWish }) => {
                   Creators:{' '}
                   <Space direction="horizontal">
                     {creators.map((creator) => (
-                      <div>{creator.name}</div>
+                      <div>
+                        {creator.fName} {creator.lName}
+                      </div>
                     ))}
                   </Space>
                 </p>
@@ -127,7 +129,9 @@ const CourseCard = ({ content, isWish }) => {
                   Creators:{' '}
                   <Space direction="horizontal">
                     {creators.map((creator) => (
-                      <div>{creator.name}</div>
+                      <div>
+                        {creator.fName} {creator.lName}
+                      </div>
                     ))}
                   </Space>
                 </p>
