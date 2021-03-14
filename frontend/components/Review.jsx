@@ -1,12 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/client';
 import ReviewList from './ReviewList';
 import ReviewInput from './ReviewInput';
 
-import { useAuth } from '../services/auth';
-
 export default function Review({ reviewUser }) {
-  const { user } = useAuth();
+  const [session] = useSession();
+  const { user } = session;
   const [review, setReview] = useState();
   let { reviews } = reviewUser;
 

@@ -92,9 +92,8 @@ const CourseSchema = new mongoose.Schema(
       min: [1, 'Rating must be at least 1'],
       max: [5, 'Rating must can not be more than 5'],
     },
-    photo: {
-      type: String,
-      default: 'no-photo.jpg',
+    photos: {
+      type: [Buffer],
     },
   },
   { timestamps: true }
@@ -121,7 +120,6 @@ CourseSchema.pre('save', async function (next) {
     zipcode,
     country: countryCode,
   };
-  this.address = undefined;
   next();
 });
 

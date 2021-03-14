@@ -1,11 +1,26 @@
 /* eslint-disable no-use-before-define */
+import sharp from 'sharp';
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
 
 /**
  * @async
+ * @desc get user by ID
+ * @route GET /api/users/:id
+ * @access public
+ */
+const getUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.status(200).send({
+    success: true,
+    data: user,
+  });
+});
+
+/**
+ * @async
  * @desc Get all users
- * @route POST /api/users?select=fields&&location[city,zipcode,street]&&tags&&sort
+ * @route GET /api/users?select=fields&&location[city,zipcode,street]&&tags&&sort
  * @access public
  */
 const getUsers = asyncHandler(async (req, res) => {
@@ -59,7 +74,7 @@ const loginUser = asyncHandler(async (req, res) => {
  * @route GET /api/users/me
  * @access private
  */
-const getUser = asyncHandler(async (req, res) => {
+const getProfile = asyncHandler(async (req, res) => {
   res.status(200).send({ success: true, data: req.user });
 });
 
@@ -72,12 +87,10 @@ const getUser = asyncHandler(async (req, res) => {
 const getUserIdByEmail = asyncHandler(async (req, res) => {
   User.findOne({ email: req.params.email }, '_id').exec((err, user) => {
     if (!user)
-      return res
-        .status(400)
-        .send({
-          success: false,
-          error: `User ${req.params.email} does not exist`,
-        });
+      return res.status(400).send({
+        success: false,
+        error: `User ${req.params.email} does not exist`,
+      });
     return res.status(200).send({ success: true, data: user._id });
   });
 });
@@ -96,6 +109,46 @@ const updateUser = asyncHandler(async (req, res) => {
   );
   const updatedUser = await req.user.save();
   sendTokenResponse(updatedUser, 200, res);
+});
+
+/**
+ * @async
+ * @desc add following user profile
+ * @route PATCH /api/users/follow
+ * @access private
+ */
+const followUser = asyncHandler(async (req, res) => {
+  if (User.findOne({ _id: req.params.id })) {
+    if (
+      !req.user.following.includes(req.params.id) &&
+      `${req.user._id} ` !== `${req.params.id} `
+    ) {
+      req.user.following.push(req.params.id);
+    } else {
+      const index = req.user.following.indexOf(req.params.id);
+      if (index > -1) {
+        req.user.following.splice(index, 1);
+      }
+    }
+    const updatedUser = await req.user.save();
+    sendTokenResponse(updatedUser, 200, res);
+  }
+});
+
+/**
+ * @async
+ * @desc get user following list
+ * @route GET /api/users/followList
+ * @access private
+ */
+const getFollowing = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page || '1', 10);
+  const limit = 2;
+  const startIndex = (page - 1) * limit;
+  const lastIndex = limit * page;
+  const followings = await User.findById(req.user._id).populate('following');
+  const results = followings.following.slice(startIndex, lastIndex);
+  res.status(200).send({ success: true, data: results });
 });
 
 /**
@@ -155,6 +208,37 @@ const instagramOauth = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @async
+ * @desc upload images
+ * @route POST /api/users/avatar
+ * @access private
+ */
+const uploadImages = asyncHandler(async (req, res) => {
+  const formattedImages = [];
+  req.files.forEach((file) => formattedImages.push(file.buffer));
+  /* eslint-disable no-return-await */
+  formattedImages.map(
+    async (image) =>
+      await sharp(image).resize({ width: 250, height: 250 }).png().toBuffer()
+  );
+  req.user.photos = formattedImages;
+  await req.user.save();
+  sendTokenResponse(req.user, 200, res);
+});
+
+/**
+ * @async
+ * @desc delete images
+ * @route DELETE /api/users/avatar
+ * @access private
+ */
+const deleteImages = asyncHandler(async (req, res) => {
+  req.user.photos = undefined;
+  await req.user.update();
+  sendTokenResponse(req.user, 200, res);
+});
+
+/**
  * @desc get the token from the user model and create a cookie
  * @param {User} user - a user
  * @param {int} statusCode - integer of status code ex 404
@@ -193,11 +277,37 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
   res.redirect(`${process.env.CLIENT_URL}`);
 };
 
+/**
+ * @async
+ * @desc Get suggested instructors for user based on random tag selected, client gender preference
+ * @param {User} user - a user
+ * @route GET /api/users/profile
+ */
+const getSuggestedInstructors = asyncHandler(async (req, res) => {
+  const users = await User.find({
+    $and: [
+      { role: 'instructor' },
+      { _id: { $ne: req.user._id } },
+      {
+        $or: [
+          {
+            tags:
+              req.user.tags[Math.floor(Math.random() * req.user.tags.length)],
+          },
+          { gender: req.user.clientGenderPreference },
+        ],
+      },
+    ],
+  }).limit(3);
+  res.status(200).send({ success: true, data: users });
+});
+
 export {
   getUsers,
   getUsersWithinRadius,
   createUser,
   loginUser,
+  getProfile,
   getUser,
   getUserIdByEmail,
   logoutUser,
@@ -206,4 +316,9 @@ export {
   googleOauth,
   facebookOauth,
   instagramOauth,
+  uploadImages,
+  deleteImages,
+  getSuggestedInstructors,
+  followUser,
+  getFollowing,
 };

@@ -1,35 +1,18 @@
-import { useRef, useState } from 'react';
-import {
-  Form,
-  Input,
-  InputNumber,
-  Button,
-  Carousel,
-  Select,
-  Row,
-  Col,
-  Card,
-  Steps,
-  Tooltip,
-  notification,
-  Alert,
-  Space,
-} from 'antd';
+import { useState } from 'react';
+import { Form, Input, InputNumber, Button, Select, Card, notification, Alert, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined, CheckOutlined } from '@ant-design/icons';
 
+import { useSession } from 'next-auth/client';
 import createCourse from '../actions/course';
 import { getUserIdByEmail } from '../actions/user';
 
 import tags from '../data/tags';
 
-import { useAuth } from '../services/auth';
-
 const { Option } = Select;
 
-const { Step } = Steps;
-
 const CourseForm = () => {
-  const { user } = useAuth();
+  const [session] = useSession();
+  const { user } = session;
   const [form] = Form.useForm();
   const [error, setError] = useState(null);
 
@@ -51,8 +34,7 @@ const CourseForm = () => {
       }
       setError(null);
     } catch (err) {
-      console.log(err);
-      // if (err.response.data) setError(err.response.data.error);
+      if (err.response.data) setError(err.response.data.error);
     }
   };
 

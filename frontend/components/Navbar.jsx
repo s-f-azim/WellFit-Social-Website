@@ -1,17 +1,22 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Button, Typography, Input } from 'antd';
 import { useState } from 'react';
 import { UserOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons';
+import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import ProfileBar from './ProfileBar';
-import { useAuth } from '../services/auth';
+
 const { Search } = Input;
 const { Title } = Typography;
 
-const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
-  const { user } = useAuth();
+const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const onUserNameClick = () => {
+    setProfileOpen(!profileOpen);
+    closeMobileMenu();
+  };
 
   return (
     <>
@@ -35,8 +40,8 @@ const LoggedInMenu = ({ profileOpen, setProfileOpen }) => {
             </Link>
           </li>
           <li className="option">
-            <Button type="link" className="menuButton" onClick={() => setProfileOpen(!profileOpen)}>
-              <UserOutlined /> {user.name}
+            <Button type="link" className="menuButton" onClick={onUserNameClick}>
+              <UserOutlined /> {session.user.fName}
             </Button>
           </li>
         </ul>
@@ -99,20 +104,28 @@ const LoggedOutMenu = () => {
 
 const Navbar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
-  const { user } = useAuth();
+  const [session] = useSession();
 
   return (
     <>
       <nav className="topheader" style={{ backgroundColor: 'white' }}>
         <Title level={1} className="logo-text">
-          <a href="/"> InstaFit </a>
+          <a href="/"> QuickFit </a>
         </Title>
-        {user === null ? (
+        {!session ? (
           <LoggedOutMenu />
         ) : (
           <>
-            <LoggedInMenu profileOpen={profileOpen} setProfileOpen={setProfileOpen} />
-            <ProfileBar profileOpen={profileOpen} setProfileOpen={setProfileOpen} />
+            <LoggedInMenu
+              session={session}
+              profileOpen={profileOpen}
+              setProfileOpen={setProfileOpen}
+            />
+            <ProfileBar
+              session={session}
+              profileOpen={profileOpen}
+              setProfileOpen={setProfileOpen}
+            />
           </>
         )}
       </nav>

@@ -1,10 +1,17 @@
+/* eslint-disable no-nested-ternary */
+import { useEffect } from 'react';
+import Router from 'next/router';
 import LandingPage from '../components/LandingPage';
+import adminDashboard from './adminDashboard';
+import { useSession } from 'next-auth/client';
 
 // eslint-disable-next-line no-unused-vars
 export default function Home() {
-  return (
-    <>
-      <LandingPage />
-    </>
-  );
+  const [session, loading] = useSession();
+  if (session && session.user.role === 'admin') {
+    Router.push('/adminDashboard');
+  } else {
+    return <LandingPage />;
+  }
+  return <></>;
 }

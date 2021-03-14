@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Avatar } from 'antd';
+import { Avatar, notification } from 'antd';
 import { useRouter } from 'next/router';
 import {
   AntDesignOutlined,
@@ -7,16 +7,29 @@ import {
   HistoryOutlined,
   EditOutlined,
   LogoutOutlined,
+  CheckOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-import { useAuth } from '../services/auth';
+import { signOut } from 'next-auth/client';
+import { logout } from '../services/auth';
 
-const ProfileBar = ({ profileOpen, setProfileOpen }) => {
-  const { user, logout } = useAuth();
+const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
   const router = useRouter();
   const signout = async () => {
-    const response = await logout();
+    setProfileOpen(false);
+    await logout();
+    notification.open({
+      message: 'Signed out',
+      duration: 2,
+      icon: <CheckOutlined style={{ color: '#70FF00' }} />,
+    });
+    signOut({ redirect: false });
     router.push('/');
+  };
+
+  const GoToeditProfile = () => {
+    setProfileOpen(false);
+    router.push('/editProfile');
   };
   return (
     <div className={`profile-bar ${profileOpen ? 'active' : ''}`}>
@@ -33,16 +46,16 @@ const ProfileBar = ({ profileOpen, setProfileOpen }) => {
         }}
         icon={<AntDesignOutlined />}
       />
-      <h1>{user.name}</h1>
+      <h1 className="item" onClick={() => setProfileOpen(false)}>
+        <Link href="/profile">{session.user.fName}</Link>
+      </h1>
       <div className="item">
         <HistoryOutlined />
         <h1>Purchase history</h1>
       </div>
-      <div className="item">
+      <div className="item edit" onClick={GoToeditProfile}>
         <EditOutlined />
-        <h1 onClick={() => setProfileOpen(false)}>
-          <Link href="/editProfile">Edit profile</Link>
-        </h1>
+        <h1>Edit profile</h1>
       </div>
       <div className="item">
         <HistoryOutlined />

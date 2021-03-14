@@ -52,6 +52,13 @@
   .logout:hover {
     & > * {
       color: red;
+      cursor: pointer;
+    }
+  }
+
+  .edit:hover {
+    & > * {
+      cursor: pointer;
     }
   }
 }

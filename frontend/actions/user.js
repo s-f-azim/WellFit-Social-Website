@@ -12,4 +12,26 @@ const getUserIdByEmail = async (email) => {
 
 const deleteUser = () => api.delete('/users/delete');
 
-export { updateUser, deleteUser, getUserIdByEmail };
+const getUsers = () => api.get('/users');
+
+const getAdmins = () => api.get('users?role=admin');
+
+const getClients = () => api.get('users?role=client');
+
+const getInstructors = () => api.get('users?role=instructor');
+
+const getSuggestedInstructors = () => api.get('users/profile');
+
+const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
+
+export {
+  updateUser as default,
+  deleteUser,
+  getUsers,
+  getAdmins,
+  getClients,
+  getInstructors,
+  addingFollowUser,
+  getSuggestedInstructors,
+  getUserIdByEmail,
+};

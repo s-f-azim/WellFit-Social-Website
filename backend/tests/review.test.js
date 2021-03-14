@@ -23,8 +23,6 @@ it('Should add a review with valid data', async () => {
     .expect(200);
 
   expect(await Review.countDocuments()).toBe(count + 1);
-  // const user = await User.findById(userTwo._id, 'reviews');
-  // expect(user.reviews.length).not.toHaveLength(0);
 });
 
 it('Should not add a review with invalid data', async () => {
