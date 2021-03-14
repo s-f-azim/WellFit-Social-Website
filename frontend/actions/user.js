@@ -7,9 +7,36 @@ const updateUser = (values) =>
 
 const deleteUser = () => api.delete('/users/delete');
 
+const getUsers = () => api.get('/users');
+
+const getAdmins = () => api.get('users?role=admin');
+
+const getClients = () => api.get('users?role=client');
+
+const getInstructors = () => api.get('users?role=instructor');
+
 const getSuggestedInstructors = () => api.get('users/profile');
 
 const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
 
-export { updateUser as default, deleteUser, 
-  addingFollowUser, getSuggestedInstructors };
+// const getFollowingList = async () => {
+//   const res = await api.get('users/getFollowing');
+//   return res.data.data;
+// };
+
+export {
+  updateUser as default,
+  deleteUser,
+  getUsers,
+  getAdmins,
+  getClients,
+  getInstructors,
+  addingFollowUser,
+  // getFollowingList,
+  getSuggestedInstructors,
+};
+
+// const getReviews = async (reviewedId) => {
+//   const res = await api.get(`/users/${reviewedId}/reviews`);
+//   return res.data.data.reviews;
+// };

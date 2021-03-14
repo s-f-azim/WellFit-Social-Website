@@ -55,6 +55,12 @@
       cursor: pointer;
     }
   }
+
+  .edit:hover {
+    & > * {
+      cursor: pointer;
+    }
+  }
 }
 .anticon-close:hover {
   color: red;

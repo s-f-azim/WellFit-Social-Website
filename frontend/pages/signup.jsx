@@ -1,9 +1,12 @@
 import { useRouter } from 'next/router';
-import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, notification } from 'antd';
+import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, notification, Select } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { useAuth } from '../services/auth';
+import { signup } from '../services/auth';
 
+const { Option } = Select;
+
+// basic form styling
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -30,22 +33,20 @@ const Signup = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
-  const { login, signup } = useAuth();
+
   const onFinish = async (values) => {
-    const { email, name, password } = values;
+    const { role, email, fName, lName, password } = values;
     try {
-      const response = await signup(name, email, password);
+      const response = await signup(role, email, fName, lName, password);
       if (response.data.success) {
         notification.open({
           message: 'Signed up successfully!',
           duration: 2,
           icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
         });
-        await login(email, password);
-        router.push('/');
+        router.push('/login');
       }
     } catch (err) {
-      console.log(err);
       setHasError(true);
     }
   };
@@ -64,6 +65,21 @@ const Signup = () => {
               <Alert type="error" message="this user already exists please try again" banner />
             )}
             <Form.Item
+              name="role"
+              label="Register as"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select a role',
+                },
+              ]}
+            >
+              <Select>
+                <Option value="client">Client</Option>
+                <Option value="instructor">Instructor</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
               name="email"
               label="Email"
               rules={[
@@ -80,16 +96,32 @@ const Signup = () => {
               <Input />
             </Form.Item>
             <Form.Item
-              name="name"
-              label="Name"
+              name="fName"
+              label="First name"
               rules={[
                 {
-                  min: 3,
-                  message: 'Name should be 3 or more letters',
+                  min: 2,
+                  message: 'Name should be 2 or more letters',
                 },
                 {
                   required: true,
-                  message: 'Please enter your name',
+                  message: 'Please enter your first name',
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="lName"
+              label="Last name"
+              rules={[
+                {
+                  min: 2,
+                  message: 'Name should be 2 or more letters',
+                },
+                {
+                  required: true,
+                  message: 'Please enter your last name',
                 },
               ]}
             >
