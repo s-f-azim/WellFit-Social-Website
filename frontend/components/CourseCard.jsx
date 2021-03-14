@@ -1,7 +1,6 @@
 import { Card, Row, Col, Modal, Space, Button, notification } from 'antd';
 import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import api from '../services/api';
 import ReactDOM from 'react-dom';
@@ -103,9 +102,9 @@ const CourseCard = ({ content, isWish }) => {
             onCancel={() => setVisible(false)}
             width={1000}
             footer={[
-              <Link href={`/courses/${content._id}`} key={content._id}>
-                <Button type="primary">Go to course page</Button>
-              </Link>,
+              <Button type="primary" href={`/courses/${content._id}`} key={content._id}>
+                Go to course page
+              </Button>,
             ]}
           >
             <Row justify="center" align="middle" className="course-card">
