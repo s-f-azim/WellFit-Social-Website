@@ -31,6 +31,7 @@ it('Should create a new course', async () => {
   expect(course).not.toBeNull;
   expect(await Course.countDocuments()).toBe(count + 1);
 });
+
 // assert creating a new course when not logged in
 it('Should not create a new course when not logged in', async () => {
   await request(app)
@@ -87,7 +88,7 @@ it('Should not delete a course by someone who dont own the course', async () => 
     .expect(500);
 });
 // assert update a course attribute
-it('Should update a course\'s valid attribute', async () => {
+it("Should update a course's valid attribute", async () => {
   await request(app)
     .patch(`/api/courses/update/${courseOne._id}`)
     .send({ title: 'test course' })
@@ -97,14 +98,14 @@ it('Should update a course\'s valid attribute', async () => {
   expect(course.title).toBe('test course');
 });
 // assert update a course attribute when not logged in
-it('Should not update a course\'s valid attribute when not logged in', async () => {
+it("Should not update a course's valid attribute when not logged in", async () => {
   await request(app)
     .patch(`/api/courses/update/${courseOne._id}`)
     .send({ title: 'test course' })
     .expect(401);
 });
 // assert update a course attribute by someone who isnt the owner
-it('Should not update a course\'s valid attribute by someone who isnt the owner', async () => {
+it("Should not update a course's valid attribute by someone who isnt the owner", async () => {
   await request(app)
     .patch(`/api/courses/update/${courseTwo._id}`)
     .send({ title: 'test course' })
