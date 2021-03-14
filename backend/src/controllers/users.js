@@ -65,6 +65,25 @@ const getUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc get a user by providing email
+ * @route GET /api/users/email/:email
+ * @access private
+ */
+const getUserIdByEmail = asyncHandler(async (req, res) => {
+  User.findOne({ email: req.params.email }, '_id').exec((err, user) => {
+    if (!user)
+      return res
+        .status(400)
+        .send({
+          success: false,
+          error: `User ${req.params.email} does not exist`,
+        });
+    return res.status(200).send({ success: true, data: user._id });
+  });
+});
+
+/**
+ * @async
  * @desc update user profile
  * @route PATCH /api/users/editprofile
  * @access private
@@ -180,6 +199,7 @@ export {
   createUser,
   loginUser,
   getUser,
+  getUserIdByEmail,
   logoutUser,
   updateUser,
   deleteUser,

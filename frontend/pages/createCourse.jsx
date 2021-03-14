@@ -3,8 +3,8 @@ import CourseForm from '../components/CourseForm';
 
 export default function CreateCourse() {
   return (
-    <Row style={{ height: '100vh' }} align="middle">
-      <Col lg={{ span: 14, offset: 5 }}>
+    <Row justify="center" align="middle" style={{ height: '100vh' }}>
+      <Col>
         <CourseForm />
       </Col>
     </Row>

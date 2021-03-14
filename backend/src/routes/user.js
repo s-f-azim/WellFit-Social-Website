@@ -6,6 +6,7 @@ import {
   loginUser,
   logoutUser,
   getUser,
+  getUserIdByEmail,
   updateUser,
   deleteUser,
   googleOauth,
@@ -35,6 +36,10 @@ router
 router
   .route('/me')
   .get(passport.authenticate('jwt', { session: false }), getUser);
+
+router
+  .route('/email/:email')
+  .get(passport.authenticate('jwt', { session: false }), getUserIdByEmail);
 
 router.route('/oauth/google').get(
   passport.authenticate('google', {
