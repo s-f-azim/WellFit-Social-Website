@@ -13,25 +13,25 @@ export default function FollowPage({ data }) {
 }
 
 export async function getStaticProps() {
-  const data = await getFollowingList();
-  // const data = [
-  //   {
-  //     _id: '604a2db3d8e54f40a88c4e01',
-  //     name: 'Savraj Bassi',
-  //   },
-  //   {
-  //     _id: '604a62f012b9736106657352',
-  //     name: 'Issa Kabir',
-  //   },
-  //   {
-  //     _id: '604a62f912b9736106657353',
-  //     name: 'Issa Kabir',
-  //   },
-  //   {
-  //     _id: '604a62db12b9736106657351',
-  //     name: 'Issa Kabir',
-  //   },
-  // ];
+  // const data = await getFollowingList();
+  const data = [
+    {
+      _id: '604a2db3d8e54f40a88c4e01',
+      name: 'Savraj Bassi',
+    },
+    {
+      _id: '604a62f012b9736106657352',
+      name: 'Issa Kabir',
+    },
+    {
+      _id: '604a62f912b9736106657353',
+      name: 'Issa Kabir',
+    },
+    {
+      _id: '604a62db12b9736106657351',
+      name: 'Issa Kabir',
+    },
+  ];
 
   return { props: { data } };
 }

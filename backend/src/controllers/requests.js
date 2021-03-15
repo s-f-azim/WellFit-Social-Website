@@ -1,5 +1,6 @@
 import asyncHandler from '../middleware/async.js';
 import Request from '../models/Request.js';
+import User from '../models/User.js';
 
 /**
  * @async
@@ -43,5 +44,23 @@ const deleteRequest = asyncHandler(async (req, res) => {
   res.status(200).send({ success: true });
 });
 
+/**
+ * @async
+ * @desc accept a verify request
+ * @route PACTH /api/verify/:id
+ * @access private
+ */
+const verifyUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  user.verified = true;
+  await user.save();
+  // const request = await Request.create({
+  //   author: req.user._id,
+  //   type: req.body.type,
+  //   content: req.body.content,
+  // });
+  res.status(200).send({ success: true, data: user });
+});
+
 // eslint-disable-next-line import/prefer-default-export
-export { createRequest, getRequests, deleteRequest };
+export { createRequest, getRequests, deleteRequest, verifyUser };

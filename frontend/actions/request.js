@@ -17,4 +17,8 @@ const deleteRequest = async (id) => {
   api.delete(`/requests/delete/${id}`);
 };
 
-export { createRequest, getRequests, deleteRequest };
+const acceptVerify = async (id) => {
+  api.patch(`/requests/verify/${id}`);
+};
+
+export { createRequest, getRequests, deleteRequest, acceptVerify };

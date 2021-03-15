@@ -13,7 +13,7 @@ import {
 import { useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
 import { getUsers, getAdmins, getClients, getInstructors } from '../actions/user';
-import { deleteRequest, getRequests } from '../actions/request';
+import { deleteRequest, getRequests, acceptVerify } from '../actions/request';
 
 const { TabPane } = Tabs;
 
@@ -71,6 +71,7 @@ const AdminDashboard = ({
     const getRequestAuthor = (id) => users.filter((user) => user._id === id);
 
     const [reports, setReports] = useState(bugReports);
+    const [verifyRequest, setVerifyRequest] = useState(verifyRequests);
 
     const onDeleteBug = async (report) => {
       await deleteRequest(report._id);
@@ -78,6 +79,29 @@ const AdminDashboard = ({
       setReports([...reports]);
       notification.open({
         message: 'Deleted report',
+        duration: 2,
+        icon: <CheckOutlined style={{ color: '#70FF00' }} />,
+      });
+    };
+
+    const onDeleteVerify = async (report) => {
+      await deleteRequest(report._id);
+      verifyRequest.splice(verifyRequest.indexOf(report), 1);
+      setVerifyRequest([...verifyRequest]);
+      notification.open({
+        message: 'Deleted request',
+        duration: 2,
+        icon: <CheckOutlined style={{ color: '#70FF00' }} />,
+      });
+    };
+
+    const onAcceptVerify = async (report) => {
+      await acceptVerify(report.author);
+      await deleteRequest(report._id);
+      verifyRequest.splice(verifyRequest.indexOf(report), 1);
+      setVerifyRequest([...verifyRequest]);
+      notification.open({
+        message: 'Accepted request',
         duration: 2,
         icon: <CheckOutlined style={{ color: '#70FF00' }} />,
       });
@@ -117,9 +141,47 @@ const AdminDashboard = ({
                   />
                   <br />
                 </Col>
+                <Col span={16}>
+                  <Statistic
+                    prefix={<CheckCircleOutlined />}
+                    title="No. Verify requests"
+                    value={verifyRequests.length}
+                  />
+                  <br />
+                </Col>
               </TabPane>
               <TabPane key="2" tab={verifiedTitle}>
-                hi
+                <List
+                  header={
+                    <h2>
+                      <CheckCircleOutlined /> Verify users
+                    </h2>
+                  }
+                  itemLayout="horizontal"
+                  dataSource={verifyRequest}
+                  renderItem={(report) => (
+                    <List.Item>
+                      <h3>
+                        <b>Request #{verifyRequest.indexOf(report) + 1}</b>
+                        <CheckOutlined
+                          style={{ color: 'green', margin: '7px' }}
+                          onClick={() => onAcceptVerify(report)}
+                        />
+                        <CloseOutlined
+                          style={{ color: 'red', margin: '7px' }}
+                          onClick={() => onDeleteVerify(report)}
+                        />
+                      </h3>
+                      <h3>
+                        <b>Author: </b>
+                        {getRequestAuthor(report.author)[0].email}
+                      </h3>
+
+                      <b>Content: </b>
+                      {report.content}
+                    </List.Item>
+                  )}
+                />
               </TabPane>
               <TabPane key="3" tab={banTitle}>
                 hi

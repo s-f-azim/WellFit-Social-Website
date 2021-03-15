@@ -23,7 +23,8 @@ GetFollow.Item = ({ follow }) => {
   return (
     <>
       <List.Item key={follow._id}>
-        <List.Item.Meta title={follow.name} />
+        <List.Item.Meta title={follow.name.split(' ')[0]} />
+        <List.Item.Meta title={follow.name.split(' ')[1]} />
       </List.Item>
     </>
   );

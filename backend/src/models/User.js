@@ -254,6 +254,10 @@ const UserSchema = new mongoose.Schema(
     twitterId: {
       type: String,
     },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
     following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
     follower: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   },

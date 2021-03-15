@@ -19,10 +19,10 @@ const getSuggestedInstructors = () => api.get('users/profile');
 
 const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
 
-// const getFollowingList = async () => {
-//   const res = await api.get('users/getFollowing');
-//   return res.data.data;
-// };
+const getFollowingList = async () => {
+  const res = await api.get('users/getFollowing');
+  return res.data.data;
+};
 
 export {
   updateUser as default,
@@ -32,11 +32,6 @@ export {
   getClients,
   getInstructors,
   addingFollowUser,
-  // getFollowingList,
+  getFollowingList,
   getSuggestedInstructors,
 };
-
-// const getReviews = async (reviewedId) => {
-//   const res = await api.get(`/users/${reviewedId}/reviews`);
-//   return res.data.data.reviews;
-// };

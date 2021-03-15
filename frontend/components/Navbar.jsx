@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Button, Typography, Input } from 'antd';
 import { useState } from 'react';
-import { UserOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons';
+import { UserOutlined, MenuOutlined, CloseOutlined, CheckCircleTwoTone } from '@ant-design/icons';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import ProfileBar from './ProfileBar';
@@ -42,6 +42,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
           <li className="option">
             <Button type="link" className="menuButton" onClick={onUserNameClick}>
               <UserOutlined /> {session.user.fName}
+              {session.user.verified && <CheckCircleTwoTone twoToneColor="#52c41a" />}
             </Button>
           </li>
         </ul>
