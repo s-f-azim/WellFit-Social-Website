@@ -36,12 +36,11 @@ const AdminDashboard = ({
   Messages,
 }) => {
   const [session, loading] = useSession();
+  const [reports, setReports] = useState(bugReports);
 
   if (typeof window !== 'undefined' && loading) return null;
 
   if (session && session.user.role === 'admin') {
-    const [reports, setReports] = useState(bugReports);
-
     const title = (
       <h1>
         <FundProjectionScreenOutlined /> Admin Dashboard

@@ -279,7 +279,7 @@ const editProfilePage = () => {
       </Row>
     );
   }
-  return <p>Access Denied</p>;
+  return <h1>Access Denied</h1>;
 };
 export async function getServerSideProps(context) {
   const session = await getSession(context);
