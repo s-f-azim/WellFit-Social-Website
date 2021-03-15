@@ -309,7 +309,7 @@ it('Adding course not already in wish list to the wish list adds it if logged in
 });
 
 it('Adding course that does not exist to the wish list does not work if not logged in', async () => {
-  const response = await request(app)
+  await request(app)
     .patch('/api/users/addtowishlist/123456')
     .send()
     .expect(401);
