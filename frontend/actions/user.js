@@ -10,6 +10,7 @@ const deleteUser = () => api.delete('/users/delete');
 const getSuggestedInstructors = () => api.get('users/profile');
 
 const getInstructors = (q, gender, age, tags) =>
+  /* api.get(`/users/role=instructors&&name=${q}&&gender=${gender}&&age=${age}&&tags[in]=${tags.join(',')}`) */
   api.get(`/users/instructors?q=${q}&&gender=${gender}&&age=${age}&&tags=${tags.join(',')}`);
 
 const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
