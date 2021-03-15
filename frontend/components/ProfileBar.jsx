@@ -11,6 +11,7 @@ import {
   CloseOutlined,
 } from '@ant-design/icons';
 import { signOut } from 'next-auth/client';
+import ReportButton from './ReportButton';
 import { logout } from '../services/auth';
 
 const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {

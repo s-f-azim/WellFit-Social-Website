@@ -144,7 +144,7 @@ const AdminDashboard = ({
                       </h3>
                       <h3>
                         <b>Author: </b>
-                        {getRequestAuthor(report.author)[0].email}
+                        {getRequestAuthor(report.author).email}
                       </h3>
 
                       <b>Content: </b>
