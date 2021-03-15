@@ -11,6 +11,7 @@ import {
   CloseOutlined,
 } from '@ant-design/icons';
 import { signOut } from 'next-auth/client';
+import ReportButton from './ReportButton';
 import { logout } from '../services/auth';
 
 const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
@@ -52,6 +53,9 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
       <div className="item">
         <HistoryOutlined />
         <h1>Purchase history</h1>
+      </div>
+      <div className="item">
+        <ReportButton RecipientID="604ea0644ce2c3e7ccc2051d" />
       </div>
       <div className="item edit" onClick={GoToeditProfile}>
         <EditOutlined />
