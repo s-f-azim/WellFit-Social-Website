@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import api from '../services/api';
 
 const loadingIcon = <LoadingOutlined spin />;
-const ChatList = () => {
+const ChatList = ({ setConversation }) => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -53,12 +53,8 @@ const ChatList = () => {
           <List
             dataSource={users}
             renderItem={(item) => (
-              <List.Item className="user" key={item._id}>
-                <List.Item.Meta
-                  avatar={image(item)}
-                  title={<a href="https://ant.design">{item.fName}</a>}
-                  description={item.email}
-                />
+              <List.Item className="user" key={item._id} onClick={() => setConversation(true)}>
+                <List.Item.Meta avatar={image(item)} title={item.fName} description={item.email} />
                 <div className="action">
                   <SendOutlined />
                 </div>

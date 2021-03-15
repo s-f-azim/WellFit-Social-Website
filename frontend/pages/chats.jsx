@@ -1,7 +1,8 @@
 import { Card, Row, Col, Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, LeftOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import ChatList from '../components/ChatList';
+import Conversation from '../components/Conversation';
 
 const Chats = () => {
   const [conversation, setConversation] = useState();
@@ -12,12 +13,22 @@ const Chats = () => {
         bordered={false}
         title={
           <div className="header">
-            <Avatar icon={<UserOutlined />} size="large" />
+            {conversation ? (
+              <>
+                <LeftOutlined onClick={() => setConversation(null)} />
+                <div className="details">
+                  <Avatar icon={<UserOutlined />} size="large" />
+                  <h3>online</h3>
+                </div>
+              </>
+            ) : (
+              <h1>Contact list</h1>
+            )}
           </div>
         }
       >
         <Col className="content-chat">
-          <ChatList />
+          {conversation ? <Conversation /> : <ChatList setConversation={setConversation} />}
         </Col>
         <Col></Col>
       </Card>
