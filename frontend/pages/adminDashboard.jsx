@@ -9,6 +9,7 @@ import {
   UserOutlined,
   CloseOutlined,
   CheckOutlined,
+  DislikeOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
@@ -53,6 +54,12 @@ const AdminDashboard = ({
     const banTitle = (
       <p>
         <StopOutlined /> Ban users
+      </p>
+    );
+
+    const reportTitle = (
+      <p>
+        <DislikeOutlined /> User Reports
       </p>
     );
 
@@ -123,6 +130,33 @@ const AdminDashboard = ({
               </TabPane>
               <TabPane key="3" tab={banTitle}>
                 hi
+              </TabPane>
+              <TabPane key="6" tab={reportTitle}>
+                <List
+                  header={
+                    <h2>
+                      <BugOutlined /> User reports
+                    </h2>
+                  }
+                  itemLayout="horizontal"
+                  dataSource={contentReports}
+                  renderItem={(report) => (
+                    <List.Item>
+                      <h3>
+                        <b>Report #{contentReports.indexOf(report) + 1}</b>
+                        <CloseOutlined style={{ color: 'red', margin: '7px' }} />
+                      </h3>
+                      <h3>
+                        <b>Author: </b>
+                        {report.author}
+                        {getRequestAuthor(report.author).email}
+                      </h3>
+
+                      <b>Content: </b>
+                      {report.content}
+                    </List.Item>
+                  )}
+                />
               </TabPane>
               <TabPane key="4" tab={bugTitle}>
                 <List

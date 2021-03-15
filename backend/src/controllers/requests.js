@@ -8,11 +8,12 @@ import Request from '../models/Request.js';
  * @access private
  */
 const createRequest = asyncHandler(async (req, res) => {
+  console.log(`HIER IST DAS RECIPEITNET DING : ${req.body.recipientID}`);
   const request = await Request.create({
     author: req.user._id,
     type: req.body.type,
     content: req.body.content,
-    recipientID: req.body.recipientID,
+    recipient: req.body.recipientID,
   });
   res.status(200).send({ success: true, data: request });
 });
