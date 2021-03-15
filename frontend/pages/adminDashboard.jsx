@@ -1,4 +1,4 @@
-import { Card, Row, Col, Statistic, Tabs, Button, Modal, List, notification } from 'antd';
+import { Card, Row, Col, Statistic, Tabs, List, notification } from 'antd';
 import {
   FundProjectionScreenOutlined,
   BarChartOutlined,
@@ -12,7 +12,13 @@ import {
 } from '@ant-design/icons';
 import { useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
-import { getUsers, getAdmins, getClients, getInstructors } from '../actions/user';
+import {
+  getUsers,
+  getUsersWithLimit,
+  getAdmins,
+  getClients,
+  getInstructors,
+} from '../actions/user';
 import { deleteRequest, getRequests } from '../actions/request';
 
 const { TabPane } = Tabs;
@@ -33,6 +39,8 @@ const AdminDashboard = ({
   if (typeof window !== 'undefined' && loading) return null;
 
   if (session && session.user.role === 'admin') {
+    const [reports, setReports] = useState(bugReports);
+
     const title = (
       <h1>
         <FundProjectionScreenOutlined /> Admin Dashboard
@@ -68,9 +76,7 @@ const AdminDashboard = ({
       </p>
     );
 
-    const getRequestAuthor = (id) => users.filter((user) => user._id === id);
-
-    const [reports, setReports] = useState(bugReports);
+    const getRequestAuthor = (id) => users.find((user) => user._id === id);
 
     const onDeleteBug = async (report) => {
       await deleteRequest(report._id);
@@ -144,7 +150,7 @@ const AdminDashboard = ({
                       </h3>
                       <h3>
                         <b>Author: </b>
-                        {getRequestAuthor(report.author)[0].email}
+                        {getRequestAuthor(report.author).email}
                       </h3>
 
                       <b>Content: </b>
@@ -183,6 +189,7 @@ function isMessage(request) {
 
 export async function getStaticProps() {
   const getUsersRes = await getUsers();
+  const getUsersWithLimitRes = await getUsersWithLimit(getUsersRes.data.pagination.total);
   const getAdminsRes = await getAdmins();
   const getClientsRes = await getClients();
   const getInstructorsRes = await getInstructors();
@@ -190,7 +197,7 @@ export async function getStaticProps() {
   return {
     props: {
       userCount: getUsersRes.data.pagination.total,
-      users: getUsersRes.data.data,
+      users: getUsersWithLimitRes.data.data,
       adminCount: getAdminsRes.data.pagination.adminTotal,
       clientCount: getClientsRes.data.pagination.clientTotal,
       instructorCount: getInstructorsRes.data.pagination.instructorTotal,
