@@ -98,7 +98,7 @@ const followUser = asyncHandler(async (req, res) => {
     const index = followingUser.following.indexOf(followeeUser._id);
     const followerIndex = followeeUser.follower.indexOf(followingUser._id);
     if (index > -1) followingUser.following.splice(index, 1);
-    if (followerIndex > -1) followeeUser.follower.splice(index, 1);
+    if (followerIndex > -1) followeeUser.follower.splice(followerIndex, 1);
   }
   await followeeUser.save();
   await followingUser.save();
