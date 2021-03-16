@@ -41,17 +41,11 @@ const createCourse = asyncHandler(async (req, res) => {
   let { creators } = req.body;
   creators = creators ? [req.user._id, ...creators] : [req.user._id];
   delete req.body.creators;
-  Course.create(
-    {
-      creators,
-      ...req.body,
-    },
-    (err, course) => {
-      if (err) return res.status(400).send({ success: false });
-      if (course) return res.status(201).send({ success: true, data: course });
-      return res.status(400).send({ success: false });
-    }
-  );
+  const course = await Course.create({
+    creators,
+    ...req.body,
+  });
+  res.status(201).send({ success: true, data: course });
 });
 
 /**
