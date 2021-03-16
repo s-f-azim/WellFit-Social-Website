@@ -3,6 +3,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+
 const CourseCard = ({ content }) => {
   // state for the modal pop up
   const [visible, setVisible] = useState(false);
@@ -46,7 +47,6 @@ const CourseCard = ({ content }) => {
               </Space>
             </p>
             <p>{content.price}</p>
-            <p>{content.location.city}</p>
             <p>something</p>
           </Col>
         </Row>

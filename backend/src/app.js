@@ -9,6 +9,7 @@ import errorHandler from './middleware/error.js';
 import ErrorResponse from './utils/errorResponse.js';
 import userRoutes from './routes/user.js';
 import userReviewRoutes from './routes/userReview.js';
+import courseReviewRoutes from './routes/courseReview.js';
 import courseRoutes from './routes/course.js';
 import requestRoutes from './routes/request.js';
 import passport from '../config/passport-setup.js';
@@ -43,7 +44,7 @@ app.use(cors({ credentials: true, origin: `${process.env.CLIENT_URL}` }));
 app.use('/api/users', userRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/users/:id/reviews', userReviewRoutes);
-app.use('/api/courses/:id/reviews', userReviewRoutes);
+app.use('/api/courses/:id/reviews', courseReviewRoutes);
 app.use('/api/requests', requestRoutes);
 
 // 404 if the route doesn't match

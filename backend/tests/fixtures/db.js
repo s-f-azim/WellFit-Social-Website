@@ -118,7 +118,7 @@ const userReviewOne = {
 const courseReviewOne = {
   kind: 'CourseReview',
   _id: courseReviewOneId,
-  author: userOneId,
+  author: userTwoId,
   rate: 5,
   comment: 'courseReviewOne',
   course: courseOneId,

@@ -6,7 +6,7 @@ import User from '../models/User.js';
 /**
  * @async
  * @desc create a review for another user
- * @route POST /api/users/reviewedId:/reviews
+ * @route POST /api/users/:id/reviews
  * @access private
  */
 const createUserReview = asyncHandler(async (req, res) => {
@@ -21,7 +21,7 @@ const createUserReview = asyncHandler(async (req, res) => {
       user: req.params.id,
       ...req.body,
     });
-    review = await review.populate('user', 'fName lName').execPopulate();
+    review = await review.populate('author', 'fName lName').execPopulate();
   } catch (err) {
     return res.status(400).send({ success: false });
   }
@@ -31,8 +31,8 @@ const createUserReview = asyncHandler(async (req, res) => {
 
 /**
  * @async
- * @desc get user profile
- * @route GET /api/users/profile
+ * @desc get all reviews of a user
+ * @route GET /api/users/:id/reviews
  * @access public
  */
 const getUserReviews = asyncHandler(async (req, res) => {
@@ -50,7 +50,7 @@ const getUserReviews = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc delete a review
- * @route DELETE /api/users/:reviewedId/reviews
+ * @route DELETE /api/users/:id/reviews
  * @access private
  */
 const deleteUserReview = asyncHandler(async (req, res) => {
