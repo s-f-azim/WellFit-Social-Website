@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Space, Button, Row, Card, Col } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
 import Suggestions from '../components/SuggestedInstructors';
+import AccessDenied from '../components/AccessDenied';
 
 const Profile = () => {
   const [session, loading] = useSession();
@@ -40,7 +41,7 @@ const Profile = () => {
       </div>
     );
   }
-  return <h1>Access Denied</h1>;
+  return <AccessDenied />;
 };
 export async function getServerSideProps(context) {
   const session = await getSession(context);

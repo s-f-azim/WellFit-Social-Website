@@ -18,6 +18,7 @@ import {
 import { useSession, getSession } from 'next-auth/client';
 import updateUser from '../actions/user';
 import InstQuest from '../components/InstQuest';
+import AccessDenied from '../components/AccessDenied';
 
 const { Option } = Select;
 
@@ -279,7 +280,7 @@ const editProfilePage = () => {
       </Row>
     );
   }
-  return <h1>Access Denied</h1>;
+  return <AccessDenied />;
 };
 export async function getServerSideProps(context) {
   const session = await getSession(context);
