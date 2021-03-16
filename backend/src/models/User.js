@@ -258,6 +258,7 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 // connect the creator of courses to the user (ex user.courses)
 UserSchema.virtual('courses', {
   ref: 'Course',
@@ -266,9 +267,9 @@ UserSchema.virtual('courses', {
 });
 
 UserSchema.virtual('reviews', {
-  ref: 'Review',
+  ref: 'UserReview',
   localField: '_id',
-  foreignField: 'reviewed',
+  foreignField: 'user',
 });
 
 // connect the creator of requests to the user

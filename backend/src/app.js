@@ -8,7 +8,7 @@ import connectDb from '../config/db.js';
 import errorHandler from './middleware/error.js';
 import ErrorResponse from './utils/errorResponse.js';
 import userRoutes from './routes/user.js';
-import reviewRoutes from './routes/review.js';
+import userReviewRoutes from './routes/userReview.js';
 import courseRoutes from './routes/course.js';
 import requestRoutes from './routes/request.js';
 import passport from '../config/passport-setup.js';
@@ -41,8 +41,9 @@ app.use(cors({ credentials: true, origin: `${process.env.CLIENT_URL}` }));
 
 // routes
 app.use('/api/users', userRoutes);
-app.use('/api/users/:reviewedId/reviews', reviewRoutes);
 app.use('/api/courses', courseRoutes);
+app.use('/api/users/:id/reviews', userReviewRoutes);
+app.use('/api/courses/:id/reviews', userReviewRoutes);
 app.use('/api/requests', requestRoutes);
 
 // 404 if the route doesn't match

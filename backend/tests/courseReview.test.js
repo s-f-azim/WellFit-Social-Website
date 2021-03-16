@@ -1,32 +1,34 @@
 import request from 'supertest';
-import Review from '../src/models/Review.js';
+import CourseReview from '../src/models/CourseReview.js';
 import app from '../src/app.js';
 import {
   tokens,
   userOne,
   userTwo,
   userThree,
+  courseOne,
   setupDatabase,
 } from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
 
-it('Should add a review with valid data', async () => {
-  const count = await Review.countDocuments();
+it.only('Should add a review with valid data', async () => {
+  const count = await CourseReview.countDocuments();
   const review = { rate: 5, comment: 'test' };
 
-  await request(app)
-    .post(`/api/users/${userTwo._id}/reviews`)
+  const response = await request(app)
+    .post(`/api/course/${courseOne._id}/reviews`)
     .send(review)
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
 
-  expect(await Review.countDocuments()).toBe(count + 1);
+  expect(response.body.data).not.toBeNull();
+  expect(await CourseReview.countDocuments()).toBe(count + 1);
 });
 
 it('Should not add a review with invalid data', async () => {
-  const count = await Review.countDocuments();
+  const count = await UserReview.countDocuments();
   const review = { rate: 0, comment: 'test' };
 
   await request(app)
@@ -35,11 +37,11 @@ it('Should not add a review with invalid data', async () => {
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(400);
 
-  expect(await Review.countDocuments()).toBe(count);
+  expect(await UserReview.countDocuments()).toBe(count);
 });
 
 it('Should not allow users to review themselves', async () => {
-  const count = await Review.countDocuments();
+  const count = await UserReview.countDocuments();
   const review = { rate: 5, comment: 'test' };
 
   await request(app)
@@ -48,11 +50,11 @@ it('Should not allow users to review themselves', async () => {
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(400);
 
-  expect(await Review.countDocuments()).toBe(count);
+  expect(await UserReview.countDocuments()).toBe(count);
 });
 
 it('Should not allow to review same user more than once', async () => {
-  const count = await Review.countDocuments();
+  const count = await UserReview.countDocuments();
   const review = { rate: 5, comment: 'test' };
 
   await request(app)
@@ -61,11 +63,11 @@ it('Should not allow to review same user more than once', async () => {
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(400);
 
-  expect(await Review.countDocuments()).toBe(count);
+  expect(await UserReview.countDocuments()).toBe(count);
 });
 
 it('Should allow many users to review same user', async () => {
-  const count = await Review.countDocuments();
+  const count = await UserReview.countDocuments();
   const review = { rate: 5, comment: 'test' };
 
   await request(app)
@@ -80,7 +82,7 @@ it('Should allow many users to review same user', async () => {
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
 
-  expect(await Review.countDocuments()).toBe(count + 2);
+  expect(await UserReview.countDocuments()).toBe(count + 2);
 });
 
 it('Should get reviews', async () => {
@@ -89,11 +91,11 @@ it('Should get reviews', async () => {
     .send()
     .expect(200);
 
-  expect(response.body.data.reviews).not.toBeNull();
+  expect(response.body.data).not.toBeNull();
 });
 
 it('Should delete a reviews', async () => {
-  const count = await Review.countDocuments();
+  const count = await UserReview.countDocuments();
 
   await request(app)
     .delete(`/api/users/${userOne._id}/reviews`)
@@ -101,5 +103,5 @@ it('Should delete a reviews', async () => {
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
 
-  expect(await Review.countDocuments()).toBe(count - 1);
+  expect(await UserReview.countDocuments()).toBe(count - 1);
 });

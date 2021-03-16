@@ -1,10 +1,14 @@
+/* eslint-disable no-unused-vars */
 import mongoose from 'mongoose';
 import User from '../../src/models/User.js';
-import Review from '../../src/models/Review.js';
 import Course from '../../src/models/Course.js';
+import Review from '../../src/models/Review.js';
+import UserReview from '../../src/models/UserReview.js';
+import CourseReview from '../../src/models/CourseReview.js';
+
+const userReviewOneId = new mongoose.Types.ObjectId();
 
 const userOneId = new mongoose.Types.ObjectId();
-const reviewOneId = new mongoose.Types.ObjectId();
 
 // create users
 const userOne = {
@@ -17,7 +21,7 @@ const userOne = {
   birthday: new Date(),
   nickname: 'testicles',
   bio: 'I have no balls',
-  reviews: [reviewOneId],
+  reviews: [userReviewOneId],
   tags: ['Sweat', 'Cardio'],
   clientGenderPreference: 'Female',
   role: 'client',
@@ -71,15 +75,9 @@ const userFour = {
   role: 'instructor',
 };
 
-const reviewOne = {
-  _id: reviewOneId,
-  reviewed: userOneId,
-  reviewer: userTwoId,
-  rate: 5,
-  comment: 'reviewOne',
-};
-
 // create courses
+
+const courseReviewOneId = new mongoose.Types.ObjectId();
 
 const courseOneId = new mongoose.Types.ObjectId();
 
@@ -91,6 +89,7 @@ const courseOne = {
   creators: [userTwoId, userOneId],
   price: 10,
   tags: ['GetFit', 'FitFam'],
+  reviews: [courseReviewOneId],
 };
 
 const courseTwoId = new mongoose.Types.ObjectId();
@@ -105,7 +104,29 @@ const courseTwo = {
   tags: ['Cardio'],
 };
 
-const reviews = [reviewOne];
+// create reviews
+
+const userReviewOne = {
+  kind: 'UserReview',
+  _id: userReviewOneId,
+  author: userTwoId,
+  rate: 5,
+  comment: 'userReviewOne',
+  user: userOneId,
+};
+
+const courseReviewOne = {
+  kind: 'CourseReview',
+  _id: courseReviewOneId,
+  author: userOneId,
+  rate: 5,
+  comment: 'courseReviewOne',
+  course: courseOneId,
+};
+
+// create fixtures
+
+const reviews = [userReviewOne, courseReviewOne];
 const users = [userOne, userTwo, userThree, userFour];
 const courses = [courseOne, courseTwo];
 // token
@@ -130,12 +151,7 @@ const setupDatabase = async () => {
     await course.save();
   }
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const r of reviews) {
-    const review = new Review(r);
-    // eslint-disable-next-line no-await-in-loop
-    await review.save();
-  }
+  await Review.create(reviews);
 };
 
 export {
