@@ -1,4 +1,4 @@
-import { Card, Row, Col, Statistic, Tabs, Button, Modal, List, notification } from 'antd';
+import { Card, Row, Col, Statistic, Tabs, List, notification } from 'antd';
 import {
   FundProjectionScreenOutlined,
   BarChartOutlined,
@@ -9,11 +9,16 @@ import {
   UserOutlined,
   CloseOutlined,
   CheckOutlined,
-  DislikeOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
-import { getUsers, getAdmins, getClients, getInstructors } from '../actions/user';
+import {
+  getUsers,
+  getUsersWithLimit,
+  getAdmins,
+  getClients,
+  getInstructors,
+} from '../actions/user';
 import { deleteRequest, getRequests } from '../actions/request';
 
 const { TabPane } = Tabs;
@@ -29,201 +34,138 @@ const AdminDashboard = ({
   contentReports,
   Messages,
 }) => {
-  const title = (
-    <h1>
-      <FundProjectionScreenOutlined /> Admin Dashboard
-    </h1>
-  );
-  const statisticsTitle = (
-    <p>
-      <BarChartOutlined /> Statistics
-    </p>
-  );
-
-  const verifiedTitle = (
-    <p>
-      <CheckCircleOutlined /> Verify users
-    </p>
-  );
-
-  const banTitle = (
-    <p>
-      <StopOutlined /> Ban users
-    </p>
-  );
-
-  const reportTitle = (
-    <p>
-      <DislikeOutlined /> User Reports
-    </p>
-  );
-
-  const bugTitle = (
-    <p>
-      <BugOutlined /> Bug reports
-    </p>
-  );
-
-  const contactTitle = (
-    <p>
-      <MailOutlined /> contact users
-    </p>
-  );
-
-  const getRequestAuthor = (id) => {
-    console.log(typeof id);
-    return users.filter((user) => {
-      console.log(user._id === id);
-      return user._id === id;
-    });
-  };
-
-  const [reports, setReports] = useState(bugReports);
-
-  const onDeleteBug = async (report) => {
-    await deleteRequest(report._id);
-    reports.splice(reports.indexOf(report), 1);
-    setReports([...reports]);
-    notification.open({
-      message: 'Deleted report',
-      duration: 2,
-      icon: <CheckOutlined style={{ color: '#70FF00' }} />,
-    });
-  };
-
-  return (
-    <div className="adminDashboard">
-      <Row justify="left" type="flex">
-        <Card title={title}>
-          <Tabs size="small" defaultActiveKey="1" tabPosition="left">
-            <TabPane key="1" tab={statisticsTitle}>
-              <Col span={16}>
-                <Statistic prefix={<UserOutlined />} title="No. users" value={userCount} />
-                <br />
-              </Col>
-              <Col span={16}>
-                <Statistic prefix={<UserOutlined />} title="No. clients" value={clientCount} />
-                <br />
-              </Col>
-              <Col span={16}>
-                <Statistic
-                  prefix={<UserOutlined />}
-                  title="No. instructors"
-                  value={instructorCount}
-                />
-                <br />
-              </Col>
-              <Col span={16}>
-                <Statistic prefix={<UserOutlined />} title="No. admins" value={adminCount} />
-                <br />
-              </Col>
-              <Col span={16}>
-                <Statistic
-                  prefix={<BugOutlined />}
-                  title="No. Bug reports"
-                  value={bugReports.length}
-                />
-                <br />
-              </Col>
-            </TabPane>
-            <TabPane key="2" tab={verifiedTitle}>
-              hi
-            </TabPane>
-            <TabPane key="3" tab={banTitle}>
-              hi
-            </TabPane>
-            <TabPane key="6" tab={reportTitle}>
-              <List
-                header={
-                  <h2>
-                    <BugOutlined /> User reports
-                  </h2>
-                }
-                itemLayout="horizontal"
-                dataSource={contentReports}
-                renderItem={(report) => (
-                  <List.Item>
-                    <h3>
-                      <b>Report #{contentReports.indexOf(report) + 1}</b>
-                      <CloseOutlined style={{ color: 'red', margin: '7px' }} />
-                    </h3>
-                    <h3>
-                      <b>Author: </b>
-                      {report.author}
-                      {getRequestAuthor(report.author).email}
-                    </h3>
-                    <b>Content: </b>
-                    {report.content}
-                  </List.Item>
-                )}
-              />
-            </TabPane>
-            <TabPane key="4" tab={bugTitle}>
-              <List
-                header={
-                  <h2>
-                    <BugOutlined /> Bug reports
-                  </h2>
-                }
-                itemLayout="horizontal"
-                dataSource={reports}
-                renderItem={(report) => (
-                  <List.Item>
-                    <h3>
-                      <b>Report #{reports.indexOf(report) + 1}</b>
-                      <CloseOutlined
-                        style={{ color: 'red', margin: '7px' }}
-                        onClick={() => onDeleteBug(report)}
-                      />
-                    </h3>
-                    <h3>
-                      <b>Author: </b>
-                      {getRequestAuthor(report.author).email}
-                    </h3>
-
-                    <b>Content: </b>
-                    {report.content}
-                  </List.Item>
-                )}
-              />
-            </TabPane>
-            <TabPane key="5" tab={contactTitle}>
-              hi
-            </TabPane>
-          </Tabs>
-        </Card>
-      </Row>
-    </div>
-  );
-};
-
-const Wrapper = ({
-  userCount,
-  users,
-  adminCount,
-  clientCount,
-  instructorCount,
-  bugReports,
-  verifyRequests,
-  contentReports,
-  Messages,
-}) => {
   const [session, loading] = useSession();
+
   if (typeof window !== 'undefined' && loading) return null;
 
   if (session && session.user.role === 'admin') {
+    const [reports, setReports] = useState(bugReports);
+
+    const title = (
+      <h1>
+        <FundProjectionScreenOutlined /> Admin Dashboard
+      </h1>
+    );
+    const statisticsTitle = (
+      <p>
+        <BarChartOutlined /> Statistics
+      </p>
+    );
+
+    const verifiedTitle = (
+      <p>
+        <CheckCircleOutlined /> Verify users
+      </p>
+    );
+
+    const banTitle = (
+      <p>
+        <StopOutlined /> Ban users
+      </p>
+    );
+
+    const bugTitle = (
+      <p>
+        <BugOutlined /> Bug reports
+      </p>
+    );
+
+    const contactTitle = (
+      <p>
+        <MailOutlined /> contact users
+      </p>
+    );
+
+    const getRequestAuthor = (id) => users.find((user) => user._id === id);
+
+    const onDeleteBug = async (report) => {
+      await deleteRequest(report._id);
+      reports.splice(reports.indexOf(report), 1);
+      setReports([...reports]);
+      notification.open({
+        message: 'Deleted report',
+        duration: 2,
+        icon: <CheckOutlined style={{ color: '#70FF00' }} />,
+      });
+    };
+
     return (
-      <AdminDashboard
-        userCount={userCount}
-        users={users}
-        adminCount={adminCount}
-        clientCount={clientCount}
-        instructorCount={instructorCount}
-        bugReports={bugReports}
-        verifyRequests={verifyRequests}
-        contentReports={contentReports}
-        Messages={Messages}
-      />
+      <div className="adminDashboard">
+        <Row justify="left" type="flex">
+          <Card title={title}>
+            <Tabs size="small" defaultActiveKey="1" tabPosition="left">
+              <TabPane key="1" tab={statisticsTitle}>
+                <Col span={16}>
+                  <Statistic prefix={<UserOutlined />} title="No. users" value={userCount} />
+                  <br />
+                </Col>
+                <Col span={16}>
+                  <Statistic prefix={<UserOutlined />} title="No. clients" value={clientCount} />
+                  <br />
+                </Col>
+                <Col span={16}>
+                  <Statistic
+                    prefix={<UserOutlined />}
+                    title="No. instructors"
+                    value={instructorCount}
+                  />
+                  <br />
+                </Col>
+                <Col span={16}>
+                  <Statistic prefix={<UserOutlined />} title="No. admins" value={adminCount} />
+                  <br />
+                </Col>
+                <Col span={16}>
+                  <Statistic
+                    prefix={<BugOutlined />}
+                    title="No. Bug reports"
+                    value={bugReports.length}
+                  />
+                  <br />
+                </Col>
+              </TabPane>
+              <TabPane key="2" tab={verifiedTitle}>
+                hi
+              </TabPane>
+              <TabPane key="3" tab={banTitle}>
+                hi
+              </TabPane>
+              <TabPane key="4" tab={bugTitle}>
+                <List
+                  header={
+                    <h2>
+                      <BugOutlined /> Bug reports
+                    </h2>
+                  }
+                  itemLayout="horizontal"
+                  dataSource={reports}
+                  renderItem={(report) => (
+                    <List.Item>
+                      <h3>
+                        <b>Report #{reports.indexOf(report) + 1}</b>
+                        <CloseOutlined
+                          style={{ color: 'red', margin: '7px' }}
+                          onClick={() => onDeleteBug(report)}
+                        />
+                      </h3>
+                      <h3>
+                        <b>Author: </b>
+                        {getRequestAuthor(report.author).email}
+                      </h3>
+
+                      <b>Content: </b>
+                      {report.content}
+                    </List.Item>
+                  )}
+                />
+              </TabPane>
+              <TabPane key="5" tab={contactTitle}>
+                hi
+              </TabPane>
+            </Tabs>
+          </Card>
+        </Row>
+      </div>
     );
   }
   return <p>Access Denied</p>;
@@ -247,6 +189,7 @@ function isMessage(request) {
 
 export async function getStaticProps() {
   const getUsersRes = await getUsers();
+  const getUsersWithLimitRes = await getUsersWithLimit(getUsersRes.data.pagination.total);
   const getAdminsRes = await getAdmins();
   const getClientsRes = await getClients();
   const getInstructorsRes = await getInstructors();
@@ -254,7 +197,7 @@ export async function getStaticProps() {
   return {
     props: {
       userCount: getUsersRes.data.pagination.total,
-      users: getUsersRes.data.data,
+      users: getUsersWithLimitRes.data.data,
       adminCount: getAdminsRes.data.pagination.adminTotal,
       clientCount: getClientsRes.data.pagination.clientTotal,
       instructorCount: getInstructorsRes.data.pagination.instructorTotal,
@@ -266,4 +209,4 @@ export async function getStaticProps() {
   };
 }
 
-export default Wrapper;
+export default AdminDashboard;

@@ -9,6 +9,8 @@ const deleteUser = () => api.delete('/users/delete');
 
 const getUsers = () => api.get('/users');
 
+const getUsersWithLimit = (limit) => api.get(`/users?limit=${limit}`);
+
 const getAdmins = () => api.get('users?role=admin');
 
 const getClients = () => api.get('users?role=client');
@@ -23,6 +25,7 @@ export {
   updateUser as default,
   deleteUser,
   getUsers,
+  getUsersWithLimit,
   getAdmins,
   getClients,
   getInstructors,
