@@ -19,10 +19,9 @@ const getSuggestedInstructors = () => api.get('users/profile');
 
 const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
 
-const getFollowingList = async () => {
-  const res = await api.get('users/getFollowing');
-  return res.data.data;
-};
+const getFollowingList = () => api.get('/users/getFollowing');
+
+const getFollowerList = (pageNum) => api.get(`/users/getFollower/?page=${pageNum}`);
 
 export {
   updateUser as default,
@@ -33,5 +32,6 @@ export {
   getInstructors,
   addingFollowUser,
   getFollowingList,
+  getFollowerList,
   getSuggestedInstructors,
 };

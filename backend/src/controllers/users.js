@@ -113,7 +113,7 @@ const followUser = asyncHandler(async (req, res) => {
     const index = followingUser.following.indexOf(followeeUser._id);
     const followerIndex = followeeUser.follower.indexOf(followingUser._id);
     if (index > -1) followingUser.following.splice(index, 1);
-    if (followerIndex > -1) followeeUser.follower.splice(index, 1);
+    if (followerIndex > -1) followeeUser.follower.splice(followerIndex, 1);
   }
   await followeeUser.save();
   await followingUser.save();
@@ -149,14 +149,14 @@ const getFollowing = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1', 10); //  Page number needs to start with 1
-  const limit = 5;
+  // const page = parseInt(req.query.page || '1', 10); //  Page number needs to start with 1
+  // const limit = 5;
   const followers = await User.findById(req.user._id).populate({
     path: 'follower',
     select: ['fName', 'lName'],
   });
-  const results = followers.follower.slice((page - 1) * limit, limit * page); //  (startIndex, lastIndex)
-  res.status(200).send({ success: true, data: results });
+  // const results = followers.follower.slice((page - 1) * limit, limit * page); //  (startIndex, lastIndex)
+  res.status(200).send({ success: true, data: followers.follower });
 });
 
 /**

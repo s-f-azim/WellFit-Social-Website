@@ -39,6 +39,13 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
               </Button>
             </Link>
           </li>
+          <li className="option" onClick={closeMobileMenu}>
+            <Link href="/followPage">
+              <Button type="link" className="menuButton">
+                FollowPage
+              </Button>
+            </Link>
+          </li>
           <li className="option">
             <Button type="link" className="menuButton" onClick={onUserNameClick}>
               <UserOutlined /> {session.user.fName}
