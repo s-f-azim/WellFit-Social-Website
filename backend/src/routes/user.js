@@ -101,6 +101,7 @@ router
 router
   .route('/follow/:id')
   .patch(passport.authenticate('jwt', { session: false }), followUser);
+
 router
   .route('/getFollowing')
   .get(passport.authenticate('jwt', { session: false }), getFollowing);
@@ -108,6 +109,7 @@ router
 router
   .route('/getFollower')
   .get(passport.authenticate('jwt', { session: false }), getFollower);
+
 router.route('/:id').get(getUser);
 
 export default router;
