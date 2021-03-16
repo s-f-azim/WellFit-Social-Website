@@ -16,7 +16,6 @@ import { CloseOutlined, PlusOutlined, PoundOutlined, CheckOutlined } from '@ant-
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import updateUser from '../actions/user';
-import { useAuth } from '../services/auth';
 
 const { Option } = Select;
 
@@ -45,9 +44,9 @@ const tailFormItemLayout = {
 };
 
 // Instructor Questionnaire
-const InstQuest = () => {
+const InstQuest = ({ session }) => {
   const router = useRouter();
-  const { user, setUser } = useAuth();
+  const user = session.user;
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
 
@@ -60,7 +59,7 @@ const InstQuest = () => {
           duration: 2,
           icon: <CheckOutlined style={{ color: '#33FF49' }} />,
         });
-        setUser(response.data.data);
+        session.user = response.data.data;
         router.push('/');
       }
     } catch (err) {

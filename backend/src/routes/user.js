@@ -11,6 +11,9 @@ import {
   googleOauth,
   facebookOauth,
   instagramOauth,
+  uploadImages,
+  deleteImages,
+  getProfile,
   getSuggestedInstructors,
   followUser,
   getFollowing,
@@ -19,10 +22,12 @@ import {
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
 import User from '../models/User.js';
+import upload from '../middleware/multer.js';
 
 const router = new express.Router();
 
 router.route('/').get(paginate(User), getUsers);
+
 router
   .route('/radius/:zipcode/:distance')
   .get(paginate(User), getUsersWithinRadius);
@@ -35,10 +40,20 @@ router.route('/logout').get(logoutUser);
 router
   .route('/editProfile')
   .patch(passport.authenticate('jwt', { session: false }), updateUser);
+router
+  .route('/avatar')
+  .post(
+    passport.authenticate('jwt', { session: false }),
+    upload.array('images', 10),
+    uploadImages
+  );
+router
+  .route('/avatar')
+  .delete(passport.authenticate('jwt', { session: false }), deleteImages);
 
 router
   .route('/me')
-  .get(passport.authenticate('jwt', { session: false }), getUser);
+  .get(passport.authenticate('jwt', { session: false }), getProfile);
 
 router.route('/oauth/google').get(
   passport.authenticate('google', {
@@ -78,11 +93,15 @@ router
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
 
 router
-  .route("/profile")
-  .get(passport.authenticate("jwt", { session: false } ), getSuggestedInstructors);
+  .route('/profile')
+  .get(
+    passport.authenticate('jwt', { session: false }),
+    getSuggestedInstructors
+  );
 router
   .route('/follow/:id')
   .patch(passport.authenticate('jwt', { session: false }), followUser);
+
 router
   .route('/getFollowing')
   .get(passport.authenticate('jwt', { session: false }), getFollowing);
@@ -90,5 +109,8 @@ router
 router
   .route('/getFollower')
   .get(passport.authenticate('jwt', { session: false }), getFollower);
+
+router.route('/:id').get(getUser);
+
 
 export default router;

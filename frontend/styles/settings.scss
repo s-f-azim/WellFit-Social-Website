@@ -1,0 +1,27 @@
+.settings {
+  .ant-card-bordered {
+    border: 0px solid #f0f0f0;
+  }
+
+  .ant-row {
+    display: grid;
+    flex-flow: row wrap;
+  }
+
+  .settingCard .ant-card-head {
+    border: 0px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .ant-card-head {
+    border-bottom: 1px solid black;
+  }
+
+  .ant-card-bordered {
+    border: 0px solid #f0f0f0;
+  }
+
+  .ant-tabs-tab-active {
+    background-color: #f0f0f0;
+  }
+}

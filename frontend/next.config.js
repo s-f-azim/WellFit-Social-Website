@@ -53,5 +53,8 @@ const nextConfig = {
     API_PRODUCTION: 'http://localhost:4000/api',
     PRODUCTION: false,
   },
+  images: {
+    domains: ['images.unsplash.com'],
+  },
 };
 module.exports = withPlugins([withSass, withImages, withLess, withCss], nextConfig);

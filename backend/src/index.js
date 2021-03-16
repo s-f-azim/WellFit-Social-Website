@@ -2,9 +2,12 @@ import fs from 'fs';
 import https from 'https';
 import path from 'path';
 import app from './app.js';
+// import socketio from 'socket.io';
 
 // setup port 4000 or the port in env
 const port = process.env.PORT || 4000;
+
+// create server
 let server;
 if (process.env.NODE_ENV === 'PRODUCTION') {
   const key = fs.readFileSync(path.join(path.resolve(), 'key.pem'));

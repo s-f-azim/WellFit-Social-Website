@@ -1,10 +1,12 @@
 import asyncHandler from './async.js';
 import geocoder from '../utils/geocoder.js';
 
-const paginateAndFilter = (model) => asyncHandler(async (req, res, next) => {
+// custom paginate middleware that does pagination and also filtering
+const paginateAndFilter = (model) =>
+  asyncHandler(async (req, res, next) => {
     let query;
     let reqQuery = { ...req.query };
-    const removeFields = ['select', 'sort', 'page', 'limit'];
+    const removeFields = ['select', 'sort', 'page', 'limit', 'name'];
     removeFields.forEach((param) => delete reqQuery[param]);
     // check for geospaital search
     if (
@@ -25,6 +27,11 @@ const paginateAndFilter = (model) => asyncHandler(async (req, res, next) => {
         ...reqQuery,
       };
     }
+    // if name is given match it with a regex
+    if (req.query.name) {
+      reqQuery = { name: { $regex: req.query.name, $options: 'i' } };
+    }
+
     let queryStr = JSON.stringify(reqQuery);
     queryStr = queryStr.replace(
       /\b(gt|gte|lte|lt|in)\b/g,
@@ -48,19 +55,26 @@ const paginateAndFilter = (model) => asyncHandler(async (req, res, next) => {
 
     // pagination
     const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 20;
+    const limit = parseInt(req.query.limit, 10) || 12;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
     const total = await model.countDocuments();
+    const instructorTotal = await model.countDocuments({ role: 'instructor' });
+    const clientTotal = await model.countDocuments({ role: 'client' });
+    const adminTotal = await model.countDocuments({ role: 'admin' });
     query = query.skip(startIndex).limit(limit);
     const results = await query;
-    const pagination = {};
+    const pagination = { total };
     if (endIndex < total) {
       pagination.next = { page: page + 1, limit };
     }
     if (startIndex > 0) {
       pagination.prev = { page: page - 1, limit };
     }
+    pagination.total = total;
+    pagination.instructorTotal = instructorTotal;
+    pagination.clientTotal = clientTotal;
+    pagination.adminTotal = adminTotal;
     res.results = results;
     res.pagination = pagination;
     next();
