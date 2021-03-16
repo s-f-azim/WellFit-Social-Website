@@ -14,20 +14,18 @@ const GetFollow = ({ data }) => (
         }}
         dataSource={data}
         renderItem={(r) => <GetFollow.Item follow={r} />}
-      ></List>
+      />
     </Card>
   </>
 );
 
-GetFollow.Item = ({ follow }) => {
-  return (
-    <>
-      <List.Item key={follow._id}>
-        <List.Item.Meta title={follow.name.split(' ')[0]} />
-        <List.Item.Meta title={follow.name.split(' ')[1]} />
-      </List.Item>
-    </>
-  );
-};
+GetFollow.Item = ({ follow }) => (
+  <>
+    <List.Item key={follow._id}>
+      <List.Item.Meta title={follow.name.split(' ')[0]} />
+      <List.Item.Meta title={follow.name.split(' ')[1]} />
+    </List.Item>
+  </>
+);
 
 export default GetFollow;

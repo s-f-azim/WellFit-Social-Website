@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
+import sharp from 'sharp';
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
-import sharp from 'sharp';
 
 /**
  * @async
@@ -105,7 +105,7 @@ const followUser = asyncHandler(async (req, res) => {
   const followingUser = await User.findById(req.user._id);
   if (
     !followingUser.following.includes(followeeUser._id) &&
-    followingUser._id + ' ' !== followeeUser._id + ' '
+    `${followingUser._id} ` !== `${followeeUser._id} `
   ) {
     followingUser.following.push(followeeUser._id);
     followeeUser.follower.push(followingUser._id);
@@ -149,7 +149,7 @@ const getFollowing = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1', 10); //Page number needs to start with 1
+  const page = parseInt(req.query.page || '1', 10); //  Page number needs to start with 1
   const limit = 5;
   const followers = await User.findById(req.user._id).populate({
     path: 'follower',
@@ -222,7 +222,7 @@ const instagramOauth = asyncHandler(async (req, res) => {
  * @access private
  */
 const uploadImages = asyncHandler(async (req, res) => {
-  let formattedImages = [];
+  const formattedImages = [];
   req.files.forEach((file) => formattedImages.push(file.buffer));
   /* eslint-disable no-return-await */
   formattedImages.map(
