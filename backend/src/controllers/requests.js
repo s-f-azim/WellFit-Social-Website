@@ -52,13 +52,8 @@ const deleteRequest = asyncHandler(async (req, res) => {
  */
 const verifyUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
-  user.verified = true;
+  if (user.role === 'instructor') user.verified = true;
   await user.save();
-  // const request = await Request.create({
-  //   author: req.user._id,
-  //   type: req.body.type,
-  //   content: req.body.content,
-  // });
   res.status(200).send({ success: true, data: user });
 });
 
