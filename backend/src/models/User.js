@@ -262,6 +262,7 @@ const UserSchema = new mongoose.Schema(
       enum: ['admin', 'instructor', 'client'],
     },
     following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+    follower: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );
