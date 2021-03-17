@@ -1,10 +1,10 @@
 import { Row, Col } from 'antd';
 import { getSession } from 'next-auth/client';
-import CourseForm from '../components/CourseForm';
+import CourseForm from '../../components/CourseForm';
 
-export default function CreateCourse() {
+export default function Create() {
   return (
-    <Row justify="center" align="middle" style={{ height: '100vh' }}>
+    <Row justify="center" align="middle">
       <Col>
         <CourseForm />
       </Col>
