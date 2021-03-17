@@ -18,6 +18,7 @@ import {
   getSuggestedInstructors,
   followUser,
   getFollowing,
+  getFollower,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -105,10 +106,16 @@ router
 router
   .route('/follow/:id')
   .patch(passport.authenticate('jwt', { session: false }), followUser);
+
 router
   .route('/getFollowing')
   .get(passport.authenticate('jwt', { session: false }), getFollowing);
 
+router
+  .route('/getFollower')
+  .get(passport.authenticate('jwt', { session: false }), getFollower);
+
 router.route('/:id').get(getUser);
+
 
 export default router;
