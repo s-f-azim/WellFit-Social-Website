@@ -13,6 +13,7 @@ import courseRoutes from './routes/course.js';
 import requestRoutes from './routes/request.js';
 import conversationRoutes from './routes/conversation.js';
 import passport from '../config/passport-setup.js';
+import compression from 'compression';
 
 // connect to the database
 connectDb();
@@ -33,6 +34,9 @@ app.use(helmet());
 
 // Prevent XSS attacks
 app.use(xss());
+
+// compress all responses
+app.use(compression());
 
 // passport setup
 app.use(passport.initialize());
