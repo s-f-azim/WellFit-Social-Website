@@ -1,9 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 import { Row, Col, Button, Typography, Space, Divider, Rate } from 'antd';
 import Image from 'next/image';
+import { CourseReview } from '../../components/Review';
 import api from '../../services/api';
+import { getCourseReviews } from '../../actions/review';
+
 const columnStyle = { width: 350, height: 'auto' };
 
-const course = ({ course }) => {
+const Course = ({ course }) => {
   <Image
     src={
       course.photos[0]
@@ -13,6 +17,7 @@ const course = ({ course }) => {
     width={300}
     height={300}
   />;
+
   return (
     <Row
       align="middle"
@@ -35,7 +40,7 @@ const course = ({ course }) => {
         />
       </Col>
       <Col md={6}>
-        <Space direction="vertical" wrap={true}>
+        <Space direction="vertical" wrap>
           <Typography.Title
             level={1}
             style={{ fontSize: '2.3rem', fontFamily: 'Poppins', ...columnStyle }}
@@ -58,6 +63,9 @@ const course = ({ course }) => {
               <h3>{`#${tag}`}</h3>
             ))}
           </Space>
+
+          <CourseReview course={{ _id: course._id, reviews: course.reviews }} />
+
           <Button type="primary" shape="round" size="large">
             Would like to buy it
           </Button>
@@ -72,7 +80,9 @@ const course = ({ course }) => {
 export const getStaticProps = async ({ params }) => {
   const courseId = params ? params.id : undefined;
   const response = await api.get(`/courses/${courseId}`);
-  return { props: { course: response.data.data }, revalidate: 60 * 10 };
+  const course = response.data.data;
+  course.reviews = await getCourseReviews(course._id);
+  return { props: { course }, revalidate: 60 * 10 };
 };
 
 // create all the pages possible for each individual course and make it static to improve performance significantly
@@ -80,14 +90,12 @@ export const getStaticProps = async ({ params }) => {
 export const getStaticPaths = async () => {
   const { data } = await api.get(`/courses?limit=${Number.MAX_SAFE_INTEGER}`);
   console.log(data);
-  const paths = data.data.map((course) => {
-    return {
-      params: {
-        id: course._id.toString(),
-      },
-    };
-  });
-  return { fallback: false, paths: paths };
+  const paths = data.data.map((course) => ({
+    params: {
+      id: course._id.toString(),
+    },
+  }));
+  return { fallback: false, paths };
 };
 
-export default course;
+export default Course;

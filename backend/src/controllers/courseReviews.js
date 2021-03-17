@@ -10,19 +10,14 @@ import Course from '../models/Course.js';
  * @access private
  */
 const createCourseReview = asyncHandler(async (req, res) => {
-  let review;
-  try {
-    review = await CourseReview.create({
-      author: req.user._id,
-      course: req.params.id,
-      ...req.body,
-    });
-    review = await review.populate('author', 'fName lName').execPopulate();
-  } catch (err) {
-    return res.status(400).send({ success: false });
-  }
+  let review = await CourseReview.create({
+    author: req.user._id,
+    course: req.params.id,
+    ...req.body,
+  });
+  review = await review.populate('author', 'fName lName').execPopulate();
 
-  return res.status(200).send({ success: true, data: review });
+  return res.status(200).json({ success: true, data: review });
 });
 
 /**

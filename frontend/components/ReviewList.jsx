@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import { List, Rate, Button, Menu, Dropdown, Card } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
-import { deleteReview } from '../actions/review';
+import { List, Rate, Button, Card, Popconfirm } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 
 const ReviewList = ({ children }) => (
   <>
@@ -19,28 +18,12 @@ const ReviewList = ({ children }) => (
   </>
 );
 
-ReviewList.Item = ({ review, showMenu, onDelete }) => {
-  const handleDeleteClick = (reviewedId) => {
-    deleteReview(reviewedId);
-    onDelete();
-  };
-
-  const ReviewMenu = () => (
+ReviewList.Item = ({ review, onDelete, showMenu }) => {
+  const DeleteButton = () => (
     <>
-      <Dropdown
-        overlay={
-          <Menu>
-            <Menu.Item key="delete">
-              <Button type="link" onClick={() => handleDeleteClick(review.reviewed)}>
-                Delete
-              </Button>
-            </Menu.Item>
-          </Menu>
-        }
-        trigger={['click']}
-      >
-        <DownOutlined />
-      </Dropdown>
+      <Popconfirm title="Are you sure?" onConfirm={onDelete} okText="Yes" cancelText="No">
+        <Button type="danger" icon={<DeleteOutlined />} />
+      </Popconfirm>
     </>
   );
 
@@ -48,14 +31,14 @@ ReviewList.Item = ({ review, showMenu, onDelete }) => {
     <>
       <List.Item
         key={review._id}
-        actions={[showMenu && <ReviewMenu />]}
+        actions={[showMenu && <DeleteButton />]}
         extra={
           <>
             <Rate disabled defaultValue={review.rate} />
           </>
         }
       >
-        <List.Item.Meta title={`${review.reviewer.fName} ${review.reviewer.lName}`} />
+        <List.Item.Meta title={`${review.author.fName} ${review.author.lName}`} />
         {review.comment}
       </List.Item>
     </>

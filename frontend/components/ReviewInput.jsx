@@ -1,12 +1,8 @@
 import { Card, Form, Rate, Input, Button } from 'antd';
-import { createReview } from '../actions/review';
 
-const { TextArea } = Input;
-
-const ReviewInput = ({ reviewedId, onSubmit }) => {
-  const onFinish = async (values) => {
-    const review = await createReview(reviewedId, values);
-    onSubmit(review);
+const ReviewInput = ({ onSubmit }) => {
+  const onFinish = (values) => {
+    onSubmit(values);
   };
 
   return (
@@ -18,7 +14,7 @@ const ReviewInput = ({ reviewedId, onSubmit }) => {
           </Form.Item>
 
           <Form.Item name="comment">
-            <TextArea rows={4} maxLength={200} allowClear showCount />
+            <Input.TextArea rows={4} maxLength={200} allowClear showCount />
           </Form.Item>
 
           <Form.Item>

@@ -1,19 +1,34 @@
 import api from '../services/api';
 
-const createReview = async (reviewedId, review) => {
-  const res = await api.post(`/users/${reviewedId}/reviews`, {
+const createUserReview = async (id, review) =>
+  api.post(`/users/${id}/reviews`, {
     ...review,
   });
-  return res.data.data.review;
+
+const getUserReviews = async (id) => {
+  const res = await api.get(`/users/${id}/reviews`);
+  return res.data.data;
 };
 
-const getReviews = async (reviewedId) => {
-  const res = await api.get(`/users/${reviewedId}/reviews`);
-  return res.data.data.reviews;
+const deleteUserReview = async (id) => api.delete(`/users/${id}/reviews`);
+
+const createCourseReview = async (id, review) =>
+  api.post(`/courses/${id}/reviews`, {
+    ...review,
+  });
+
+const getCourseReviews = async (id) => {
+  const res = await api.get(`/courses/${id}/reviews`);
+  return res.data.data;
 };
 
-const deleteReview = async (reviewedId) => {
-  api.delete(`/users/${reviewedId}/reviews`);
-};
+const deleteCourseReview = async (id) => api.delete(`/courses/${id}/reviews`);
 
-export { createReview, getReviews, deleteReview };
+export {
+  createUserReview,
+  getUserReviews,
+  deleteUserReview,
+  createCourseReview,
+  getCourseReviews,
+  deleteCourseReview,
+};
