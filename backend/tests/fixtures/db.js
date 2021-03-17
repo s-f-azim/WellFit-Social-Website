@@ -107,8 +107,11 @@ const courseTwo = {
 };
 
 const requestOneId = new mongoose.Types.ObjectId();
+const requestTwoId = new mongoose.Types.ObjectId();
+const requestThreeId = new mongoose.Types.ObjectId();
+const requestFourId = new mongoose.Types.ObjectId();
 
-// Testing requests with no recipients
+// requests
 const requestOne = {
   _id: requestOneId,
   author: userOneId,
@@ -116,10 +119,32 @@ const requestOne = {
   content: 'bug report #1',
 };
 
+const requestTwo = {
+  _id: requestTwoId,
+  author: userOneId,
+  type: 'verify',
+  content: 'verify req #1',
+};
+
+const requestThree = {
+  _id: requestThreeId,
+  author: userOneId,
+  type: 'message',
+  content: 'message #1',
+};
+
+const requestFour = {
+  _id: requestFourId,
+  author: userOneId,
+  recipient: userTwo,
+  type: 'report',
+  content: 'user report #1',
+};
+
 const reviews = [reviewOne];
 const users = [userOne, userTwo, userThree, userFour];
 const courses = [courseOne, courseTwo];
-const requests = [requestOne];
+const requests = [requestOne, requestTwo, requestThree, requestFour];
 // token
 const tokens = [];
 const setupDatabase = async () => {
@@ -163,6 +188,9 @@ export {
   userTwo,
   userThree,
   requestOne,
+  requestTwo,
+  requestThree,
+  requestFour,
   courseOne,
   courseTwo,
   setupDatabase,

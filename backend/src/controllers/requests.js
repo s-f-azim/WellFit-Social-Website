@@ -8,7 +8,6 @@ import Request from '../models/Request.js';
  * @access private
  */
 const createRequest = asyncHandler(async (req, res) => {
-  console.log(`HIER IST DAS RECIPEITNET DING : ${req.body.recipientID}`);
   const request = await Request.create({
     author: req.user._id,
     type: req.body.type,
