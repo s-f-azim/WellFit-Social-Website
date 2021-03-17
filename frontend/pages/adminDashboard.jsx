@@ -22,6 +22,7 @@ import {
 } from '../actions/user';
 import { deleteRequest, getRequests } from '../actions/request';
 import AccessDenied from '../components/AccessDenied';
+import BanUser from '../components/BanUser';
 
 const { TabPane } = Tabs;
 
@@ -135,7 +136,7 @@ const AdminDashboard = ({
                 hi
               </TabPane>
               <TabPane key="3" tab={banTitle}>
-                hi
+                <BanUser users={users} />
               </TabPane>
               <TabPane key="6" tab={reportTitle}>
                 <List

@@ -7,6 +7,8 @@ const updateUser = (values) =>
 
 const deleteUser = () => api.delete('/users/delete');
 
+const deleteSpecificUser = (userId) => api.delete(`/users/delete/${userId}`);
+
 const getUsers = () => api.get('/users');
 
 const getUsersWithLimit = (limit) => api.get(`/users?limit=${limit}`);
@@ -24,6 +26,7 @@ const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
 export {
   updateUser as default,
   deleteUser,
+  deleteSpecificUser,
   getUsers,
   getUsersWithLimit,
   getAdmins,

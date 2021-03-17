@@ -8,6 +8,7 @@ import {
   getUser,
   updateUser,
   deleteUser,
+  deleteSpecificUser,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -89,6 +90,10 @@ router
   .delete(passport.authenticate('jwt', { session: false }), deleteUser);
 
 router
+  .route('/delete/:id')
+  .delete(passport.authenticate('jwt', { session: false }), deleteSpecificUser);
+
+router
   .route('/oauth/facebook/redirect')
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
 
@@ -111,6 +116,5 @@ router
   .get(passport.authenticate('jwt', { session: false }), getFollower);
 
 router.route('/:id').get(getUser);
-
 
 export default router;

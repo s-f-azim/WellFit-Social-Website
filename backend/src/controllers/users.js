@@ -171,12 +171,24 @@ const logoutUser = asyncHandler(async (req, res) => {
 /**
  *
  * @async
- * @desc delete user from the db
+ * @desc delete current user from the db
  * @route DELETE /api/users/delete
  *
  */
 const deleteUser = asyncHandler(async (req, res) => {
   await User.findByIdAndDelete(req.user._id);
+  res.status(200).send({ success: true });
+});
+
+/**
+ *
+ * @async
+ * @desc delete user with id from the db
+ * @route DELETE /api/users/delete/:id
+ *
+ */
+const deleteSpecificUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndDelete(req.params.id);
   res.status(200).send({ success: true });
 });
 
@@ -315,6 +327,7 @@ export {
   logoutUser,
   updateUser,
   deleteUser,
+  deleteSpecificUser,
   googleOauth,
   facebookOauth,
   instagramOauth,

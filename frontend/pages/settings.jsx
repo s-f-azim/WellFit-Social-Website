@@ -173,7 +173,7 @@ const settingsPage = () => {
               </TabPane>
               <TabPane key="2" tab="Contact us">
                 <Card className="settingCard" title={bugReport}>
-                  <Form form={form} name="Update my info" onFinish={onBugReport}>
+                  <Form form={form} name="Send a bug report" onFinish={onBugReport}>
                     <Space direction="vertical" size="middle">
                       {hasError && (
                         <Alert
