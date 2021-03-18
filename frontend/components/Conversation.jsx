@@ -1,89 +1,92 @@
-import { Avatar, Form, Input, Button } from 'antd';
-import { UserOutlined, SendOutlined } from '@ant-design/icons';
+/* eslint-disable no-underscore-dangle */
+import { Form, Input, Button } from 'antd';
+import { SendOutlined } from '@ant-design/icons';
+import { useSession } from 'next-auth/client';
+import { useEffect, useState } from 'react';
+import { animateScroll } from 'react-scroll';
+import io from 'socket.io-client';
+import { SOCKET_URL } from '../config';
+
+let socket;
 const layout = {
   wrapperCol: { xs: { span: 24 }, sm: { span: 100 }, md: { span: 200 }, lg: { span: 300 } },
 };
-const tailLayout = {
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 12, offset: 12 },
-    md: { span: 12, offset: 8 },
-    lg: { span: 12, offset: 8 },
-  },
-};
-const msgs = [
-  { author: 'me', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-  { author: 'me', message: 'something very interesting' },
-  { author: 'you', message: 'something very interesting' },
-];
 
-const ChatBubble = ({ incoming }) => {
-  return (
-    <div className={`chat-bubble ${incoming ? 'outgoing' : 'incoming'}`}>
-      <div className={incoming ? 'outgoing' : 'incoming'}>
-        <p>long ass text here i like to do things and run around </p>
-      </div>
+const ChatBubble = ({ incoming, content }) => (
+  <div className={`chat-bubble ${incoming ? 'outgoing' : 'incoming'}`}>
+    <div className={incoming ? 'outgoing' : 'incoming'}>
+      <p>{content}</p>
     </div>
+  </div>
+);
+const Conversation = ({ conversation }) => {
+  const [msgs, setMsgs] = useState(
+    conversation && conversation.messages ? conversation.messages : []
   );
-};
-
-const Conversation = () => {
   const [form] = Form.useForm();
+  const [session] = useSession();
+  // scroll to the bottom
+  const scrollToBottom = () => {
+    animateScroll.scrollToBottom({ containerId: 'chat-bubbles', duration: 50 });
+  };
+
+  // connect to a socket on load
+  useEffect(() => {
+    scrollToBottom();
+    socket = io(SOCKET_URL, { withCreddentials: true });
+    return () => {
+      socket.off();
+    };
+  }, []);
+
+  // check for new messages and update the state
+  useEffect(() => {
+    socket.on('message', (message) => {
+      setMsgs([...msgs, message]);
+    });
+    scrollToBottom();
+  }, [msgs]);
+  // send a new message
+  const sendMsg = (values) => {
+    socket.emit('Send message', {
+      author: session.user._id,
+      conversationId: conversation._id,
+      message: values.message,
+    });
+    form.resetFields();
+  };
   return (
     <>
-      <div className="chat-box">
+      <div id="chat-bubbles" className="chat-box" style={{ height: '60vh' }}>
         {msgs.map((msg) => (
-          <ChatBubble incoming={msg.author !== 'me'} />
+          <ChatBubble content={msg.content} incoming={msg.author !== session.user._id} />
         ))}
-        <Form
-          {...layout}
-          className="typing-area"
-          style={{ width: '100%', marginTop: '0.9rem' }}
-          layout="inline"
-          form={form}
-          scrollToFirstError
+      </div>
+      <Form
+        {...layout}
+        className="typing-area"
+        style={{ width: '100%', marginTop: '0.9rem' }}
+        layout="inline"
+        form={form}
+        onFinish={sendMsg}
+        scrollToFirstError
+      >
+        <Form.Item
+          name="message"
+          style={{ width: '70%' }}
+          rules={[{ required: true, message: 'Please write a message' }]}
         >
-          <Form.Item
-            style={{ width: '70%' }}
-            rules={[{ required: true, message: 'Please write a message' }]}
-          >
-            <Input
-              style={{ textAlign: 'center', borderRadius: '2000rem' }}
-              placeholder="Type a message here"
-            />
-          </Form.Item>
+          <Input
+            style={{ textAlign: 'center', borderRadius: '2000rem' }}
+            placeholder="Type a message here"
+          />
+        </Form.Item>
+        <Form.Item>
           <Button type="primary" shape="round" htmlType="submit">
             <SendOutlined />
           </Button>
-        </Form>
-      </div>
+        </Form.Item>
+      </Form>
     </>
   );
 };

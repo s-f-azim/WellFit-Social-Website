@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import santanize from 'express-mongo-sanitize';
 import helmet from 'helmet';
 import xss from 'xss-clean';
+import compression from 'compression';
 import connectDb from '../config/db.js';
 import errorHandler from './middleware/error.js';
 import ErrorResponse from './utils/errorResponse.js';
@@ -13,7 +14,6 @@ import courseRoutes from './routes/course.js';
 import requestRoutes from './routes/request.js';
 import conversationRoutes from './routes/conversation.js';
 import passport from '../config/passport-setup.js';
-import compression from 'compression';
 
 // connect to the database
 connectDb();

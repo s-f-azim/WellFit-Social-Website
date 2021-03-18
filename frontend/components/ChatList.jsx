@@ -1,6 +1,6 @@
-import { Input, List, Spin, Avatar } from 'antd';
+/* eslint-disable no-underscore-dangle */
+import { Input, List, Spin, Avatar, Tabs } from 'antd';
 import { UserOutlined, SendOutlined, LoadingOutlined } from '@ant-design/icons';
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import api from '../services/api';
@@ -8,14 +8,19 @@ import api from '../services/api';
 const loadingIcon = <LoadingOutlined spin />;
 const ChatList = ({ setConversation }) => {
   const [users, setUsers] = useState([]);
+  const [conversations, setConversatios] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  let total;
+  let totalUsers;
+  let totalConversations;
   useEffect(async () => {
     const response = await api.get('/users');
-    total = response.data.pagination.total;
+    const res = await api.get('/conversation/me');
+    totalConversations = res.data.pagination.total;
+    totalUsers = response.data.pagination.total;
     setUsers([...response.data.data]);
   }, []);
+  // load images of users
   const image = (user) => {
     if (user.photos[0]) {
       return (
@@ -26,7 +31,9 @@ const ChatList = ({ setConversation }) => {
     }
     return <Avatar icon={<UserOutlined />} />;
   };
-  const handleScroll = async (params) => {
+  // handle the infinite scroll
+  const handleScroll = async (params, total, type) => {
+    let response;
     console.log('hmm');
     setLoading(true);
     if (users.length >= total) {
@@ -34,41 +41,105 @@ const ChatList = ({ setConversation }) => {
       setHasMore(false);
       return;
     }
-    const response = await api.get(`/users?limit=${params}`);
+    if (type === 'users') {
+      response = await api.get(`/users?limit=${params}`);
+    } else {
+      response = await api.get(`/conversation/me?limit=${params}`);
+    }
     setUsers([...response.data.data]);
     setLoading(false);
+  };
+  // handle the click of the conversation or user
+  const handleClick = async (userId) => {
+    try {
+      const usersIds = [userId];
+      const response = await api.get(`/conversation/${usersIds.join(',')}`);
+      console.log(response);
+      if (response.data.success) {
+        // if conversation exists return that
+        if (response.data.data) {
+          setConversation({ ...response.data.data });
+        } else {
+          // otherwise make a new conversation
+          const newConversation = await api.post('/conversation', { users: [userId] });
+          setConversation(newConversation.data.data);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <>
-      <Input style={{ borderRadius: '10000rem' }} />
-      <div className="infinite-container">
-        <InfiniteScroll
-          initialLoad={false}
-          pageStart={0}
-          loadMore={() => handleScroll(users.length + 2)}
-          hasMore={!loading && hasMore}
-          useWindow={false}
-        >
-          <List
-            dataSource={users}
-            renderItem={(item) => (
-              <List.Item className="user" key={item._id} onClick={() => setConversation(true)}>
-                <List.Item.Meta avatar={image(item)} title={item.fName} description={item.email} />
-                <div className="action">
-                  <SendOutlined />
-                </div>
-              </List.Item>
-            )}
-          >
-            {loading && hasMore && (
-              <div className="loading-container">
-                <Spin indicator={loadingIcon} />
-              </div>
-            )}
-          </List>
-        </InfiniteScroll>
-      </div>
+      <Tabs defaultActiveKey="2" centered="true">
+        <Tabs.TabPane tab="Conversations" key="1">
+          <div className="infinite-container">
+            <InfiniteScroll
+              initialLoad={false}
+              pageStart={0}
+              loadMore={() => handleScroll(users.length + 2)}
+              hasMore={!loading && hasMore}
+              useWindow={false}
+            >
+              <List
+                dataSource={users}
+                renderItem={(item) => (
+                  <List.Item className="user" key={item._id} onClick={() => handleClick(item._id)}>
+                    <List.Item.Meta
+                      avatar={image(item)}
+                      title={item.fName}
+                      description={item.email}
+                    />
+                    <div className="action">
+                      <SendOutlined />
+                    </div>
+                  </List.Item>
+                )}
+              >
+                {loading && hasMore && (
+                  <div className="loading-container">
+                    <Spin indicator={loadingIcon} />
+                  </div>
+                )}
+              </List>
+            </InfiniteScroll>
+          </div>
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Following/followers" key="2">
+          <div className="infinite-container">
+            <InfiniteScroll
+              initialLoad={false}
+              pageStart={0}
+              loadMore={() => handleScroll(users.length + 2, totalUsers, 'user')}
+              hasMore={!loading && hasMore}
+              useWindow={false}
+            >
+              <List
+                dataSource={users}
+                renderItem={(item) => (
+                  <List.Item className="user" key={item._id} onClick={() => handleClick(item._id)}>
+                    <List.Item.Meta
+                      avatar={image(item)}
+                      title={item.fName}
+                      description={item.email}
+                    />
+                    <div className="action">
+                      <SendOutlined />
+                    </div>
+                  </List.Item>
+                )}
+              >
+                {loading && hasMore && (
+                  <div className="loading-container">
+                    <Spin indicator={loadingIcon} />
+                  </div>
+                )}
+              </List>
+            </InfiniteScroll>
+          </div>
+        </Tabs.TabPane>
+      </Tabs>
     </>
   );
 };

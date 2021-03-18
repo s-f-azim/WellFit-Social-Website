@@ -5,7 +5,7 @@ import ChatList from '../components/ChatList';
 import Conversation from '../components/Conversation';
 
 const Chats = () => {
-  const [conversation, setConversation] = useState();
+  const [conversation, setConversation] = useState(null);
   return (
     <Row className="chat-row" justify="center" type="flex">
       <Card
@@ -28,9 +28,9 @@ const Chats = () => {
         }
       >
         <Col className="content-chat">
-          {conversation ? <Conversation /> : <ChatList setConversation={setConversation} />}
+          {conversation ? <Conversation conversation={conversation} /> : <ChatList setConversation={setConversation} />}
         </Col>
-        <Col></Col>
+        <Col />
       </Card>
     </Row>
   );

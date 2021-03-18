@@ -5,21 +5,14 @@ import 'antd/dist/antd.css';
 import '../styles/main.scss';
 import Head from 'next/head';
 import Router from 'next/router';
-import { useState } from 'react';
-import Layout from '../components/Layout';
 import { Provider } from 'next-auth/client';
-import io from 'socket.io-client';
-import API from '../config';
+import Layout from '../components/Layout';
+
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
 Router.onRouteChangeError = () => NProgress.done();
 
 function MyApp({ Component, pageProps }) {
-  const [session, setSession] = useState(pageProps.session);
-  const socket = io('ws://localhost:4000', { withCreddentials: true });
-  socket.on('online', (data) => {
-    console.log(data.message);
-  });
   return (
     <Provider
       session={pageProps.session}
@@ -43,7 +36,7 @@ function MyApp({ Component, pageProps }) {
             <ArrowUpOutlined />
           </div>
         </BackTop>
-        <Component {...pageProps} updateSession={setSession} />
+        <Component {...pageProps}  />
       </Layout>
     </Provider>
   );
