@@ -51,6 +51,8 @@ const nextConfig = {
     APP_NAME: 'instaFit',
     API_DEVELOPMENT: 'http://localhost:4000/api',
     API_PRODUCTION: 'http://localhost:4000/api',
+    SOCKET_URL_DEV: 'ws://localhost:4000',
+    SOCKET_URL_PRODUCTION: '',
     PRODUCTION: false,
   },
   images: {
