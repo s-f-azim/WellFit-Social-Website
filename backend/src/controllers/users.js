@@ -1,8 +1,8 @@
 /* eslint-disable no-use-before-define */
+import sharp from 'sharp';
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
 import Course from '../models/Course.js';
-import sharp from 'sharp';
 
 /**
  * @async
@@ -81,6 +81,23 @@ const getProfile = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc get a user by providing email
+ * @route GET /api/users/email/:email
+ * @access private
+ */
+const getUserIdByEmail = asyncHandler(async (req, res) => {
+  User.findOne({ email: req.params.email }, '_id').exec((err, user) => {
+    if (!user)
+      return res.status(400).send({
+        success: false,
+        error: `User ${req.params.email} does not exist`,
+      });
+    return res.status(200).send({ success: true, data: user._id });
+  });
+});
+
+/**
+ * @async
  * @desc update user profile
  * @route PATCH /api/users/editprofile
  * @access private
@@ -106,7 +123,7 @@ const followUser = asyncHandler(async (req, res) => {
   const followingUser = await User.findById(req.user._id);
   if (
     !followingUser.following.includes(followeeUser._id) &&
-    followingUser._id + ' ' !== followeeUser._id + ' '
+    `${followingUser._id} ` !== `${followeeUser._id} `
   ) {
     followingUser.following.push(followeeUser._id);
     followeeUser.follower.push(followingUser._id);
@@ -128,7 +145,7 @@ const followUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1', 10); //Page number needs to start with 1
+  const page = parseInt(req.query.page || '1', 10); // Page number needs to start with 1
   const limit = 5;
   const followings = await User.findById(req.user._id).populate({
     path: 'following',
@@ -145,7 +162,7 @@ const getFollowing = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1', 10); //Page number needs to start with 1
+  const page = parseInt(req.query.page || '1', 10); // Page number needs to start with 1
   const limit = 5;
   const followers = await User.findById(req.user._id).populate({
     path: 'follower',
@@ -248,7 +265,7 @@ const instagramOauth = asyncHandler(async (req, res) => {
  * @access private
  */
 const uploadImages = asyncHandler(async (req, res) => {
-  let formattedImages = [];
+  const formattedImages = [];
   req.files.forEach((file) => formattedImages.push(file.buffer));
   /* eslint-disable no-return-await */
   formattedImages.map(
@@ -343,6 +360,7 @@ export {
   loginUser,
   getProfile,
   getUser,
+  getUserIdByEmail,
   logoutUser,
   updateUser,
   deleteUser,

@@ -6,7 +6,7 @@ import User from '../models/User.js';
 /**
  * @async
  * @desc create a review for another user
- * @route POST /api/users/review/:id
+ * @route POST /api/users/reviewedId:/reviews
  * @access private
  */
 const createReview = asyncHandler(async (req, res) => {
@@ -44,7 +44,7 @@ const getReviews = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc delete a review
- * @route DELETE /api/users/review/:id
+ * @route DELETE /api/users/:reviewedId/reviews
  * @access private
  */
 const deleteReview = asyncHandler(async (req, res) => {

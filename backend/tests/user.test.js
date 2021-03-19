@@ -207,6 +207,15 @@ it('Should get all users', async () => {
   expect(response.body.count).toBe(1);
 });
 
+it('Should get id of users by email', async () => {
+  const response = await request(app)
+    .get(`/api/users/email/${userOne.email}`)
+    .send()
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(200);
+  expect(response.body.data).toBe(userOne._id.toString());
+});
+
 /**
  * @test getSuggestedInstructors
  * @desc Testing querying for suggested instructors for users to follow

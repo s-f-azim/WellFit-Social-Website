@@ -6,6 +6,7 @@ import {
   loginUser,
   logoutUser,
   getUser,
+  getUserIdByEmail,
   updateUser,
   deleteUser,
   getWishList,
@@ -55,6 +56,10 @@ router
 router
   .route('/me')
   .get(passport.authenticate('jwt', { session: false }), getProfile);
+
+router
+  .route('/email/:email')
+  .get(passport.authenticate('jwt', { session: false }), getUserIdByEmail);
 
 router.route('/oauth/google').get(
   passport.authenticate('google', {
