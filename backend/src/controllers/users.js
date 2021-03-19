@@ -2,6 +2,7 @@
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
 import sharp from 'sharp';
+import { Mongoose } from 'mongoose';
 
 /**
  * @async
@@ -317,6 +318,15 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
   res.status(200).send({ success: true, data: users });
 });
 
+/**
+ * @desc ban a user
+ * @route PATCH ban/:id
+ * @access private
+ */
+const banUser = asyncHandler(async (req, res) => {
+  const user = Mongoose.findByIdAndUpdate(req.params.id, { isBanned: true });
+  sendTokenResponse(user, 200, res);
+});
 export {
   getUsers,
   getUsersWithinRadius,
@@ -337,4 +347,5 @@ export {
   followUser,
   getFollowing,
   getFollower,
+  banUser,
 };

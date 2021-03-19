@@ -19,6 +19,7 @@ import {
   followUser,
   getFollowing,
   getFollower,
+  banUser,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -41,6 +42,10 @@ router.route('/logout').get(logoutUser);
 router
   .route('/editProfile')
   .patch(passport.authenticate('jwt', { session: false }), updateUser);
+
+router
+  .route('/ban/:id')
+  .patch(passport.authenticate('jwt', { session: false }), banUser);
 router
   .route('/avatar')
   .post(

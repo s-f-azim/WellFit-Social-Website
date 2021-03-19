@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Form, notification, Space, Alert, Input, Card } from 'antd';
 import { CheckOutlined, DownCircleOutlined, WarningOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { deleteSpecificUser } from '../actions/user';
+import { deleteSpecificUser, banUser } from '../actions/user';
 
 const BanUser = ({ users }) => {
   const router = useRouter();
@@ -13,9 +13,9 @@ const BanUser = ({ users }) => {
     const { deleteEmail } = values;
     try {
       // eslint-disable-next-line no-underscore-dangle
-      const toBan = users.filter((user) => user.email === deleteEmail)[0]._id;
+      const toDelete = users.filter((user) => user.email === deleteEmail)[0]._id;
 
-      const response = await deleteSpecificUser(toBan);
+      const response = await deleteSpecificUser(toDelete);
       notification.open({
         message: 'user account has been deleted',
         duration: 3,
@@ -35,8 +35,7 @@ const BanUser = ({ users }) => {
     try {
       // eslint-disable-next-line no-underscore-dangle
       const toBan = users.filter((user) => user.email === banEmail)[0]._id;
-
-      const response = await deleteSpecificUser(toBan);
+      const response = await banUser(toBan);
       notification.open({
         message: 'user account has been deleted',
         duration: 3,

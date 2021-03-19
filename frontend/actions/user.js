@@ -23,6 +23,8 @@ const getSuggestedInstructors = () => api.get('users/profile');
 
 const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
 
+const banUser = (user) => api.patch(`/ban/${user._id}`, {});
+
 export {
   updateUser as default,
   deleteUser,
@@ -34,4 +36,5 @@ export {
   getInstructors,
   addingFollowUser,
   getSuggestedInstructors,
+  banUser,
 };
