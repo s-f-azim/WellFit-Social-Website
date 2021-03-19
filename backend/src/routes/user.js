@@ -26,7 +26,6 @@ import upload from '../middleware/multer.js';
 
 const router = new express.Router();
 
-router.route('/').get(paginate(User), getUsers);
 
 router
   .route('/radius/:zipcode/:distance')
@@ -109,6 +108,8 @@ router
 router
   .route('/getFollower')
   .get(passport.authenticate('jwt', { session: false }), getFollower);
+
+router.route('/').get(paginate(User), getUsers);
 
 router.route('/:id').get(getUser);
 
