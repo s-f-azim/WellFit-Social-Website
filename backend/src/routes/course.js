@@ -19,7 +19,6 @@ const router = new express.Router();
 
 router.route('/').get(paginate(Course), getCourses);
 
-router.route('/:id').get(getCourse);
 
 router.route('/:id/creators').get(getCourseCreators);
 
@@ -49,5 +48,7 @@ router
 router
   .route('/delete/:id')
   .delete(passport.authenticate('jwt', { session: false }), deleteCourse);
+
+router.route('/:id').get(getCourse);
 
 export default router;

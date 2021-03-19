@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import santanize from 'express-mongo-sanitize';
 import helmet from 'helmet';
 import xss from 'xss-clean';
+import compression from 'compression';
 import connectDb from '../config/db.js';
 import errorHandler from './middleware/error.js';
 import ErrorResponse from './utils/errorResponse.js';
@@ -11,6 +12,7 @@ import userRoutes from './routes/user.js';
 import reviewRoutes from './routes/review.js';
 import courseRoutes from './routes/course.js';
 import requestRoutes from './routes/request.js';
+import conversationRoutes from './routes/conversation.js';
 import passport from '../config/passport-setup.js';
 
 // connect to the database
@@ -33,6 +35,9 @@ app.use(helmet());
 // Prevent XSS attacks
 app.use(xss());
 
+// compress all responses
+app.use(compression());
+
 // passport setup
 app.use(passport.initialize());
 
@@ -44,6 +49,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/users/:reviewedId/reviews', reviewRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/requests', requestRoutes);
+app.use('/api/conversation', conversationRoutes);
 
 // 404 if the route doesn't match
 // eslint-disable-next-line no-unused-vars
