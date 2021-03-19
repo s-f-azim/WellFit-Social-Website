@@ -70,7 +70,6 @@ const editProfilePage = () => {
   if (typeof window !== 'undefined' && loading) return null;
 
   if (session) {
-    console.log(session);
     const { user } = session;
     const [isAlertVisible, setIsAlertVisible] = useState(false);
 

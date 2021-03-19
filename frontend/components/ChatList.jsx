@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Input, List, Spin, Avatar, Tabs } from 'antd';
+import {  List, Spin, Avatar, Tabs } from 'antd';
 import { UserOutlined, SendOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -8,15 +8,13 @@ import api from '../services/api';
 const loadingIcon = <LoadingOutlined spin />;
 const ChatList = ({ setConversation }) => {
   const [users, setUsers] = useState([]);
-  const [conversations, setConversatios] = useState([]);
+  const [conversation] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   let totalUsers;
-  let totalConversations;
   useEffect(async () => {
     const response = await api.get('/users');
     const res = await api.get('/conversation/me');
-    totalConversations = res.data.pagination.total;
     totalUsers = response.data.pagination.total;
     setUsers([...response.data.data]);
   }, []);
@@ -72,43 +70,10 @@ const ChatList = ({ setConversation }) => {
 
   return (
     <>
-      <Tabs defaultActiveKey="2" centered="true">
-        <Tabs.TabPane tab="Conversations" key="1">
-          <div className="infinite-container">
-            <InfiniteScroll
-              initialLoad={false}
-              pageStart={0}
-              loadMore={() => handleScroll(users.length + 2)}
-              hasMore={!loading && hasMore}
-              useWindow={false}
-            >
-              <List
-                dataSource={users}
-                renderItem={(item) => (
-                  <List.Item className="user" key={item._id} onClick={() => handleClick(item._id)}>
-                    <List.Item.Meta
-                      avatar={image(item)}
-                      title={item.fName}
-                      description={item.email}
-                    />
-                    <div className="action">
-                      <SendOutlined />
-                    </div>
-                  </List.Item>
-                )}
-              >
-                {loading && hasMore && (
-                  <div className="loading-container">
-                    <Spin indicator={loadingIcon} />
-                  </div>
-                )}
-              </List>
-            </InfiniteScroll>
-          </div>
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Following/followers" key="2">
-          <div className="infinite-container">
-            <InfiniteScroll
+      <Tabs defaultActiveKey="1" centered="true">
+        <Tabs.TabPane tab="Following/followers" key="1">
+    <div className="infinite-container">
+    <InfiniteScroll
               initialLoad={false}
               pageStart={0}
               loadMore={() => handleScroll(users.length + 2, totalUsers, 'user')}
