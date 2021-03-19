@@ -4,6 +4,7 @@
 @import './profileBar.scss';
 @import './signup.scss';
 @import './login.scss';
+@import './profile.scss';
 @import './adminDashboard.scss';
 @import './_searchQuestions.scss';
 @import './settings.scss';
@@ -11,7 +12,8 @@
 @import './searchCourse.scss';
 @import './questionnaire.scss';
 @import './preferences.scss';
-@import './_searchQuestions.scss';
+@import './searchQuestions.scss';
+@import './suggestedInstructors.scss';
 
 body,
 ::before,

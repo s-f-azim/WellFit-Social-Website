@@ -8,6 +8,7 @@ import {
   uploadImages,
   deleteImages,
   getCourse,
+  getCourseCreators,
 } from '../controllers/courses.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -19,6 +20,8 @@ const router = new express.Router();
 router.route('/').get(paginate(Course), getCourses);
 
 router.route('/:id').get(getCourse);
+
+router.route('/:id/creators').get(getCourseCreators);
 
 router
   .route('/create')

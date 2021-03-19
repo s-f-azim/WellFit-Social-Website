@@ -5,6 +5,7 @@ import Course from '../../src/models/Course.js';
 
 const userOneId = new mongoose.Types.ObjectId();
 const reviewOneId = new mongoose.Types.ObjectId();
+const courseOneId = new mongoose.Types.ObjectId();
 
 // create users
 const userOne = {
@@ -71,6 +72,20 @@ const userFour = {
   role: 'instructor',
 };
 
+const userFiveId = new mongoose.Types.ObjectId();
+
+const userFive = {
+  _id: userFiveId,
+  email: 'test5@gmail.com',
+  password: '12345678',
+  fName: 'testUser',
+  lName: '55',
+  gender: 'Male',
+  location: 'Europe',
+  birthday: new Date(),
+  wishlist: [courseOneId],
+};
+
 const reviewOne = {
   _id: reviewOneId,
   reviewed: userOneId,
@@ -80,8 +95,6 @@ const reviewOne = {
 };
 
 // create courses
-
-const courseOneId = new mongoose.Types.ObjectId();
 
 const courseOne = {
   _id: courseOneId,
@@ -106,7 +119,7 @@ const courseTwo = {
 };
 
 const reviews = [reviewOne];
-const users = [userOne, userTwo, userThree, userFour];
+const users = [userOne, userTwo, userThree, userFour, userFive];
 const courses = [courseOne, courseTwo];
 // token
 const tokens = [];
@@ -142,6 +155,8 @@ export {
   userOne,
   userTwo,
   userThree,
+  userFour,
+  userFive,
   courseOne,
   courseTwo,
   setupDatabase,

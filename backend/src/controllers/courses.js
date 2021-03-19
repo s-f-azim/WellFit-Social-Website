@@ -9,11 +9,24 @@ import Course from '../models/Course.js';
  * @access public
  */
 const getCourse = asyncHandler(async (req, res) => {
-  console.log(req.params);
   const course = await Course.findById(req.params.id);
   res.status(200).send({
     success: true,
     data: course,
+  });
+});
+
+/**
+ * @async
+ * @desc get course creators by ID of the course
+ * @route GET /api/courses/:id/creators
+ * @access public
+ */
+const getCourseCreators = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.id).populate('creators');
+  res.status(200).send({
+    success: true,
+    data: course.creators,
   });
 });
 
@@ -143,4 +156,5 @@ export {
   uploadImages,
   deleteImages,
   getCourse,
+  getCourseCreators,
 };
