@@ -136,7 +136,7 @@ const requestThree = {
 const requestFour = {
   _id: requestFourId,
   author: userOneId,
-  recipient: userTwo,
+  recipient: userTwoId,
   type: 'report',
   content: 'user report #1',
 };

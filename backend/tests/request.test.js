@@ -86,12 +86,12 @@ it('Should be able to create a request of any type', async () => {
     .send(report3)
     .expect(200);
 
-  /* Recipient is for report reqs only, which is WIP
-  
+  // Recipient is required for report reqs only
+
   const report4 = {
     author: userOne,
     type: 'report',
-    recipient: userTwo._id,
+    recipientID: userTwo._id,
     content: 'user report',
   };
 
@@ -99,11 +99,71 @@ it('Should be able to create a request of any type', async () => {
     .post('/api/requests/create')
     .set('Cookie', [`token=${tokens[0]}`])
     .send(report4)
-    .expect(200); */
+    .expect(200);
 
-  expect(await Request.countDocuments()).toBe(count + 3);
+  expect(await Request.countDocuments()).toBe(count + 4);
 });
 
+it('Should create a report request with valid data', async () => {
+  const count = await Request.countDocuments();
+  const report = {
+    author: userOne,
+    type: 'report',
+    content: 'report',
+    recipientID: userTwo._id,
+  };
+
+  await request(app)
+    .post('/api/requests/create')
+    .set('Cookie', [`token=${tokens[0]}`])
+    .send(report)
+    .expect(200);
+
+  expect(await Request.countDocuments()).toBe(count + 1);
+});
+
+it('Should not create a report request without recipientID', async () => {
+  const count = await Request.countDocuments();
+  const report = {
+    author: userOne,
+    type: 'report',
+    content: 'report',
+  };
+
+  await request(app)
+    .post('/api/requests/create')
+    .set('Cookie', [`token=${tokens[0]}`])
+    .send(report)
+    .expect(400);
+
+  expect(await Request.countDocuments()).toBe(count);
+});
+it('Should not create a report request with invalid recipientID', async () => {
+  const count = await Request.countDocuments();
+  const report = {
+    author: userOne,
+    type: 'report',
+    content: 'report',
+    recipientID: 0,
+  };
+  const report2 = {
+    author: userOne,
+    type: 'report',
+    content: 'report',
+    recipientID: 'dfw2141240',
+  };
+  await request(app)
+    .post('/api/requests/create')
+    .set('Cookie', [`token=${tokens[0]}`])
+    .send(report)
+    .expect(400);
+  await request(app)
+    .post('/api/requests/create')
+    .set('Cookie', [`token=${tokens[0]}`])
+    .send(report2)
+    .expect(400);
+  expect(await Request.countDocuments()).toBe(count);
+});
 it('Should allow user to submit a req of same type more than once', async () => {
   const count = await Request.countDocuments();
   const report1 = { author: userOne, type: 'bug', content: 'bug report' };
@@ -143,7 +203,35 @@ it('Should allow two users to submit identical requests', async () => {
 
   expect(await Request.countDocuments()).toBe(count + 2);
 });
+it('Should allow one user to submit identical report requests', async () => {
+  const count = await Request.countDocuments();
+  const report1 = {
+    author: userOne,
+    type: 'report',
+    recipientID: userTwo._id,
+    content: 'report report',
+  };
+  const report2 = {
+    author: userOne,
+    type: 'report',
+    recipientID: userTwo._id,
+    content: 'report report',
+  };
 
+  await request(app)
+    .post('/api/requests/create')
+    .set('Cookie', [`token=${tokens[0]}`])
+    .send(report1)
+    .expect(200);
+
+  await request(app)
+    .post('/api/requests/create')
+    .set('Cookie', [`token=${tokens[1]}`])
+    .send(report2)
+    .expect(200);
+
+  expect(await Request.countDocuments()).toBe(count + 2);
+});
 it('Should get requests', async () => {
   const response = await request(app).get('/api/requests').send().expect(200);
 
@@ -160,4 +248,19 @@ it('Should delete a request', async () => {
     .expect(200);
 
   expect(await Request.countDocuments()).toBe(count - 1);
+});
+it('Should delete a bug request and a report request', async () => {
+  const count = await Request.countDocuments();
+
+  await request(app)
+    .delete(`/api/requests/delete/${requestOne._id}`)
+    .set('Cookie', [`token=${tokens[0]}`])
+    .send()
+    .expect(200);
+  await request(app)
+    .delete(`/api/requests/delete/${requestFour._id}`)
+    .set('Cookie', [`token=${tokens[0]}`])
+    .send()
+    .expect(200);
+  expect(await Request.countDocuments()).toBe(count - 2);
 });
