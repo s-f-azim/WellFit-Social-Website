@@ -4,11 +4,13 @@ import geocoder from '../utils/geocoder.js';
 
 const CourseSchema = new mongoose.Schema(
   {
-    creators: {
-      type: [mongoose.Schema.Types.ObjectId],
-      required: [true, 'Please enter the authors of the package'],
-      ref: 'User',
-    },
+    creators: [
+      {
+        type: [mongoose.Schema.Types.ObjectId],
+        required: [true, 'Please enter the authors of the course'],
+        ref: 'User',
+      },
+    ],
     description: {
       type: String,
       required: [true, 'Please enter a description'],
@@ -83,6 +85,7 @@ const CourseSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 // Geocode and create location field
 CourseSchema.pre('save', async function (next) {
   const loc = await geocoder.geocode(this.address);

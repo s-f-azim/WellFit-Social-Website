@@ -6,6 +6,7 @@ import Conversation from '../../src/models/Conversation.js';
 
 const userOneId = new mongoose.Types.ObjectId();
 const reviewOneId = new mongoose.Types.ObjectId();
+const courseOneId = new mongoose.Types.ObjectId();
 
 // create users
 const userOne = {
@@ -72,6 +73,20 @@ const userFour = {
   role: 'instructor',
 };
 
+const userFiveId = new mongoose.Types.ObjectId();
+
+const userFive = {
+  _id: userFiveId,
+  email: 'test5@gmail.com',
+  password: '12345678',
+  fName: 'testUser',
+  lName: '55',
+  gender: 'Male',
+  location: 'Europe',
+  birthday: new Date(),
+  wishlist: [courseOneId],
+};
+
 const reviewOne = {
   _id: reviewOneId,
   reviewed: userOneId,
@@ -81,8 +96,6 @@ const reviewOne = {
 };
 
 // create courses
-
-const courseOneId = new mongoose.Types.ObjectId();
 
 const courseOne = {
   _id: courseOneId,
@@ -119,7 +132,7 @@ const conversationTwo = {
 };
 
 const reviews = [reviewOne];
-const users = [userOne, userTwo, userThree, userFour];
+const users = [userOne, userTwo, userThree, userFour, userFive];
 const courses = [courseOne, courseTwo];
 const conversations = [conversationOne, conversationTwo];
 // token
@@ -163,6 +176,8 @@ export {
   userOne,
   userTwo,
   userThree,
+  userFour,
+  userFive,
   courseOne,
   courseTwo,
   setupDatabase,
