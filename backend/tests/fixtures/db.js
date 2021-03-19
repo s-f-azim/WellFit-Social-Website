@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import User from '../../src/models/User.js';
 import Review from '../../src/models/Review.js';
 import Course from '../../src/models/Course.js';
+import Conversation from '../../src/models/Conversation.js';
 
 const userOneId = new mongoose.Types.ObjectId();
 const reviewOneId = new mongoose.Types.ObjectId();
@@ -104,16 +105,30 @@ const courseTwo = {
   price: 0,
   tags: ['Cardio'],
 };
+const conversationOneId = new mongoose.Types.ObjectId();
+const conversationOne = {
+  _id: conversationOneId,
+  users: [userOne._id],
+};
+
+const conversationTwoId = new mongoose.Types.ObjectId();
+const conversationTwo = {
+  _id: conversationTwoId,
+  users: [userTwo._id, userThree._id],
+  messages: [],
+};
 
 const reviews = [reviewOne];
 const users = [userOne, userTwo, userThree, userFour];
 const courses = [courseOne, courseTwo];
+const conversations = [conversationOne, conversationTwo];
 // token
 const tokens = [];
 const setupDatabase = async () => {
   await User.deleteMany();
   await Review.deleteMany();
   await Course.deleteMany();
+  await Conversation.deleteMany();
   // seed users
 
   // eslint-disable-next-line no-restricted-syntax
@@ -136,6 +151,12 @@ const setupDatabase = async () => {
     // eslint-disable-next-line no-await-in-loop
     await review.save();
   }
+  // eslint-disable-next-line no-restricted-syntax
+  for (const conv of conversations) {
+    const newConv = new Conversation(conv);
+    // eslint-disable-next-line no-await-in-loop
+    await newConv.save();
+  }
 };
 
 export {
@@ -147,4 +168,6 @@ export {
   setupDatabase,
   userOneId,
   tokens,
+  conversationOne,
+  conversationTwo,
 };

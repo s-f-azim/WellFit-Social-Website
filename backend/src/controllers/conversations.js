@@ -5,7 +5,7 @@ import Conversation from '../models/Conversation.js';
 /**
  * @async
  * @desc create a new conversation given the ids
- * @route POST /api/conversations/
+ * @route POST /api/conversation/
  * @access private
  */
 const createConversation = asyncHandler(async (req, res) => {
@@ -19,13 +19,11 @@ const createConversation = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc get a conversation given the ids
- * @route GET /api/conversations/:user
+ * @route GET /api/conversation/:user
  * @access private
  */
 const getConversation = asyncHandler(async (req, res) => {
-  // const { users } = req.params;
   const users = req.params.users.split(',');
-  console.log(users);
 
   users.push(req.user._id);
   const conversation = await Conversation.findOne({
@@ -38,7 +36,7 @@ const getConversation = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc get all conversations of the current user
- * @route GET /api/conversations/me?limit=number&&page=number
+ * @route GET /api/conversation/me?limit=number&&page=number
  * @access private
  */
 const getConversations = asyncHandler(async (req, res) => {
@@ -63,7 +61,7 @@ const getConversations = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc update conversation with new messages
- * @route PATCH /api/conversations/
+ * @route PATCH /api/conversation/
  * @access private
  */
 const updateConversation = asyncHandler(async (req, res) => {
