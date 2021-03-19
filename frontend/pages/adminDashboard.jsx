@@ -236,9 +236,9 @@ export async function getStaticProps() {
     props: {
       userCount: getUsersRes.data.pagination.total,
       users: getUsersWithLimitRes.data.data,
-      adminCount: getAdminsRes.data.pagination.adminTotal,
-      clientCount: getClientsRes.data.pagination.clientTotal,
-      instructorCount: getInstructorsRes.data.pagination.instructorTotal,
+      adminCount: getAdminsRes.data.count,
+      clientCount: getClientsRes.data.count,
+      instructorCount: getInstructorsRes.data.count,
       bugReports: getRequestsRes.filter(isBugReport),
       verifyRequests: getRequestsRes.filter(isVerifyRequest),
       contentReports: getRequestsRes.filter(isContentReport),

@@ -259,7 +259,6 @@ const UserSchema = new mongoose.Schema(
     isBanned: {
       type: Boolean,
       default: false,
-      required: [true, 'Ban status has not been defined'],
     },
   },
   { timestamps: true }

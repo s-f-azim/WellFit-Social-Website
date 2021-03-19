@@ -323,9 +323,16 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
  * @access private
  */
 const banUser = asyncHandler(async (req, res) => {
-  const user = User.findByIdAndUpdate(req.params.id, { isBanned: true });
+  console.log(req.params);
+  const user = User.findByIdAndUpdate(
+    req.params.id,
+    { isBanned: true },
+    { new: true }
+  );
+  await user.save();
   sendTokenResponse(user, 200, res);
 });
+
 export {
   getUsers,
   getUsersWithinRadius,
