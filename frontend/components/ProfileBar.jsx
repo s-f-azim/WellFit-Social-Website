@@ -54,9 +54,6 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
         <HistoryOutlined />
         <h1>Purchase history</h1>
       </div>
-      <div className="item">
-        <ReportButton RecipientID="604ea0644ce2c3e7ccc2051d" />
-      </div>
       <div className="item edit" onClick={GoToeditProfile}>
         <EditOutlined />
         <h1>Edit profile</h1>

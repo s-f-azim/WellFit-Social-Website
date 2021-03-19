@@ -1,4 +1,4 @@
-import { Card, Row, Col, Statistic, Tabs, List, notification } from 'antd';
+import { Card, Row, Col, Statistic, Button, Tabs, List, notification } from 'antd';
 import {
   FundProjectionScreenOutlined,
   BarChartOutlined,
@@ -9,6 +9,7 @@ import {
   UserOutlined,
   CloseOutlined,
   CheckOutlined,
+  DislikeOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
@@ -35,12 +36,11 @@ const AdminDashboard = ({
   Messages,
 }) => {
   const [session, loading] = useSession();
+  const [reports, setReports] = useState(bugReports);
 
   if (typeof window !== 'undefined' && loading) return null;
 
   if (session && session.user.role === 'admin') {
-    const [reports, setReports] = useState(bugReports);
-
     const title = (
       <h1>
         <FundProjectionScreenOutlined /> Admin Dashboard
@@ -67,6 +67,12 @@ const AdminDashboard = ({
     const bugTitle = (
       <p>
         <BugOutlined /> Bug reports
+      </p>
+    );
+
+    const userTitle = (
+      <p>
+        <DislikeOutlined /> User reports
       </p>
     );
 
@@ -155,6 +161,45 @@ const AdminDashboard = ({
 
                       <b>Content: </b>
                       {report.content}
+                    </List.Item>
+                  )}
+                />
+              </TabPane>
+              <TabPane key="7" tab={userTitle}>
+                <List
+                  header={
+                    <h2>
+                      <DislikeOutlined /> User reports
+                    </h2>
+                  }
+                  itemLayout="horizontal"
+                  dataSource={contentReports}
+                  renderItem={(report) => (
+                    <List.Item>
+                      <h3>
+                        <b>Report #{contentReports.indexOf(report) + 1}</b>
+                        <CloseOutlined
+                          style={{ color: 'red', margin: '7px' }}
+                          onClick={() => onDeleteBug(report)}
+                        />
+                      </h3>
+                      <h3>
+                        <b>Reported User: </b>
+                        {getRequestAuthor(report.recipient).email}
+                        <br />
+                        <b>Reported by: </b>
+                        {getRequestAuthor(report.author).email}
+                      </h3>
+
+                      <b>Content: </b>
+                      {report.content}
+                      <br />
+                      <Button type="danger" style={{ marginRight: '2rem' }}>
+                        Ban User
+                      </Button>
+                      <Button type="danger" size="small">
+                        Ban Reportee
+                      </Button>
                     </List.Item>
                   )}
                 />
