@@ -5,8 +5,11 @@ import Course from '../../src/models/Course.js';
 import Review from '../../src/models/Review.js';
 import UserReview from '../../src/models/UserReview.js';
 import CourseReview from '../../src/models/CourseReview.js';
+import Conversation from '../../src/models/Conversation.js';
 
 const userReviewOneId = new mongoose.Types.ObjectId();
+
+const courseOneId = new mongoose.Types.ObjectId();
 
 const userOneId = new mongoose.Types.ObjectId();
 
@@ -75,11 +78,23 @@ const userFour = {
   role: 'instructor',
 };
 
+const userFiveId = new mongoose.Types.ObjectId();
+
+const userFive = {
+  _id: userFiveId,
+  email: 'test5@gmail.com',
+  password: '12345678',
+  fName: 'testUser',
+  lName: '55',
+  gender: 'Male',
+  location: 'Europe',
+  birthday: new Date(),
+  wishlist: [courseOneId],
+};
+
 // create courses
 
 const courseReviewOneId = new mongoose.Types.ObjectId();
-
-const courseOneId = new mongoose.Types.ObjectId();
 
 const courseOne = {
   _id: courseOneId,
@@ -102,6 +117,18 @@ const courseTwo = {
   creators: [userOneId],
   price: 0,
   tags: ['Cardio'],
+};
+const conversationOneId = new mongoose.Types.ObjectId();
+const conversationOne = {
+  _id: conversationOneId,
+  users: [userOne._id],
+};
+
+const conversationTwoId = new mongoose.Types.ObjectId();
+const conversationTwo = {
+  _id: conversationTwoId,
+  users: [userTwo._id, userThree._id],
+  messages: [],
 };
 
 // create reviews
@@ -127,14 +154,18 @@ const courseReviewOne = {
 // create fixtures
 
 const reviews = [userReviewOne, courseReviewOne];
-const users = [userOne, userTwo, userThree, userFour];
+const users = [userOne, userTwo, userThree, userFour, userFive];
 const courses = [courseOne, courseTwo];
+const conversations = [conversationOne, conversationTwo];
+
 // token
 const tokens = [];
+
 const setupDatabase = async () => {
   await User.deleteMany();
   await Review.deleteMany();
   await Course.deleteMany();
+  await Conversation.deleteMany();
   // seed users
 
   // eslint-disable-next-line no-restricted-syntax
@@ -152,15 +183,26 @@ const setupDatabase = async () => {
   }
 
   await Review.create(reviews);
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const conv of conversations) {
+    const newConv = new Conversation(conv);
+    // eslint-disable-next-line no-await-in-loop
+    await newConv.save();
+  }
 };
 
 export {
   userOne,
   userTwo,
   userThree,
+  userFour,
+  userFive,
   courseOne,
   courseTwo,
   setupDatabase,
   userOneId,
   tokens,
+  conversationOne,
+  conversationTwo,
 };

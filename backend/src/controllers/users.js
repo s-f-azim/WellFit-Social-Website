@@ -2,6 +2,7 @@
 import sharp from 'sharp';
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
+import Course from '../models/Course.js';
 
 /**
  * @async
@@ -33,7 +34,7 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 /**
  * @async
- * @desc  get a users within a radius
+ * @desc  get all users within a radius
  * @route GET /api/users/radius/:zipcode/:distance
  * @access public
  */
@@ -118,36 +119,56 @@ const updateUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const followUser = asyncHandler(async (req, res) => {
-  if (User.findOne({ _id: req.params.id })) {
-    if (
-      !req.user.following.includes(req.params.id) &&
-      `${req.user._id} ` !== `${req.params.id} `
-    ) {
-      req.user.following.push(req.params.id);
-    } else {
-      const index = req.user.following.indexOf(req.params.id);
-      if (index > -1) {
-        req.user.following.splice(index, 1);
-      }
-    }
-    const updatedUser = await req.user.save();
-    sendTokenResponse(updatedUser, 200, res);
+  const followeeUser = await User.findOne({ _id: req.params.id });
+  const followingUser = await User.findById(req.user._id);
+  if (
+    !followingUser.following.includes(followeeUser._id) &&
+    `${followingUser._id} ` !== `${followeeUser._id} `
+  ) {
+    followingUser.following.push(followeeUser._id);
+    followeeUser.follower.push(followingUser._id);
+  } else {
+    const index = followingUser.following.indexOf(followeeUser._id);
+    const followerIndex = followeeUser.follower.indexOf(followingUser._id);
+    if (index > -1) followingUser.following.splice(index, 1);
+    if (followerIndex > -1) followeeUser.follower.splice(followerIndex, 1);
   }
+  await followeeUser.save();
+  await followingUser.save();
+  sendTokenResponse(followingUser, 200, res);
 });
 
 /**
  * @async
  * @desc get user following list
- * @route GET /api/users/followList
+ * @route GET /api/users/getFollowing?page=`{$pageNumber}`
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1', 10);
-  const limit = 2;
-  const startIndex = (page - 1) * limit;
-  const lastIndex = limit * page;
-  const followings = await User.findById(req.user._id).populate('following');
-  const results = followings.following.slice(startIndex, lastIndex);
+  const page = parseInt(req.query.page || '1', 10); // Page number needs to start with 1
+  const limit = 5;
+  const followings = await User.findById(req.user._id).populate({
+    path: 'following',
+    select: ['name'],
+  });
+  const results = followings.following.slice((page - 1) * limit, limit * page); //  (startIndex, lastIndex)
+  res.status(200).send({ success: true, data: results });
+});
+
+/**
+ * @async
+ * @desc get user follower list
+ * @route GET /api/users/getFollower?page=`{$pageNumber}`
+ * @access private
+ */
+const getFollower = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page || '1', 10); // Page number needs to start with 1
+  const limit = 5;
+  const followers = await User.findById(req.user._id).populate({
+    path: 'follower',
+    select: ['name'],
+  });
+  const results = followers.follower.slice((page - 1) * limit, limit * page); //  (startIndex, lastIndex)
   res.status(200).send({ success: true, data: results });
 });
 
@@ -175,6 +196,36 @@ const logoutUser = asyncHandler(async (req, res) => {
 const deleteUser = asyncHandler(async (req, res) => {
   await User.findByIdAndDelete(req.user._id);
   res.status(200).send({ success: true });
+});
+
+/**
+ * @async
+ * @desc add specified course to user's wish list - if it already exists, remove it
+ * @route PATCH /api/users/addtowishlist/:id
+ * @access private
+ */
+const addToWishList = asyncHandler(async (req, res) => {
+  if (Course.findById(req.params.id)) {
+    const index = req.user.wishlist.indexOf(req.params.id);
+    if (index === -1) {
+      req.user.wishlist.push(req.params.id);
+    } else {
+      req.user.wishlist.splice(index, 1);
+    }
+  }
+  const updatedUser = await req.user.save();
+  sendTokenResponse(updatedUser, 200, res);
+});
+
+/**
+ * @async
+ * @desc get all wishlist
+ * @route GET /api/users/wishlist
+ * @access private
+ */
+const getWishList = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).populate('wishlist');
+  res.status(200).send({ success: true, data: user.wishlist });
 });
 
 /**
@@ -313,6 +364,8 @@ export {
   logoutUser,
   updateUser,
   deleteUser,
+  getWishList,
+  addToWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -321,4 +374,5 @@ export {
   getSuggestedInstructors,
   followUser,
   getFollowing,
+  getFollower,
 };

@@ -18,6 +18,20 @@ const getCourse = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc get course creators by ID of the course
+ * @route GET /api/courses/:id/creators
+ * @access public
+ */
+const getCourseCreators = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.id).populate('creators');
+  res.status(200).send({
+    success: true,
+    data: course.creators,
+  });
+});
+
+/**
+ * @async
  * @desc Get all courses
  * @route GET /api/courses?select=fields&&location[city,zipcode,street]&&price&&avgRating&&tags
  * @access public
@@ -41,17 +55,11 @@ const createCourse = asyncHandler(async (req, res) => {
   let { creators } = req.body;
   creators = creators ? [req.user._id, ...creators] : [req.user._id];
   delete req.body.creators;
-  Course.create(
-    {
-      creators,
-      ...req.body,
-    },
-    (err, course) => {
-      if (err) return res.status(400).send({ success: false });
-      if (course) return res.status(201).send({ success: true, data: course });
-      return res.status(400).send({ success: false });
-    }
-  );
+  const course = await Course.create({
+    creators,
+    ...req.body,
+  });
+  res.status(201).send({ success: true, data: course });
 });
 
 /**
@@ -148,4 +156,5 @@ export {
   uploadImages,
   deleteImages,
   getCourse,
+  getCourseCreators,
 };

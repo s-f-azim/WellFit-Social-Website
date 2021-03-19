@@ -1,12 +1,46 @@
-/* eslint-disable no-underscore-dangle */
-import { Row, Col, Button, Typography, Space, Divider, Rate } from 'antd';
+import { Row, Col, Button, Typography, Space, Divider, Rate, notification } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
 import Image from 'next/image';
-import { CourseReview } from '../../components/Review';
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/client';
+import ReactDOM from 'react-dom';
 import api from '../../services/api';
+import { CourseReview } from '../../components/Review';
 
 const columnStyle = { width: 350, height: 'auto' };
 
-const Course = ({ course }) => {
+const course = ({ course }) => {
+  const [session, loading] = useSession();
+  // state to indicate whether or not the user's wish list has been fetched yet
+  const [wishListFetched, setWishListFetched] = useState(false);
+  // the courses in the user's wish list
+  const [courses, setCourses] = useState({});
+
+  useEffect(async () => {
+    try {
+      const response = await api.get('/users/wishlist');
+      setCourses(response.data.data);
+      // now that the courses from the wish list have been fetched, update the state
+      setWishListFetched(true);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  // Add this course to the user's wish list and then remove the add to wish list button
+  function addToWishList() {
+    api.patch(`/users/addToWishList/${course._id}`, {});
+    notification.open({
+      message: 'Course added to wish list!',
+      duration: 2,
+      icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+    });
+
+    ReactDOM.render(<></>, document.getElementById('wishListButton'));
+  }
+
+  if (typeof window !== 'undefined' && loading) return null;
+
   <Image
     src={
       course.photos[0]
@@ -66,6 +100,25 @@ const Course = ({ course }) => {
             <Button type="primary" shape="round" size="large">
               Would like to buy it
             </Button>
+          </Space>
+          <Space direction="horizontal" size="large">
+            <Button type="primary" shape="round" size="large">
+              Would like to buy it
+            </Button>
+            <div id="wishListButton">
+              {/**
+               * If the wish list has not yet been fetched or it has but this course is already in
+               * the wish lsit, display nothing. If this course is not in the wish list, display a
+               * button to add the course to the wish list.
+               */}
+              {wishListFetched ? (
+                courses.find((c) => c._id === course._id) ? null : (
+                  <Button type="primary" shape="round" size="large" onClick={() => addToWishList()}>
+                    Add to wish list
+                  </Button>
+                )
+              ) : null}
+            </div>
           </Space>
         </Col>
       </Row>
