@@ -1,20 +1,20 @@
 /* eslint-disable no-underscore-dangle */
-import {  List, Spin, Avatar, Tabs } from 'antd';
+import { List, Spin, Avatar, Tabs } from 'antd';
 import { UserOutlined, SendOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
+import { useSession } from 'next-auth/client';
 import api from '../services/api';
 
 const loadingIcon = <LoadingOutlined spin />;
-const ChatList = ({ setConversation }) => {
+const ChatList = ({ setConversation,setReciver }) => {
   const [users, setUsers] = useState([]);
-  const [conversation] = useState([]);
+  const [session] = useSession();
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   let totalUsers;
   useEffect(async () => {
     const response = await api.get('/users');
-    const res = await api.get('/conversation/me');
     totalUsers = response.data.pagination.total;
     setUsers([...response.data.data]);
   }, []);
@@ -48,20 +48,20 @@ const ChatList = ({ setConversation }) => {
     setLoading(false);
   };
   // handle the click of the conversation or user
-  const handleClick = async (userId) => {
+  const handleClick = async (user) => {
     try {
-      const usersIds = [userId];
+      const usersIds = [user._id];
       const response = await api.get(`/conversation/${usersIds.join(',')}`);
-      console.log(response);
       if (response.data.success) {
         // if conversation exists return that
         if (response.data.data) {
           setConversation({ ...response.data.data });
         } else {
           // otherwise make a new conversation
-          const newConversation = await api.post('/conversation', { users: [userId] });
+          const newConversation = await api.post('/conversation', { users: [usersIds] });
           setConversation(newConversation.data.data);
         }
+      setReciver(user);
       }
     } catch (err) {
       console.log(err);
@@ -72,8 +72,8 @@ const ChatList = ({ setConversation }) => {
     <>
       <Tabs defaultActiveKey="1" centered="true">
         <Tabs.TabPane tab="Following/followers" key="1">
-    <div className="infinite-container">
-    <InfiniteScroll
+          <div className="infinite-container">
+            <InfiniteScroll
               initialLoad={false}
               pageStart={0}
               loadMore={() => handleScroll(users.length + 2, totalUsers, 'user')}
@@ -82,18 +82,26 @@ const ChatList = ({ setConversation }) => {
             >
               <List
                 dataSource={users}
-                renderItem={(item) => (
-                  <List.Item className="user" key={item._id} onClick={() => handleClick(item._id)}>
-                    <List.Item.Meta
-                      avatar={image(item)}
-                      title={item.fName}
-                      description={item.email}
-                    />
-                    <div className="action">
-                      <SendOutlined />
-                    </div>
-                  </List.Item>
-                )}
+                renderItem={(item) => {
+                  if (item._id !== session.user._id) {
+                    return (
+                      <List.Item
+                        className="user"
+                        key={item._id}
+                        onClick={() => handleClick(item)}
+                      >
+                        <List.Item.Meta
+                          avatar={image(item)}
+                          title={item.fName}
+                          description={item.email}
+                        />
+                        <div className="action">
+                          <SendOutlined />
+                        </div>
+                      </List.Item>
+                    );
+                  }
+                }}
               >
                 {loading && hasMore && (
                   <div className="loading-container">

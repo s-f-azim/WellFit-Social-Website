@@ -8,6 +8,7 @@ import { useSession, getSession } from 'next-auth/client';
 const Chats = () => {
   const [session, loading] = useSession();
   const [conversation, setConversation] = useState(null);
+  const [receiver, setReciver] = useState(null);
   if (typeof window !== 'undefined' && loading) return null;
   if (session) {
     return (
@@ -22,6 +23,7 @@ const Chats = () => {
                   <LeftOutlined onClick={() => setConversation(null)} />
                   <div className="details">
                     <Avatar icon={<UserOutlined />} size="large" />
+                    <h3>{receiver?receiver.fName:""}</h3>
                   </div>
                 </>
               ) : (
@@ -34,7 +36,7 @@ const Chats = () => {
             {conversation ? (
               <Conversation conversation={conversation} />
             ) : (
-              <ChatList setConversation={setConversation} />
+              <ChatList setReciver={setReciver} setConversation={setConversation} />
             )}
           </Col>
           <Col />
