@@ -20,6 +20,7 @@ const userOne = {
   reviews: [reviewOneId],
   tags: ['Sweat', 'Cardio'],
   clientGenderPreference: 'Female',
+  verified: false,
   role: 'client',
 };
 
@@ -36,6 +37,7 @@ const userTwo = {
   nickname: 'Notesticles',
   bio: 'I have many balls',
   tags: ['Sweat'],
+  verified: false,
   role: 'instructor',
 };
 
@@ -52,6 +54,7 @@ const userThree = {
   nickname: 'FitnessGuru',
   bio: 'I love fitness',
   tags: ['Sweat'],
+  verified: false,
   role: 'instructor',
 };
 
@@ -68,7 +71,25 @@ const userFour = {
   nickname: 'FitnessGeeza',
   bio: 'I dont mind fitness',
   tags: ['Workout', 'Sweat'],
+  verified: false,
   role: 'instructor',
+};
+
+const userFiveId = new mongoose.Types.ObjectId();
+
+const userFive = {
+  _id: userFiveId,
+  email: 'admin@test.com',
+  password: 'password@123',
+  fName: 'testUser',
+  lName: '22',
+  gender: 'Female',
+  birthday: new Date(),
+  nickname: 'Notesticles',
+  bio: 'I have many balls',
+  tags: ['Sweat'],
+  verified: false,
+  role: 'admin',
 };
 
 const reviewOne = {
@@ -106,7 +127,7 @@ const courseTwo = {
 };
 
 const reviews = [reviewOne];
-const users = [userOne, userTwo, userThree, userFour];
+const users = [userOne, userTwo, userThree, userFour, userFive];
 const courses = [courseOne, courseTwo];
 // token
 const tokens = [];
@@ -142,9 +163,10 @@ export {
   userOne,
   userTwo,
   userThree,
+  userFive,
   courseOne,
   courseTwo,
-  setupDatabase,
   userOneId,
   tokens,
+  setupDatabase,
 };

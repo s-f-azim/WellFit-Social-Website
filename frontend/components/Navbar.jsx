@@ -49,7 +49,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
           <li className="option">
             <Button type="link" className="menuButton" onClick={onUserNameClick}>
               <UserOutlined /> {session.user.fName}
-              {session.user.verified && <CheckCircleTwoTone twoToneColor="#52c41a" />}
+              {session.user.verified && <CheckCircleTwoTone twoToneColor="#096dd9" />}
             </Button>
           </li>
         </ul>
@@ -118,7 +118,7 @@ const Navbar = () => {
     <>
       <nav className="topheader" style={{ backgroundColor: 'white' }}>
         <Title level={1} className="logo-text">
-          <a href="/"> QuickFit </a>
+          <a href="/"> WellFit </a>
         </Title>
         {!session ? (
           <LoggedOutMenu />

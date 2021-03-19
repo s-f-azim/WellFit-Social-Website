@@ -9,12 +9,20 @@ import User from '../models/User.js';
  * @access private
  */
 const createRequest = asyncHandler(async (req, res) => {
-  const request = await Request.create({
-    author: req.user._id,
-    type: req.body.type,
-    content: req.body.content,
-  });
-  res.status(200).send({ success: true, data: request });
+  if (req.user.role === 'client' && req.body.type === 'verify') {
+    res.status(400).send({
+      message: 'Clients cant be verified',
+      success: false,
+      data: req.user,
+    });
+  } else {
+    const request = await Request.create({
+      author: req.user._id,
+      type: req.body.type,
+      content: req.body.content,
+    });
+    res.status(200).send({ success: true, data: request });
+  }
 });
 
 /**
@@ -51,10 +59,17 @@ const deleteRequest = asyncHandler(async (req, res) => {
  * @access private
  */
 const verifyUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
-  if (user.role === 'instructor') user.verified = true;
-  await user.save();
-  res.status(200).send({ success: true, data: user });
+  if (req.user.role === 'admin') {
+    const user = await User.findById(req.params.id);
+    if (user.role === 'instructor') user.verified = true;
+    await user.save();
+    res.status(200).send({ success: true, data: user });
+  } else {
+    res.status(400).send({
+      success: false,
+      message: `${req.user._id} is not authorised to verify the ID`,
+    });
+  }
 });
 
 // eslint-disable-next-line import/prefer-default-export

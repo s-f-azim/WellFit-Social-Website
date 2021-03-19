@@ -245,7 +245,7 @@ const settingsPage = () => {
                         </Form.Item>
                         <Form.Item>
                           <Button type="primary" htmlType="submit">
-                            Submit bug report
+                            Submit verify request
                           </Button>
                         </Form.Item>
                       </Space>
