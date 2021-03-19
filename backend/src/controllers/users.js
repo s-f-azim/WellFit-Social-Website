@@ -1,5 +1,4 @@
 /* eslint-disable no-use-before-define */
-import sharp from 'sharp';
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
 import Course from '../models/Course.js';
