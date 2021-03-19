@@ -93,7 +93,6 @@ const userFive = {
   verified: false,
   role: 'admin',
   location: 'Europe',
-  birthday: new Date(),
   wishlist: [courseOneId],
 };
 
