@@ -1,4 +1,4 @@
-import { Card, Row, Col, Pagination } from 'antd';
+import { Row, Col, Pagination } from 'antd';
 import Router from 'next/router';
 import CourseCard from '../../components/CourseCard';
 import api from '../../services/api';
@@ -17,7 +17,7 @@ const Courses = ({ courses, total }) => (
     >
       {courses.map((course) => (
         <Col key={course._id}>
-          <CourseCard content={course} />
+          <CourseCard content={course} isWish={false} />
         </Col>
       ))}
     </Row>

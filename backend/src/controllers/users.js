@@ -2,6 +2,7 @@
 import sharp from 'sharp';
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
+import Course from '../models/Course.js';
 
 /**
  * @async
@@ -33,7 +34,7 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 /**
  * @async
- * @desc  get a users within a radius
+ * @desc  get all users within a radius
  * @route GET /api/users/radius/:zipcode/:distance
  * @access public
  */
@@ -199,6 +200,36 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc add specified course to user's wish list - if it already exists, remove it
+ * @route PATCH /api/users/addtowishlist/:id
+ * @access private
+ */
+const addToWishList = asyncHandler(async (req, res) => {
+  if (Course.findById(req.params.id)) {
+    const index = req.user.wishlist.indexOf(req.params.id);
+    if (index === -1) {
+      req.user.wishlist.push(req.params.id);
+    } else {
+      req.user.wishlist.splice(index, 1);
+    }
+  }
+  const updatedUser = await req.user.save();
+  sendTokenResponse(updatedUser, 200, res);
+});
+
+/**
+ * @async
+ * @desc get all wishlist
+ * @route GET /api/users/wishlist
+ * @access private
+ */
+const getWishList = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).populate('wishlist');
+  res.status(200).send({ success: true, data: user.wishlist });
+});
+
+/**
+ * @async
  * @desc google login user using oauth
  * @route GET /api/users/google/redirect
  * @access private
@@ -333,6 +364,8 @@ export {
   logoutUser,
   updateUser,
   deleteUser,
+  getWishList,
+  addToWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,

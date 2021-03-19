@@ -9,6 +9,8 @@ import {
   getUserIdByEmail,
   updateUser,
   deleteUser,
+  getWishList,
+  addToWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -27,7 +29,6 @@ import upload from '../middleware/multer.js';
 
 const router = new express.Router();
 
-router.route('/').get(paginate(User), getUsers);
 
 router
   .route('/radius/:zipcode/:distance')
@@ -98,6 +99,14 @@ router
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
 
 router
+  .route('/addToWishList/:id')
+  .patch(passport.authenticate('jwt', { session: false }), addToWishList);
+
+router
+  .route('/wishlist')
+  .get(passport.authenticate('jwt', { session: false }), getWishList);
+
+router
   .route('/profile')
   .get(
     passport.authenticate('jwt', { session: false }),
@@ -115,7 +124,8 @@ router
   .route('/getFollower')
   .get(passport.authenticate('jwt', { session: false }), getFollower);
 
-router.route('/:id').get(getUser);
+router.route('/').get(paginate(User), getUsers);
 
+router.route('/:id').get(getUser);
 
 export default router;

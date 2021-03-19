@@ -4,6 +4,7 @@ import app from '../src/app.js';
 import {
   tokens,
   userOne,
+  userTwo,
   setupDatabase,
   courseOne,
   courseTwo,
@@ -134,4 +135,23 @@ it('Should get all courses within range', async () => {
     .send()
     .expect(200);
   expect(response.body.count).toBe(1);
+});
+// assert should get the single creator of a course
+it('Should get the creator of a course', async () => {
+  const response = await request(app)
+    .get(`/api/courses/${courseTwo._id}/creators`)
+    .send()
+    .expect(200);
+  expect(response.body.data.length).toBe(1);
+  expect(response.body.data[0]._id === userOne._id);
+});
+// assert should get all creators of a course
+it('Should get all the creators of a course when there are several', async () => {
+  const response = await request(app)
+    .get(`/api/courses/${courseOne._id}/creators`)
+    .send()
+    .expect(200);
+  expect(response.body.data.length).toBe(2);
+  expect(response.body.data[0]._id === userTwo._id);
+  expect(response.body.data[1]._id === userOne._id);
 });
