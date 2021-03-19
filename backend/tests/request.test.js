@@ -249,6 +249,28 @@ it('Should delete a request', async () => {
 
   expect(await Request.countDocuments()).toBe(count - 1);
 });
+it('Should not delete a request', async () => {
+  const count = await Request.countDocuments();
+
+  await request(app)
+    .delete('/api/requests/delete/02314')
+    .set('Cookie', [`token=${tokens[0]}`])
+    .send()
+    .expect(404);
+
+  expect(await Request.countDocuments()).toBe(count);
+});
+it('Should delete a report request', async () => {
+  const count = await Request.countDocuments();
+
+  await request(app)
+    .delete(`/api/requests/delete/${requestFour._id}`)
+    .set('Cookie', [`token=${tokens[0]}`])
+    .send()
+    .expect(200);
+
+  expect(await Request.countDocuments()).toBe(count - 1);
+});
 it('Should delete a bug request and a report request', async () => {
   const count = await Request.countDocuments();
 
