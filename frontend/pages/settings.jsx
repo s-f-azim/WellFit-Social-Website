@@ -17,6 +17,7 @@ import { useSession, getSession } from 'next-auth/client';
 import { useAuth } from '../services/auth';
 import { createRequest } from '../actions/request';
 import { deleteUser } from '../actions/user';
+import AccessDenied from '../components/AccessDenied';
 
 const settingsPage = () => {
   const [session, loading] = useSession();
@@ -211,7 +212,7 @@ const settingsPage = () => {
       </div>
     );
   }
-  return <p>Access Denied</p>;
+  return <AccessDenied />;
 };
 
 export default settingsPage;

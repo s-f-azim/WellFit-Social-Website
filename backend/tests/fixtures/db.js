@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import User from '../../src/models/User.js';
 import Review from '../../src/models/Review.js';
 import Course from '../../src/models/Course.js';
+import Request from '../../src/models/Request.js';
 
 const userOneId = new mongoose.Types.ObjectId();
 const reviewOneId = new mongoose.Types.ObjectId();
@@ -105,15 +106,52 @@ const courseTwo = {
   tags: ['Cardio'],
 };
 
+const requestOneId = new mongoose.Types.ObjectId();
+const requestTwoId = new mongoose.Types.ObjectId();
+const requestThreeId = new mongoose.Types.ObjectId();
+const requestFourId = new mongoose.Types.ObjectId();
+
+// requests
+const requestOne = {
+  _id: requestOneId,
+  author: userOneId,
+  type: 'bug',
+  content: 'bug report #1',
+};
+
+const requestTwo = {
+  _id: requestTwoId,
+  author: userOneId,
+  type: 'verify',
+  content: 'verify req #1',
+};
+
+const requestThree = {
+  _id: requestThreeId,
+  author: userOneId,
+  type: 'message',
+  content: 'message #1',
+};
+
+const requestFour = {
+  _id: requestFourId,
+  author: userOneId,
+  recipient: userTwo,
+  type: 'report',
+  content: 'user report #1',
+};
+
 const reviews = [reviewOne];
 const users = [userOne, userTwo, userThree, userFour];
 const courses = [courseOne, courseTwo];
+const requests = [requestOne, requestTwo, requestThree, requestFour];
 // token
 const tokens = [];
 const setupDatabase = async () => {
   await User.deleteMany();
   await Review.deleteMany();
   await Course.deleteMany();
+  await Request.deleteMany();
   // seed users
 
   // eslint-disable-next-line no-restricted-syntax
@@ -136,12 +174,23 @@ const setupDatabase = async () => {
     // eslint-disable-next-line no-await-in-loop
     await review.save();
   }
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const r of requests) {
+    const request = new Request(r);
+    // eslint-disable-next-line no-await-in-loop
+    await request.save();
+  }
 };
 
 export {
   userOne,
   userTwo,
   userThree,
+  requestOne,
+  requestTwo,
+  requestThree,
+  requestFour,
   courseOne,
   courseTwo,
   setupDatabase,

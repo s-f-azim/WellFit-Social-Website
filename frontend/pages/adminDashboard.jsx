@@ -21,6 +21,7 @@ import {
   getInstructors,
 } from '../actions/user';
 import { deleteRequest, getRequests } from '../actions/request';
+import AccessDenied from '../components/AccessDenied';
 
 const { TabPane } = Tabs;
 
@@ -213,7 +214,7 @@ const AdminDashboard = ({
       </div>
     );
   }
-  return <p>Access Denied</p>;
+  return <AccessDenied />;
 };
 
 function isBugReport(request) {
