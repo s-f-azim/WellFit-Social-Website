@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/client';
 import api from '../services/api';
 
 const loadingIcon = <LoadingOutlined spin />;
-const ChatList = ({ setConversation,setReciver }) => {
+const ChatList = ({ setConversation, setReciver }) => {
   const [users, setUsers] = useState([]);
   const [session] = useSession();
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,6 @@ const ChatList = ({ setConversation,setReciver }) => {
   // handle the infinite scroll
   const handleScroll = async (params, total, type) => {
     let response;
-    console.log('hmm');
     setLoading(true);
     if (users.length >= total) {
       setLoading(false);
@@ -61,7 +60,7 @@ const ChatList = ({ setConversation,setReciver }) => {
           const newConversation = await api.post('/conversation', { users: [usersIds] });
           setConversation(newConversation.data.data);
         }
-      setReciver(user);
+        setReciver(user);
       }
     } catch (err) {
       console.log(err);
@@ -85,11 +84,7 @@ const ChatList = ({ setConversation,setReciver }) => {
                 renderItem={(item) => {
                   if (item._id !== session.user._id) {
                     return (
-                      <List.Item
-                        className="user"
-                        key={item._id}
-                        onClick={() => handleClick(item)}
-                      >
+                      <List.Item className="user" key={item._id} onClick={() => handleClick(item)}>
                         <List.Item.Meta
                           avatar={image(item)}
                           title={item.fName}
