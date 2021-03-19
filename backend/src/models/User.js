@@ -243,6 +243,16 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
+    twitterId: {
+      type: String,
+    },
+    wishlist: [
+      {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Course',
+        default: [],
+      },
+    ],
     photos: {
       type: [Buffer],
     },
@@ -251,24 +261,17 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: ['admin', 'instructor', 'client'],
     },
-    twitterId: {
-      type: String,
-    },
+
     verified: {
       type: Boolean,
       default: false,
     },
+  
     following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
     follower: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );
-// connect the creator of courses to the user (ex user.courses)
-UserSchema.virtual('courses', {
-  ref: 'Course',
-  localField: '_id',
-  foreignField: 'creators',
-});
 
 UserSchema.virtual('reviews', {
   ref: 'Review',

@@ -1,0 +1,57 @@
+.profile-tabs {
+  border: solid;
+  border-width: 0.1rem;
+  border-radius: 1rem;
+  padding-bottom: 0.9rem;
+}
+
+.tab {
+  width: 33.3%;
+}
+
+.button > * {
+  font-size: 2rem;
+}
+
+.clicked-button > * {
+  font-size: 2rem;
+  color: white;
+  background-color: black;
+  border-radius: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.profile-info {
+  width: 40%;
+}
+
+@media screen and (max-width: 1024px) {
+  .profile-tabs {
+    border: solid;
+    border-width: 0.1rem;
+    border-radius: 1rem;
+    padding-bottom: 0rem;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .button > * {
+    font-size: 1rem;
+  }
+
+  .clicked-button > * {
+    font-size: 1rem;
+    color: white;
+    background-color: black;
+    border-radius: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .profile-info {
+    width: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}

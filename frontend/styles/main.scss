@@ -4,6 +4,7 @@
 @import './profileBar.scss';
 @import './signup.scss';
 @import './login.scss';
+@import './profile.scss';
 @import './adminDashboard.scss';
 @import './_searchQuestions.scss';
 @import './settings.scss';
@@ -12,6 +13,9 @@
 @import './questionnaire.scss';
 @import './preferences.scss';
 @import './_searchQuestions.scss';
+@import './chats.scss';
+@import './searchQuestions.scss';
+@import './suggestedInstructors.scss';
 
 body,
 ::before,
@@ -57,6 +61,31 @@ body {
 .ant-alert.ant-alert-info {
   background-color: #e6f7ff;
   border: 1px solid #91d5ff;
+}
+.anticon-loading {
+  color: black;
+  font-size: 30;
+}
+/*
+  Change scrollbar across the whole website
+*/
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.75) transparent;
+}
+
+/* Works on Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 20px;
+  border: transparent;
 }
 // @media (prefers-reduced-motion: reduce) {
 //   *,

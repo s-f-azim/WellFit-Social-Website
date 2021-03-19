@@ -26,7 +26,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
             <Search placeholder="Search our Site" enterButton />
           </li>
           <li className="option" onClick={closeMobileMenu}>
-            <Link href="#">
+            <Link href="/courses">
               <Button type="link" className="menuButton">
                 Courses
               </Button>
