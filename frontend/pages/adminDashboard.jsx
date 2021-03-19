@@ -62,7 +62,7 @@ const AdminDashboard = ({
 
     const banTitle = (
       <p>
-        <StopOutlined /> Ban users
+        <StopOutlined /> Ban/Delete users
       </p>
     );
 
