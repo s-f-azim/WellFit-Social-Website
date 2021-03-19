@@ -2,21 +2,22 @@ import { useState } from 'react';
 import { Button, Form, notification, Space, Alert, Input, Card } from 'antd';
 import { CheckOutlined, DownCircleOutlined, WarningOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { banUser } from '../actions/user';
+import { deleteSpecificUser } from '../actions/user';
 
-const BanUser = ({ users }) => {
+const DeleteUser = ({ users }) => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
 
-  const onBanUser = async (values) => {
-    const { banEmail } = values;
+  const onDeleteUser = async (values) => {
+    const { deleteEmail } = values;
     try {
       // eslint-disable-next-line no-underscore-dangle
-      const toBan = users.filter((user) => user.email === banEmail)[0]._id;
-      const response = await banUser(toBan);
+      const toDelete = users.filter((user) => user.email === deleteEmail)[0]._id;
+
+      const response = await deleteSpecificUser(toDelete);
       notification.open({
-        message: 'user account has been banned',
+        message: 'user account has been deleted',
         duration: 3,
         icon: <CheckOutlined style={{ color: '#33FF49' }} />,
       });
@@ -31,17 +32,17 @@ const BanUser = ({ users }) => {
 
   return (
     <>
-      <Form form={form} name="Ban a user" onFinish={onBanUser}>
+      <Form form={form} name="Delete a user" onFinish={onDeleteUser}>
         <Space direction="vertical" size="middle">
           {hasError && (
             <Alert type="error" message="something went wrong, please try again" banner />
           )}
           <h3>
             {/* eslint-disable-next-line react/no-unescaped-entities */}
-            Ban an account (enter user's email) <DownCircleOutlined />
+            Delete an account (enter user's email) <DownCircleOutlined />
           </h3>
           <Form.Item
-            name="banEmail"
+            name="deleteEmail"
             rules={[
               {
                 type: 'email',
@@ -58,7 +59,7 @@ const BanUser = ({ users }) => {
 
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              <WarningOutlined /> Perma ban user
+              <WarningOutlined /> Delete user
             </Button>
           </Form.Item>
         </Space>
@@ -67,4 +68,4 @@ const BanUser = ({ users }) => {
   );
 };
 
-export default BanUser;
+export default DeleteUser;

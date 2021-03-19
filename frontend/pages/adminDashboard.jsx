@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import { Card, Row, Col, Statistic, Tabs, List, notification } from 'antd';
 import {
   FundProjectionScreenOutlined,
@@ -23,6 +24,7 @@ import {
 import { deleteRequest, getRequests } from '../actions/request';
 import AccessDenied from '../components/AccessDenied';
 import BanUser from '../components/BanUser';
+import DeleteUser from '../components/DeleteUser';
 
 const { TabPane } = Tabs;
 
@@ -137,6 +139,7 @@ const AdminDashboard = ({
               </TabPane>
               <TabPane key="3" tab={banTitle}>
                 <BanUser users={users} />
+                <DeleteUser users={users} />
               </TabPane>
               <TabPane key="6" tab={reportTitle}>
                 <List

@@ -2,7 +2,6 @@
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
 import sharp from 'sharp';
-import { Mongoose } from 'mongoose';
 
 /**
  * @async
@@ -324,7 +323,7 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
  * @access private
  */
 const banUser = asyncHandler(async (req, res) => {
-  const user = Mongoose.findByIdAndUpdate(req.params.id, { isBanned: true });
+  const user = User.findByIdAndUpdate(req.params.id, { isBanned: true });
   sendTokenResponse(user, 200, res);
 });
 export {
