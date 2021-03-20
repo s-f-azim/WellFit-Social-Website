@@ -1,7 +1,13 @@
 import request from 'supertest';
 import User from '../src/models/User.js';
 import app from '../src/app.js';
-import { tokens, userOne, userTwo, setupDatabase } from './fixtures/db.js';
+import {
+  tokens,
+  userOne,
+  userTwo,
+  setupDatabase,
+  userOneId,
+} from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
@@ -151,6 +157,17 @@ it('Should delete a logged in user', async () => {
   const userExists = await User.exists({ _id: userOne._id });
   expect(userExists).toEqual(false);
 });
+
+it('Should delete a users account whilst not logged in as the user', async () => {
+  await request(app)
+    .delete(`/api/users/delete/${userOneId}`)
+    .send()
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(200);
+  const userExists = await User.exists({ _id: userOne._id });
+  expect(userExists).toEqual(false);
+});
+
 // assert can't delete user when not logged in
 it('Should not delete a user when not logged in', async () => {
   await request(app).delete('/api/users/delete').send().expect(401);
