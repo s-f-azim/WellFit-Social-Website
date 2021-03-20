@@ -143,21 +143,6 @@ it('Should delete a logged in user', async () => {
   expect(userExists).toEqual(false);
 });
 
-it('Should not delete a user when not logged in', async () => {
-  await request(app).delete('/api/users/delete').send().expect(401);
-});
-
-// assert delete a user
-it('Should delete a logged in user', async () => {
-  await request(app)
-    .delete('/api/users/delete')
-    .send()
-    .set('Cookie', [`token=${tokens[0]}`])
-    .expect(200);
-  const userExists = await User.exists({ _id: userOne._id });
-  expect(userExists).toEqual(false);
-});
-
 it('Should delete a users account whilst not logged in as the user', async () => {
   await request(app)
     .delete(`/api/users/delete/${userOneId}`)
