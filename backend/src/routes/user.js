@@ -21,6 +21,7 @@ import {
   followUser,
   getFollowing,
   getFollower,
+  getTrendingUsers,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -127,5 +128,7 @@ router
 router.route('/').get(paginate(User), getUsers);
 
 router.route('/:id').get(getUser);
+
+router.route('/trendingUsers').get(getTrendingUsers);
 
 export default router;

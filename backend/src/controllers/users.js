@@ -353,6 +353,31 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
   res.status(200).send({ success: true, data: users });
 });
 
+/**
+ * @async
+ * @desc Gets trending users on the website
+ * @route GET /api/users/trendingUsers
+ * 
+ */
+const getTrendingUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({
+    $and: [
+      {
+        $or: [
+          {role: 'instructor'},
+          {role: 'client'}
+        ]
+      },
+      { follower: { $exists: true, $ne: []}}
+    ]
+    
+  })
+    .sort( (u1, u2) => u2.follower.length - u1.follower.length ) //sort descending
+    .slice(0, 10); //get first 10 trending users
+  res.status(200).send( {success: true, data: users});
+
+});
+
 export {
   getUsers,
   getUsersWithinRadius,
@@ -375,4 +400,5 @@ export {
   followUser,
   getFollowing,
   getFollower,
+  getTrendingUsers,
 };
