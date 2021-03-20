@@ -1,13 +1,14 @@
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { signIn, useSession } from 'next-auth/client';
-import { Space, Form, Input, Alert, Button, Row, Card, notification } from 'antd';
+import { Space, Form, Input, Alert, Button, Row, Card, notification, Modal } from 'antd';
 import {
   InstagramOutlined,
   GoogleOutlined,
   FacebookOutlined,
   SmileOutlined,
+  QuestionOutlined,
 } from '@ant-design/icons';
-import { useState } from 'react';
 import { login } from '../services/auth';
 import API from '../services/api';
 
@@ -39,6 +40,50 @@ const Login = () => {
   const router = useRouter();
   const [hasError, setHasError] = useState(false);
   const [form] = Form.useForm();
+
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+  const showAlert = () => {
+    setIsAlertVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsAlertVisible(false);
+  };
+
+  const errorInfoText = (
+    <p>
+      You may have failed to login for the following reasons:
+      <ul>
+        <li>You have entered incorrect details, make sure caps lock is turned off.</li>
+        <li>You have deleted your account or asked us to delete it for you</li>
+        <li>Our website is undergoing maintenance and our servers are currently unavailable</li>
+        <li>
+          You have been banned from WellFit for irresponsible behaviour. Contact us to appeal this
+          decision if you feel it is unfair.
+        </li>
+      </ul>
+    </p>
+  );
+
+  const errorText = (
+    <>
+      Unable to login
+      <Button type="text" danger shape="circle" onClick={showAlert}>
+        ?
+      </Button>
+      <Modal
+        closable={false}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        title="Why can't I login?"
+        visible={isAlertVisible}
+        onOk={handleOk}
+      >
+        {errorInfoText}
+      </Modal>
+    </>
+  );
+
   // normal login handler
   const onFinish = async (values) => {
     const { email, password } = values;
@@ -87,7 +132,7 @@ const Login = () => {
           scrollToFirstError
         >
           <Space direction="vertical" size="large">
-            {hasError && <Alert type="error" message="Unable to login" banner />}
+            {hasError && <Alert type="error" message={errorText} banner />}
             <Form.Item
               name="email"
               label="Email"
