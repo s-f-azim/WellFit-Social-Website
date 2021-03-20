@@ -1,11 +1,10 @@
-import { Card, Row, Col, Modal, Space, Button, notification } from 'antd';
-import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Modal, Space, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import api from '../services/api';
-import ReactDOM from 'react-dom';
 
-const CourseCard = ({ content, isWish }) => {
+const CourseCard = ({ content, isWish, removeFromWishList }) => {
   // state for the modal pop up
   const [visible, setVisible] = useState(false);
   // state for showing the course card
@@ -19,22 +18,6 @@ const CourseCard = ({ content, isWish }) => {
     // now that the creators of the course have been fetched, the course card can be shown
     setShowState(true);
   }, []);
-
-  /**
-   * Remove this course from the user's wish list and replace the card with nothing so the
-   * user can see it is gone. Also, change the class of the List.Item in the WishList so that
-   * it no longer has a margin.
-   */
-  function removeFromWishList() {
-    api.patch(`/users/addToWishList/${content._id}`, {});
-    notification.open({
-      message: 'Wish list updated!',
-      duration: 2,
-      icon: <CheckOutlined style={{ color: '#33FF49' }} />,
-    });
-    ReactDOM.render(null, document.getElementById(`${content._id}`));
-    document.getElementById(`${content._id}`).className = 'deleted-course';
-  }
 
   return (
     <>
