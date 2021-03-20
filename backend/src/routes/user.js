@@ -24,6 +24,7 @@ import {
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
 import User from '../models/User.js';
+import role from '../middleware/role.js';
 import upload from '../middleware/multer.js';
 
 const router = new express.Router();
@@ -45,7 +46,11 @@ router
 
 router
   .route('/ban/:id')
-  .patch(passport.authenticate('jwt', { session: false }), banUser);
+  .patch(
+    passport.authenticate('jwt', { session: false }),
+    role('admin'),
+    banUser
+  );
 router
   .route('/avatar')
   .post(
