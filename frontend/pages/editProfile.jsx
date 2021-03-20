@@ -180,6 +180,7 @@ const editProfilePage = () => {
                       mode="tags"
                       style={{ display: 'flex', flexFlow: 'column wrap', flexGrow: '2' }}
                       placeholder="Select your interests"
+                      defaultValue={user.tags ? user.tags : null}
                       rules={[
                         {
                           type: 'string',

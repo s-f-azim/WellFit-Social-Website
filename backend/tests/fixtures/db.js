@@ -195,5 +195,6 @@ export {
   courseTwo,
   setupDatabase,
   userOneId,
+  userTwoId,
   tokens,
 };

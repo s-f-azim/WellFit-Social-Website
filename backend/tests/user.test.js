@@ -7,6 +7,7 @@ import {
   userTwo,
   setupDatabase,
   userOneId,
+  userTwoId,
 } from './fixtures/db.js';
 
 // setup db for each test
@@ -151,6 +152,24 @@ it('Should delete a users account whilst not logged in as the user', async () =>
     .expect(200);
   const userExists = await User.exists({ _id: userOne._id });
   expect(userExists).toEqual(false);
+});
+
+it('Should be able to delete several users whilst not logged in as the users', async () => {
+  await request(app)
+    .delete(`/api/users/delete/${userOneId}`)
+    .send()
+    .set('Cookie', [`token=${tokens[2]}`])
+    .expect(200);
+  const user1Exists = await User.exists({ _id: userOne._id });
+  expect(user1Exists).toEqual(false);
+
+  await request(app)
+    .delete(`/api/users/delete/${userTwoId}`)
+    .send()
+    .set('Cookie', [`token=${tokens[2]}`])
+    .expect(200);
+  const user2Exists = await User.exists({ _id: userTwo._id });
+  expect(user2Exists).toEqual(false);
 });
 
 // assert can't delete user when not logged in
