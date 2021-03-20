@@ -280,6 +280,12 @@ UserSchema.virtual('reviews', {
   foreignField: 'user',
 });
 
+UserSchema.virtual('posts', {
+  ref: 'Post',
+  localField: '_id',
+  foreignField: 'author',
+});
+
 // connect the creator of requests to the user
 UserSchema.virtual('requests', {
   ref: 'Request',

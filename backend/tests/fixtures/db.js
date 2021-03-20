@@ -6,11 +6,9 @@ import Review from '../../src/models/Review.js';
 import UserReview from '../../src/models/UserReview.js';
 import CourseReview from '../../src/models/CourseReview.js';
 import Conversation from '../../src/models/Conversation.js';
-
-const userReviewOneId = new mongoose.Types.ObjectId();
+import Post from '../../src/models/Post.js';
 
 const courseOneId = new mongoose.Types.ObjectId();
-
 const userOneId = new mongoose.Types.ObjectId();
 
 // create users
@@ -24,10 +22,10 @@ const userOne = {
   birthday: new Date(),
   nickname: 'testicles',
   bio: 'I have no balls',
-  reviews: [userReviewOneId],
   tags: ['Sweat', 'Cardio'],
   clientGenderPreference: 'Female',
   role: 'client',
+  posts: [],
 };
 
 const userTwoId = new mongoose.Types.ObjectId();
@@ -94,8 +92,6 @@ const userFive = {
 
 // create courses
 
-const courseReviewOneId = new mongoose.Types.ObjectId();
-
 const courseOne = {
   _id: courseOneId,
   title: 'Lose weight',
@@ -104,7 +100,6 @@ const courseOne = {
   creators: [userTwoId, userOneId],
   price: 10,
   tags: ['GetFit', 'FitFam'],
-  reviews: [courseReviewOneId],
 };
 
 const courseTwoId = new mongoose.Types.ObjectId();
@@ -133,6 +128,8 @@ const conversationTwo = {
 
 // create reviews
 
+const userReviewOneId = new mongoose.Types.ObjectId();
+
 const userReviewOne = {
   kind: 'UserReview',
   _id: userReviewOneId,
@@ -141,6 +138,8 @@ const userReviewOne = {
   comment: 'userReviewOne',
   user: userOneId,
 };
+
+const courseReviewOneId = new mongoose.Types.ObjectId();
 
 const courseReviewOne = {
   kind: 'CourseReview',
@@ -151,12 +150,33 @@ const courseReviewOne = {
   course: courseOneId,
 };
 
+// create posts
+
+const postOneId = new mongoose.Types.ObjectId();
+
+const postOne = {
+  _id: postOneId,
+  author: userOneId,
+  content: 'postOne',
+  youtubelink: 'postOne',
+};
+
+const postTwoId = new mongoose.Types.ObjectId();
+
+const postTwo = {
+  _id: postTwoId,
+  author: userOneId,
+  content: 'postTwo',
+  youtubelink: 'postTwo',
+};
+
 // create fixtures
 
 const reviews = [userReviewOne, courseReviewOne];
 const users = [userOne, userTwo, userThree, userFour, userFive];
 const courses = [courseOne, courseTwo];
 const conversations = [conversationOne, conversationTwo];
+const posts = [postOne, postTwo];
 
 // token
 const tokens = [];
@@ -166,6 +186,7 @@ const setupDatabase = async () => {
   await Review.deleteMany();
   await Course.deleteMany();
   await Conversation.deleteMany();
+  await Post.deleteMany();
   // seed users
 
   // eslint-disable-next-line no-restricted-syntax
@@ -183,6 +204,8 @@ const setupDatabase = async () => {
   }
 
   await Review.create(reviews);
+
+  await Post.create(posts);
 
   // eslint-disable-next-line no-restricted-syntax
   for (const conv of conversations) {
@@ -205,4 +228,5 @@ export {
   tokens,
   conversationOne,
   conversationTwo,
+  postOne,
 };

@@ -9,9 +9,10 @@ import connectDb from '../config/db.js';
 import errorHandler from './middleware/error.js';
 import ErrorResponse from './utils/errorResponse.js';
 import userRoutes from './routes/user.js';
+import courseRoutes from './routes/course.js';
 import userReviewRoutes from './routes/userReview.js';
 import courseReviewRoutes from './routes/courseReview.js';
-import courseRoutes from './routes/course.js';
+import postRoutes from './routes/post.js';
 import requestRoutes from './routes/request.js';
 import conversationRoutes from './routes/conversation.js';
 import passport from '../config/passport-setup.js';
@@ -52,6 +53,7 @@ app.use('/api/users/:id/reviews', userReviewRoutes);
 app.use('/api/courses/:id/reviews', courseReviewRoutes);
 app.use('/api/requests', requestRoutes);
 app.use('/api/conversation', conversationRoutes);
+app.use('/api/posts', postRoutes);
 
 // 404 if the route doesn't match
 // eslint-disable-next-line no-unused-vars
