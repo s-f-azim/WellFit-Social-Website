@@ -14,7 +14,6 @@ const BanUser = ({ users }) => {
     try {
       // eslint-disable-next-line no-underscore-dangle
       const toBan = users.filter((user) => user.email === banEmail)[0]._id;
-      console.log(toBan);
       const response = await banUser(toBan);
       notification.open({
         message: 'user account has been banned',

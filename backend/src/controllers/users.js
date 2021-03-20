@@ -319,7 +319,7 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
 
 /**
  * @desc ban a user
- * @route PATCH ban/:id
+ * @route PATCH api/users/ban/:id
  * @access private
  */
 const banUser = asyncHandler(async (req, res) => {

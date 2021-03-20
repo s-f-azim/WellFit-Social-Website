@@ -86,7 +86,13 @@ const AdminDashboard = ({
       </p>
     );
 
-    const getRequestAuthor = (id) => users.find((user) => user._id === id);
+    const getRequestAuthor = (id) => {
+      try {
+        return users.filter((user) => user._id === id)[0].email;
+      } catch (err) {
+        return 'Author not found';
+      }
+    };
 
     const onDeleteBug = async (report) => {
       await deleteRequest(report._id);
@@ -158,8 +164,7 @@ const AdminDashboard = ({
                       </h3>
                       <h3>
                         <b>Author: </b>
-                        {report.author}
-                        {getRequestAuthor(report.author).email}
+                        {getRequestAuthor(report.author)}
                       </h3>
 
                       <b>Content: </b>
@@ -188,7 +193,7 @@ const AdminDashboard = ({
                       </h3>
                       <h3>
                         <b>Author: </b>
-                        {getRequestAuthor(report.author).email}
+                        {getRequestAuthor(report.author)}
                       </h3>
 
                       <b>Content: </b>
