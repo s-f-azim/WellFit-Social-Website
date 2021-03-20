@@ -157,7 +157,9 @@ const AdminDashboard = ({
                       </h3>
                       <h3>
                         <b>Author: </b>
-                        {getRequestAuthor(report.author).email}
+                        {getRequestAuthor(report.author)
+                          ? getRequestAuthor(report.author).email
+                          : 'User has been deleted'}
                       </h3>
 
                       <b>Content: </b>
@@ -186,10 +188,14 @@ const AdminDashboard = ({
                       </h3>
                       <h3>
                         <b>Reported User: </b>
-                        {getRequestAuthor(report.recipient).email}
+                        {getRequestAuthor(report.author)
+                          ? getRequestAuthor(report.author).email
+                          : 'User has been deleted'}
                         <br />
                         <b>Reported by: </b>
-                        {getRequestAuthor(report.author).email}
+                        {getRequestAuthor(report.author)
+                          ? getRequestAuthor(report.author).email
+                          : 'User has been deleted'}
                       </h3>
 
                       <b>Content: </b>

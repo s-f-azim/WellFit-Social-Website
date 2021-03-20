@@ -59,6 +59,9 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
         <h1>Edit profile</h1>
       </div>
       <div className="item">
+        <ReportButton RecipientID="6054afe81d705afb62c24861" />
+      </div>
+      <div className="item">
         <HistoryOutlined />
         <h1>Change goals</h1>
       </div>
