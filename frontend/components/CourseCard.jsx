@@ -21,7 +21,9 @@ const CourseCard = ({ content, isWish }) => {
   }, []);
 
   /**
-   * Remove this course from the user's wish list and replace the card with a blank space
+   * Remove this course from the user's wish list and replace the card with nothing so the
+   * user can see it is gone. Also, change the class of the List.Item in the WishList so that
+   * it no longer has a margin.
    */
   function removeFromWishList() {
     api.patch(`/users/addToWishList/${content._id}`, {});
@@ -30,18 +32,15 @@ const CourseCard = ({ content, isWish }) => {
       duration: 2,
       icon: <CheckOutlined style={{ color: '#33FF49' }} />,
     });
-    ReactDOM.render(
-      <div style={{ minWidth: '25rem', minHeight: '18rem' }}></div>,
-      document.getElementById(`${content._id}`)
-    );
+    ReactDOM.render(null, document.getElementById(`${content._id}`));
+    document.getElementById(`${content._id}`).className = 'deleted-course';
   }
 
   return (
     <>
       {/* If showState is currently false, display nothing. Once it is true, display the card*/}
       {showState ? (
-        <div id={content._id}>
-          {/* Place the course in a div with the id of the course so it can be removed easily */}
+        <div>
           <Card className="course-card" style={{ borderColor: 'black', borderRadius: '1rem' }}>
             <div style={{ paddingBottom: '5rem' }}>
               <h1 className="title" onClick={() => setVisible(true)}>

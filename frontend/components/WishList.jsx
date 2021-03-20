@@ -1,4 +1,4 @@
-import { Row, Col } from 'antd';
+import { Row, Col, List } from 'antd';
 import CourseCard from './CourseCard';
 import api from '../services/api';
 import { useState, useEffect } from 'react';
@@ -22,26 +22,23 @@ const WishList = () => {
       {/**
        * If showState is false, then display a loading circle. If it is true and there are no
        * courses in the user's wish list, display some text informing the user that their wish list
-       * is empty. Else, display each course in the wish list using the CourseCard component.
+       * is empty. Else, display each course in the wish list using the CourseCard component. Give
+       * the List.Item the id of the course so that it can have the class changed when the course is
+       * deleted from the wish list. This removes the margin so that a deleted course occupies no space
+       * at all.
        */}
       {showState ? (
         courses.length > 0 ? (
           <>
-            <Row
-              type="flex"
-              align="middle"
-              justify="center"
-              gutter={[
-                { xs: 30, sm: 16, md: 24, lg: 32 },
-                { xs: 30, sm: 16, md: 24, lg: 32 },
-              ]}
-            >
-              {courses.map((course) => (
-                <Col key={course._id} md={8}>
+            <List
+              grid={{ xs: 1 }}
+              dataSource={courses}
+              renderItem={(course) => (
+                <List.Item className="course" id={course._id}>
                   <CourseCard content={course} isWish={true} />
-                </Col>
-              ))}
-            </Row>
+                </List.Item>
+              )}
+            />
             <br />
           </>
         ) : (
