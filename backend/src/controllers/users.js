@@ -327,8 +327,7 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
  * @access private
  */
 const banUser = asyncHandler(async (req, res) => {
-  console.log(req.params);
-  const user = User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     req.params.id,
     { isBanned: true },
     { new: true }
