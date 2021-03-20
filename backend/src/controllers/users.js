@@ -65,7 +65,11 @@ const createUser = asyncHandler(async (req, res) => {
  */
 const loginUser = asyncHandler(async (req, res) => {
   const user = await User.checkCredentials(req.body);
-  sendTokenResponse(user, 200, res);
+  if (user.isBanned) {
+    sendTokenResponse(user, 401, res);
+  } else {
+    sendTokenResponse(user, 200, res);
+  }
 });
 
 /**
