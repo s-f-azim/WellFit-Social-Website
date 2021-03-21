@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import { Card, Row, Col, Statistic, Button, Tabs, List, notification } from 'antd';
 import {
   FundProjectionScreenOutlined,
@@ -22,6 +23,8 @@ import {
 } from '../actions/user';
 import { deleteRequest, getRequests } from '../actions/request';
 import AccessDenied from '../components/AccessDenied';
+import BanUser from '../components/BanUser';
+import DeleteUser from '../components/DeleteUser';
 
 const { TabPane } = Tabs;
 
@@ -62,7 +65,7 @@ const AdminDashboard = ({
 
     const banTitle = (
       <p>
-        <StopOutlined /> Ban users
+        <StopOutlined /> Ban/Delete users
       </p>
     );
 
@@ -84,7 +87,13 @@ const AdminDashboard = ({
       </p>
     );
 
-    const getRequestAuthor = (id) => users.find((user) => user._id === id);
+    const getRequestAuthor = (id) => {
+      try {
+        return users.filter((user) => user._id === id)[0].email;
+      } catch (err) {
+        return 'Author not found';
+      }
+    };
 
     const onDeleteBug = async (report) => {
       await deleteRequest(report._id);
@@ -144,7 +153,7 @@ const AdminDashboard = ({
                 </Col>
                 <Col span={16}>
                   <Statistic
-                    prefix={<BugOutlined />}
+                    prefix={<DislikeOutlined />}
                     title="No. User reports"
                     value={userReports.length}
                   />
@@ -155,7 +164,8 @@ const AdminDashboard = ({
                 hi
               </TabPane>
               <TabPane key="3" tab={banTitle}>
-                hi
+                <BanUser users={users} />
+                <DeleteUser users={users} />
               </TabPane>
               <TabPane key="4" tab={bugTitle}>
                 <List
@@ -264,9 +274,9 @@ export async function getStaticProps() {
     props: {
       userCount: getUsersRes.data.pagination.total,
       users: getUsersWithLimitRes.data.data,
-      adminCount: getAdminsRes.data.pagination.adminTotal,
-      clientCount: getClientsRes.data.pagination.clientTotal,
-      instructorCount: getInstructorsRes.data.pagination.instructorTotal,
+      adminCount: getAdminsRes.data.count,
+      clientCount: getClientsRes.data.count,
+      instructorCount: getInstructorsRes.data.count,
       bugReports: getRequestsRes.filter(isBugReport),
       verifyRequests: getRequestsRes.filter(isVerifyRequest),
       userReports: getRequestsRes.filter(isContentReport),

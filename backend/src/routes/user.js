@@ -8,6 +8,7 @@ import {
   getUser,
   updateUser,
   deleteUser,
+  deleteSpecificUser,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -17,10 +18,13 @@ import {
   getSuggestedInstructors,
   followUser,
   getFollowing,
+  getFollower,
+  banUser,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
 import User from '../models/User.js';
+import role from '../middleware/role.js';
 import upload from '../middleware/multer.js';
 
 const router = new express.Router();
@@ -39,6 +43,14 @@ router.route('/logout').get(logoutUser);
 router
   .route('/editProfile')
   .patch(passport.authenticate('jwt', { session: false }), updateUser);
+
+router
+  .route('/ban/:id')
+  .patch(
+    passport.authenticate('jwt', { session: false }),
+    role('admin'),
+    banUser
+  );
 router
   .route('/avatar')
   .post(
@@ -88,6 +100,10 @@ router
   .delete(passport.authenticate('jwt', { session: false }), deleteUser);
 
 router
+  .route('/delete/:id')
+  .delete(passport.authenticate('jwt', { session: false }), deleteSpecificUser);
+
+router
   .route('/oauth/facebook/redirect')
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
 
@@ -100,9 +116,14 @@ router
 router
   .route('/follow/:id')
   .patch(passport.authenticate('jwt', { session: false }), followUser);
+
 router
   .route('/getFollowing')
   .get(passport.authenticate('jwt', { session: false }), getFollowing);
+
+router
+  .route('/getFollower')
+  .get(passport.authenticate('jwt', { session: false }), getFollower);
 
 router.route('/:id').get(getUser);
 
