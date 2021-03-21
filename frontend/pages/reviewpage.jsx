@@ -20,5 +20,5 @@ export async function getStaticProps() {
     _id: '6044bd0315a05e2266f11abe',
     reviews,
   };
-  return { props: { reviewUser } };
+  return { props: { reviewUser }, revalidate: 60 * 2 };
 }
