@@ -303,6 +303,7 @@ export async function getStaticProps() {
       userReports: getRequestsRes.filter(isContentReport),
       Messages: getRequestsRes.filter(isMessage),
     },
+    revalidate: 60 * 1,
   };
 }
 
