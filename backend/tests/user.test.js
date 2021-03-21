@@ -10,6 +10,8 @@ import {
   userOneId,
   userTwoId,
   userFiveId,
+  courseOne,
+  courseTwo,
 } from './fixtures/db.js';
 
 // setup db for each test
@@ -251,6 +253,15 @@ it('Should get all users within radius', async () => {
   expect(response.body.count).toBe(1);
 });
 
+it('Should get id of users by email', async () => {
+  const response = await request(app)
+    .get(`/api/users/email/${userOne.email}`)
+    .send()
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(200);
+  expect(response.body.data).toBe(userOne._id.toString());
+});
+
 /**
  * @test getSuggestedInstructors
  * @desc Testing querying for suggested instructors for users to follow
@@ -305,4 +316,64 @@ it('Should not return more than 3 suggested instructors', async () => {
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
   expect(response.body.data.length <= 3);
+});
+
+it('Should not get wish list when not logged in', async () => {
+  await request(app).get('/api/users/wishlist').send().expect(401);
+});
+
+it('Should get wish list when logged in', async () => {
+  const response = await request(app)
+    .get('/api/users/wishlist')
+    .send()
+    .set('Cookie', [`token=${tokens[4]}`])
+    .expect(200);
+  expect(response.body.data.length === 1);
+});
+
+it('Adding course already in wish list to the wish list does not remove it if not logged in', async () => {
+  await request(app)
+    .patch(`/api/users/addtowishlist/${courseOne._id}`)
+    .send()
+    .expect(401);
+});
+
+it('Adding course already in wish list to the wish list removes it if logged in', async () => {
+  const response = await request(app)
+    .patch(`/api/users/addtowishlist/${courseOne._id}`)
+    .send()
+    .set('Cookie', [`token=${tokens[4]}`])
+    .expect(200);
+  expect(response.body.data.length === 0);
+});
+
+it('Adding course not already in wish list to the wish list does not add it if not logged in', async () => {
+  await request(app)
+    .patch(`/api/users/addtowishlist/${courseTwo._id}`)
+    .send()
+    .expect(401);
+});
+
+it('Adding course not already in wish list to the wish list adds it if logged in', async () => {
+  const response = await request(app)
+    .patch(`/api/users/addtowishlist/${courseTwo._id}`)
+    .send()
+    .set('Cookie', [`token=${tokens[4]}`])
+    .expect(200);
+  expect(response.body.data.length === 2);
+});
+
+it('Adding course that does not exist to the wish list does not work if not logged in', async () => {
+  await request(app)
+    .patch('/api/users/addtowishlist/123456')
+    .send()
+    .expect(401);
+});
+
+it('Adding course that does not exist to the wish list does not work if logged in', async () => {
+  await request(app)
+    .patch('/api/users/addtowishlist/123456')
+    .send()
+    .set('Cookie', [`token=${tokens[4]}`])
+    .expect(404);
 });

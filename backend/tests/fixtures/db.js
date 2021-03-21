@@ -3,9 +3,11 @@ import User from '../../src/models/User.js';
 import Review from '../../src/models/Review.js';
 import Course from '../../src/models/Course.js';
 import Request from '../../src/models/Request.js';
+import Conversation from '../../src/models/Conversation.js';
 
 const userOneId = new mongoose.Types.ObjectId();
 const reviewOneId = new mongoose.Types.ObjectId();
+const courseOneId = new mongoose.Types.ObjectId();
 
 // create users
 const userOne = {
@@ -85,7 +87,9 @@ const userFive = {
   birthday: new Date(),
   nickname: 'RPE10single',
   bio: 'I powerlift ur mom',
+  wishlist: [courseOneId],
   tags: ['Workout', 'Sweat'],
+  gender: 'Male',
   role: 'admin',
 };
 
@@ -98,8 +102,6 @@ const reviewOne = {
 };
 
 // create courses
-
-const courseOneId = new mongoose.Types.ObjectId();
 
 const courseOne = {
   _id: courseOneId,
@@ -121,6 +123,18 @@ const courseTwo = {
   creators: [userOneId],
   price: 0,
   tags: ['Cardio'],
+};
+const conversationOneId = new mongoose.Types.ObjectId();
+const conversationOne = {
+  _id: conversationOneId,
+  users: [userOne._id],
+};
+
+const conversationTwoId = new mongoose.Types.ObjectId();
+const conversationTwo = {
+  _id: conversationTwoId,
+  users: [userTwo._id, userThree._id],
+  messages: [],
 };
 
 const requestOneId = new mongoose.Types.ObjectId();
@@ -162,6 +176,7 @@ const reviews = [reviewOne];
 const users = [userOne, userTwo, userThree, userFour, userFive];
 const courses = [courseOne, courseTwo];
 const requests = [requestOne, requestTwo, requestThree, requestFour];
+const conversations = [conversationOne, conversationTwo];
 // token
 const tokens = [];
 const setupDatabase = async () => {
@@ -169,6 +184,7 @@ const setupDatabase = async () => {
   await Review.deleteMany();
   await Course.deleteMany();
   await Request.deleteMany();
+  await Conversation.deleteMany();
   // seed users
 
   // eslint-disable-next-line no-restricted-syntax
@@ -191,12 +207,17 @@ const setupDatabase = async () => {
     // eslint-disable-next-line no-await-in-loop
     await review.save();
   }
-
   // eslint-disable-next-line no-restricted-syntax
   for (const r of requests) {
     const request = new Request(r);
     // eslint-disable-next-line no-await-in-loop
     await request.save();
+  }
+  // eslint-disable-next-line no-restricted-syntax
+  for (const conv of conversations) {
+    const newConv = new Conversation(conv);
+    // eslint-disable-next-line no-await-in-loop
+    await newConv.save();
   }
 };
 
@@ -205,6 +226,7 @@ export {
   userTwo,
   userThree,
   userFive,
+  userFour,
   requestOne,
   requestTwo,
   requestThree,
@@ -216,4 +238,6 @@ export {
   userTwoId,
   userFiveId,
   tokens,
+  conversationOne,
+  conversationTwo,
 };

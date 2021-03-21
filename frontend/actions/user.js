@@ -5,6 +5,11 @@ const updateUser = (values) =>
     ...values,
   });
 
+const getUserIdByEmail = async (email) => {
+  const res = await api.get(`/users/email/${email}`);
+  return res.data.data;
+};
+
 const deleteUser = () => api.delete('/users/delete');
 
 const deleteSpecificUser = (userId) => api.delete(`/users/delete/${userId}`);
@@ -37,4 +42,5 @@ export {
   addingFollowUser,
   getSuggestedInstructors,
   banUser,
+  getUserIdByEmail,
 };

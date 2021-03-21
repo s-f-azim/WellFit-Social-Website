@@ -4,11 +4,13 @@ import geocoder from '../utils/geocoder.js';
 
 const CourseSchema = new mongoose.Schema(
   {
-    creators: {
-      type: [mongoose.Schema.Types.ObjectId],
-      required: [true, 'Please enter the authors of the package'],
-      ref: 'User',
-    },
+    creators: [
+      {
+        type: [mongoose.Schema.Types.ObjectId],
+        required: [true, 'Please enter the authors of the course'],
+        ref: 'User',
+      },
+    ],
     description: {
       type: String,
       required: [true, 'Please enter a description'],
@@ -16,7 +18,6 @@ const CourseSchema = new mongoose.Schema(
 
     title: {
       type: String,
-      unique: true,
       trim: true,
       index: true,
       required: [true, 'Please enter the title of the course '],
@@ -48,10 +49,9 @@ const CourseSchema = new mongoose.Schema(
     },
     address: {
       type: String,
-      required: [true, 'Please add an address'],
     },
     isVirtual: Boolean,
-    Gym: Boolean,
+    gym: Boolean,
     slug: String,
     location: {
       type: {
@@ -72,6 +72,23 @@ const CourseSchema = new mongoose.Schema(
       type: Number,
       required: [true, 'Please enter a price if it is free leave it as 0'],
     },
+    fitnessLevel: {
+      type: String,
+      enum: ['beginner', 'intermediate', 'advanced'],
+    },
+    trainingDuration: {
+      type: Number,
+      min: 0,
+      validate: {
+        validator: Number.isInteger,
+      },
+    },
+    trainingEquipment: [
+      {
+        type: String,
+        enum: ['dumbbells', 'barbells', 'resistanceBands', 'treadmill'],
+      },
+    ],
     averageRating: {
       type: Number,
       min: [1, 'Rating must be at least 1'],
@@ -83,8 +100,10 @@ const CourseSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 // Geocode and create location field
 CourseSchema.pre('save', async function (next) {
+  if (!this.address) next();
   const loc = await geocoder.geocode(this.address);
   const {
     longitude,
@@ -106,6 +125,7 @@ CourseSchema.pre('save', async function (next) {
   };
   next();
 });
+
 // Create course slug from the name
 CourseSchema.pre('save', function (next) {
   this.slug = slugify(this.title, { lower: true });

@@ -6,9 +6,12 @@ import {
   loginUser,
   logoutUser,
   getUser,
+  getUserIdByEmail,
   updateUser,
   deleteUser,
   deleteSpecificUser,
+  getWishList,
+  addToWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -28,8 +31,6 @@ import role from '../middleware/role.js';
 import upload from '../middleware/multer.js';
 
 const router = new express.Router();
-
-router.route('/').get(paginate(User), getUsers);
 
 router
   .route('/radius/:zipcode/:distance')
@@ -65,6 +66,10 @@ router
 router
   .route('/me')
   .get(passport.authenticate('jwt', { session: false }), getProfile);
+
+router
+  .route('/email/:email')
+  .get(passport.authenticate('jwt', { session: false }), getUserIdByEmail);
 
 router.route('/oauth/google').get(
   passport.authenticate('google', {
@@ -108,6 +113,14 @@ router
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
 
 router
+  .route('/addToWishList/:id')
+  .patch(passport.authenticate('jwt', { session: false }), addToWishList);
+
+router
+  .route('/wishlist')
+  .get(passport.authenticate('jwt', { session: false }), getWishList);
+
+router
   .route('/profile')
   .get(
     passport.authenticate('jwt', { session: false }),
@@ -124,6 +137,8 @@ router
 router
   .route('/getFollower')
   .get(passport.authenticate('jwt', { session: false }), getFollower);
+
+router.route('/').get(paginate(User), getUsers);
 
 router.route('/:id').get(getUser);
 

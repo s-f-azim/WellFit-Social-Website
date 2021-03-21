@@ -1,7 +1,8 @@
 /* eslint-disable no-use-before-define */
+import sharp from 'sharp';
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
-import sharp from 'sharp';
+import Course from '../models/Course.js';
 
 /**
  * @async
@@ -33,7 +34,7 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 /**
  * @async
- * @desc  get a users within a radius
+ * @desc  get all users within a radius
  * @route GET /api/users/radius/:zipcode/:distance
  * @access public
  */
@@ -84,6 +85,23 @@ const getProfile = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc get a user by providing email
+ * @route GET /api/users/email/:email
+ * @access private
+ */
+const getUserIdByEmail = asyncHandler(async (req, res) => {
+  User.findOne({ email: req.params.email }, '_id').exec((err, user) => {
+    if (!user)
+      return res.status(400).send({
+        success: false,
+        error: `User ${req.params.email} does not exist`,
+      });
+    return res.status(200).send({ success: true, data: user._id });
+  });
+});
+
+/**
+ * @async
  * @desc update user profile
  * @route PATCH /api/users/editprofile
  * @access private
@@ -109,7 +127,7 @@ const followUser = asyncHandler(async (req, res) => {
   const followingUser = await User.findById(req.user._id);
   if (
     !followingUser.following.includes(followeeUser._id) &&
-    followingUser._id + ' ' !== followeeUser._id + ' '
+    `${followingUser._id} ` !== `${followeeUser._id} `
   ) {
     followingUser.following.push(followeeUser._id);
     followeeUser.follower.push(followingUser._id);
@@ -131,7 +149,7 @@ const followUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1', 10); //Page number needs to start with 1
+  const page = parseInt(req.query.page || '1', 10); // Page number needs to start with 1
   const limit = 5;
   const followings = await User.findById(req.user._id).populate({
     path: 'following',
@@ -148,7 +166,7 @@ const getFollowing = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1', 10); //Page number needs to start with 1
+  const page = parseInt(req.query.page || '1', 10); // Page number needs to start with 1
   const limit = 5;
   const followers = await User.findById(req.user._id).populate({
     path: 'follower',
@@ -198,6 +216,36 @@ const deleteSpecificUser = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc add specified course to user's wish list - if it already exists, remove it
+ * @route PATCH /api/users/addtowishlist/:id
+ * @access private
+ */
+const addToWishList = asyncHandler(async (req, res) => {
+  if (Course.findById(req.params.id)) {
+    const index = req.user.wishlist.indexOf(req.params.id);
+    if (index === -1) {
+      req.user.wishlist.push(req.params.id);
+    } else {
+      req.user.wishlist.splice(index, 1);
+    }
+  }
+  const updatedUser = await req.user.save();
+  sendTokenResponse(updatedUser, 200, res);
+});
+
+/**
+ * @async
+ * @desc get all wishlist
+ * @route GET /api/users/wishlist
+ * @access private
+ */
+const getWishList = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).populate('wishlist');
+  res.status(200).send({ success: true, data: user.wishlist });
+});
+
+/**
+ * @async
  * @desc google login user using oauth
  * @route GET /api/users/google/redirect
  * @access private
@@ -233,7 +281,7 @@ const instagramOauth = asyncHandler(async (req, res) => {
  * @access private
  */
 const uploadImages = asyncHandler(async (req, res) => {
-  let formattedImages = [];
+  const formattedImages = [];
   req.files.forEach((file) => formattedImages.push(file.buffer));
   /* eslint-disable no-return-await */
   formattedImages.map(
@@ -343,10 +391,13 @@ export {
   loginUser,
   getProfile,
   getUser,
+  getUserIdByEmail,
   logoutUser,
   updateUser,
   deleteUser,
   deleteSpecificUser,
+  getWishList,
+  addToWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,

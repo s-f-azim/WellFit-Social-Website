@@ -9,13 +9,16 @@ import {
   LogoutOutlined,
   CheckOutlined,
   CloseOutlined,
+  SendOutlined,
 } from '@ant-design/icons';
+import { useEffect } from 'react';
 import { signOut } from 'next-auth/client';
 import { logout } from '../services/auth';
 import ReportButton from './ReportButton';
 
 const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
   const router = useRouter();
+  
   const signout = async () => {
     setProfileOpen(false);
     await logout();
@@ -32,6 +35,8 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
     setProfileOpen(false);
     router.push('/editProfile');
   };
+  useEffect(()=>setProfileOpen(false),[router.pathname])
+
   return (
     <div className={`profile-bar ${profileOpen ? 'active' : ''}`}>
       <CloseOutlined onClick={() => setProfileOpen(false)} />
@@ -47,7 +52,7 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
         }}
         icon={<AntDesignOutlined />}
       />
-      <h1 className="item" onClick={() => setProfileOpen(false)}>
+      <h1 className="item">
         <Link href="/profile">{session.user.fName}</Link>
       </h1>
       <div className="item">
@@ -59,12 +64,14 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
         <h1>Edit profile</h1>
       </div>
       <div className="item">
-        <HistoryOutlined />
-        <h1>Change goals</h1>
+        <SendOutlined />
+        <h1>
+          <Link href="/chats">Chats</Link>
+        </h1>
       </div>
       <div className="item">
         <SettingOutlined />
-        <h1 onClick={() => setProfileOpen(false)}>
+        <h1>
           <Link href="/settings">Settings</Link>
         </h1>
       </div>
