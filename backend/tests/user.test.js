@@ -5,11 +5,9 @@ import {
   tokens,
   userOne,
   userTwo,
-  userFive,
   setupDatabase,
   userOneId,
   userTwoId,
-  userFiveId,
   courseOne,
   courseTwo,
 } from './fixtures/db.js';

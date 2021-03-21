@@ -5,10 +5,7 @@ import {
   tokens,
   userOne,
   userTwo,
-  userThree,
   requestOne,
-  requestTwo,
-  requestThree,
   requestFour,
   setupDatabase,
 } from './fixtures/db.js';
