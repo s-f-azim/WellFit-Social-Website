@@ -1,4 +1,5 @@
-import { Card, Row, Col, Statistic, Tabs, Button, Modal, List, notification } from 'antd';
+/* eslint-disable import/no-duplicates */
+import { Card, Row, Col, Statistic, Button, Tabs, List, notification } from 'antd';
 import {
   FundProjectionScreenOutlined,
   BarChartOutlined,
@@ -9,11 +10,22 @@ import {
   UserOutlined,
   CloseOutlined,
   CheckOutlined,
+  DislikeOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
-import { getUsers, getAdmins, getClients, getInstructors } from '../actions/user';
+import {
+  getUsers,
+  getUsersWithLimit,
+  getAdmins,
+  getClients,
+  getInstructors,
+} from '../actions/user';
 import { deleteRequest, getRequests } from '../actions/request';
+import AccessDenied from '../components/AccessDenied';
+import BanUser from '../components/BanUser';
+import DeleteUser from '../components/DeleteUser';
+import { banUser } from '../actions/user';
 
 const { TabPane } = Tabs;
 
@@ -25,10 +37,12 @@ const AdminDashboard = ({
   instructorCount,
   bugReports,
   verifyRequests,
-  contentReports,
+  userReports,
   Messages,
 }) => {
   const [session, loading] = useSession();
+  const [allBugReports, setBugReports] = useState(bugReports);
+  const [allUserReports, setUserReports] = useState(userReports);
 
   if (typeof window !== 'undefined' && loading) return null;
 
@@ -52,7 +66,7 @@ const AdminDashboard = ({
 
     const banTitle = (
       <p>
-        <StopOutlined /> Ban users
+        <StopOutlined /> Ban/Delete users
       </p>
     );
 
@@ -62,25 +76,61 @@ const AdminDashboard = ({
       </p>
     );
 
+    const userTitle = (
+      <p>
+        <DislikeOutlined /> User reports
+      </p>
+    );
+
     const contactTitle = (
       <p>
         <MailOutlined /> contact users
       </p>
     );
 
-    const getRequestAuthor = (id) => users.filter((user) => user._id === id);
-
-    const [reports, setReports] = useState(bugReports);
+    const getRequestAuthor = (id) => {
+      try {
+        return users.filter((user) => user._id === id)[0].email;
+      } catch (err) {
+        return 'Not found';
+      }
+    };
 
     const onDeleteBug = async (report) => {
       await deleteRequest(report._id);
-      reports.splice(reports.indexOf(report), 1);
-      setReports([...reports]);
+      allBugReports.splice(allBugReports.indexOf(report), 1);
+      setBugReports([...allBugReports]);
       notification.open({
         message: 'Deleted report',
         duration: 2,
         icon: <CheckOutlined style={{ color: '#70FF00' }} />,
       });
+    };
+
+    const onDeleteReport = async (report) => {
+      await deleteRequest(report._id);
+      allUserReports.splice(allUserReports.indexOf(report), 1);
+      setUserReports([...allUserReports]);
+      notification.open({
+        message: 'Deleted report',
+        duration: 2,
+        icon: <CheckOutlined style={{ color: '#70FF00' }} />,
+      });
+    };
+
+    const onBanUser = async (userId, report) => {
+      console.log(userId);
+      try {
+        const response = await banUser(userId);
+        notification.open({
+          message: 'user account has been banned',
+          duration: 3,
+          icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+        });
+        onDeleteReport(report);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     return (
@@ -117,12 +167,21 @@ const AdminDashboard = ({
                   />
                   <br />
                 </Col>
+                <Col span={16}>
+                  <Statistic
+                    prefix={<DislikeOutlined />}
+                    title="No. User reports"
+                    value={userReports.length}
+                  />
+                  <br />
+                </Col>
               </TabPane>
               <TabPane key="2" tab={verifiedTitle}>
                 hi
               </TabPane>
               <TabPane key="3" tab={banTitle}>
-                hi
+                <BanUser users={users} />
+                <DeleteUser users={users} />
               </TabPane>
               <TabPane key="4" tab={bugTitle}>
                 <List
@@ -132,11 +191,11 @@ const AdminDashboard = ({
                     </h2>
                   }
                   itemLayout="horizontal"
-                  dataSource={reports}
+                  dataSource={allBugReports}
                   renderItem={(report) => (
                     <List.Item>
                       <h3>
-                        <b>Report #{reports.indexOf(report) + 1}</b>
+                        <b>Report #{allBugReports.indexOf(report) + 1}</b>
                         <CloseOutlined
                           style={{ color: 'red', margin: '7px' }}
                           onClick={() => onDeleteBug(report)}
@@ -144,11 +203,55 @@ const AdminDashboard = ({
                       </h3>
                       <h3>
                         <b>Author: </b>
-                        {getRequestAuthor(report.author)[0].email}
+                        {getRequestAuthor(report.author)
+                          ? getRequestAuthor(report.author).email
+                          : 'User has been deleted'}
                       </h3>
 
                       <b>Content: </b>
                       {report.content}
+                    </List.Item>
+                  )}
+                />
+              </TabPane>
+              <TabPane key="7" tab={userTitle}>
+                <List
+                  header={
+                    <h2>
+                      <DislikeOutlined /> User reports
+                    </h2>
+                  }
+                  itemLayout="horizontal"
+                  dataSource={allUserReports}
+                  renderItem={(report) => (
+                    <List.Item>
+                      <h3>
+                        <b>Report #{allUserReports.indexOf(report) + 1}</b>
+                        <CloseOutlined
+                          style={{ color: 'red', margin: '7px' }}
+                          onClick={() => onDeleteReport(report)}
+                        />
+                      </h3>
+                      <h3>
+                        <b>Reported User: </b>
+                        {getRequestAuthor(report.recipient)
+                          ? getRequestAuthor(report.recipient)
+                          : 'User has been deleted'}
+                        <br />
+                        <b>Reported by: </b>
+                        {getRequestAuthor(report.author)
+                          ? getRequestAuthor(report.author)
+                          : 'User has been deleted'}
+                      </h3>{' '}
+                      <br />
+                      <Button
+                        type="danger"
+                        style={{ marginRight: '2rem' }}
+                        disabled
+                        onClick={() => onBanUser(report.recipient, report)}
+                      >
+                        Ban reported user
+                      </Button>
                     </List.Item>
                   )}
                 />
@@ -162,7 +265,7 @@ const AdminDashboard = ({
       </div>
     );
   }
-  return <p>Access Denied</p>;
+  return <AccessDenied />;
 };
 
 function isBugReport(request) {
@@ -183,6 +286,7 @@ function isMessage(request) {
 
 export async function getStaticProps() {
   const getUsersRes = await getUsers();
+  const getUsersWithLimitRes = await getUsersWithLimit(getUsersRes.data.pagination.total);
   const getAdminsRes = await getAdmins();
   const getClientsRes = await getClients();
   const getInstructorsRes = await getInstructors();
@@ -190,15 +294,16 @@ export async function getStaticProps() {
   return {
     props: {
       userCount: getUsersRes.data.pagination.total,
-      users: getUsersRes.data.data,
-      adminCount: getAdminsRes.data.pagination.adminTotal,
-      clientCount: getClientsRes.data.pagination.clientTotal,
-      instructorCount: getInstructorsRes.data.pagination.instructorTotal,
+      users: getUsersWithLimitRes.data.data,
+      adminCount: getAdminsRes.data.count,
+      clientCount: getClientsRes.data.count,
+      instructorCount: getInstructorsRes.data.count,
       bugReports: getRequestsRes.filter(isBugReport),
       verifyRequests: getRequestsRes.filter(isVerifyRequest),
-      contentReports: getRequestsRes.filter(isContentReport),
+      userReports: getRequestsRes.filter(isContentReport),
       Messages: getRequestsRes.filter(isMessage),
     },
+    revalidate: 60 * 1,
   };
 }
 

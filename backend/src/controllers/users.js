@@ -66,7 +66,11 @@ const createUser = asyncHandler(async (req, res) => {
  */
 const loginUser = asyncHandler(async (req, res) => {
   const user = await User.checkCredentials(req.body);
-  sendTokenResponse(user, 200, res);
+  if (user.isBanned) {
+    sendTokenResponse(user, 401, res);
+  } else {
+    sendTokenResponse(user, 200, res);
+  }
 });
 
 /**
@@ -189,12 +193,24 @@ const logoutUser = asyncHandler(async (req, res) => {
 /**
  *
  * @async
- * @desc delete user from the db
+ * @desc delete current user from the db
  * @route DELETE /api/users/delete
  *
  */
 const deleteUser = asyncHandler(async (req, res) => {
   await User.findByIdAndDelete(req.user._id);
+  res.status(200).send({ success: true });
+});
+
+/**
+ *
+ * @async
+ * @desc delete user with id from the db
+ * @route DELETE /api/users/delete/:id
+ *
+ */
+const deleteSpecificUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndDelete(req.params.id);
   res.status(200).send({ success: true });
 });
 
@@ -353,6 +369,21 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
   res.status(200).send({ success: true, data: users });
 });
 
+/**
+ * @desc ban a user
+ * @route PATCH api/users/ban/:id
+ * @access private
+ */
+const banUser = asyncHandler(async (req, res) => {
+  const user = await User.findByIdAndUpdate(
+    req.params.id,
+    { isBanned: true },
+    { new: true }
+  );
+  await user.save();
+  sendTokenResponse(user, 200, res);
+});
+
 export {
   getUsers,
   getUsersWithinRadius,
@@ -364,6 +395,7 @@ export {
   logoutUser,
   updateUser,
   deleteUser,
+  deleteSpecificUser,
   getWishList,
   addToWishList,
   googleOauth,
@@ -375,4 +407,5 @@ export {
   followUser,
   getFollowing,
   getFollower,
+  banUser,
 };

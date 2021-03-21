@@ -100,7 +100,7 @@ const course = ({ course }) => {
             <div id="wishListButton">
               {/**
                * If the wish list has not yet been fetched or it has but this course is already in
-               * the wish lsit, display nothing. If this course is not in the wish list, display a
+               * the wish list, display nothing. If this course is not in the wish list, display a
                * button to add the course to the wish list.
                */}
               {wishListFetched ? (

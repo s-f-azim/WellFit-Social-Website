@@ -15,10 +15,10 @@ export default function ReviewPage({ reviewUser }) {
 }
 
 export async function getStaticProps() {
-  const reviews = await getReviews('6044bd0315a05e2266f11abe');
+  const reviews = await getReviews('6054d68c077dc3dfd17a1492');
   const reviewUser = {
-    _id: '6044bd0315a05e2266f11abe',
+    _id: '6054d68c077dc3dfd17a1492',
     reviews,
   };
-  return { props: { reviewUser } };
+  return { props: { reviewUser }, revalidate: 60 * 2 };
 }
