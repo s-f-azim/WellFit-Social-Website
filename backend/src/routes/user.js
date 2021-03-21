@@ -125,10 +125,12 @@ router
   .route('/getFollower')
   .get(passport.authenticate('jwt', { session: false }), getFollower);
 
+router.route('/trendingUsers').get(getTrendingUsers);
+
 router.route('/').get(paginate(User), getUsers);
 
 router.route('/:id').get(getUser);
 
-router.route('/trendingUsers').get(getTrendingUsers);
+
 
 export default router;

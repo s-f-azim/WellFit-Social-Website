@@ -24,6 +24,8 @@ const getSuggestedInstructors = () => api.get('users/profile');
 
 const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
 
+const getTrendingUsers = () => api.get('/users/trendingUsers');
+
 export {
   updateUser as default,
   deleteUser,
@@ -34,4 +36,5 @@ export {
   addingFollowUser,
   getSuggestedInstructors,
   getUserIdByEmail,
+  getTrendingUsers,
 };
