@@ -6,10 +6,18 @@ import { tokens, userOne, postOne, setupDatabase } from './fixtures/db.js';
 // setup db for each test
 beforeEach(setupDatabase);
 
-it.only('Should create a post with valid data', async () => {
+it('Should create a post with valid data', async () => {
   const count = await Post.countDocuments();
+  const post = { content: 'test', youtubeLink: 'test' };
 
-  expect(count).toBe(1);
+  const response = await request(app)
+    .post('/api/posts')
+    .send(post)
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(200);
+
+  expect(response.body.data).not.toBeNull();
+  expect(await Post.countDocuments()).toBe(count + 1);
 });
 
 it('Should not create a post with invalid data', async () => {

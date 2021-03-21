@@ -46,13 +46,13 @@ const Review = ({ getReviews, onSubmit, onDelete }) => {
     <Card>
       <ReviewList
         reviews={reviews}
+        loading={loading}
         renderItem={(r) => (
           <ReviewList.Item
             review={r}
             onDelete={user && user._id === r.author._id ? handleDelete : undefined}
           />
         )}
-        loading={loading}
       />
       {user && !hasReviewed && <ReviewInput onSubmit={handleSubmit} />}
     </Card>

@@ -14,8 +14,7 @@ const createPost = asyncHandler(async (req, res) => {
     author: req.user._id,
     ...req.body,
   });
-  post = await post.populate('author', 'fName lName');
-
+  post = await post.populate('author', 'fName lName').execPopulate();
   return res.status(200).send({ success: true, data: post });
 });
 

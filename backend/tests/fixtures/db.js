@@ -187,6 +187,7 @@ const setupDatabase = async () => {
   await Course.deleteMany();
   await Conversation.deleteMany();
   await Post.deleteMany();
+
   // seed users
 
   // eslint-disable-next-line no-restricted-syntax
@@ -196,6 +197,7 @@ const setupDatabase = async () => {
     await user.save();
     tokens.push(user.getSignedJWTToken());
   }
+
   // eslint-disable-next-line no-restricted-syntax
   for (const c of courses) {
     const course = new Course(c);
@@ -216,6 +218,7 @@ const setupDatabase = async () => {
 };
 
 export {
+  setupDatabase,
   userOne,
   userTwo,
   userThree,
@@ -223,7 +226,6 @@ export {
   userFive,
   courseOne,
   courseTwo,
-  setupDatabase,
   userOneId,
   tokens,
   conversationOne,
