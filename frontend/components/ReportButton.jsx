@@ -3,8 +3,11 @@ import { createReport } from '../actions/request';
 
 const ReportButton = ({ RecipientID }) => {
   const reportUser = async () => {
-    console.log(`tutut : ${RecipientID}`);
-    await createReport('report', 'Report', RecipientID);
+    try {
+      await createReport('report', 'Report', RecipientID);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

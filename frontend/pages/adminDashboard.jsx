@@ -33,11 +33,12 @@ const AdminDashboard = ({
   instructorCount,
   bugReports,
   verifyRequests,
-  contentReports,
+  userReports,
   Messages,
 }) => {
   const [session, loading] = useSession();
-  const [reports, setReports] = useState(bugReports);
+  const [allBugReports, setBugReports] = useState(bugReports);
+  const [allUserReports, setUserReports] = useState(userReports);
 
   if (typeof window !== 'undefined' && loading) return null;
 
@@ -87,8 +88,19 @@ const AdminDashboard = ({
 
     const onDeleteBug = async (report) => {
       await deleteRequest(report._id);
-      reports.splice(reports.indexOf(report), 1);
-      setReports([...reports]);
+      allBugReports.splice(allBugReports.indexOf(report), 1);
+      setBugReports([...allBugReports]);
+      notification.open({
+        message: 'Deleted report',
+        duration: 2,
+        icon: <CheckOutlined style={{ color: '#70FF00' }} />,
+      });
+    };
+
+    const onDeleteReport = async (report) => {
+      await deleteRequest(report._id);
+      allUserReports.splice(allUserReports.indexOf(report), 1);
+      setUserReports([...allUserReports]);
       notification.open({
         message: 'Deleted report',
         duration: 2,
@@ -130,6 +142,14 @@ const AdminDashboard = ({
                   />
                   <br />
                 </Col>
+                <Col span={16}>
+                  <Statistic
+                    prefix={<BugOutlined />}
+                    title="No. User reports"
+                    value={userReports.length}
+                  />
+                  <br />
+                </Col>
               </TabPane>
               <TabPane key="2" tab={verifiedTitle}>
                 hi
@@ -145,11 +165,11 @@ const AdminDashboard = ({
                     </h2>
                   }
                   itemLayout="horizontal"
-                  dataSource={reports}
+                  dataSource={allBugReports}
                   renderItem={(report) => (
                     <List.Item>
                       <h3>
-                        <b>Report #{reports.indexOf(report) + 1}</b>
+                        <b>Report #{allBugReports.indexOf(report) + 1}</b>
                         <CloseOutlined
                           style={{ color: 'red', margin: '7px' }}
                           onClick={() => onDeleteBug(report)}
@@ -176,36 +196,30 @@ const AdminDashboard = ({
                     </h2>
                   }
                   itemLayout="horizontal"
-                  dataSource={contentReports}
+                  dataSource={allUserReports}
                   renderItem={(report) => (
                     <List.Item>
                       <h3>
-                        <b>Report #{contentReports.indexOf(report) + 1}</b>
+                        <b>Report #{allUserReports.indexOf(report) + 1}</b>
                         <CloseOutlined
                           style={{ color: 'red', margin: '7px' }}
-                          onClick={() => onDeleteBug(report)}
+                          onClick={() => onDeleteReport(report)}
                         />
                       </h3>
                       <h3>
                         <b>Reported User: </b>
-                        {getRequestAuthor(report.author)
-                          ? getRequestAuthor(report.author).email
+                        {getRequestAuthor(report.recipient)
+                          ? getRequestAuthor(report.recipient).email
                           : 'User has been deleted'}
                         <br />
                         <b>Reported by: </b>
                         {getRequestAuthor(report.author)
                           ? getRequestAuthor(report.author).email
                           : 'User has been deleted'}
-                      </h3>
-
-                      <b>Content: </b>
-                      {report.content}
+                      </h3>{' '}
                       <br />
                       <Button type="danger" style={{ marginRight: '2rem' }}>
-                        Ban User
-                      </Button>
-                      <Button type="danger" size="small">
-                        Ban Reportee
+                        Ban reported user
                       </Button>
                     </List.Item>
                   )}
@@ -255,7 +269,7 @@ export async function getStaticProps() {
       instructorCount: getInstructorsRes.data.pagination.instructorTotal,
       bugReports: getRequestsRes.filter(isBugReport),
       verifyRequests: getRequestsRes.filter(isVerifyRequest),
-      contentReports: getRequestsRes.filter(isContentReport),
+      userReports: getRequestsRes.filter(isContentReport),
       Messages: getRequestsRes.filter(isMessage),
     },
   };
