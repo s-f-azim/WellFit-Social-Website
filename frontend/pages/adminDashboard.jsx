@@ -247,6 +247,7 @@ const AdminDashboard = ({
                       <Button
                         type="danger"
                         style={{ marginRight: '2rem' }}
+                        disabled
                         onClick={() => onBanUser(report.recipient, report)}
                       >
                         Ban reported user
