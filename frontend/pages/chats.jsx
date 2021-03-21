@@ -1,9 +1,10 @@
 import { Card, Row, Col, Avatar } from 'antd';
 import { UserOutlined, LeftOutlined } from '@ant-design/icons';
 import { useState } from 'react';
+import { useSession, getSession } from 'next-auth/client';
 import ChatList from '../components/ChatList';
 import Conversation from '../components/Conversation';
-import { useSession, getSession } from 'next-auth/client';
+import AccessDenied from '../components/AccessDenied';
 
 const Chats = () => {
   const [session, loading] = useSession();
@@ -23,7 +24,7 @@ const Chats = () => {
                   <LeftOutlined onClick={() => setConversation(null)} />
                   <div className="details">
                     <Avatar icon={<UserOutlined />} size="large" />
-                    <h3>{receiver?receiver.fName:""}</h3>
+                    <h3>{receiver ? receiver.fName : ''}</h3>
                   </div>
                 </>
               ) : (
@@ -43,9 +44,8 @@ const Chats = () => {
         </Card>
       </Row>
     );
-  } else {
-    return <div>access denied </div>;
   }
+  return <AccessDenied />;
 };
 export default Chats;
 
