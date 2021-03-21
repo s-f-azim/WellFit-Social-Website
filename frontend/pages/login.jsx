@@ -69,8 +69,8 @@ const Login = () => {
   const errorText = (
     <>
       Unable to login
-      <Button type="text" danger shape="circle" onClick={showAlert}>
-        ?
+      <Button type="link" danger onClick={showAlert}>
+        <QuestionOutlined />
       </Button>
       <Modal
         closable={false}

@@ -5,9 +5,11 @@ import {
   tokens,
   userOne,
   userTwo,
+  userFive,
   setupDatabase,
   userOneId,
   userTwoId,
+  userFiveId,
 } from './fixtures/db.js';
 
 // setup db for each test
@@ -51,7 +53,7 @@ it('Should login user', async () => {
 });
 
 // assert user login with invalid data
-it('Should login user', async () => {
+it('Should not login user', async () => {
   await request(app).post('/api/users/login').expect(404);
 });
 
@@ -172,6 +174,34 @@ it('Should be able to delete several users whilst not logged in as the users', a
   expect(user2Exists).toEqual(false);
 });
 
+it('Should set a users ban status to true when done by admin', async () => {
+  await request(app)
+    .patch(`/api/users/ban/${userOneId}`)
+    .send()
+    .set('Cookie', [`token=${tokens[4]}`])
+    .expect(200);
+  const user = await User.findById(userOne._id);
+  expect(user.isBanned).toEqual(true);
+});
+
+it('Should not set a users ban status to true when not done by admin', async () => {
+  await request(app)
+    .patch(`/api/users/ban/${userOneId}`)
+    .send()
+    .set('Cookie', [`token=${tokens[2]}`])
+    .expect(403);
+});
+
+it('Should not login a banned user', async () => {
+  await request(app)
+    .patch(`/api/users/ban/${userOneId}`)
+    .send()
+    .set('Cookie', [`token=${tokens[4]}`])
+    .expect(200);
+
+  await request(app).post('/api/users/login').send(userOne).expect(401);
+});
+
 // assert can't delete user when not logged in
 it('Should not delete a user when not logged in', async () => {
   await request(app).delete('/api/users/delete').send().expect(401);
@@ -185,7 +215,7 @@ it('Should get all users', async () => {
 });
 
 // assert get users with filters
-it('Should get all users', async () => {
+it('Should get all users with filter', async () => {
   const response = await request(app)
     .get('/api/users?lName=11')
     .send()
@@ -193,7 +223,7 @@ it('Should get all users', async () => {
   expect(response.body.count).toBe(1);
 });
 // assert get users with filters and select specific fields
-it('Should get all users', async () => {
+it('Should get all users with filters and select specific fields', async () => {
   const response = await request(app)
     .get('/api/users?lName=11&&select=fName')
     .send()
@@ -203,7 +233,7 @@ it('Should get all users', async () => {
   expect(response.body.data[0].fName).toEqual(userOne.fName);
 });
 // assert get users within radius
-it('Should get all users', async () => {
+it('Should get all users within radius', async () => {
   await request(app)
     .post('/api/users/signup')
     .send({
