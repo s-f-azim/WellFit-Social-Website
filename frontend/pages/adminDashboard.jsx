@@ -25,6 +25,7 @@ import { deleteRequest, getRequests } from '../actions/request';
 import AccessDenied from '../components/AccessDenied';
 import BanUser from '../components/BanUser';
 import DeleteUser from '../components/DeleteUser';
+import { banUser } from '../actions/user';
 
 const { TabPane } = Tabs;
 
@@ -91,7 +92,7 @@ const AdminDashboard = ({
       try {
         return users.filter((user) => user._id === id)[0].email;
       } catch (err) {
-        return 'Author not found';
+        return 'Not found';
       }
     };
 
@@ -115,6 +116,21 @@ const AdminDashboard = ({
         duration: 2,
         icon: <CheckOutlined style={{ color: '#70FF00' }} />,
       });
+    };
+
+    const onBanUser = async (userId, report) => {
+      console.log(userId);
+      try {
+        const response = await banUser(userId);
+        notification.open({
+          message: 'user account has been banned',
+          duration: 3,
+          icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+        });
+        onDeleteReport(report);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     return (
@@ -219,16 +235,20 @@ const AdminDashboard = ({
                       <h3>
                         <b>Reported User: </b>
                         {getRequestAuthor(report.recipient)
-                          ? getRequestAuthor(report.recipient).email
+                          ? getRequestAuthor(report.recipient)
                           : 'User has been deleted'}
                         <br />
                         <b>Reported by: </b>
                         {getRequestAuthor(report.author)
-                          ? getRequestAuthor(report.author).email
+                          ? getRequestAuthor(report.author)
                           : 'User has been deleted'}
                       </h3>{' '}
                       <br />
-                      <Button type="danger" style={{ marginRight: '2rem' }}>
+                      <Button
+                        type="danger"
+                        style={{ marginRight: '2rem' }}
+                        onClick={() => onBanUser(report.recipient, report)}
+                      >
                         Ban reported user
                       </Button>
                     </List.Item>

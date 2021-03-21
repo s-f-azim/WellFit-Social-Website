@@ -191,9 +191,7 @@ const settingsPage = () => {
                     </Space>
                   </Form>
                 </Card>
-                <Card className="settingCard" title={verifyMe}>
-                  <ReportButton RecipientID="6054dafaddeadc433efa84c0" />
-                </Card>
+                <Card className="settingCard" title={verifyMe}></Card>
                 <Card className="settingCard" title={feedback}>
                   check your inbox
                 </Card>

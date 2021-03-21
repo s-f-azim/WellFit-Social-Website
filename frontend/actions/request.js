@@ -9,7 +9,6 @@ const createRequest = async (type, content) => {
 };
 
 const createReport = async (type, content, recipientID) => {
-  console.log(`RÜTÜTÜÜTÜTTÜÜ: ${recipientID}`);
   const res = await api.post(`/requests/create`, {
     type,
     content,
