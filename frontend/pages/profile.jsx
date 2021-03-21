@@ -141,7 +141,7 @@ const Profile = () => {
             <br />
             <br />
             <Row type="flex" justify="center" align="middle">
-              <div id="content" />
+              <div id="content" style={{ minWidth: '100%' }} />
             </Row>
           </div>
         </Row>
