@@ -61,11 +61,11 @@ body {
 }
 
 .ant-alert.ant-alert-info {
-  background-color: #e6f7ff;
-  border: 1px solid #91d5ff;
+  background-color: white;
+  border: 1px solid #ffa277;
 }
 .anticon-loading {
-  color: black;
+  color: #ffa277;
   font-size: 30;
 }
 /*
@@ -94,4 +94,12 @@ a:link,
 a:hover,
 a:active {
   color: #ffa277;
+}
+
+.anticon svg {
+  color: #ffa277;
+}
+
+.ant-avatar.ant-avatar-icon {
+  background-color: white;
 }
