@@ -372,9 +372,6 @@ const getTrendingUsers = asyncHandler(async (req, res) => {
     ]
     
   });
-  console.log(users[0].follower.length);
-    // .sort( (u1, u2) => u2.follower.length - u1.follower.length ) //sort descending
-    // // .slice(0, 10); //get first 10 trending users
   res.status(200).send( 
     {
       success: true, 
