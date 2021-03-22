@@ -1,7 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Button, Typography, Input } from 'antd';
 import { useState } from 'react';
-import { UserOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  MenuOutlined,
+  CloseOutlined,
+  ContactsOutlined,
+  ProfileOutlined,
+} from '@ant-design/icons';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import ProfileBar from './ProfileBar';
@@ -25,13 +31,14 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
           <li className="option" onClick={closeMobileMenu}>
             <Link href="/courses">
               <Button type="link" className="menuButton">
-                Courses
+                <ProfileOutlined /> Courses
               </Button>
             </Link>
           </li>
           <li className="option" onClick={closeMobileMenu}>
             <Link href="#">
               <Button type="link" className="menuButton">
+                <ContactsOutlined />
                 Instructors
               </Button>
             </Link>

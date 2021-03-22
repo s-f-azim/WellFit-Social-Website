@@ -204,10 +204,12 @@ const editProfilePage = () => {
 
               <TabPane tab="Detailed info" key="2">
                 <h1>
-                  Add/Edit in-depth profile information{' '}
+                  Add/Edit in-depth profile information
                   <>
-                    <Button type="primary" shape="circle" onClick={showAlert}>
-                      <QuestionOutlined />
+                    <Button type="text" shape="circle" onClick={showAlert}>
+                      <h2>
+                        <QuestionOutlined />
+                      </h2>
                     </Button>
                     <Modal
                       closable={false}
