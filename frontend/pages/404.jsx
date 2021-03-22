@@ -3,7 +3,7 @@ import { WarningOutlined } from '@ant-design/icons';
 
 const subTitle = (
   <>
-    <WarningOutlined /> Sorry, the page you visited does not exist.
+    <WarningOutlined /> Sorry, the page you are looking for does not exist.
   </>
 );
 

@@ -107,7 +107,11 @@ const Navbar = () => {
     <>
       <nav className="topheader" style={{ backgroundColor: 'white' }}>
         <Title level={1} className="logo-text">
-          <a href="/"> WellFit </a>
+          <a href="/">
+            <div>
+              Well<span style={{ color: '#ffa277' }}>F</span>it
+            </div>
+          </a>
         </Title>
         {!session ? (
           <LoggedOutMenu />

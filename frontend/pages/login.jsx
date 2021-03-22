@@ -153,7 +153,6 @@ const Login = () => {
               name="password"
               label="Password"
               rules={[{ required: true, message: 'Please enter your password' }]}
-              hasFeedback
             >
               <Input.Password />
             </Form.Item>

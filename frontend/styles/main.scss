@@ -18,6 +18,7 @@
 @import './searchQuestions.scss';
 @import './suggestedInstructors.scss';
 @import './wishList.scss';
+@import './editProfile.scss';
 
 body,
 ::before,
@@ -61,7 +62,7 @@ body {
 }
 
 .ant-alert.ant-alert-info {
-  background-color: white;
+  background-color: #ffeee6;
   border: 1px solid #ffa277;
 }
 .anticon-loading {
@@ -96,10 +97,10 @@ a:active {
   color: #ffa277;
 }
 
-.anticon svg {
-  color: #ffa277;
-}
-
 .ant-avatar.ant-avatar-icon {
   background-color: white;
+}
+
+.anticon svg:not(.ant-notification) {
+  color: #ffa277;
 }

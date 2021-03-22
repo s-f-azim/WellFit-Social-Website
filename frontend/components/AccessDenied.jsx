@@ -9,6 +9,7 @@ const subTitle = (
 
 const AccessDenied = () => (
   <Result
+    className="AccessDenied"
     status="403"
     title="403"
     subTitle={subTitle}

@@ -11,7 +11,7 @@
   border-radius: 8%;
   width: 28rem;
   height: 100%;
-  background-color: #515050;
+  background-color: #ffeee6;
   transform: translateX(100%);
   transition: all 0.5s ease;
   opacity: 0;
@@ -24,7 +24,7 @@
   h1,
   .anticon,
   a {
-    color: white;
+    color: black;
     transition: color 0.3s ease-in-out;
   }
   .profile-pic {
@@ -38,7 +38,7 @@
     &:hover {
       & > *,
       a {
-        color: #40a9ff;
+        color: #ffa277;
       }
     }
     .anticon {
