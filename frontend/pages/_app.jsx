@@ -7,8 +7,6 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { Provider } from 'next-auth/client';
 import Layout from '../components/Layout';
-import { Elements } from '@stripe/react-stripe-js';
-import stripePromise from '../services/stripe';
 
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
@@ -31,16 +29,14 @@ function MyApp({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
-      <Elements stripe={stripePromise}>
-        <Layout>
-          <BackTop>
-            <h1>
-              <ArrowUpOutlined />
-            </h1>
-          </BackTop>
-          <Component {...pageProps} />
-        </Layout>
-      </Elements>
+      <Layout>
+        <BackTop>
+          <h1>
+            <ArrowUpOutlined />
+          </h1>
+        </BackTop>
+        <Component {...pageProps} />
+      </Layout>
     </Provider>
   );
 }

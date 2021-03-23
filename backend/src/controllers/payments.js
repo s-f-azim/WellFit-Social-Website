@@ -9,9 +9,11 @@ import asyncHandler from '../middleware/async.js';
  */
 const checkout = asyncHandler(async (req, res) => {
   // console.log('hey');
-  const { line_items } = req.body;
-  const response = await createStripeCheckOutSession(line_items, req.user);
-  res.status(200).send({ success: true, data: response });
+  /* eslint-disable camelcase*/
+  const { line_items, courseId } = req.body;
+  console.log('hmm');
+  const id = await createStripeCheckOutSession(line_items, req.user, courseId);
+  res.status(200).send({ success: true, id });
 });
 
 export default checkout;

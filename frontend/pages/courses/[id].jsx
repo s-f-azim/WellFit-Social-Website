@@ -1,13 +1,13 @@
 import { Row, Col, Button, Typography, Space, Divider, Rate, notification, Skeleton } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
+import ReactDOM from 'react-dom';
 import Image from 'next/image';
 import api from '../../services/api';
 import { useState, useEffect } from 'react';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import NotFound from '../../components/404';
 import { useSession } from 'next-auth/client';
-import ReactDOM from 'react-dom';
-import { useStripe } from '@stripe/react-stripe-js';
+import stripePromise from '../../services/stripe';
 import checkout from '../../actions/payment';
 const columnStyle = { width: 350, height: 'auto' };
 
@@ -49,10 +49,12 @@ const course = ({ course }) => {
       ReactDOM.render(<></>, document.getElementById('wishListButton'));
     }
 
-    const stripe = useStripe();
+    // handle the payment
     const handleClick = async (e) => {
       try {
+        const stripe = await stripePromise;
         const response = await checkout({
+          courseId: course._id,
           line_items: [
             {
               name: course.title,
@@ -165,7 +167,7 @@ export const getStaticProps = async ({ params }) => {
 // create all the pages possible for each individual course and make it static to improve performance significantly
 // each page will be at url/courses/id
 export const getStaticPaths = async () => {
-  const { data } = await api.get(`/courses?limit=1`);
+  const { data } = await api.get(`/courses?limit=50`);
   const paths = data.data.map((course) => {
     return {
       params: {
