@@ -53,6 +53,8 @@ const nextConfig = {
     API_PRODUCTION: 'http://localhost:4000/api',
     SOCKET_URL_DEV: 'ws://localhost:4000',
     SOCKET_URL_PRODUCTION: '',
+    STRIPE_KEY:
+      'pk_test_51IXtHEDwrWa9UGRt2QwiL8Yj0XjYj9jsruDB9SYxq5GpIsNay4Qp3DllZnXIP90IIOwqSIwOMbCwt9cYYzURQ5T000ADaG6pOw',
     PRODUCTION: false,
   },
   images: {
