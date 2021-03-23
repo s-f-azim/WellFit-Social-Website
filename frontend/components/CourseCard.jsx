@@ -1,11 +1,10 @@
-import { Card, Row, Col, Modal, Space, Button, notification } from 'antd';
-import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Modal, Space, Button } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import api from '../services/api';
-import ReactDOM from 'react-dom';
 
-const CourseCard = ({ content, isWish }) => {
+const CourseCard = ({ content, isWish, removeFromWishList }) => {
   // state for the modal pop up
   const [visible, setVisible] = useState(false);
   // state for showing the course card
@@ -20,28 +19,11 @@ const CourseCard = ({ content, isWish }) => {
     setShowState(true);
   }, []);
 
-  /**
-   * Remove this course from the user's wish list and replace the card with a blank space
-   */
-  function removeFromWishList() {
-    api.patch(`/users/addToWishList/${content._id}`, {});
-    notification.open({
-      message: 'Wish list updated!',
-      duration: 2,
-      icon: <CheckOutlined style={{ color: '#33FF49' }} />,
-    });
-    ReactDOM.render(
-      <div style={{ minWidth: '25rem', minHeight: '18rem' }}></div>,
-      document.getElementById(`${content._id}`)
-    );
-  }
-
   return (
     <>
       {/* If showState is currently false, display nothing. Once it is true, display the card*/}
       {showState ? (
-        <div id={content._id}>
-          {/* Place the course in a div with the id of the course so it can be removed easily */}
+        <div>
           <Card className="course-card" style={{ borderColor: 'black', borderRadius: '1rem' }}>
             <div style={{ paddingBottom: '5rem' }}>
               <h1 className="title" onClick={() => setVisible(true)}>

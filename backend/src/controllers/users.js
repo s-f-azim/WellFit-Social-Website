@@ -66,7 +66,11 @@ const createUser = asyncHandler(async (req, res) => {
  */
 const loginUser = asyncHandler(async (req, res) => {
   const user = await User.checkCredentials(req.body);
-  sendTokenResponse(user, 200, res);
+  if (user.isBanned) {
+    sendTokenResponse(user, 401, res);
+  } else {
+    sendTokenResponse(user, 200, res);
+  }
 });
 
 /**
@@ -145,14 +149,14 @@ const followUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1', 10); // Page number needs to start with 1
-  const limit = 5;
   const followings = await User.findById(req.user._id).populate({
     path: 'following',
-    select: ['name'],
+    select: ['fName', 'lName'],
   });
-  const results = followings.following.slice((page - 1) * limit, limit * page); //  (startIndex, lastIndex)
-  res.status(200).send({ success: true, data: results });
+  res.status(200).send({
+    success: true,
+    data: followings.following,
+  });
 });
 
 /**
@@ -162,14 +166,11 @@ const getFollowing = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1', 10); // Page number needs to start with 1
-  const limit = 5;
   const followers = await User.findById(req.user._id).populate({
     path: 'follower',
-    select: ['name'],
+    select: ['fName', 'lName'],
   });
-  const results = followers.follower.slice((page - 1) * limit, limit * page); //  (startIndex, lastIndex)
-  res.status(200).send({ success: true, data: results });
+  res.status(200).send({ success: true, data: followers.follower });
 });
 
 /**
@@ -189,12 +190,24 @@ const logoutUser = asyncHandler(async (req, res) => {
 /**
  *
  * @async
- * @desc delete user from the db
+ * @desc delete current user from the db
  * @route DELETE /api/users/delete
  *
  */
 const deleteUser = asyncHandler(async (req, res) => {
   await User.findByIdAndDelete(req.user._id);
+  res.status(200).send({ success: true });
+});
+
+/**
+ *
+ * @async
+ * @desc delete user with id from the db
+ * @route DELETE /api/users/delete/:id
+ *
+ */
+const deleteSpecificUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndDelete(req.params.id);
   res.status(200).send({ success: true });
 });
 
@@ -380,7 +393,20 @@ const getTrendingUsers = asyncHandler(async (req, res) => {
               .slice(0, 10)
     }
   );
-
+});
+/*
+ * @desc ban a user
+ * @route PATCH api/users/ban/:id
+ * @access private
+ */
+const banUser = asyncHandler(async (req, res) => {
+  const user = await User.findByIdAndUpdate(
+    req.params.id,
+    { isBanned: true },
+    { new: true }
+  );
+  await user.save();
+  sendTokenResponse(user, 200, res);
 });
 
 export {
@@ -394,6 +420,7 @@ export {
   logoutUser,
   updateUser,
   deleteUser,
+  deleteSpecificUser,
   getWishList,
   addToWishList,
   googleOauth,
@@ -406,4 +433,5 @@ export {
   getFollowing,
   getFollower,
   getTrendingUsers,
+  banUser,
 };

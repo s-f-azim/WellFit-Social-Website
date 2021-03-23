@@ -31,12 +31,11 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Layout>
         <BackTop>
-          <div>
-            Top
+          <h1>
             <ArrowUpOutlined />
-          </div>
+          </h1>
         </BackTop>
-        <Component {...pageProps}  />
+        <Component {...pageProps} />
       </Layout>
     </Provider>
   );

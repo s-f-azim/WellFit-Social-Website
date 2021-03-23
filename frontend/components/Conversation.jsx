@@ -59,7 +59,11 @@ const Conversation = ({ conversation }) => {
     <>
       <div id="chat-bubbles" className="chat-box" style={{ height: '60vh' }}>
         {msgs.map((msg) => (
-          <ChatBubble content={msg.content} incoming={msg.author !== session.user._id} />
+          <ChatBubble
+            key={msg._id}
+            content={msg.content}
+            incoming={msg.author !== session.user._id}
+          />
         ))}
       </div>
       <Form

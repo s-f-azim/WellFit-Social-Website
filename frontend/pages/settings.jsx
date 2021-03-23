@@ -11,16 +11,30 @@ import {
   DownCircleOutlined,
   EditOutlined,
 } from '@ant-design/icons';
-import { Button, Row, Card, Modal, Tabs, Form, Alert, notification, Space, Input } from 'antd';
+import {
+  Button,
+  Row,
+  Card,
+  Modal,
+  Tabs,
+  Form,
+  Alert,
+  notification,
+  Space,
+  Input,
+  Typography,
+} from 'antd';
 import { useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
 import { useAuth } from '../services/auth';
 import { createRequest } from '../actions/request';
 import { deleteUser } from '../actions/user';
+import AccessDenied from '../components/AccessDenied';
+import ReportButton from '../components/ReportButton';
 
 const settingsPage = () => {
   const [session, loading] = useSession();
-
+  const { Text } = Typography;
   if (session) {
     const { user } = session;
 
@@ -60,7 +74,7 @@ const settingsPage = () => {
 
     const feedback = (
       <h3>
-        <MailOutlined /> Give us some feedback!
+        <MailOutlined /> Inbox
       </h3>
     );
 
@@ -109,7 +123,10 @@ const settingsPage = () => {
 
     const [hasError, setHasError] = useState(false);
     const [form] = Form.useForm();
-
+    const [hasVerifyError, setHasVerifyError] = useState(false);
+    const [VerifyForm] = Form.useForm();
+    const [showVerifyTab, setShowVerifyTab] = useState(user.verified);
+    console.log(showVerifyTab);
     const onBugReport = async (values) => {
       const { report } = values;
       try {
@@ -122,6 +139,22 @@ const settingsPage = () => {
         form.resetFields();
       } catch (err) {
         setHasError(true);
+      }
+    };
+
+    const onVerifyRequest = async (values) => {
+      const { verifyRequest } = values;
+      try {
+        const response = await createRequest('verify', verifyRequest);
+        notification.open({
+          message: 'Request submitted, hope you get verified soon!',
+          duration: 3,
+          icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+        });
+        setHasVerifyError(false);
+        VerifyForm.resetFields();
+      } catch (err) {
+        setHasVerifyError(true);
       }
     };
 
@@ -172,7 +205,7 @@ const settingsPage = () => {
               </TabPane>
               <TabPane key="2" tab="Contact us">
                 <Card className="settingCard" title={bugReport}>
-                  <Form form={form} name="Update my info" onFinish={onBugReport}>
+                  <Form form={form} name="Send a bug report" onFinish={onBugReport}>
                     <Space direction="vertical" size="middle">
                       {hasError && (
                         <Alert
@@ -195,14 +228,40 @@ const settingsPage = () => {
                     </Space>
                   </Form>
                 </Card>
-                <Card className="settingCard" title={verifyMe}>
-                  Verify me
-                </Card>
+                {(user.verified && user.role === 'instructor') || user.role === 'client' ? null : (
+                  <Card className="settingCard" title={verifyMe}>
+                    <Form form={VerifyForm} name="Update my verify" onFinish={onVerifyRequest}>
+                      <Space direction="vertical" size="middle">
+                        {hasVerifyError && (
+                          <Alert
+                            type="error"
+                            message="something went wrong, please try again"
+                            banner
+                          />
+                        )}
+                        <h3>
+                          Why should we verify you <DownCircleOutlined />
+                        </h3>
+                        <Form.Item name="verifyRequest">
+                          <Input.TextArea allowClear showCount maxLength={150} />
+                        </Form.Item>
+                        <Form.Item>
+                          <Button type="primary" htmlType="submit">
+                            Submit verify request
+                          </Button>
+                        </Form.Item>
+                      </Space>
+                    </Form>
+                    <Text type="secondary">
+                      **If your request is not excepted in 30 days. You are can to try again
+                    </Text>
+                  </Card>
+                )}
                 <Card className="settingCard" title={UserReport}>
                   Report something
                 </Card>
                 <Card className="settingCard" title={feedback}>
-                  suggest something!
+                  check your inbox
                 </Card>
               </TabPane>
             </Tabs>
@@ -211,7 +270,7 @@ const settingsPage = () => {
       </div>
     );
   }
-  return <p>Access Denied</p>;
+  return <AccessDenied />;
 };
 
 export default settingsPage;
