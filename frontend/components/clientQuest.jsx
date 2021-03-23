@@ -86,7 +86,7 @@ const InstQuest = ({ session }) => {
                   },
                 ]}
               >
-                <InputNumber />
+                <InputNumber defaultValue={user.weight ? user.weight : null} />
               </Form.Item>
               <Form.Item
                 label="What is your height? (cm)"
@@ -99,10 +99,10 @@ const InstQuest = ({ session }) => {
                   },
                 ]}
               >
-                <InputNumber />
+                <InputNumber defaultValue={user.height ? user.height : null} />
               </Form.Item>
               <Form.Item label="What is your Fitness Level?" name="fitnessLevel">
-                <Select allowClear>
+                <Select allowClear defaultValue={user.fitnessLevel ? user.fitnessLevel : null}>
                   <Option value="beginner">Beginner</Option>
                   <Option value="intermediate">Intermediate</Option>
                   <Option value="advanced">Advanced</Option>
@@ -111,7 +111,10 @@ const InstQuest = ({ session }) => {
             </Panel>
             <Panel header={preferencesText} key="2">
               <Form.Item label="Preferred instructor's gender?" name="preferredGender">
-                <Select allowClear>
+                <Select
+                  allowClear
+                  defaultValue={user.preferredGender ? user.preferredGender : null}
+                >
                   <Option value="male">Male</Option>
                   <Option value="female">Female</Option>
                   <Option value="any">Any</Option>
@@ -134,12 +137,16 @@ const InstQuest = ({ session }) => {
                   },
                 ]}
               >
-                <InputNumber />
+                <InputNumber defaultValue={user.trainingDuration ? user.trainingDuration : null} />
               </Form.Item>
             </Panel>
             <Panel header={additionalText} key="3">
               <Form.Item label="What equipment do you have?" name="trainingEquipment">
-                <Select mode="multiple" allowClear>
+                <Select
+                  mode="multiple"
+                  allowClear
+                  defaultValue={user.trainingEquipment ? user.trainingEquipment : null}
+                >
                   <Option value="dumbbells">Dumbbells</Option>
                   <Option value="barbells">Barbells</Option>
                   <Option value="resistanceBands">Resistance Bands</Option>
