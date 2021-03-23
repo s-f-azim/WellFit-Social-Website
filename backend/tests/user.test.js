@@ -331,3 +331,32 @@ it('Adding course that does not exist to the wish list does not work if logged i
     .set('Cookie', [`token=${tokens[4]}`])
     .expect(404);
 });
+
+/**
+ * @test getTrendingUsers
+ * @desc Testing querying users
+ */
+
+it('Should get top ten users in the database', async () => {
+  const response = await request(app)
+    .get('/api/users/trendingUsers')
+    .send()
+    .expect(200);
+  expect(response.body.data.length).toBeLessThanOrEqual(10); //check only max 10 users retrieved
+});
+
+it('Should get top ten users in database sorted in ascending order', async() => {
+  const response = await request(app)
+    .get('/api/users/trendingUsers')
+    .send()
+    .expect(200);
+  expect(response.body.data).toEqual(response.body.data.sort((a, b) => b -a)); //check array is ascending
+});
+
+it('Should get top ten users that are not admins', async() => {
+  const response = await request(app)
+    .get('/api/users/trendingUsers')
+    .send()
+    .expect(200);
+  expect(response.body.data.every( user => user.role !== 'admin')).toBeTruthy();
+})
