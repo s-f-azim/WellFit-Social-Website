@@ -112,7 +112,19 @@ const UserSchema = new mongoose.Schema(
     trainingEquipment: [
       {
         type: String,
-        enum: ['dumbbells', 'barbells', 'resistanceBands', 'treadmill'],
+        enum: [
+          'dumbbells',
+          'barbells',
+          'resistanceBands',
+          'treadmill',
+          'cardioMachines',
+          'kettlebells',
+          'freeWeights',
+          'battleRopes',
+          'jumpRope',
+          'mats',
+          'abWheel',
+        ],
       },
     ],
 
