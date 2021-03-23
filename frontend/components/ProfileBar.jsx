@@ -14,6 +14,7 @@ import {
 import { useEffect } from 'react';
 import { signOut } from 'next-auth/client';
 import { logout } from '../services/auth';
+import ReportButton from './ReportButton';
 
 const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
   const router = useRouter();

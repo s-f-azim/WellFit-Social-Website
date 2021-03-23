@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import User from '../../src/models/User.js';
 import Review from '../../src/models/Review.js';
 import Course from '../../src/models/Course.js';
+import Request from '../../src/models/Request.js';
 import Conversation from '../../src/models/Conversation.js';
 
 const userOneId = new mongoose.Types.ObjectId();
@@ -24,6 +25,7 @@ const userOne = {
   clientGenderPreference: 'Female',
   verified: false,
   role: 'client',
+  isBanned: 'false',
 };
 
 const userTwoId = new mongoose.Types.ObjectId();
@@ -81,19 +83,19 @@ const userFiveId = new mongoose.Types.ObjectId();
 
 const userFive = {
   _id: userFiveId,
-  email: 'test5@gmail.com',
-  password: 'password@123',
+  email: 'test5@test.com',
+  password: 'password123',
   fName: 'testUser',
-  lName: '22',
-  gender: 'Male',
-  birthday: new Date(),
-  nickname: 'Notesticles',
-  bio: 'I have many balls',
-  tags: ['Sweat'],
-  verified: false,
-  role: 'admin',
+  lName: '55',
   location: 'Europe',
+  birthday: new Date(),
+  nickname: 'RPE10single',
+  bio: 'I powerlift ur mom',
   wishlist: [courseOneId],
+  verified: false,
+  tags: ['Workout', 'Sweat'],
+  gender: 'Male',
+  role: 'admin',
 };
 
 const reviewOne = {
@@ -140,9 +142,45 @@ const conversationTwo = {
   messages: [],
 };
 
+const requestOneId = new mongoose.Types.ObjectId();
+const requestTwoId = new mongoose.Types.ObjectId();
+const requestThreeId = new mongoose.Types.ObjectId();
+const requestFourId = new mongoose.Types.ObjectId();
+
+// requests
+const requestOne = {
+  _id: requestOneId,
+  author: userOneId,
+  type: 'bug',
+  content: 'bug report #1',
+};
+
+const requestTwo = {
+  _id: requestTwoId,
+  author: userOneId,
+  type: 'verify',
+  content: 'verify req #1',
+};
+
+const requestThree = {
+  _id: requestThreeId,
+  author: userOneId,
+  type: 'message',
+  content: 'message #1',
+};
+
+const requestFour = {
+  _id: requestFourId,
+  author: userOneId,
+  recipient: userTwoId,
+  type: 'report',
+  content: 'user report #1',
+};
+
 const reviews = [reviewOne];
 const users = [userOne, userTwo, userThree, userFour, userFive];
 const courses = [courseOne, courseTwo];
+const requests = [requestOne, requestTwo, requestThree, requestFour];
 const conversations = [conversationOne, conversationTwo];
 // token
 const tokens = [];
@@ -150,6 +188,7 @@ const setupDatabase = async () => {
   await User.deleteMany();
   await Review.deleteMany();
   await Course.deleteMany();
+  await Request.deleteMany();
   await Conversation.deleteMany();
   // seed users
 
@@ -174,6 +213,12 @@ const setupDatabase = async () => {
     await review.save();
   }
   // eslint-disable-next-line no-restricted-syntax
+  for (const r of requests) {
+    const request = new Request(r);
+    // eslint-disable-next-line no-await-in-loop
+    await request.save();
+  }
+  // eslint-disable-next-line no-restricted-syntax
   for (const conv of conversations) {
     const newConv = new Conversation(conv);
     // eslint-disable-next-line no-await-in-loop
@@ -185,11 +230,17 @@ export {
   userOne,
   userTwo,
   userThree,
-  userFour,
   userFive,
+  userFour,
+  requestOne,
+  requestTwo,
+  requestThree,
+  requestFour,
   courseOne,
   courseTwo,
   userOneId,
+  userTwoId,
+  userFiveId,
   tokens,
   setupDatabase,
   conversationOne,

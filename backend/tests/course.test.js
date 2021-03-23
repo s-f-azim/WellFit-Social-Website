@@ -32,6 +32,7 @@ it('Should create a new course', async () => {
   expect(course).not.toBeNull;
   expect(await Course.countDocuments()).toBe(count + 1);
 });
+
 // assert creating a new course when not logged in
 it('Should not create a new course when not logged in', async () => {
   await request(app)

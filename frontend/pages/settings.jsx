@@ -29,6 +29,8 @@ import { useSession, getSession } from 'next-auth/client';
 import { useAuth } from '../services/auth';
 import { createRequest } from '../actions/request';
 import { deleteUser } from '../actions/user';
+import AccessDenied from '../components/AccessDenied';
+import ReportButton from '../components/ReportButton';
 
 const settingsPage = () => {
   const [session, loading] = useSession();
@@ -72,7 +74,7 @@ const settingsPage = () => {
 
     const feedback = (
       <h3>
-        <MailOutlined /> Give us some feedback!
+        <MailOutlined /> Inbox
       </h3>
     );
 
@@ -203,7 +205,7 @@ const settingsPage = () => {
               </TabPane>
               <TabPane key="2" tab="Contact us">
                 <Card className="settingCard" title={bugReport}>
-                  <Form form={form} name="Update my info" onFinish={onBugReport}>
+                  <Form form={form} name="Send a bug report" onFinish={onBugReport}>
                     <Space direction="vertical" size="middle">
                       {hasError && (
                         <Alert
@@ -259,7 +261,7 @@ const settingsPage = () => {
                   Report something
                 </Card>
                 <Card className="settingCard" title={feedback}>
-                  suggest something!
+                  check your inbox
                 </Card>
               </TabPane>
             </Tabs>
@@ -268,7 +270,7 @@ const settingsPage = () => {
       </div>
     );
   }
-  return <p>Access Denied</p>;
+  return <AccessDenied />;
 };
 
 export default settingsPage;

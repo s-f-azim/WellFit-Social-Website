@@ -59,9 +59,6 @@ const paginateAndFilter = (model) =>
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
     const total = await model.countDocuments();
-    const instructorTotal = await model.countDocuments({ role: 'instructor' });
-    const clientTotal = await model.countDocuments({ role: 'client' });
-    const adminTotal = await model.countDocuments({ role: 'admin' });
     query = query.skip(startIndex).limit(limit);
     const results = await query;
     const pagination = { total };
@@ -72,9 +69,6 @@ const paginateAndFilter = (model) =>
       pagination.prev = { page: page - 1, limit };
     }
     pagination.total = total;
-    pagination.instructorTotal = instructorTotal;
-    pagination.clientTotal = clientTotal;
-    pagination.adminTotal = adminTotal;
     res.results = results;
     res.pagination = pagination;
     next();

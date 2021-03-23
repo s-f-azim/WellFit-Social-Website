@@ -10,13 +10,12 @@ const LandingText = () => (
       verticalAlign: 'middle',
     }}
   >
-    <p className="landing-text">
-      {' '}
+    <Row className="landing-text">
       Connect with health enthusiasts.
       <br />
       <br />
       Enjoy a better lifestyle.
-    </p>
+    </Row>
   </div>
 );
 

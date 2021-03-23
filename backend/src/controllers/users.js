@@ -1,8 +1,8 @@
 /* eslint-disable no-use-before-define */
+import sharp from 'sharp';
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
 import Course from '../models/Course.js';
-import sharp from 'sharp';
 
 /**
  * @async
@@ -66,7 +66,11 @@ const createUser = asyncHandler(async (req, res) => {
  */
 const loginUser = asyncHandler(async (req, res) => {
   const user = await User.checkCredentials(req.body);
-  sendTokenResponse(user, 200, res);
+  if (user.isBanned) {
+    sendTokenResponse(user, 401, res);
+  } else {
+    sendTokenResponse(user, 200, res);
+  }
 });
 
 /**
@@ -77,6 +81,23 @@ const loginUser = asyncHandler(async (req, res) => {
  */
 const getProfile = asyncHandler(async (req, res) => {
   res.status(200).send({ success: true, data: req.user });
+});
+
+/**
+ * @async
+ * @desc get a user by providing email
+ * @route GET /api/users/email/:email
+ * @access private
+ */
+const getUserIdByEmail = asyncHandler(async (req, res) => {
+  User.findOne({ email: req.params.email }, '_id').exec((err, user) => {
+    if (!user)
+      return res.status(400).send({
+        success: false,
+        error: `User ${req.params.email} does not exist`,
+      });
+    return res.status(200).send({ success: true, data: user._id });
+  });
 });
 
 /**
@@ -128,18 +149,13 @@ const followUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  // const page = parseInt(req.query.page || '1', 10); //Page number needs to start with 1
-  const limit = 5;
   const followings = await User.findById(req.user._id).populate({
     path: 'following',
     select: ['fName', 'lName'],
   });
-  const total = followings.following.length;
-  // const results = followings.following.slice((page - 1) * limit, limit * page); //  (startIndex, lastIndex)
   res.status(200).send({
     success: true,
     data: followings.following,
-    totalPages: Math.ceil(total / limit),
   });
 });
 
@@ -150,13 +166,10 @@ const getFollowing = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
-  // const page = parseInt(req.query.page || '1', 10); //  Page number needs to start with 1
-  // const limit = 5;
   const followers = await User.findById(req.user._id).populate({
     path: 'follower',
     select: ['fName', 'lName'],
   });
-  // const results = followers.follower.slice((page - 1) * limit, limit * page); //  (startIndex, lastIndex)
   res.status(200).send({ success: true, data: followers.follower });
 });
 
@@ -177,12 +190,24 @@ const logoutUser = asyncHandler(async (req, res) => {
 /**
  *
  * @async
- * @desc delete user from the db
+ * @desc delete current user from the db
  * @route DELETE /api/users/delete
  *
  */
 const deleteUser = asyncHandler(async (req, res) => {
   await User.findByIdAndDelete(req.user._id);
+  res.status(200).send({ success: true });
+});
+
+/**
+ *
+ * @async
+ * @desc delete user with id from the db
+ * @route DELETE /api/users/delete/:id
+ *
+ */
+const deleteSpecificUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndDelete(req.params.id);
   res.status(200).send({ success: true });
 });
 
@@ -341,6 +366,21 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
   res.status(200).send({ success: true, data: users });
 });
 
+/**
+ * @desc ban a user
+ * @route PATCH api/users/ban/:id
+ * @access private
+ */
+const banUser = asyncHandler(async (req, res) => {
+  const user = await User.findByIdAndUpdate(
+    req.params.id,
+    { isBanned: true },
+    { new: true }
+  );
+  await user.save();
+  sendTokenResponse(user, 200, res);
+});
+
 export {
   getUsers,
   getUsersWithinRadius,
@@ -348,9 +388,11 @@ export {
   loginUser,
   getProfile,
   getUser,
+  getUserIdByEmail,
   logoutUser,
   updateUser,
   deleteUser,
+  deleteSpecificUser,
   getWishList,
   addToWishList,
   googleOauth,
@@ -362,4 +404,5 @@ export {
   followUser,
   getFollowing,
   getFollower,
+  banUser,
 };

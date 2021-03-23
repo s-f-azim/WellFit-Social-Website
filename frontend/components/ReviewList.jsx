@@ -55,7 +55,7 @@ ReviewList.Item = ({ review, showMenu, onDelete }) => {
           </>
         }
       >
-        <List.Item.Meta title={review.reviewer.name} />
+        <List.Item.Meta title={`${review.reviewer.fName} ${review.reviewer.lName}`} />
         {review.comment}
       </List.Item>
     </>

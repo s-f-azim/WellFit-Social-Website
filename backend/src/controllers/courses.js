@@ -115,7 +115,7 @@ const deleteCourse = asyncHandler(async (req, res) => {
  * @access private
  */
 const uploadImages = asyncHandler(async (req, res) => {
-  let formattedImages = [];
+  const formattedImages = [];
   req.files.forEach((file) => formattedImages.push(file.buffer));
   /* eslint-disable no-return-await */
   formattedImages.map(

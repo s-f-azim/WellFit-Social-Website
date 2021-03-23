@@ -6,8 +6,10 @@ import {
   loginUser,
   logoutUser,
   getUser,
+  getUserIdByEmail,
   updateUser,
   deleteUser,
+  deleteSpecificUser,
   getWishList,
   addToWishList,
   googleOauth,
@@ -20,14 +22,15 @@ import {
   followUser,
   getFollowing,
   getFollower,
+  banUser,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
 import User from '../models/User.js';
+import role from '../middleware/role.js';
 import upload from '../middleware/multer.js';
 
 const router = new express.Router();
-
 
 router
   .route('/radius/:zipcode/:distance')
@@ -41,6 +44,14 @@ router.route('/logout').get(logoutUser);
 router
   .route('/editProfile')
   .patch(passport.authenticate('jwt', { session: false }), updateUser);
+
+router
+  .route('/ban/:id')
+  .patch(
+    passport.authenticate('jwt', { session: false }),
+    role('admin'),
+    banUser
+  );
 router
   .route('/avatar')
   .post(
@@ -55,6 +66,10 @@ router
 router
   .route('/me')
   .get(passport.authenticate('jwt', { session: false }), getProfile);
+
+router
+  .route('/email/:email')
+  .get(passport.authenticate('jwt', { session: false }), getUserIdByEmail);
 
 router.route('/oauth/google').get(
   passport.authenticate('google', {
@@ -88,6 +103,10 @@ router.route('/oauth/facebook').get(
 router
   .route('/delete')
   .delete(passport.authenticate('jwt', { session: false }), deleteUser);
+
+router
+  .route('/delete/:id')
+  .delete(passport.authenticate('jwt', { session: false }), deleteSpecificUser);
 
 router
   .route('/oauth/facebook/redirect')

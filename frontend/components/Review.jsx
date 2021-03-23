@@ -1,17 +1,18 @@
 /* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
-import { useSession, getSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 import ReviewList from './ReviewList';
 import ReviewInput from './ReviewInput';
 
 export default function Review({ reviewUser }) {
   const [session] = useSession();
-  const user = session.user;
+  let user;
   const [review, setReview] = useState();
   let { reviews } = reviewUser;
 
   useEffect(() => {
-    if (user) {
+    if (session && session.user) {
+      user = session.user;
       setReview(reviews.find(({ reviewer }) => reviewer._id === user._id));
       reviews = reviews.filter(({ reviewer }) => reviewer._id !== user._id);
     }

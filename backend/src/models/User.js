@@ -269,6 +269,10 @@ const UserSchema = new mongoose.Schema(
   
     following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
     follower: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+    isBanned: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

@@ -8,6 +8,15 @@ const createRequest = async (type, content) => {
   return res.data.data.request;
 };
 
+const createReport = async (type, content, recipientID) => {
+  const res = await api.post(`/requests/create`, {
+    type,
+    content,
+    recipientID,
+  });
+  return res.data.data.request;
+};
+
 const getRequests = async () => {
   const res = await api.get(`/requests`);
   return res.data.data;
@@ -21,4 +30,4 @@ const acceptVerify = async (id) => {
   api.patch(`/requests/verify/${id}`);
 };
 
-export { createRequest, getRequests, deleteRequest, acceptVerify };
+export { createRequest, createReport, getRequests, deleteRequest, acceptVerify };

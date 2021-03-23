@@ -5,15 +5,24 @@ const updateUser = (values) =>
     ...values,
   });
 
+const getUserIdByEmail = async (email) => {
+  const res = await api.get(`/users/email/${email}`);
+  return res.data.data;
+};
+
 const deleteUser = () => api.delete('/users/delete');
+
+const deleteSpecificUser = (userId) => api.delete(`/users/delete/${userId}`);
 
 const getUsers = () => api.get('/users');
 
-const getAdmins = () => api.get('users?role=admin');
+const getUsersWithLimit = (limit) => api.get(`/users?limit=${limit}`);
 
-const getClients = () => api.get('users?role=client');
+const getAdmins = () => api.get(`users?role=admin&&limit=${Number.MAX_SAFE_INTEGER}`);
 
-const getInstructors = () => api.get('users?role=instructor');
+const getClients = () => api.get(`users?role=client&&limit=${Number.MAX_SAFE_INTEGER}`);
+
+const getInstructors = () => api.get(`users?role=instructor&&limit=${Number.MAX_SAFE_INTEGER}`);
 
 const getSuggestedInstructors = () => api.get('users/profile');
 
@@ -23,10 +32,14 @@ const getFollowingList = () => api.get('/users/getFollowing');
 
 const getFollowerList = (pageNum) => api.get(`/users/getFollower/?page=${pageNum}`);
 
+const banUser = (userId) => api.patch(`/users/ban/${userId}`, {});
+
 export {
   updateUser as default,
   deleteUser,
+  deleteSpecificUser,
   getUsers,
+  getUsersWithLimit,
   getAdmins,
   getClients,
   getInstructors,
@@ -34,4 +47,6 @@ export {
   getFollowingList,
   getFollowerList,
   getSuggestedInstructors,
+  banUser,
+  getUserIdByEmail,
 };
