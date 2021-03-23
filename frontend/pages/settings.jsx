@@ -134,7 +134,7 @@ const settingsPage = () => {
         notification.open({
           message: 'Report submitted, thanks for helping us!',
           duration: 3,
-          icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+          icon: <CheckOutlined />,
         });
         form.resetFields();
       } catch (err) {
@@ -147,9 +147,9 @@ const settingsPage = () => {
       try {
         const response = await createRequest('verify', verifyRequest);
         notification.open({
-          message: 'Request submitted, hope you get verified soon!',
+          message: 'Verify request submitted, make sure to check your profile regularly.',
           duration: 3,
-          icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+          icon: <CheckOutlined />,
         });
         setHasVerifyError(false);
         VerifyForm.resetFields();
@@ -253,13 +253,11 @@ const settingsPage = () => {
                       </Space>
                     </Form>
                     <Text type="secondary">
-                      **If your request is not excepted in 30 days. You are can to try again
+                      *If your request is not accepted within 30 days, please request your profile
+                      verification again.
                     </Text>
                   </Card>
                 )}
-                <Card className="settingCard" title={UserReport}>
-                  Report something
-                </Card>
                 <Card className="settingCard" title={feedback}>
                   check your inbox
                 </Card>

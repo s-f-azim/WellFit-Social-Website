@@ -56,7 +56,7 @@ const deleteRequest = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc accept a verify request
- * @route PACTH /api/verify/:id
+ * @route PATCH /api/verify/:id
  * @access private
  */
 const verifyUser = asyncHandler(async (req, res) => {
