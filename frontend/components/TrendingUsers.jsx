@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Card, List, Avatar, Descriptions } from 'antd';
+import { Card, List, Avatar, Descriptions, Icon } from 'antd';
 import { getTrendingUsers } from '../actions/user.js';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, BarChartOutlined } from '@ant-design/icons';
 
 const { Item } = List;
 const { Meta } = Item;
@@ -18,7 +18,12 @@ const TrendingUsers = () => { //Card of list of trending users in db
 	let rank = 1;
 	return (
 		<Card
-			title="Trending Users" 
+			title={
+				<div style={{display: "flex", paddingBottom: 0}}>
+					<BarChartOutlined style={{fontSize: "24px", paddingRight: 4}}/>
+					<h3>Trending Users</h3> 
+				</div>
+			} 
 			style={{ width: 350}}
 			bodyStyle={{padding: 0, paddingLeft: 10, paddingRight: 0}}
 			>
