@@ -8,7 +8,7 @@ beforeEach(setupDatabase);
 
 it('Should create a post with valid data', async () => {
   const count = await Post.countDocuments();
-  const post = { content: 'test', youtubeLink: 'test' };
+  const post = { content: 'test', videoUrl: 'test' };
 
   const response = await request(app)
     .post('/api/posts')
@@ -22,7 +22,7 @@ it('Should create a post with valid data', async () => {
 
 it('Should not create a post with invalid data', async () => {
   const count = await Post.countDocuments();
-  const post = { youtubeLink: 'test' };
+  const post = { videoUrl: 'test' };
 
   await request(app)
     .post('/api/posts')
@@ -35,7 +35,7 @@ it('Should not create a post with invalid data', async () => {
 
 it('Should allow same user to create many posts', async () => {
   const count = await Post.countDocuments();
-  const post = { content: 'test', youtubeLink: 'test' };
+  const post = { content: 'test', videoUrl: 'test' };
 
   await request(app)
     .post('/api/posts')

@@ -10,7 +10,7 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please add some content'],
     },
-    youtubeLink: {
+    videoUrl: {
       type: String,
     },
   },

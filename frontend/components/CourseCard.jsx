@@ -1,18 +1,11 @@
 import { Card, Row, Col, Modal, Space, Button, notification } from 'antd';
 import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
 import Image from 'next/image';
-<<<<<<< HEAD
-import Link from 'next/link';
-import { useState } from 'react';
-
-const CourseCard = ({ content }) => {
-=======
 import { useState, useEffect } from 'react';
 import api from '../services/api';
 import ReactDOM from 'react-dom';
 
 const CourseCard = ({ content, isWish }) => {
->>>>>>> main
   // state for the modal pop up
   const [visible, setVisible] = useState(false);
   // state for showing the course card

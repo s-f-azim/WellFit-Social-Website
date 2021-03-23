@@ -12,8 +12,8 @@ const PostInput = ({ onSubmit }) => {
         <Input.TextArea autoSize={{ minRows: 2, maxRows: 4 }} maxLength={200} allowClear />
       </Form.Item>
 
-      <Form.Item name="youtubeLink">
-        <Input placeholder="Youtube URL..." />
+      <Form.Item name="videoURL">
+        <Input placeholder="Video URL..." />
       </Form.Item>
 
       <Form.Item>
