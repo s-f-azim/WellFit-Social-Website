@@ -19,6 +19,7 @@ import { useSession, getSession } from 'next-auth/client';
 import updateUser from '../actions/user';
 import InstQuest from '../components/InstQuest';
 import AccessDenied from '../components/AccessDenied';
+import ClientQuest from '../components/clientQuest';
 
 const { Option } = Select;
 
@@ -222,7 +223,11 @@ const editProfilePage = () => {
                     </Modal>
                   </>
                 </h1>
-                <InstQuest session={session} />
+                {user.role === 'client' ? (
+                  <ClientQuest session={session} />
+                ) : (
+                  <InstQuest session={session} />
+                )}
               </TabPane>
 
               <TabPane tab="Credentials" key="3">
