@@ -7,6 +7,11 @@ const getPostsByAuthor = async (id) => {
   return res.data.data;
 };
 
+const getFeedPosts = async () => {
+  const res = await api.get(`/posts/feed`);
+  return res.data.data;
+};
+
 const deletePost = async (id) => api.delete(`/posts/${id}`);
 
-export { createPost, getPostsByAuthor, deletePost };
+export { createPost, getPostsByAuthor, getFeedPosts, deletePost };

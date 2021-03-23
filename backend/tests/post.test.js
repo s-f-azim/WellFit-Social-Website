@@ -61,6 +61,16 @@ it('Should get posts by author', async () => {
   expect(response.body.data).not.toBeNull();
 });
 
+it('Should get feed posts', async () => {
+  const response = await request(app)
+    .get('/api/posts/feed')
+    .send()
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(200);
+
+  expect(response.body.data).not.toBeNull();
+});
+
 it('Should delete a post', async () => {
   const count = await Post.countDocuments();
 

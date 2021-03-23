@@ -42,6 +42,7 @@ const userTwo = {
   bio: 'I have many balls',
   tags: ['Sweat'],
   role: 'instructor',
+  following: [userOneId],
 };
 
 const userThreeId = new mongoose.Types.ObjectId();

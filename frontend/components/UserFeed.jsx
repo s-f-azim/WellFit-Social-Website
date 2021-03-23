@@ -5,15 +5,16 @@ import { Card } from 'antd';
 import PostInput from './PostInput';
 import PostList from './PostList';
 
-import { createPost, getPostsByAuthor, deletePost } from '../actions/post';
+import { createPost, getPostsByAuthor, getFeedPosts, deletePost } from '../actions/post';
 
-const UserFeed = ({ id, showInput, loading }) => {
-  const [session] = useSession();
+const UserFeed = ({ id }) => {
+  const [session, loading] = useSession();
   const [user, setUser] = useState();
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState([]);
 
   useEffect(async () => {
-    setPosts(await getPostsByAuthor(id));
+    setPosts(await getFeedPosts());
+    // setPosts(await getPostsByAuthor(id));
   }, []);
 
   useEffect(() => {
@@ -32,10 +33,10 @@ const UserFeed = ({ id, showInput, loading }) => {
 
   return (
     <Card>
-      {showInput && <PostInput onSubmit={handleSubmit} />}
+      <PostInput onSubmit={handleSubmit} />
       <PostList
         posts={posts}
-        loading={loading}
+        loading={loading && posts}
         renderItem={(p) => (
           <PostList.Item
             post={p}

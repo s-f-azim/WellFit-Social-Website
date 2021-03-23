@@ -25,13 +25,30 @@ const createPost = asyncHandler(async (req, res) => {
  * @access public
  */
 const getPostsByAuthor = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.authorId, 'posts')
-  .populate({
+  const user = await User.findById(req.params.authorId, 'posts').populate({
     path: 'posts',
     options: { sort: { createdAt: -1 } },
     populate: { path: 'author', select: 'fName lName' },
   });
   res.status(200).json({ success: true, data: user.posts });
+});
+
+/**
+ * @async
+ * @desc get posts of user and following users sorted by creation date
+ * @route GET /api/posts/feed
+ * @access public
+ */
+const getFeedPosts = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id, 'following');
+
+  const posts = await Post.find({
+    $or: [{ author: req.user._id }, { author: { $in: user.following } }],
+  })
+    .populate('author', 'fName lName')
+    .sort('-createdAt');
+
+  res.status(200).json({ success: true, data: posts });
 });
 
 /**
@@ -50,4 +67,4 @@ const deletePost = asyncHandler(async (req, res) => {
   );
 });
 
-export { createPost, getPostsByAuthor, deletePost };
+export { createPost, getPostsByAuthor, getFeedPosts, deletePost };
