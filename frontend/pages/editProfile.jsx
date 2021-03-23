@@ -120,7 +120,7 @@ const editProfilePage = () => {
       <div className="EditProfile">
         <Row type="flex" justify="center" align="middle">
           <Card>
-            <Tabs defaultActiveKey="1">
+            <Tabs defaultActiveKey="1" tabPosition="left">
               <TabPane tab="Basic Info" key="1">
                 <Form form={form} name="Update my info" onFinish={onFinish} scrollToFirstError>
                   <Space direction="vertical" size="middle">
