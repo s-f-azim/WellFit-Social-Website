@@ -1,6 +1,3 @@
-import { Result } from 'antd';
-
-const NotFoundPage = () => (
-  <Result status="404" title="404" subTitle="Sorry,the page you visited does not exits." />
-);
+import NotFound from '../components/404';
+const NotFoundPage = () => <NotFound />;
 export default NotFoundPage;
