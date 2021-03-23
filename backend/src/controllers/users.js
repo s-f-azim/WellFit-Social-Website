@@ -149,14 +149,14 @@ const followUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1', 10); // Page number needs to start with 1
-  const limit = 5;
   const followings = await User.findById(req.user._id).populate({
     path: 'following',
-    select: ['name'],
+    select: ['fName', 'lName'],
   });
-  const results = followings.following.slice((page - 1) * limit, limit * page); //  (startIndex, lastIndex)
-  res.status(200).send({ success: true, data: results });
+  res.status(200).send({
+    success: true,
+    data: followings.following,
+  });
 });
 
 /**
@@ -166,14 +166,11 @@ const getFollowing = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page || '1', 10); // Page number needs to start with 1
-  const limit = 5;
   const followers = await User.findById(req.user._id).populate({
     path: 'follower',
-    select: ['name'],
+    select: ['fName', 'lName'],
   });
-  const results = followers.follower.slice((page - 1) * limit, limit * page); //  (startIndex, lastIndex)
-  res.status(200).send({ success: true, data: results });
+  res.status(200).send({ success: true, data: followers.follower });
 });
 
 /**
