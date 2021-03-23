@@ -20,8 +20,12 @@ const Review = ({ getReviews, onSubmit, onDelete }) => {
   const [reviews, setReviews] = useState();
   const [hasReviewed, setHasReviewed] = useState(false);
 
-  useEffect(async () => {
-    setReviews(await getReviews());
+  useEffect(() => {
+    async function fetchData() {
+      setReviews(await getReviews());
+    }
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

@@ -4,7 +4,6 @@
 
 
 # Environment variables
-
 Add two files in the config folder named ``dev.env`` and ``test.env``, each file should have:
 
 ```.env 

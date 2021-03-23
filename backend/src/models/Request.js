@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+function isReport() {
+  return this.type === 'report';
+}
 const RequestSchema = new mongoose.Schema(
   {
     author: {
@@ -11,6 +14,11 @@ const RequestSchema = new mongoose.Schema(
       type: String,
       enum: ['verify', 'bug', 'message', 'report'],
       required: [true, 'Please select a request type'],
+    },
+    recipient: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: [isReport, 'Please enter a recipient'],
+      ref: 'User',
     },
     content: {
       type: String,

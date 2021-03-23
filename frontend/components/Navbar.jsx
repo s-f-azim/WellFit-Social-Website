@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Button, Typography, Input } from 'antd';
 import { useState } from 'react';
-import { UserOutlined, MenuOutlined, CloseOutlined } from '@ant-design/icons';
+import { UserOutlined, MenuOutlined, CloseOutlined, CheckCircleTwoTone } from '@ant-design/icons';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import ProfileBar from './ProfileBar';
@@ -39,9 +39,17 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
               </Button>
             </Link>
           </li>
+          <li className="option" onClick={closeMobileMenu}>
+            <Link href="/followPage">
+              <Button type="link" className="menuButton">
+                FollowPage
+              </Button>
+            </Link>
+          </li>
           <li className="option">
             <Button type="link" className="menuButton" onClick={onUserNameClick}>
               <UserOutlined /> {session.user.fName}
+              {session.user.verified && <CheckCircleTwoTone twoToneColor="#096dd9" />}
             </Button>
           </li>
         </ul>
@@ -110,7 +118,7 @@ const Navbar = () => {
     <>
       <nav className="topheader" style={{ backgroundColor: 'white' }}>
         <Title level={1} className="logo-text">
-          <a href="/"> QuickFit </a>
+          <a href="/"> WellFit </a>
         </Title>
         {!session ? (
           <LoggedOutMenu />

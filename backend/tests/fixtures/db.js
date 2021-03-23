@@ -5,6 +5,7 @@ import Course from '../../src/models/Course.js';
 import Review from '../../src/models/Review.js';
 import UserReview from '../../src/models/UserReview.js';
 import CourseReview from '../../src/models/CourseReview.js';
+import Request from '../../src/models/Request.js';
 import Conversation from '../../src/models/Conversation.js';
 import Post from '../../src/models/Post.js';
 
@@ -24,8 +25,9 @@ const userOne = {
   bio: 'I have no balls',
   tags: ['Sweat', 'Cardio'],
   clientGenderPreference: 'Female',
+  verified: false,
   role: 'client',
-  posts: [],
+  isBanned: 'false',
 };
 
 const userTwoId = new mongoose.Types.ObjectId();
@@ -41,6 +43,7 @@ const userTwo = {
   nickname: 'Notesticles',
   bio: 'I have many balls',
   tags: ['Sweat'],
+  verified: false,
   role: 'instructor',
   following: [userOneId],
 };
@@ -58,6 +61,7 @@ const userThree = {
   nickname: 'FitnessGuru',
   bio: 'I love fitness',
   tags: ['Sweat'],
+  verified: false,
   role: 'instructor',
 };
 
@@ -74,6 +78,7 @@ const userFour = {
   nickname: 'FitnessGeeza',
   bio: 'I dont mind fitness',
   tags: ['Workout', 'Sweat'],
+  verified: false,
   role: 'instructor',
 };
 
@@ -81,14 +86,19 @@ const userFiveId = new mongoose.Types.ObjectId();
 
 const userFive = {
   _id: userFiveId,
-  email: 'test5@gmail.com',
-  password: '12345678',
+  email: 'test5@test.com',
+  password: 'password123',
   fName: 'testUser',
   lName: '55',
-  gender: 'Male',
   location: 'Europe',
   birthday: new Date(),
+  nickname: 'RPE10single',
+  bio: 'I powerlift ur mom',
   wishlist: [courseOneId],
+  verified: false,
+  tags: ['Workout', 'Sweat'],
+  gender: 'Male',
+  role: 'admin',
 };
 
 // create courses
@@ -173,9 +183,45 @@ const postTwo = {
 
 // create fixtures
 
+const requestOneId = new mongoose.Types.ObjectId();
+const requestTwoId = new mongoose.Types.ObjectId();
+const requestThreeId = new mongoose.Types.ObjectId();
+const requestFourId = new mongoose.Types.ObjectId();
+
+// requests
+const requestOne = {
+  _id: requestOneId,
+  author: userOneId,
+  type: 'bug',
+  content: 'bug report #1',
+};
+
+const requestTwo = {
+  _id: requestTwoId,
+  author: userOneId,
+  type: 'verify',
+  content: 'verify req #1',
+};
+
+const requestThree = {
+  _id: requestThreeId,
+  author: userOneId,
+  type: 'message',
+  content: 'message #1',
+};
+
+const requestFour = {
+  _id: requestFourId,
+  author: userOneId,
+  recipient: userTwoId,
+  type: 'report',
+  content: 'user report #1',
+};
+
 const reviews = [userReviewOne, courseReviewOne];
 const users = [userOne, userTwo, userThree, userFour, userFive];
 const courses = [courseOne, courseTwo];
+const requests = [requestOne, requestTwo, requestThree, requestFour];
 const conversations = [conversationOne, conversationTwo];
 const posts = [postOne, postTwo];
 
@@ -186,6 +232,7 @@ const setupDatabase = async () => {
   await User.deleteMany();
   await Review.deleteMany();
   await Course.deleteMany();
+  await Request.deleteMany();
   await Conversation.deleteMany();
   await Post.deleteMany();
 
@@ -211,6 +258,12 @@ const setupDatabase = async () => {
   await Post.create(posts);
 
   // eslint-disable-next-line no-restricted-syntax
+  for (const r of requests) {
+    const request = new Request(r);
+    // eslint-disable-next-line no-await-in-loop
+    await request.save();
+  }
+  // eslint-disable-next-line no-restricted-syntax
   for (const conv of conversations) {
     const newConv = new Conversation(conv);
     // eslint-disable-next-line no-await-in-loop
@@ -223,11 +276,17 @@ export {
   userOne,
   userTwo,
   userThree,
-  userFour,
   userFive,
+  userFour,
+  requestOne,
+  requestTwo,
+  requestThree,
+  requestFour,
   courseOne,
   courseTwo,
   userOneId,
+  userTwoId,
+  userFiveId,
   tokens,
   conversationOne,
   conversationTwo,

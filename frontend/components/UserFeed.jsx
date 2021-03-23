@@ -5,16 +5,18 @@ import { Card } from 'antd';
 import PostInput from './PostInput';
 import PostList from './PostList';
 
-import { createPost, getPostsByAuthor, getFeedPosts, deletePost } from '../actions/post';
+import { createPost, getFeedPosts, deletePost } from '../actions/post';
 
-const UserFeed = ({ id }) => {
+const UserFeed = () => {
   const [session, loading] = useSession();
   const [user, setUser] = useState();
   const [posts, setPosts] = useState([]);
 
-  useEffect(async () => {
-    setPosts(await getFeedPosts());
-    // setPosts(await getPostsByAuthor(id));
+  useEffect(() => {
+    async function fetchData() {
+      setPosts(await getFeedPosts());
+    }
+    fetchData();
   }, []);
 
   useEffect(() => {

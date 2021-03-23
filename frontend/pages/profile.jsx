@@ -1,9 +1,10 @@
 import { Space, Button, Row, Col } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
-import Suggestions from '../components/SuggestedInstructors';
-import WishList from '../components/WishList';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
+import Suggestions from '../components/SuggestedInstructors';
+import AccessDenied from '../components/AccessDenied';
+import WishList from '../components/WishList';
 
 const Profile = () => {
   const [session, loading] = useSession();
@@ -93,7 +94,7 @@ const Profile = () => {
                   height={300}
                 />
               </Col>
-              <Col span={1}></Col>
+              <Col span={1} />
               <Col className="profile-info">
                 <p style={{ fontSize: '3rem' }}>{session.user.name}</p>
                 <Space direction="horizontal" size="large" style={{ fontSize: '1.5rem' }}>
@@ -107,7 +108,7 @@ const Profile = () => {
         </Row>
 
         <Row>
-          <Col style={{ minHeight: '3rem' }}></Col>
+          <Col style={{ minHeight: '3rem' }} />
         </Row>
 
         <Row type="flex" justify="center">
@@ -115,7 +116,7 @@ const Profile = () => {
         </Row>
 
         <Row>
-          <Col style={{ minHeight: '3rem' }}></Col>
+          <Col style={{ minHeight: '3rem' }} />
         </Row>
         <Row type="flex" justify="center" align="middle">
           <div style={{ width: '83rem' }}>
@@ -140,14 +141,14 @@ const Profile = () => {
             <br />
             <br />
             <Row type="flex" justify="center" align="middle">
-              <div id="content"></div>
+              <div id="content" style={{ minWidth: '100%' }} />
             </Row>
           </div>
         </Row>
       </>
     );
   }
-  return <p>Access Denied</p>;
+  return <AccessDenied />;
 };
 export async function getServerSideProps(context) {
   const session = await getSession(context);
