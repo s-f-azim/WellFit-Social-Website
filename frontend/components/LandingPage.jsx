@@ -50,7 +50,7 @@ const LandingPage = () => (
         
         
       </Row>
-      <Row style={{ paddingTop: '1rem' }}>
+      <Row style={{ paddingTop: '2rem' }}>
         <Col lg={{ span: 8 }} span={0} />
         <Col lg={{ span: 8 }} span={24} style={{ fontSize: '1.5rem' }}>
           <Row

@@ -13,7 +13,6 @@ const TrendingUsers = () => { //Card of list of trending users in db
 	useEffect( async () => {
 		const response = await getTrendingUsers();
 		setData(response.data.data);
-		console.log("Done!");
 	});
 
 	let rank = 1;
@@ -21,7 +20,7 @@ const TrendingUsers = () => { //Card of list of trending users in db
 		<Card
 			title="Trending Users" 
 			style={{ width: 350}}
-			bodyStyle={{padding: 0, paddingLeft: 10, paddingRight: 10}}
+			bodyStyle={{padding: 0, paddingLeft: 10, paddingRight: 0}}
 			>
 				<List
 					style={{marginTop: 0, overflow: "auto", height: "auto", maxHeight: 400}}
