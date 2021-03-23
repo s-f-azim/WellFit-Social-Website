@@ -15,7 +15,24 @@ const getCourse = asyncHandler(async (req, res) => {
     data: course,
   });
 });
+const getCoursesFiltered = asyncHandler(async (req, res) => {
+  const s = req.query.title;
+  const regex = new RegExp(s, 'i');
+  const instr = await Course.find({
+    ...(req.query.title ? { title: { $regex: regex } } : {}),
+    ...(req.query.max ? { price: { $lte: req.query.max } } : {}),
+    ...(req.query.tags ? { tags: { $all: req.query.tags.split(',') } } : {}),
+    ...(req.query.equipment
+      ? { trainingEquipment: { $all: req.query.equipment.split(',') } }
+      : {}),
+  });
 
+  res.status(200).send({
+    success: true,
+    count: instr.length,
+    data: instr,
+  });
+});
 /**
  * @async
  * @desc get course creators by ID of the course
@@ -152,6 +169,7 @@ export {
   updateCourse,
   createCourse,
   getCoursesWithinRadius,
+  getCoursesFiltered,
   deleteCourse,
   uploadImages,
   deleteImages,

@@ -3,6 +3,7 @@ import {
   createCourse,
   updateCourse,
   getCoursesWithinRadius,
+  getCoursesFiltered,
   getCourses,
   deleteCourse,
   uploadImages,
@@ -17,8 +18,7 @@ import upload from '../middleware/multer.js';
 
 const router = new express.Router();
 
-router.route('/').get(paginate(Course), getCourses);
-
+router.route('/').get(getCoursesFiltered);
 
 router.route('/:id/creators').get(getCourseCreators);
 

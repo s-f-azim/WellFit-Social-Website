@@ -7,4 +7,7 @@ const createCourse = async (values) => {
   return res.data;
 };
 
-export { createCourse as default };
+const getCourses = (title, tags, etags) =>
+  api.get(`courses?title=${title}&&tags=${tags.join(',')}&&equipment=${etags.join(',')}`);
+
+export { createCourse as default, getCourses };

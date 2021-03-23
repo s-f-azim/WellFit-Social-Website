@@ -274,6 +274,48 @@ const instagramOauth = asyncHandler(async (req, res) => {
   sendTokenResponseOauth(req.user, 200, res);
 });
 
+const getInstructors = asyncHandler(async (req, res) => {
+  const getAge = (birthday) =>
+    (new Date() - birthday) / 1000 / 60 / 60 / 24 / 365;
+  const s = req.query.q;
+  const regex = new RegExp(s, 'i');
+  let instr = await User.find({
+    role: 'instructor',
+    ...(req.query.q ? { screenname: { $regex: regex } } : {}),
+    ...(req.query.gender ? { gender: req.query.gender } : {}),
+    ...(req.query.tags ? { tags: { $all: req.query.tags.split(',') } } : {}),
+  });
+
+  if (req.query.age) {
+    if (parseInt(req.query.age, 10) !== 0) {
+      if (parseInt(req.query.age, 10) >= 62) {
+        instr = instr.filter((inst) => {
+          if (inst.age) {
+            return inst.age >= 62;
+          }
+          return true;
+        });
+      } else {
+        instr = instr.filter((inst) => {
+          if (inst.birthday) {
+            console.log(`${inst.screenname} ${getAge(inst.birthday)}`);
+            return (
+              getAge(inst.birthday) >= parseInt(req.query.age, 10) - 5 &&
+              getAge(inst.birthday) <= parseInt(req.query.age, 10) + 5
+            );
+          }
+          return false;
+        });
+      }
+    }
+  }
+
+  res.status(200).send({
+    success: true,
+    count: instr.length,
+    data: instr,
+  });
+});
 /**
  * @async
  * @desc upload images
@@ -401,6 +443,7 @@ export {
   googleOauth,
   facebookOauth,
   instagramOauth,
+  getInstructors,
   uploadImages,
   deleteImages,
   getSuggestedInstructors,
