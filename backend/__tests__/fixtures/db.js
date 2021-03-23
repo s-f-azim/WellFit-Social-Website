@@ -23,6 +23,7 @@ const userOne = {
   reviews: [reviewOneId],
   tags: ['Sweat', 'Cardio'],
   clientGenderPreference: 'Female',
+  verified: false,
   role: 'client',
   isBanned: 'false',
 };
@@ -40,6 +41,7 @@ const userTwo = {
   nickname: 'Notesticles',
   bio: 'I have many balls',
   tags: ['Sweat'],
+  verified: false,
   role: 'instructor',
 };
 
@@ -56,6 +58,7 @@ const userThree = {
   nickname: 'FitnessGuru',
   bio: 'I love fitness',
   tags: ['Sweat'],
+  verified: false,
   role: 'instructor',
 };
 
@@ -72,6 +75,7 @@ const userFour = {
   nickname: 'FitnessGeeza',
   bio: 'I dont mind fitness',
   tags: ['Workout', 'Sweat'],
+  verified: false,
   role: 'instructor',
 };
 
@@ -88,6 +92,7 @@ const userFive = {
   nickname: 'RPE10single',
   bio: 'I powerlift ur mom',
   wishlist: [courseOneId],
+  verified: false,
   tags: ['Workout', 'Sweat'],
   gender: 'Male',
   role: 'admin',
@@ -233,11 +238,11 @@ export {
   requestFour,
   courseOne,
   courseTwo,
-  setupDatabase,
   userOneId,
   userTwoId,
   userFiveId,
   tokens,
+  setupDatabase,
   conversationOne,
   conversationTwo,
 };
