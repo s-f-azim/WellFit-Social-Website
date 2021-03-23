@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { List, Button, Popconfirm } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import ReactPlayer from 'react-player/youtube';
+import VideoPlayer from './VideoPlayer';
 
 const PostList = ({ posts, renderItem, loading }) => (
   <List
@@ -22,9 +22,8 @@ PostList.Item = ({ post, onDelete }) => {
 
   return (
     <List.Item key={post._id} actions={[onDelete && <DeleteButton id={post._id} />]}>
-      <List.Item.Meta title={`${post.author.fName} ${post.author.lName}`} />
-      {post.content}
-      {post.videoUrl && ReactPlayer.canPlay(post.videoUrl) && <ReactPlayer url={post.videoUrl} controls />}
+      <List.Item.Meta title={`${post.author.fName} ${post.author.lName}`} description={post.content}/>
+      {post.videoUrl && <VideoPlayer url={post.videoUrl} />}
     </List.Item>
   );
 };

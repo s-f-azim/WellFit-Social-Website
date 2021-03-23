@@ -25,8 +25,10 @@ const createPost = asyncHandler(async (req, res) => {
  * @access public
  */
 const getPostsByAuthor = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.authorId, 'posts').populate({
+  const user = await User.findById(req.params.authorId, 'posts')
+  .populate({
     path: 'posts',
+    options: { sort: { createdAt: -1 } },
     populate: { path: 'author', select: 'fName lName' },
   });
   res.status(200).json({ success: true, data: user.posts });
