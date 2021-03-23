@@ -4,7 +4,7 @@ import { Input, Row, Col, Card, Select, Radio, Slider } from 'antd';
 const { Option } = Select;
 const { Search } = Input;
 
-const InstructorFilter = (setGender, setAge, setTags, tagsOption) => (
+const InstructorFilter = ({ setGender, setAge, setTags, tagsOption }) => (
   <div id="filterrow" style={{ display: 'block', paddingTop: '2rem', width: '80%' }}>
     <Select
       defaultValue="All Genders"
