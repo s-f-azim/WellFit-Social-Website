@@ -58,14 +58,6 @@ const tags = [
   'Workout',
 ];
 
-const infoAlertText = (
-  <p>
-    Adding information on this page helps us tailor our services and allows clients to be matched
-    more efficiently, as well as letting them know who you are and how you work before initiating
-    contact. We encourage but do not require you to provide this information.
-  </p>
-);
-
 const editProfilePage = () => {
   const [session, loading] = useSession();
 
@@ -74,6 +66,21 @@ const editProfilePage = () => {
   if (session) {
     const { user } = session;
     const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+    const infoAlertText =
+      user.role === 'client' ? (
+        <p>
+          Adding information on this page helps us tailor our services and allows instructors to be
+          more suited to your needs, as well as found for you more efficiently. We encourage but do
+          not require you to provide any of this information.
+        </p>
+      ) : (
+        <p>
+          Adding information on this page helps us tailor our services and allows clients to be
+          matched more efficiently, as well as letting them know who you are and how you work before
+          initiating contact. We encourage but do not require you to provide this information.
+        </p>
+      );
 
     const showAlert = () => {
       setIsAlertVisible(true);
