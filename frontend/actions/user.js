@@ -28,6 +28,8 @@ const getSuggestedInstructors = () => api.get('users/profile');
 
 const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
 
+const getTrendingUsers = () => api.get('/users/trendingUsers');
+
 const getFollowingList = () => api.get('/users/getFollowing');
 
 const getFollowerList = (pageNum) => api.get(`/users/getFollower/?page=${pageNum}`);
@@ -49,4 +51,5 @@ export {
   getSuggestedInstructors,
   banUser,
   getUserIdByEmail,
+  getTrendingUsers,
 };

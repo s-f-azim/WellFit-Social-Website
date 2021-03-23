@@ -22,6 +22,7 @@ import {
   followUser,
   getFollowing,
   getFollower,
+  getTrendingUsers,
   banUser,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
@@ -138,8 +139,12 @@ router
   .route('/getFollower')
   .get(passport.authenticate('jwt', { session: false }), getFollower);
 
+router.route('/trendingUsers').get(getTrendingUsers);
+
 router.route('/').get(paginate(User), getUsers);
 
 router.route('/:id').get(getUser);
+
+
 
 export default router;
