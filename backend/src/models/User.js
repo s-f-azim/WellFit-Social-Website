@@ -273,6 +273,12 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: ['admin', 'instructor', 'client'],
     },
+
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+  
     following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
     follower: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
     isBanned: {

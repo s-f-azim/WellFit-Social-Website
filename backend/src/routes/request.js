@@ -3,6 +3,7 @@ import {
   createRequest,
   getRequests,
   deleteRequest,
+  verifyUser,
 } from '../controllers/requests.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -19,5 +20,9 @@ router
 router
   .route('/delete/:id')
   .delete(passport.authenticate('jwt', { session: false }), deleteRequest);
+
+router
+  .route('/verify/:id')
+  .patch(passport.authenticate('jwt', { session: false }), verifyUser);
 
 export default router;

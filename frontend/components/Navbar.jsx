@@ -7,6 +7,7 @@ import {
   CloseOutlined,
   ContactsOutlined,
   ProfileOutlined,
+  CheckCircleTwoTone,
 } from '@ant-design/icons';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
@@ -43,9 +44,17 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
               </Button>
             </Link>
           </li>
+          <li className="option" onClick={closeMobileMenu}>
+            <Link href="/followPage">
+              <Button type="link" className="menuButton">
+                FollowPage
+              </Button>
+            </Link>
+          </li>
           <li className="option">
             <Button type="link" className="menuButton" onClick={onUserNameClick}>
               <UserOutlined /> {session.user.fName}
+              {session.user.verified && <CheckCircleTwoTone twoToneColor="#096dd9" />}
             </Button>
           </li>
         </ul>
