@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { Form, InputNumber, Button, Carousel, Select, Row, Col, Card, Steps } from 'antd';
 
-import updateUser from '../../actions/user';
+import updateUser from '../../../actions/user';
 
 const { Option } = Select;
 

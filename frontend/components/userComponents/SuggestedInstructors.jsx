@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, Space } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import Animate from 'rc-animate';
-import { getSuggestedInstructors } from '../../actions/user.js';
+import { getSuggestedInstructors } from '../../actions/user';
 
 const { Meta } = Card;
 

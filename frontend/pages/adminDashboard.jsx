@@ -13,7 +13,7 @@ import {
   DislikeOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
-import { useSession, getSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 import {
   getUsers,
   getUsersWithLimit,

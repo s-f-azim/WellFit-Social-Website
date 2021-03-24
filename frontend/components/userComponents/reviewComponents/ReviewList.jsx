@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { List, Rate, Button, Menu, Dropdown, Card } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import { deleteReview } from '../actions/review';
+import { deleteReview } from '../../../actions/review';
 
 const ReviewList = ({ children }) => (
   <>

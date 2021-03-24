@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/client';
-import ReviewList from '../ReviewList';
+import ReviewList from './ReviewList';
 import ReviewInput from './ReviewInput';
 
 export default function Review({ reviewUser }) {

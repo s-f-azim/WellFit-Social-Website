@@ -14,10 +14,10 @@ import {
 import { MinusCircleOutlined, PlusOutlined, CheckOutlined } from '@ant-design/icons';
 
 import { useSession } from 'next-auth/client';
-import createCourse from '../../actions/course';
-import { getUserIdByEmail } from '../../actions/user';
+import createCourse from '../../../actions/course';
+import { getUserIdByEmail } from '../../../actions/user';
 
-import tags from '../../data/tags';
+import tags from '../../../data/tags';
 
 const { Option } = Select;
 

@@ -1,5 +1,6 @@
 import api from '../../../services/api';
-import Index from '../';
+import Index from '../..';
+
 export default Index;
 
 // check if the page was given and prerender the page using the index template
@@ -17,8 +18,6 @@ export const getStaticPaths = async () => {
   const numberOfPages = Math.ceil(total / 12);
   const paths = Array(numberOfPages)
     .fill('')
-    .map((_, index) => {
-      return { params: { page: (index + 1).toString() } };
-    });
-  return { fallback: false, paths: paths };
+    .map((_, index) => ({ params: { page: (index + 1).toString() } }));
+  return { fallback: false, paths };
 };

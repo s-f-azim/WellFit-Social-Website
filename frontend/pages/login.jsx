@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { signIn, useSession } from 'next-auth/client';
+import { signIn } from 'next-auth/client';
 import { Space, Form, Input, Alert, Button, Row, Card, notification, Modal } from 'antd';
 import {
   InstagramOutlined,

@@ -1,5 +1,5 @@
 import { WarningOutlined } from '@ant-design/icons';
-import { Result, Button, Row } from 'antd';
+import { Result } from 'antd';
 
 const subTitle = (
   <div>

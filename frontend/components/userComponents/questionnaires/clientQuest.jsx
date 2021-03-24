@@ -1,22 +1,19 @@
 import {
   Alert,
   Form,
-  Row,
   Space,
   Input,
   Select,
   Collapse,
   Button,
-  Rate,
-  Slider,
   notification,
   InputNumber,
 } from 'antd';
 
-import { CloseOutlined, PlusOutlined, PoundOutlined, CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import updateUser from '../../actions/user';
+import updateUser from '../../../actions/user';
 
 const { Option } = Select;
 

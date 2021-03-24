@@ -1,4 +1,4 @@
-import { Button, Form, Row, Card, Col, Modal, Typography, Carousel, Steps, Input } from 'antd';
+import { Button, Form, Card, Col, Modal, Typography, Carousel, Steps, Input } from 'antd';
 import Image from 'next/image';
 import { useRef, useState, useCallback } from 'react';
 
@@ -48,7 +48,7 @@ const SearchCard = ({ category }) => {
           }
           style={{ width: 450, height: 450 }}
           cover={<Image src={category.photo} height={450} width={450} objectFit="contain" />}
-        ></Card>
+        />
       </Col>
       <Modal
         title={category.name}
