@@ -1,6 +1,7 @@
 import express from 'express';
 import {
   getUsers,
+  getInstructors,
   getUsersWithinRadius,
   createUser,
   loginUser,
@@ -14,7 +15,6 @@ import {
   addToWishList,
   googleOauth,
   facebookOauth,
-  getInstructors,
   instagramOauth,
   uploadImages,
   deleteImages,

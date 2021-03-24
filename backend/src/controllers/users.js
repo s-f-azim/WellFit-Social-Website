@@ -301,10 +301,10 @@ const getInstructors = asyncHandler(async (req, res) => {
     if (parseInt(req.query.age, 10) !== 0) {
       if (parseInt(req.query.age, 10) >= 62) {
         instr = instr.filter((inst) => {
-          if (inst.age) {
-            return inst.age >= 62;
+          if (inst.birthday) {
+            return getAge(inst.birthday) >= 62;
           }
-          return true;
+          return false;
         });
       } else {
         instr = instr.filter((inst) => {
@@ -321,10 +321,12 @@ const getInstructors = asyncHandler(async (req, res) => {
   }
   /* save length and paginate according to offset and limit */
   const TotalC = instr.length;
-  instr = instr.slice(
-    parseInt(req.query.offset, 10),
-    parseInt(req.query.offset, 10) + parseInt(req.query.pageSize, 10)
-  );
+  if (req.query.pageSize && req.query.offset) {
+    instr = instr.slice(
+      parseInt(req.query.offset, 10),
+      parseInt(req.query.offset, 10) + parseInt(req.query.pageSize, 10)
+    );
+  }
   res.status(200).send({
     success: true,
     total: TotalC,
@@ -444,6 +446,7 @@ const banUser = asyncHandler(async (req, res) => {
 
 export {
   getUsers,
+  getInstructors,
   getUsersWithinRadius,
   createUser,
   loginUser,
@@ -459,7 +462,6 @@ export {
   googleOauth,
   facebookOauth,
   instagramOauth,
-  getInstructors,
   uploadImages,
   deleteImages,
   getSuggestedInstructors,
