@@ -48,6 +48,7 @@ passport.use(
     },
   ),
 );
+
 if (process.env.NODE_ENV !== 'TEST') {
   // Google oauth strategy
   passport.use(
@@ -60,7 +61,6 @@ if (process.env.NODE_ENV !== 'TEST') {
         passReqToCallback: true,
       },
       async (res, accessToken, refreshToken, profile, done) => {      	
-      	console.log(refreshToken)
 				if(res.cookies){
 					const currentUser = await User.findOne({ _id: jwtDecode(res.cookies["token"])["id"]})
 					await User.findOneAndUpdate({ _id: jwtDecode(res.cookies["token"])["id"]},{$set:{googleId: profile.id , googleAccessToken: accessToken , googleRefreshToken: refreshToken}}, function(err) {
