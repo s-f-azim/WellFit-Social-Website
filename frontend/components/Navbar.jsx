@@ -13,7 +13,6 @@ import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import ProfileBar from './ProfileBar';
 
-const { Search } = Input;
 const { Title } = Typography;
 
 const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
