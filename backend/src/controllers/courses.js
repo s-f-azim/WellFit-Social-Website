@@ -25,10 +25,21 @@ const getCoursesFiltered = asyncHandler(async (req, res) => {
     ...(req.query.equipment
       ? { trainingEquipment: { $all: req.query.equipment.split(',') } }
       : {}),
+  })
+    .skip(parseInt(req.query.offset, 10))
+    .limit(parseInt(req.query.pageSize, 10));
+  const instr2 = await Course.find({
+    ...(req.query.title ? { title: { $regex: regex } } : {}),
+    ...(req.query.max ? { price: { $lte: req.query.max } } : {}),
+    ...(req.query.tags ? { tags: { $all: req.query.tags.split(',') } } : {}),
+    ...(req.query.equipment
+      ? { trainingEquipment: { $all: req.query.equipment.split(',') } }
+      : {}),
   });
-
+  const totalC = instr2.length;
   res.status(200).send({
     success: true,
+    total: totalC,
     count: instr.length,
     data: instr,
   });

@@ -285,7 +285,6 @@ const getInstructors = asyncHandler(async (req, res) => {
     ...(req.query.gender ? { gender: req.query.gender } : {}),
     ...(req.query.tags ? { tags: { $all: req.query.tags.split(',') } } : {}),
   });
-
   if (req.query.age) {
     if (parseInt(req.query.age, 10) !== 0) {
       if (parseInt(req.query.age, 10) >= 62) {
