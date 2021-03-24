@@ -1,24 +1,24 @@
 @import './variables.scss';
-@import './404.scss';
-@import './navBar.scss';
-@import './profileBar.scss';
-@import './signup.scss';
-@import './login.scss';
-@import './profile.scss';
-@import './adminDashboard.scss';
-@import './_searchQuestions.scss';
-@import './settings.scss';
-@import './courseCard.scss';
-@import './searchCourse.scss';
-@import './questionnaire.scss';
-@import './preferences.scss';
-@import './_searchQuestions.scss';
-@import './_accessDenied.scss';
-@import './chats.scss';
-@import './searchQuestions.scss';
-@import './suggestedInstructors.scss';
-@import './wishList.scss';
-@import './editProfile.scss';
+@import './partials/404.scss';
+@import './partials/navBar.scss';
+@import './partials/profileBar.scss';
+@import './pages/signup.scss';
+@import './pages/login.scss';
+@import './pages/profile.scss';
+@import './partials/adminDashboard.scss';
+@import './partials/_searchQuestions.scss';
+@import './pages/settings.scss';
+@import './partials/courseCard.scss';
+@import './pages/searchCourse.scss';
+@import './partials/questionnaire.scss';
+@import './pages/preferences.scss';
+@import './partials/_searchQuestions.scss';
+@import './partials/_accessDenied.scss';
+@import './pages/chats.scss';
+@import './partials/searchQuestions.scss';
+@import './partials/suggestedInstructors.scss';
+@import './pages/wishList.scss';
+@import './partials/editProfile.scss';
 
 body,
 ::before,
