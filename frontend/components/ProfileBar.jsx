@@ -11,6 +11,7 @@ import {
   CloseOutlined,
   SendOutlined,
   UserOutlined,
+  HeartOutlined,
 } from '@ant-design/icons';
 import { useEffect } from 'react';
 import { signOut } from 'next-auth/client';
@@ -65,6 +66,12 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
         <SendOutlined />
         <h1>
           <Link href="/chats">Chats</Link>
+        </h1>
+      </div>
+      <div className="item">
+        <HeartOutlined />
+        <h1>
+          <Link href="/followPage">Follow</Link>
         </h1>
       </div>
       <div className="item">
