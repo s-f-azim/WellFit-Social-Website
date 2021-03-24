@@ -308,9 +308,15 @@ const getInstructors = asyncHandler(async (req, res) => {
       }
     }
   }
-
+  const TotalC = instr.length;
+  console.log(instr);
+  instr = instr.slice(
+    parseInt(req.query.offset, 10),
+    parseInt(req.query.offset, 10) + parseInt(req.query.limit, 10)
+  );
   res.status(200).send({
     success: true,
+    total: TotalC,
     count: instr.length,
     data: instr,
   });
