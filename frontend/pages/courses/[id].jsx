@@ -17,10 +17,6 @@ const course = ({ course }) => {
     return <Skeleton active />;
   }
   const [session, loading] = useSession();
-  // state to indicate whether or not the user's wish list has been fetched yet
-  const [wishListFetched, setWishListFetched] = useState(false);
-  // the courses in the user's wish list
-  const [courses, setCourses] = useState({});
 
   if (typeof window !== 'undefined' && loading) return null;
 
@@ -48,6 +44,10 @@ const course = ({ course }) => {
       });
       ReactDOM.render(<></>, document.getElementById('wishListButton'));
     }
+    // state to indicate whether or not the user's wish list has been fetched yet
+    const [wishListFetched, setWishListFetched] = useState(false);
+    // the courses in the user's wish list
+    const [courses, setCourses] = useState({});
 
     // handle the payment
     const handleClick = async (e) => {
