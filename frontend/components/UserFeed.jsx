@@ -1,11 +1,13 @@
 /* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/client';
-import { Card } from 'antd';
+import { Divider, Typography } from 'antd';
 import PostInput from './PostInput';
 import PostList from './PostList';
 
 import { createPost, getFeedPosts, deletePost } from '../actions/post';
+
+const { Title } = Typography;
 
 const UserFeed = () => {
   const [session, loading] = useSession();
@@ -34,8 +36,9 @@ const UserFeed = () => {
   };
 
   return (
-    <Card>
+    <>
       <PostInput onSubmit={handleSubmit} />
+      <Divider dashed />
       <PostList
         posts={posts}
         loading={loading && posts}
@@ -46,7 +49,7 @@ const UserFeed = () => {
           />
         )}
       />
-    </Card>
+    </>
   );
 };
 
