@@ -6,7 +6,7 @@ import '../styles/main.scss';
 import Head from 'next/head';
 import Router from 'next/router';
 import { Provider } from 'next-auth/client';
-import Layout from '../components/Layout';
+import Layout from '../components/generalComponents/Layout';
 
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();

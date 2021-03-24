@@ -22,9 +22,9 @@ import {
   getInstructors,
 } from '../actions/user';
 import { deleteRequest, getRequests, acceptVerify } from '../actions/request';
-import AccessDenied from '../components/AccessDenied';
-import BanUser from '../components/BanUser';
-import DeleteUser from '../components/DeleteUser';
+import AccessDenied from '../components/generalComponents/AccessDenied';
+import BanUser from '../components/adminComponents/BanUser';
+import DeleteUser from '../components/adminComponents/DeleteUser';
 import { banUser } from '../actions/user';
 
 const { TabPane } = Tabs;

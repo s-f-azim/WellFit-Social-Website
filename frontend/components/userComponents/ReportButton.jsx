@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { createReport } from '../actions/request';
+import { createReport } from '../../actions/request';
 
 const ReportButton = ({ RecipientID }) => {
   const reportUser = async () => {

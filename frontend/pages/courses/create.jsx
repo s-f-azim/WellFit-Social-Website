@@ -1,6 +1,6 @@
 import { Row, Col } from 'antd';
 import { getSession } from 'next-auth/client';
-import CourseForm from '../../components/CourseForm';
+import CourseForm from '../../components/userComponents/courseComponents/CourseForm';
 
 export default function Create() {
   return (

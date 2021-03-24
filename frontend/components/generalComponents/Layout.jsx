@@ -1,4 +1,4 @@
-import Navbar from './Navbar';
+import Navbar from '../userComponents/navigationComponents/Navbar';
 
 const Layout = ({ children }) => (
   <>

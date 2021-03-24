@@ -2,13 +2,14 @@ import { Row, Col, Button, Typography, Space, Divider, Rate, notification, Skele
 import { CheckOutlined } from '@ant-design/icons';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
-import api from '../../services/api';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import NotFound from '../../components/404';
 import { useSession } from 'next-auth/client';
+import NotFound from '../../components/generalComponents/404';
+import api from '../../services/api';
 import stripePromise from '../../services/stripe';
 import checkout from '../../actions/payment';
+
 const columnStyle = { width: 350, height: 'auto' };
 
 const course = ({ course }) => {
@@ -101,7 +102,7 @@ const course = ({ course }) => {
           />
         </Col>
         <Col md={6}>
-          <Space direction="vertical" wrap={true}>
+          <Space direction="vertical" wrap>
             <Typography.Title
               level={1}
               style={{ fontSize: '2.3rem', fontFamily: 'Poppins', ...columnStyle }}
@@ -168,13 +169,11 @@ export const getStaticProps = async ({ params }) => {
 // each page will be at url/courses/id
 export const getStaticPaths = async () => {
   const { data } = await api.get(`/courses?limit=50`);
-  const paths = data.data.map((course) => {
-    return {
-      params: {
-        id: course._id.toString(),
-      },
-    };
-  });
+  const paths = data.data.map((course) => ({
+    params: {
+      id: course._id.toString(),
+    },
+  }));
   return { fallback: true, paths };
 };
 

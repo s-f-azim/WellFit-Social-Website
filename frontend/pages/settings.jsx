@@ -25,12 +25,10 @@ import {
   Typography,
 } from 'antd';
 import { useState } from 'react';
-import { useSession, getSession } from 'next-auth/client';
-import { useAuth } from '../services/auth';
+import { useSession } from 'next-auth/client';
 import { createRequest } from '../actions/request';
 import { deleteUser } from '../actions/user';
-import AccessDenied from '../components/AccessDenied';
-import ReportButton from '../components/ReportButton';
+import AccessDenied from '../components/generalComponents/AccessDenied';
 
 const settingsPage = () => {
   const [session, loading] = useSession();

@@ -4,7 +4,7 @@ import { UserOutlined, SendOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useSession } from 'next-auth/client';
-import api from '../services/api';
+import api from '../../../services/api';
 
 const loadingIcon = <LoadingOutlined spin />;
 const ChatList = ({ setConversation, setReciver }) => {

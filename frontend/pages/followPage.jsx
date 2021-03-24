@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
 import { Card, Space, Button } from 'antd';
-import FollowButton from '../components/FollowButton';
-import GetFollow from '../components/GetFollow';
+import FollowButton from '../components/userComponents/FollowButton';
+import GetFollow from '../components/userComponents/GetFollow';
 import { getFollowingList, addingFollowUser, getFollowerList } from '../actions/user';
 
 export default function FollowPage() {

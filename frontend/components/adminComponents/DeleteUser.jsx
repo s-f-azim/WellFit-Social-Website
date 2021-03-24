@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Form, notification, Space, Alert, Input, Card } from 'antd';
 import { CheckOutlined, DownCircleOutlined, WarningOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { deleteSpecificUser } from '../actions/user';
+import { deleteSpecificUser } from '../../actions/user';
 
 const DeleteUser = ({ users }) => {
   const router = useRouter();

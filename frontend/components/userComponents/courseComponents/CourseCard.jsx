@@ -2,7 +2,7 @@ import { Card, Row, Col, Modal, Space, Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import api from '../services/api';
+import api from '../../../services/api';
 
 const CourseCard = ({ content, isWish, removeFromWishList }) => {
   // state for the modal pop up
@@ -21,7 +21,7 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
 
   return (
     <>
-      {/* If showState is currently false, display nothing. Once it is true, display the card*/}
+      {/* If showState is currently false, display nothing. Once it is true, display the card */}
       {showState ? (
         <div>
           <Card className="course-card" style={{ borderColor: 'black', borderRadius: '1rem' }}>
@@ -30,11 +30,11 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
                 {content.title}
               </h1>
               {/* If isWish is true, the card is in the wish list and therefore should have a
-               * delete icon so that it can be removed from the wish list.*/}
+               * delete icon so that it can be removed from the wish list. */}
               {isWish === true ? (
                 <DeleteOutlined className="delete-icon" onClick={() => removeFromWishList()} />
               ) : (
-                <div style={{ minWidth: '2rem' }}></div>
+                <div style={{ minWidth: '2rem' }} />
               )}
             </div>
 

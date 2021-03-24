@@ -1,6 +1,6 @@
 import { Row, Col, Pagination } from 'antd';
 import Router from 'next/router';
-import CourseCard from '../../components/CourseCard';
+import CourseCard from '../../components/userComponents/courseComponents/CourseCard';
 import api from '../../services/api';
 
 const Courses = ({ courses, total }) => (

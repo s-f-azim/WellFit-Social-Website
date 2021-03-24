@@ -1,10 +1,9 @@
 import { List, notification } from 'antd';
-import { CheckOutlined } from '@ant-design/icons';
-import CourseCard from './CourseCard';
-import api from '../services/api';
+import { CheckOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
-import { LoadingOutlined } from '@ant-design/icons';
 import ReactDOM from 'react-dom';
+import CourseCard from './courseComponents/CourseCard';
+import api from '../../services/api';
 
 const WishList = () => {
   // state for the wish list
@@ -56,7 +55,7 @@ const WishList = () => {
                 <List.Item className="course" id={course._id}>
                   <CourseCard
                     content={course}
-                    isWish={true}
+                    isWish
                     removeFromWishList={() => removeFromWishList(course._id)}
                   />
                 </List.Item>

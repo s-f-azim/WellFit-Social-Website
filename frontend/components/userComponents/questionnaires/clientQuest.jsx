@@ -16,7 +16,7 @@ import {
 import { CloseOutlined, PlusOutlined, PoundOutlined, CheckOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import updateUser from '../actions/user';
+import updateUser from '../../actions/user';
 
 const { Option } = Select;
 

@@ -17,9 +17,9 @@ import {
 } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
 import updateUser from '../actions/user';
-import InstQuest from '../components/InstQuest';
-import AccessDenied from '../components/AccessDenied';
-import ClientQuest from '../components/clientQuest';
+import InstQuest from '../components/userComponents/questionnaires/InstQuest';
+import AccessDenied from '../components/generalComponents/AccessDenied';
+import ClientQuest from '../components/userComponents/questionnaires/clientQuest';
 
 const { Option } = Select;
 

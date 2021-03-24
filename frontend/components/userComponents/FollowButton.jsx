@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { addingFollowUser } from '../actions/user';
+import { addingFollowUser } from '../../actions/user';
 
 const FollowButton = ({ userId }) => {
   const addFollowUser = async () => {

@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import { useSession } from 'next-auth/client';
 import { useEffect, useState } from 'react';
 import { animateScroll } from 'react-scroll';
 import io from 'socket.io-client';
-import { SOCKET_URL } from '../config';
+import { SOCKET_URL } from '../../../config';
 
 let socket;
 const layout = {
