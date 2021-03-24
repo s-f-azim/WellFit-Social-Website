@@ -6,14 +6,7 @@ const paginateAndFilter = (model) =>
   asyncHandler(async (req, res, next) => {
     let query;
     let reqQuery = { ...req.query };
-    const removeFields = [
-      'select',
-      'sort',
-      'page',
-      'limit',
-      'screenname',
-      'title',
-    ];
+    const removeFields = ['select', 'sort', 'page', 'limit', 'name'];
     removeFields.forEach((param) => delete reqQuery[param]);
     // check for geospaital search
     if (
@@ -35,25 +28,15 @@ const paginateAndFilter = (model) =>
       };
     }
     // if name is given match it with a regex
-    if (req.query.screenname) {
-      reqQuery = {
-        screenname: { $regex: req.query.screenname, $options: 'i' },
-      };
-    }
-    // if course title is given match it with a regex
-    if (req.query.title) {
-      reqQuery = {
-        title: { $regex: req.query.title, $options: 'i' },
-      };
+    if (req.query.name) {
+      reqQuery = { name: { $regex: req.query.name, $options: 'i' } };
     }
 
     let queryStr = JSON.stringify(reqQuery);
-
     queryStr = queryStr.replace(
       /\b(gt|gte|lte|lt|in)\b/g,
       (match) => `$${match}`
     );
-    console.log(queryStr);
     query = model.find(JSON.parse(queryStr));
 
     // check if select given

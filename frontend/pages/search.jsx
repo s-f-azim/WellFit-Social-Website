@@ -1,6 +1,6 @@
 import { Input, Select, Radio, Pagination } from 'antd';
 import { useEffect, useState } from 'react';
-import { getInstructors } from '../actions/user';
+import { getInstructorsFiltered } from '../actions/user';
 import { getCourses } from '../actions/course';
 import InstructorResults from '../components/Search/InstructorResults';
 import CourseResults from '../components/Search/CourseResults';
@@ -26,7 +26,7 @@ const SearchBar = () => {
   const searchName = async () => {
     let response = 'Nothing';
     if (searchType === 'Instructors') {
-      response = await getInstructors(
+      response = await getInstructorsFiltered(
         q,
         gender,
         age,

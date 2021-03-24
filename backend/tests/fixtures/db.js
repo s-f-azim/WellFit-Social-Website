@@ -217,6 +217,32 @@ const courseTwo = {
   creators: [userOneId],
   price: 0,
   tags: ['Cardio'],
+  trainingEquipment: ['treadmill'],
+};
+
+const courseThreeId = new mongoose.Types.ObjectId();
+
+const courseThree = {
+  _id: courseThreeId,
+  title: 'Course 3',
+  description: 'lose your weight today',
+  address: 'E20 1GS',
+  creators: [userOneId],
+  price: 0,
+  tags: ['Cardio', 'FitFam'],
+};
+
+const courseFourId = new mongoose.Types.ObjectId();
+
+const courseFour = {
+  _id: courseFourId,
+  title: 'Course 4',
+  description: 'lose your weight today',
+  address: 'E20 1GS',
+  creators: [userTwoId],
+  price: 0,
+  tags: ['Cardio', 'FitFam'],
+  trainingEquipment: ['treadmill'],
 };
 const conversationOneId = new mongoose.Types.ObjectId();
 const conversationOne = {
@@ -276,7 +302,7 @@ const instructors = [
   instructorFive,
   instructorSix,
 ];
-const courses = [courseOne, courseTwo];
+const courses = [courseOne, courseTwo, courseThree, courseFour];
 const requests = [requestOne, requestTwo, requestThree, requestFour];
 const conversations = [conversationOne, conversationTwo];
 // token

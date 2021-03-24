@@ -22,7 +22,7 @@ const getAdmins = () => api.get(`users?role=admin&&limit=${Number.MAX_SAFE_INTEG
 
 const getClients = () => api.get(`users?role=client&&limit=${Number.MAX_SAFE_INTEGER}`);
 
-const getInstructors = (q, gender, age, tags, pageSize, offset) =>
+const getInstructorsFiltered = (q, gender, age, tags, pageSize, offset) =>
   /* api.get(`/users/role=instructors&&name=${q}&&gender=${gender}&&age=${age}&&tags[in]=${tags.join(',')}`) */
   api.get(
     `/users/instructors?q=${q}&&gender=${gender}&&pageSize=${pageSize}&&offset=${offset}&&age=${age}&&tags=${tags.join(
@@ -30,7 +30,7 @@ const getInstructors = (q, gender, age, tags, pageSize, offset) =>
     )}`
   );
 
-const getInstructors2 = () => api.get(`users?role=instructor&&limit=${Number.MAX_SAFE_INTEGER}`);
+const getInstructors = () => api.get(`users?role=instructor&&limit=${Number.MAX_SAFE_INTEGER}`);
 
 const getSuggestedInstructors = () => api.get('users/profile');
 
@@ -47,6 +47,7 @@ export {
   getAdmins,
   getClients,
   getInstructors,
+  getInstructorsFiltered,
   addingFollowUser,
   getSuggestedInstructors,
   banUser,

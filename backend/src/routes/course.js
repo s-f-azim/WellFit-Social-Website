@@ -18,7 +18,8 @@ import upload from '../middleware/multer.js';
 
 const router = new express.Router();
 
-router.route('/').get(getCoursesFiltered);
+router.route('/').get(paginate(Course), getCourses);
+router.route('/filtered').get(getCoursesFiltered);
 
 router.route('/:id/creators').get(getCourseCreators);
 

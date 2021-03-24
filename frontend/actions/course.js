@@ -9,7 +9,7 @@ const createCourse = async (values) => {
 
 const getCourses = (title, tags, etags, pageSize, offset) =>
   api.get(
-    `courses?title=${title}&&tags=${tags.join(
+    `courses/filtered?title=${title}&&tags=${tags.join(
       ','
     )}&&pageSize=${pageSize}&&offset=${offset}&&equipment=${etags.join(',')}`
   );
