@@ -237,6 +237,12 @@ const UserSchema = new mongoose.Schema(
     googleId: {
       type: String,
     },
+    googleAccessToken: {
+      type: String,
+    },
+    googleRefreshToken: {
+      type: String,
+    },
     instaId: {
       type: String,
     },
@@ -244,6 +250,15 @@ const UserSchema = new mongoose.Schema(
       type: String,
     },
     twitterId: {
+      type: String,
+    },
+    twitterAccessToken: {
+      type: String,
+    },
+    twitterRefreshToken: {
+      type: String,
+    },
+    twitterScreenName: {
       type: String,
     },
     wishlist: [

@@ -4,6 +4,8 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as InstagramStrategy } from 'passport-instagram';
 import User from '../src/models/User.js';
+import { Strategy as TwitterStrategy } from 'passport-twitter';
+import * as jwtDecode from "jwt-decode"; 
 
 // get the cookie out of the request
 const cookieExtractor = (req) => {
@@ -54,8 +56,21 @@ if (process.env.NODE_ENV !== 'TEST') {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: `${process.env.SERVER_API_URL}/users/oauth/google/redirect`,
+        jwtFromRequest: cookieExtractor,
+        passReqToCallback: true,
       },
-      async (accessToken, refreshToken, profile, done) => {
+      async (res, accessToken, refreshToken, profile, done) => {      	
+      	console.log(refreshToken)
+				if(res.cookies){
+					const currentUser = await User.findOne({ _id: jwtDecode(res.cookies["token"])["id"]})
+					await User.findOneAndUpdate({ _id: jwtDecode(res.cookies["token"])["id"]},{$set:{googleId: profile.id , googleAccessToken: accessToken , googleRefreshToken: refreshToken}}, function(err) {
+       			if (err) { console.log(err); }
+       			else { console.log("Updated"); }
+     				});  
+     				console.log(currentUser)
+					done(null, currentUser);
+				}
+				
         const currentUser = await User.findOne({ googleId: profile.id });
         // check if the person has logged with google before
         if (currentUser) {
@@ -77,9 +92,21 @@ if (process.env.NODE_ENV !== 'TEST') {
         clientID: process.env.INSTA_CLIENT_ID,
         clientSecret: process.env.INSTA_CLIENT_SECRET,
         callbackURL: `${process.env.SERVER_API_URL}/users/oauth/instagram/redirect`,
+        jwtFromRequest: cookieExtractor,
+        passReqToCallback: true,
       },
-      async (accessToken, refreshToken, profile, done) => {
-        const currentUser = await User.findOne({ instaID: profile.id });
+      async (res, accessToken, refreshToken, profile, done) => {
+        // check if the person is logged into our websie
+      	console.log(profile)
+				if(res.cookies){
+					const currentUser = await User.findOne({ _id: jwtDecode(res.cookies["token"])["id"]})
+					await User.findOneAndUpdate({ _id: jwtDecode(res.cookies["token"])["id"]},{$set:{instaId: profile.id, instaAccessToken: accessToken, instaRefreshToken: refreshToken}}, function(err) {
+       			if (err) { console.log(err); }
+       			else { console.log("Updated"); }
+     				});  
+					done(null, currentUser);
+				}
+				const currentUser = await User.findOne({ instaID: profile.id });
         // check if the person has logged with google before
         if (currentUser) {
           done(null, currentUser);
@@ -100,11 +127,21 @@ if (process.env.NODE_ENV !== 'TEST') {
         clientID: process.env.FACEBOOK_CLIENT_ID,
         clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
         callbackURL: `${process.env.SERVER_API_URL}/users/oauth/facebook/redirect/`,
-        profileFields: ['email', 'name'],
+        profileFields: ['email', 'name', 'link'],
+      	jwtFromRequest: cookieExtractor,
+      	passReqToCallback: true,
       },
-      async (accessToken, refreshToken, profile, done) => {
+      async (res, accessToken, refreshToken, profile, done,) => {
+				if(res.cookies){
+					const currentUser = await User.findOne({ _id: jwtDecode(res.cookies["token"])["id"]})
+					await User.findOneAndUpdate({ _id: jwtDecode(res.cookies["token"])["id"]},{$set:{facebookId: profile.id, facebookAccessToken: accessToken, facebookRefreshToken: refreshToken}}, function(err) {
+       			if (err) { console.log(err); }
+       			else { console.log("Updated"); }
+     				});  
+					done(null, currentUser);
+				}	
+							
         const currentUser = await User.findOne({ facebookId: profile.id });
-        // check if the person has logged with google before
         if (currentUser) {
           done(null, currentUser);
         } else {
@@ -115,6 +152,29 @@ if (process.env.NODE_ENV !== 'TEST') {
             name: `${firstName} ${lastName}`,
           });
         }
+      },
+    ),
+  );
+  passport.use(
+    new TwitterStrategy(
+      {
+        consumerKey: process.env.TWITTER_CLIENT_ID,
+        consumerSecret: process.env.TWITTER_CLIENT_SECRET,
+        callbackURL: `${process.env.SERVER_API_URL}/users/oauth/twitter/redirect/`,
+        profileFields: ['email', 'name'],
+      	jwtFromRequest: cookieExtractor,
+      	passReqToCallback: true,
+      },
+      async (res, accessToken, refreshToken, profile, done,) => {
+				if(res.cookies){
+					const currentUser = await User.findOne({ _id: jwtDecode(res.cookies["token"])["id"]})
+					console.log("Current user: " + currentUser);
+					await User.findOneAndUpdate({ _id: jwtDecode(res.cookies["token"])["id"]},{$set:{twitterId: profile.id, twitterAccessToken: accessToken , twitterRefreshToken: refreshToken, twitterScreenName: profile.username}}, function(err) {
+       			if (err) { console.log(err); }
+       			else { console.log("Updated"); }
+     				});  
+					done(null, currentUser);
+				}	
       },
     ),
   );

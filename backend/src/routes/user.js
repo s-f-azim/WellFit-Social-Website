@@ -30,8 +30,25 @@ import paginate from '../middleware/paginate.js';
 import User from '../models/User.js';
 import role from '../middleware/role.js';
 import upload from '../middleware/multer.js';
+import cookieParser from 'cookie-parser';
 
 const router = new express.Router();
+
+router.use(cookieParser());
+router.use(passport.initialize())
+router.use(passport.session())
+
+
+router.route('/oauth/twitter').get(
+  passport.authenticate('twitter', {
+    session: false,
+    scope: ['user_profile'],
+  })
+);
+
+router
+  .route('/oauth/twitter/redirect')
+  .get(passport.authenticate('twitter', { session: false }), instagramOauth);
 
 router
   .route('/radius/:zipcode/:distance')
