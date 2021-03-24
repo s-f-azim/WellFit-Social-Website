@@ -1,8 +1,4 @@
-import Image from 'next/image';
-import { Input, Row, Col, Card, Select, Radio, Slider } from 'antd';
-
-const { Option } = Select;
-const { Search } = Input;
+import { Select } from 'antd';
 
 const CourseFilter = ({ tagsOption, equipOptions, setTags, setETags }) => (
   <>

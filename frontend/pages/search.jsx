@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import { Input, Row, Col, Card, Select, Radio, Slider, Pagination } from 'antd';
+import { Input, Select, Radio, Pagination } from 'antd';
 import { useEffect, useState } from 'react';
 import { getInstructors } from '../actions/user';
 import { getCourses } from '../actions/course';
@@ -25,9 +24,6 @@ const SearchBar = () => {
   const [searchType, setSearchType] = useState('Instructors');
 
   const searchName = async () => {
-    console.log(
-      `${searchType} ${age} ${q} ${gender}  TAGS : ${stags} ETAGS : ${etags} , current PAGE : ${currentPage} , pageSize : ${pageSize} `
-    );
     let response = 'Nothing';
     if (searchType === 'Instructors') {
       response = await getInstructors(
@@ -39,7 +35,6 @@ const SearchBar = () => {
         currentPage * pageSize - pageSize
       );
     } else if (searchType === 'Courses') {
-      console.log(searchType);
       response = await getCourses(q, stags, etags, pageSize, currentPage * pageSize - pageSize);
     }
     setData(response.data.data);
@@ -48,10 +43,9 @@ const SearchBar = () => {
   useEffect(() => {
     searchName();
   }, [searchType]);
-  const handlePaginationChange = (current, pageSize) => {
-    console.log(current, pageSize);
+  const handlePaginationChange = (current, updatedPageSize) => {
     setCurrentPage(current);
-    setPageSize(pageSize);
+    setPageSize(updatedPageSize);
   };
   /* can be replaced by data/tags  */
   const tags = [
@@ -100,7 +94,6 @@ const SearchBar = () => {
           style={{ paddingBottom: '2rem' }}
           onChange={(e) => {
             setSearchType(e.target.value);
-            console.log(`changed input to ${e.target.value}`);
           }}
           defaultValue="Instructors"
           size="large"
@@ -121,7 +114,8 @@ const SearchBar = () => {
           style={{ width: '90%' }}
         />
         {/* TODO: ADD LINK TO PROFILE! */}
-        {searchType == 'Instructors' ? (
+        {/* COLLECTIONS? */}
+        {searchType === 'Instructors' ? (
           <InstructorFilter
             setGender={setGender}
             setAge={setAge}
@@ -147,8 +141,9 @@ const SearchBar = () => {
         showTotal={(totalQ) => `Total ${totalQ} items`}
         showSizeChanger
         onShowSizeChange={handlePaginationChange}
-        defaultCurrent={1}
+        defaultCurrent={0}
         total={total}
+        style={{ marginTop: '2rem', alignItems: 'center' }}
         onChange={handlePaginationChange}
       />
     </>

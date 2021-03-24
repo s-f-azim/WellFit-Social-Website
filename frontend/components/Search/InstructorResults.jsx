@@ -1,10 +1,5 @@
 import Image from 'next/image';
-import { Input, Row, Col, Card, Select, Radio } from 'antd';
-import { useState } from 'react';
-import { getInstructors } from '../../actions/user';
-
-const { Option } = Select;
-const { Search } = Input;
+import { Row, Col, Card } from 'antd';
 
 const InstructorResults = ({ data }) => (
   <>
@@ -20,6 +15,7 @@ const InstructorResults = ({ data }) => (
                 layout="responsive"
                 width="440px"
                 height="440px"
+                /* Placeholder image */
                 src={
                   val.avatar
                     ? val.avatar
