@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Row, Col } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import { useSession } from 'next-auth/client';
 import { useEffect, useState } from 'react';
@@ -75,18 +75,19 @@ const Conversation = ({ conversation }) => {
         onFinish={sendMsg}
         scrollToFirstError
       >
-        <Form.Item
-          name="message"
-          style={{ width: '70%' }}
-          rules={[{ required: true, message: 'Please write a message' }]}
-        >
+        <Form.Item name="message" style={{ width: '70%' }}>
           <Input
             style={{ textAlign: 'center', borderRadius: '2000rem' }}
-            placeholder="Type a message here"
+            placeholder="Enter your message..."
           />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" shape="round" htmlType="submit">
+          <Button
+            type="text"
+            shape="round"
+            htmlType="submit"
+            style={{ border: '1px solid #dddddd' }}
+          >
             <SendOutlined />
           </Button>
         </Form.Item>

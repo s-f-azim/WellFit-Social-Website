@@ -16,6 +16,13 @@
   transition: all 0.5s ease;
   opacity: 0;
   box-shadow: 17px 6px 49px #cccccc;
+
+  a:link,
+  a:hover,
+  a:active {
+    color: black;
+  }
+
   .anticon-close {
     font-size: 2rem;
     margin-bottom: 0.3rem;

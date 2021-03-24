@@ -88,3 +88,9 @@
   align-items: center;
   flex-wrap: nowrap;
 }
+
+@media screen and (max-width: 1024px) {
+  .ant-row {
+    min-width: 0vw;
+  }
+}
