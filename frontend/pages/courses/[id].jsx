@@ -9,7 +9,7 @@ import { CourseReview } from '../../components/Review';
 
 const columnStyle = { width: 350, height: 'auto' };
 
-const course = ({ course }) => {
+const Course = ({ course }) => {
   const [session, loading] = useSession();
   // state to indicate whether or not the user's wish list has been fetched yet
   const [wishListFetched, setWishListFetched] = useState(false);

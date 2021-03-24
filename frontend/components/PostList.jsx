@@ -28,7 +28,11 @@ PostList.Item = ({ post, onDelete }) => {
   return (
     <List.Item key={post._id} actions={[onDelete && <DeleteButton id={post._id} />]}>
       <List.Item.Meta
-        title={<Title level={4}>{`${post.author.fName} ${post.author.lName}`}</Title>}
+        title={
+          <Title level={4}>
+            {post.author.fName} {post.author.lName}
+          </Title>
+        }
         description={<Moment date={post.createdAt} fromNow />}
       />
       <Paragraph>{post.content}</Paragraph>
