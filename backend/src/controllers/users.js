@@ -312,7 +312,7 @@ const getInstructors = asyncHandler(async (req, res) => {
   console.log(instr);
   instr = instr.slice(
     parseInt(req.query.offset, 10),
-    parseInt(req.query.offset, 10) + parseInt(req.query.limit, 10)
+    parseInt(req.query.offset, 10) + parseInt(req.query.pageSize, 10)
   );
   res.status(200).send({
     success: true,

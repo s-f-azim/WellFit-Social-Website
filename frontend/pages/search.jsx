@@ -30,7 +30,14 @@ const SearchBar = () => {
     );
     let response = 'Nothing';
     if (searchType === 'Instructors') {
-      response = await getInstructors(q, gender, age, stags, pageSize, currentPage * pageSize);
+      response = await getInstructors(
+        q,
+        gender,
+        age,
+        stags,
+        pageSize,
+        currentPage * pageSize - pageSize
+      );
     } else if (searchType === 'Courses') {
       console.log(searchType);
       response = await getCourses(q, stags, etags, pageSize, currentPage * pageSize - pageSize);

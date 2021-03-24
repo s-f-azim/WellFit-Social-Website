@@ -25,7 +25,7 @@ const getClients = () => api.get(`users?role=client&&limit=${Number.MAX_SAFE_INT
 const getInstructors = (q, gender, age, tags, pageSize, offset) =>
   /* api.get(`/users/role=instructors&&name=${q}&&gender=${gender}&&age=${age}&&tags[in]=${tags.join(',')}`) */
   api.get(
-    `/users/instructors?q=${q}&&gender=${gender}&&pageSize={pageSize}&&offset={offset}&&age=${age}&&tags=${tags.join(
+    `/users/instructors?q=${q}&&gender=${gender}&&pageSize=${pageSize}&&offset=${offset}&&age=${age}&&tags=${tags.join(
       ','
     )}`
   );
