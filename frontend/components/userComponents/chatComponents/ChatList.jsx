@@ -69,7 +69,8 @@ const ChatList = ({ setConversation, setReciver }) => {
   };
   const addMsg = async (id) => {
     const res = await api.get(`/conversation/${id}`);
-    const msg = res.data.data ? res.data.data.messages.slice(-1)[0].content : '';
+    const msg =
+      res.data.data && res.data.data.messages ? res.data.data.messages.slice(-1)[0].content : '';
 
     setLastMsgs({ [id]: msg, ...lastMsgs });
   };

@@ -43,6 +43,7 @@ const CourseForm = () => {
           duration: 2,
           icon: <CheckOutlined style={{ color: '#33FF49' }} />,
         });
+        form.resetFields();
       }
       setError(null);
     } catch (err) {
