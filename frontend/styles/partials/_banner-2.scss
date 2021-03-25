@@ -29,12 +29,26 @@
   font-family: 'Poppins';
 }
 .card {
-  height: 200px;
   background-color: white;
   border: 2px solid $two-tone;
 }
 .inner_banner_content2 {
+  padding-top: 1rem;
   grid-column: auto/span 3;
+}
+.cardText {
+  padding-top: 0.5rem;
+  text-align: center;
+  font-family: 'poppins';
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
+}
+.cardImage {
+  display: block;
+}
+.cardImage > div {
+  margin: 0 auto;
+  display: block !important;
 }
 @media only screen and (max-width: 780px) {
   .inner_banner_content2 {

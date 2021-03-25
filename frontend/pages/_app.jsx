@@ -24,8 +24,9 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link rel="stylesheet" type="text/css" href="/nprogress.css" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,700&display=swap"
           rel="stylesheet"
         />
       </Head>
