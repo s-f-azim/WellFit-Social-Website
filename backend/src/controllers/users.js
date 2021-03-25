@@ -413,13 +413,15 @@ const banUser = asyncHandler(async (req, res) => {
 const updateInterestedUsers = asyncHandler(async (req, res) => {
   if (`${req.params.id}` !== `${req.user._id}`) {
     const user = await User.findById(req.params.id);
-    const index = user.interestedUsers.indexOf(req.user._id);
-    if (index === -1) {
-      user.interestedUsers.push(req.user._id);
-    } else {
-      user.interestedUsers.splice(index, 1);
+    if (user.role === 'instructor') {
+      const index = user.interestedUsers.indexOf(req.user._id);
+      if (index === -1) {
+        user.interestedUsers.push(req.user._id);
+      } else {
+        user.interestedUsers.splice(index, 1);
+      }
+      await user.save();
     }
-    await user.save();
   }
   sendTokenResponse(req.user, 200, res);
 });
