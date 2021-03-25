@@ -13,8 +13,8 @@
   grid-auto-flow: row;
 }
 .inner_banner1_content {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
   grid-column: auto/span 6;
 }
 .inner_banner1_image {
@@ -25,10 +25,16 @@
 .headerText {
   font-size: 3rem;
 }
+.ant-btn.banner_button {
+  min-width: 25rem;
+  background-color: $secondary-color;
+  font-family: 'Poppins';
+  font-style: italic;
+}
 @media only screen and (max-width: 780px) {
   .inner_banner1_content {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     grid-column: auto/span 12;
   }
   .inner_banner1_image {
@@ -38,5 +44,18 @@
   }
   .headerText {
     font-size: 2rem;
+  }
+  .banner_button_box {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  .ant-btn.banner_button {
+    width: 20rem;
+    background-color: $secondary-color;
+    font-family: 'Poppins';
+    font-style: italic;
+    margin-right: auto;
+    margin-left: auto;
   }
 }

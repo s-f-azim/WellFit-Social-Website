@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Row, Col, Button } from 'antd';
 import Banner1 from './LandingPage/banner-1';
+import Banner2 from './LandingPage/banner-2';
 
 const LandingText = () => (
   <div
@@ -33,6 +34,7 @@ const LandingFooter = () => (
 const LandingPage = () => (
   <>
     <Banner1 />
+    <Banner2 />
     <div style={{ padding: '2rem', backgroundColor: 'white' }}>
       <Row>
         <Col md={{ span: 5 }} span={0} />
