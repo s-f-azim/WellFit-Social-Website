@@ -53,7 +53,10 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
                 />
               </Col>
               <Col>
-                <p>Location: {content.location.city}</p>
+                <p>
+                  Location:
+                  {content.address ? content.address : ' No location specified'}
+                </p>
                 <p>Price: £{content.price}</p>
                 <p>
                   Creators:{' '}
@@ -104,7 +107,10 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
                 />
               </Col>
               <Col>
-                <p>Location: {content.location.city}</p>
+                <p>
+                  Location:
+                  {content.address ? content.address : ' No location specified'}
+                </p>
                 <p>Price: £{content.price}</p>
                 <p>
                   Creators:{' '}
