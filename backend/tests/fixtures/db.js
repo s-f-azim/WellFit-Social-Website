@@ -227,7 +227,7 @@ const courseThree = {
   title: 'Course 3',
   description: 'lose your weight today',
   address: 'E20 1GS',
-  creators: [userOneId],
+  creators: [userFiveId],
   price: 0,
   tags: ['Cardio', 'FitFam'],
 };
@@ -239,7 +239,7 @@ const courseFour = {
   title: 'Course 4',
   description: 'lose your weight today',
   address: 'E20 1GS',
-  creators: [userTwoId],
+  creators: [userFourId],
   price: 0,
   tags: ['Cardio', 'FitFam'],
   trainingEquipment: ['treadmill'],
