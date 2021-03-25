@@ -20,7 +20,6 @@ beforeEach(setupDatabase);
 
 // assert creating a new course while logged in
 it('Should create a new course', async () => {
-  const count = await Course.countDocuments();
   geocoder.geocode = jest.fn().mockResolvedValue([
     {
       longitude: -0.288986,
@@ -32,6 +31,7 @@ it('Should create a new course', async () => {
       countryCode: 'GB',
     },
   ]);
+  const count = await Course.countDocuments();
   const response = await request(app)
     .post('/api/courses/create')
     .set('Cookie', [`token=${tokens[0]}`])
@@ -51,6 +51,17 @@ it('Should create a new course', async () => {
 
 // assert creating a new course when not logged in
 it('Should not create a new course when not logged in', async () => {
+  geocoder.geocode = jest.fn().mockResolvedValue([
+    {
+      longitude: -0.288986,
+      latitude: 51.412536,
+      formattedAddress: 'London KT2 6QW, United Kingdom',
+      streetName: 'London',
+      city: 'London',
+      zipcode: 'KT2 6QW',
+      countryCode: 'GB',
+    },
+  ]);
   await request(app)
     .post('/api/courses/create')
     .send({
@@ -66,6 +77,17 @@ it('Should not create a new course when not logged in', async () => {
 
 // assert creating a new course with invalid data
 it('Should not create a new course with invalid data', async () => {
+  geocoder.geocode = jest.fn().mockResolvedValue([
+    {
+      longitude: -0.288986,
+      latitude: 51.412536,
+      formattedAddress: 'London KT2 6QW, United Kingdom',
+      streetName: 'London',
+      city: 'London',
+      zipcode: 'KT2 6QW',
+      countryCode: 'GB',
+    },
+  ]);
   await request(app)
     .post('/api/courses/create')
     .set('Cookie', [`token=${tokens[0]}`])
@@ -150,7 +172,7 @@ it('Should get all courses within range', async () => {
     .get('/api/courses/radius/kt26qw/1')
     .send()
     .expect(200);
-  expect(response.body.count).toBe(1);
+  expect(response.body.count).toBe(4);
 });
 // assert should get the single creator of a course
 it('Should get the creator of a course', async () => {
@@ -213,7 +235,7 @@ it('Should get 3 courses with no title and tag Cardio', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(3);
 });
-/*
+
 it('Should get no course with tag Cycling', async () => {
   const response = await request(app)
     .get('/api/courses/filtered?title=&&tags=Cycling')
@@ -242,4 +264,3 @@ it('Should get 1 course with equipment treadmill and tag FitFam', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(1);
 });
-*/

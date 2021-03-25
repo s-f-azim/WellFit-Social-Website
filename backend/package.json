@@ -2,7 +2,8 @@
   "name": "seg-major",
   "version": "1.0.0",
   "jest": {
-    "transform": {}
+    "transform": {},
+    "testTimeout": 30000
   },
   "description": "This is project revolves around fitness and nutrition ",
   "main": "index.js",
