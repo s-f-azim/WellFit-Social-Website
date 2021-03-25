@@ -1,5 +1,7 @@
 .banner1 {
   width: 100%;
+  padding-right: 2rem;
+  padding-left: 2rem;
 }
 .inner_banner1 {
   width: 100%;
@@ -11,9 +13,30 @@
   grid-auto-flow: row;
 }
 .inner_banner1_content {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
   grid-column: auto/span 6;
 }
 .inner_banner1_image {
   grid-column: auto/span 6;
   position: relative;
+  height: 100%;
+}
+.headerText {
+  font-size: 3rem;
+}
+@media only screen and (max-width: 780px) {
+  .inner_banner1_content {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    grid-column: auto/span 12;
+  }
+  .inner_banner1_image {
+    grid-column: auto/span 12;
+    position: relative;
+    height: 100%;
+  }
+  .headerText {
+    font-size: 2rem;
+  }
 }
