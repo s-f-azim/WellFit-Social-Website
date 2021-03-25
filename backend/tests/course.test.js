@@ -1,6 +1,9 @@
 import request from 'supertest';
+import { jest } from '@jest/globals';
 import Course from '../src/models/Course.js';
 import app from '../src/app.js';
+import geocoder from '../src/utils/geocoder.js';
+
 import {
   tokens,
   userOne,
@@ -10,12 +13,25 @@ import {
   courseTwo,
 } from './fixtures/db.js';
 
+jest.mock('geocoder');
+
 // setup db for each test
 beforeEach(setupDatabase);
 
 // assert creating a new course while logged in
 it('Should create a new course', async () => {
   const count = await Course.countDocuments();
+  geocoder.geocode = jest.fn().mockResolvedValue([
+    {
+      longitude: -0.288986,
+      latitude: 51.412536,
+      formattedAddress: 'London KT2 6QW, United Kingdom',
+      streetName: 'London',
+      city: 'London',
+      zipcode: 'KT2 6QW',
+      countryCode: 'GB',
+    },
+  ]);
   const response = await request(app)
     .post('/api/courses/create')
     .set('Cookie', [`token=${tokens[0]}`])
