@@ -25,7 +25,7 @@ const WishList = () => {
    * has a margin.
    */
   function removeFromWishList(id) {
-    api.patch(`/users/addToWishList/${id}`, {});
+    api.patch(`/users/updatewishlist/${id}`, {});
     notification.open({
       message: 'Wish list updated!',
       duration: 2,

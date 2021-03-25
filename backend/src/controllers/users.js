@@ -214,10 +214,10 @@ const deleteSpecificUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc add specified course to user's wish list - if it already exists, remove it
- * @route PATCH /api/users/addtowishlist/:id
+ * @route PATCH /api/users/updatewishlist/:id
  * @access private
  */
-const addToWishList = asyncHandler(async (req, res) => {
+const updateWishList = asyncHandler(async (req, res) => {
   if (Course.findById(req.params.id)) {
     const index = req.user.wishlist.indexOf(req.params.id);
     if (index === -1) {
@@ -370,29 +370,23 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
  * @async
  * @desc Gets trending users on the website
  * @route GET /api/users/trendingUsers
- * 
+ *
  */
 const getTrendingUsers = asyncHandler(async (req, res) => {
   const users = await User.find({
     $and: [
       {
-        $or: [
-          {role: 'instructor'},
-          {role: 'client'}
-        ]
+        $or: [{ role: 'instructor' }, { role: 'client' }],
       },
-      { follower: { $exists: true, $ne: []}}
-    ]
-    
+      { follower: { $exists: true, $ne: [] } },
+    ],
   });
-  res.status(200).send( 
-    {
-      success: true, 
-      data: users 
-              .sort( (u1, u2) => u2.follower.length - u1.follower.length )
-              .slice(0, 10)
-    }
-  );
+  res.status(200).send({
+    success: true,
+    data: users
+      .sort((u1, u2) => u2.follower.length - u1.follower.length)
+      .slice(0, 10),
+  });
 });
 /*
  * @desc ban a user
@@ -422,7 +416,7 @@ export {
   deleteUser,
   deleteSpecificUser,
   getWishList,
-  addToWishList,
+  updateWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,

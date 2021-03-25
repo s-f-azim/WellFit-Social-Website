@@ -11,7 +11,7 @@ import {
   deleteUser,
   deleteSpecificUser,
   getWishList,
-  addToWishList,
+  updateWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -114,8 +114,8 @@ router
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
 
 router
-  .route('/addToWishList/:id')
-  .patch(passport.authenticate('jwt', { session: false }), addToWishList);
+  .route('/updatewishlist/:id')
+  .patch(passport.authenticate('jwt', { session: false }), updateWishList);
 
 router
   .route('/wishlist')
@@ -144,7 +144,5 @@ router.route('/trendingUsers').get(getTrendingUsers);
 router.route('/').get(paginate(User), getUsers);
 
 router.route('/:id').get(getUser);
-
-
 
 export default router;

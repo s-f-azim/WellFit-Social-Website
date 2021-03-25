@@ -40,7 +40,7 @@ const course = ({ course }) => {
     // Add this course to the user's wish list and then remove the add to wish list button
     function addToWishList() {
       /* eslint-disable no-underscore-dangle */
-      api.patch(`/users/addToWishList/${course._id}`, {});
+      api.patch(`/users/updatewishlist/${course._id}`, {});
       notification.open({
         message: 'Course added to wish list!',
         duration: 2,
