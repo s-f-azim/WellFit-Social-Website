@@ -1,0 +1,19 @@
+.banner1 {
+  width: 100%;
+}
+.inner_banner1 {
+  width: 100%;
+  max-width: 1024px;
+  margin-right: auto;
+  margin-left: auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-flow: row;
+}
+.inner_banner1_content {
+  grid-column: auto/span 6;
+}
+.inner_banner1_image {
+  grid-column: auto/span 6;
+  position: relative;
+}
