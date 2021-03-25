@@ -1,7 +1,7 @@
 import api from '../services/api';
 
 const createPost = async (values) => {
-  const res = api.post('/posts', { ...values });
+  const res = await api.post('/posts', { ...values });
   return res.data.data;
 };
 

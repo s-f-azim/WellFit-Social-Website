@@ -34,6 +34,7 @@ it('calls onDelete when delete button is clicked', async () => {
     />
   );
 
-  screen.getAllByRole('button', { name: 'delete' }).forEach((button) => userEvent.click(button));
-  await waitFor(() => expect(handleDelete).toHaveBeenCalledTimes(0));
+  userEvent.click(screen.getAllByRole('button', { name: 'delete' })[0]);
+  userEvent.click(screen.getByText('Yes'));
+  await waitFor(() => expect(handleDelete).toHaveBeenCalledTimes(1));
 });

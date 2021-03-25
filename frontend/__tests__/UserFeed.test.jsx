@@ -8,7 +8,7 @@ const user = { _id: '1', fName: 'user', lName: 'test' };
 jest.mock('../actions/post', () => ({
   createPost: jest.fn(),
   getFeedPosts: jest.fn(),
-  deletePosts: jest.fn(),
+  deletePost: jest.fn(),
 }));
 
 jest.mock('next-auth/client', () => ({
@@ -16,8 +16,8 @@ jest.mock('next-auth/client', () => ({
 }));
 
 it('renders post to list when post is submitted', async () => {
-  const post = { content: 'test' };
-  createPost.mockReturnValueOnce({ _id: '1', content: post.content, author: user });
+  const post = { _id: '1', content: 'content', author: user };
+  createPost.mockReturnValueOnce(post);
   getFeedPosts.mockReturnValue([]);
 
   render(<UserFeed />);
@@ -26,4 +26,19 @@ it('renders post to list when post is submitted', async () => {
   userEvent.click(screen.getByRole('button', { name: 'post' }));
 
   await waitFor(() => expect(screen.getAllByRole('listitem', { name: 'post' })).toHaveLength(1));
+});
+
+it('removes post when delete button is clicked', async () => {
+  const post = { _id: '1', content: 'content', author: user };
+  getFeedPosts.mockReturnValue([post]);
+
+  render(<UserFeed />);
+  await waitFor(() => expect(screen.getAllByRole('listitem', { name: 'post' })).toHaveLength(1));
+
+  userEvent.click(screen.getAllByRole('button', { name: 'delete' })[0]);
+  userEvent.click(screen.getByText('Yes'));
+
+  await waitFor(() =>
+    expect(screen.queryByRole('listitem', { name: 'post' })).not.toBeInTheDocument()
+  );
 });

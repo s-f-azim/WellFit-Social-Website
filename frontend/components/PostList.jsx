@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { List, Button, Popconfirm, Typography, Card } from 'antd';
 import { DeleteOutlined, HeartOutlined } from '@ant-design/icons';
+import { useEffect } from 'react';
 import Moment from 'react-moment';
 import VideoPlayer from './VideoPlayer';
 
@@ -39,7 +40,10 @@ PostList.Item = ({ post, onDelete, onLike }) => {
     <List.Item
       aria-label="post"
       key={post._id}
-      actions={[onLike && <LikeButton id={post._id} />, onDelete && <DeleteButton id={post._id} />]}
+      actions={[
+        ...(onLike ? [<LikeButton id={post._id} />] : []),
+        ...(onDelete ? [<DeleteButton id={post._id} />] : []),
+      ]}
     >
       <List.Item.Meta
         title={
