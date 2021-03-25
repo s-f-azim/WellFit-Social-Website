@@ -48,7 +48,7 @@ const Suggestions = () => {
               />,
             ]}
           >
-            <Meta title={props.user.name} description={props.user.email} />
+            <Meta title={props.user.fName + " " + props.user.lName} description={props.user.email} />
           </Card>
         ) : null}
       </Animate>
