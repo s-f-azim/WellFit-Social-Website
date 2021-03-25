@@ -66,7 +66,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
             )}
           </li>
           <li className="option" onClick={closeMobileMenu}>
-            <Link href="#">
+            <Link href="/search">
               <Button type="link" className="menuButton">
                 <ContactsOutlined />
                 Instructors

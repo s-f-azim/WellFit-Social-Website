@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
 import { Card, Space } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
@@ -48,7 +49,10 @@ const Suggestions = () => {
               />,
             ]}
           >
-            <Meta title={props.user.fName + " " + props.user.lName} description={props.user.email} />
+            <Meta
+              title={`${props.user.fName} ${props.user.lName}`}
+              description={props.user.email}
+            />
           </Card>
         ) : null}
       </Animate>

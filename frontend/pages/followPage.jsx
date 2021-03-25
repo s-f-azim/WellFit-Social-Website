@@ -2,8 +2,14 @@ import { useEffect, useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
 import { Card, Space, Button } from 'antd';
 import FollowButton from '../components/userComponents/FollowButton';
+import AccessDenied from '../components/generalComponents/AccessDenied';
 import GetFollow from '../components/userComponents/GetFollow';
-import { getFollowingList, addingFollowUser, getFollowerList } from '../actions/user';
+import {
+  getFollowingList,
+  addingFollowUser,
+  getFollowerList,
+  getSuggestedInstructors,
+} from '../actions/user';
 import TrendingUsers from '../components/userComponents/TrendingUsers';
 
 export default function FollowPage() {
@@ -33,6 +39,7 @@ export default function FollowPage() {
 
         <Space>
           <TrendingUsers />
+          {session.user.role === 'client' && <getSuggestedInstructors />}
         </Space>
 
         <br />
@@ -48,7 +55,7 @@ export default function FollowPage() {
       </>
     );
   }
-  return <p>Access Denied</p>;
+  return <AccessDenied />;
   // Instead of the hard coded userID there should be a programmed get userID from visiting profile
 }
 
