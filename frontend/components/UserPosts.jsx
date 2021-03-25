@@ -22,6 +22,10 @@ const UserFeed = ({ id }) => {
     if (session) setUser(session.user);
   }, [session]);
 
+  const handleLike = (postId) => {
+    // likePost()
+  };
+
   const handleDelete = (postId) => {
     deletePost(postId);
     setPosts(posts.filter((p) => p._id !== postId));
@@ -34,6 +38,7 @@ const UserFeed = ({ id }) => {
       renderItem={(p) => (
         <PostList.Item
           post={p}
+          onLike={user && user._id === p.author._id ? handleLike : undefined}
           onDelete={user && user._id === p.author._id ? handleDelete : undefined}
         />
       )}

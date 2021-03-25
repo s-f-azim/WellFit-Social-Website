@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import PostList from '../components/PostList';
 
@@ -13,22 +13,20 @@ const posts = [1, 2, 3, 4].map((n) => ({
 }));
 
 it('renders posts', () => {
-  const { getByText, getAllByRole } = render(
-    <PostList posts={posts} renderItem={(p) => <PostList.Item post={p} />} loading={false} />
-  );
+  render(<PostList posts={posts} renderItem={(p) => <PostList.Item post={p} />} loading={false} />);
 
-  expect(getAllByRole('listitem')).toHaveLength(posts.length);
+  expect(screen.getAllByRole('listitem')).toHaveLength(posts.length);
 
   posts.forEach((post) => {
-    expect(getByText(`${post.author.fName} ${post.author.lName}`)).toBeInTheDocument();
-    expect(getByText(post.content)).toBeInTheDocument();
+    expect(screen.getByText(`${post.author.fName} ${post.author.lName}`)).toBeInTheDocument();
+    expect(screen.getByText(post.content)).toBeInTheDocument();
   });
 });
 
 it('calls onDelete when delete button is clicked', async () => {
   const handleDelete = jest.fn();
 
-  const { getAllByRole } = render(
+  render(
     <PostList
       posts={posts}
       renderItem={(p) => <PostList.Item post={p} onDelete={handleDelete} />}
@@ -36,6 +34,6 @@ it('calls onDelete when delete button is clicked', async () => {
     />
   );
 
-  getAllByRole('button', { name: 'delete' }).forEach((button) => userEvent.click(button));
+  screen.getAllByRole('button', { name: 'delete' }).forEach((button) => userEvent.click(button));
   await waitFor(() => expect(handleDelete).toHaveBeenCalledTimes(0));
 });

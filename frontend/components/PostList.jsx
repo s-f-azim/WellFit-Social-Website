@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { List, Button, Popconfirm, Typography, Card } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, HeartOutlined } from '@ant-design/icons';
 import Moment from 'react-moment';
 import VideoPlayer from './VideoPlayer';
 
@@ -18,7 +18,18 @@ const PostList = ({ posts, renderItem, loading }) => (
   </Card>
 );
 
-PostList.Item = ({ post, onDelete }) => {
+PostList.Item = ({ post, onDelete, onLike }) => {
+  const LikeButton = ({ id }) => (
+    <Button
+      role="button"
+      aria-label="like"
+      type="text"
+      onClick={() => onLike(id)}
+      icon={<HeartOutlined />}
+      danger
+    />
+  );
+
   const DeleteButton = ({ id }) => (
     <Popconfirm title="Are you sure?" onConfirm={() => onDelete(id)} okText="Yes" cancelText="No">
       <Button role="button" aria-label="delete" type="text" icon={<DeleteOutlined />} danger />
@@ -29,7 +40,7 @@ PostList.Item = ({ post, onDelete }) => {
     <List.Item
       role="listitem"
       key={post._id}
-      actions={onDelete && [<DeleteButton id={post._id} />]}
+      actions={[onLike && <LikeButton id={post._id} />, onDelete && <DeleteButton id={post._id} />]}
     >
       <List.Item.Meta
         title={
