@@ -12,6 +12,7 @@ const ChatList = ({ setConversation, setReciver }) => {
   const [session] = useSession();
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [lastMsgs, setLastMsgs] = useState({});
   let totalUsers;
   useEffect(async () => {
     const response = await api.get('/users');
@@ -66,6 +67,16 @@ const ChatList = ({ setConversation, setReciver }) => {
       console.log(err);
     }
   };
+  const addMsg = async (id) => {
+    const res = await api.get(`/conversation/${id}`);
+    const msg = res.data.data ? res.data.data.messages.slice(-1)[0].content : '';
+
+    setLastMsgs({ [id]: msg, ...lastMsgs });
+  };
+  const removeMsg = (id) => {
+    delete lastMsgs[id];
+    setLastMsgs({ ...lastMsgs });
+  };
 
   return (
     <>
@@ -84,11 +95,17 @@ const ChatList = ({ setConversation, setReciver }) => {
                 renderItem={(item) => {
                   if (item._id !== session.user._id) {
                     return (
-                      <List.Item className="user" key={item._id} onClick={() => handleClick(item)}>
+                      <List.Item
+                        className="user"
+                        key={item._id}
+                        onClick={() => handleClick(item)}
+                        onMouseEnter={() => addMsg(item._id)}
+                        onMouseLeave={() => removeMsg(item._id)}
+                      >
                         <List.Item.Meta
                           avatar={image(item)}
                           title={item.fName}
-                          description={item.email}
+                          description={lastMsgs[item._id] ? lastMsgs[item._id] : item.email}
                         />
                         <div className="action">
                           <SendOutlined />
