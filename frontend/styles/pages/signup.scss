@@ -1,11 +1,17 @@
-.ant-row {
-  min-width: 20vw;
-}
-.ant-form-item-label {
-  margin-right: 1.2rem;
-}
-@media screen and (max-width: 1024px) {
+.signup {
   .ant-row {
-    min-width: 52vw;
+    min-width: 20vw;
+  }
+  .ant-form-item-label {
+    margin-right: 1.2rem;
+  }
+  @media screen and (max-width: 1024px) {
+    .ant-row {
+      min-width: 52vw;
+    }
+  }
+
+  .ant-card-bordered {
+    border: 0px solid #f0f0f0;
   }
 }
