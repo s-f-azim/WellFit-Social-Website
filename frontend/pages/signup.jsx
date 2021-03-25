@@ -168,13 +168,13 @@ const Signup = () => {
                   validator: (_, value) =>
                     value
                       ? Promise.resolve()
-                      : Promise.reject('Please accept the consumer agreement'),
+                      : Promise.reject('Please accept the terms and conditions'),
                 },
               ]}
               {...tailFormItemLayout}
             >
               <Checkbox>
-                I have read the <a href="/">agreement</a>
+                I have read the <a href="/TandCs">agreement</a>
               </Checkbox>
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
