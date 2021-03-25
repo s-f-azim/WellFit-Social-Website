@@ -37,8 +37,11 @@
   grid-column: auto/span 3;
 }
 .cardText {
+  padding-top: 0.5rem;
   text-align: center;
   font-family: 'poppins';
+  padding-left: 0.1rem;
+  padding-right: 0.1rem;
 }
 .cardImage {
   display: block;
