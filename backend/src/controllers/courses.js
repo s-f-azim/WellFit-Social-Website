@@ -15,7 +15,43 @@ const getCourse = asyncHandler(async (req, res) => {
     data: course,
   });
 });
-
+/**
+ * @async
+ * @desc get courses with filters
+ * @route GET /api/courses?title=&&tags=&&equipment=&&offset=&&limit=
+ * @access public
+ */
+const getCoursesFiltered = asyncHandler(async (req, res) => {
+  /* matching course title with regex */
+  const s = req.query.title;
+  const regex = new RegExp(s, 'i');
+  const instr = await Course.find({
+    ...(req.query.title ? { title: { $regex: regex } } : {}),
+    ...(req.query.tags ? { tags: { $all: req.query.tags.split(',') } } : {}),
+    ...(req.query.equipment
+      ? { trainingEquipment: { $all: req.query.equipment.split(',') } }
+      : {}),
+  })
+    .skip(parseInt(req.query.offset, 10))
+    .limit(parseInt(req.query.pageSize, 10));
+  /* not possible to split query and get count in cursor object */
+  const instr2 = await Course.find({
+    ...(req.query.title ? { title: { $regex: regex } } : {}),
+    ...(req.query.max ? { price: { $lte: req.query.max } } : {}),
+    ...(req.query.tags ? { tags: { $all: req.query.tags.split(',') } } : {}),
+    ...(req.query.equipment
+      ? { trainingEquipment: { $all: req.query.equipment.split(',') } }
+      : {}),
+  });
+  /* saving amount of total items */
+  const totalC = instr2.length;
+  res.status(200).send({
+    success: true,
+    total: totalC,
+    count: instr.length,
+    data: instr,
+  });
+});
 /**
  * @async
  * @desc get course creators by ID of the course
@@ -152,6 +188,7 @@ export {
   updateCourse,
   createCourse,
   getCoursesWithinRadius,
+  getCoursesFiltered,
   deleteCourse,
   uploadImages,
   deleteImages,

@@ -42,7 +42,11 @@ const UserSchema = new mongoose.Schema(
       required: [true, 'please enter your last name'],
       minlength: 2,
     },
-
+    screenname: {
+      type: String,
+      required: false,
+      // fix for missing usernames causing validation fail
+    },
     gender: {
       type: String,
       trim: true,
@@ -52,7 +56,6 @@ const UserSchema = new mongoose.Schema(
     address: {
       type: String,
     },
-
     location: {
       type: {
         type: String,
@@ -67,6 +70,9 @@ const UserSchema = new mongoose.Schema(
       city: String,
       zipcode: String,
       country: String,
+    },
+    age: {
+      type: Number,
     },
 
     birthday: {
@@ -340,6 +346,7 @@ UserSchema.pre('save', async function (next) {
     };
     this.address = undefined;
   }
+  this.screenname = `${this.fName} ${this.lName}`;
   next();
 });
 
