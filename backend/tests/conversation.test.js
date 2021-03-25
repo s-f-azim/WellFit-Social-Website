@@ -1,5 +1,5 @@
 import request from 'supertest';
-import Converstion from '../src/models/Conversation.js';
+import Conversation from '../src/models/Conversation.js';
 import app from '../src/app.js';
 import {
   tokens,
@@ -52,6 +52,6 @@ it('Should be able to send messages', async () => {
     })
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
-  const convo = await Converstion.findById(conversationTwo._id);
+  const convo = await Conversation.findById(conversationTwo._id);
   expect(convo.messages.length).toBe(count + 1);
 });

@@ -43,6 +43,7 @@ const CourseForm = () => {
           duration: 2,
           icon: <CheckOutlined style={{ color: '#33FF49' }} />,
         });
+        form.resetFields();
       }
       setError(null);
     } catch (err) {
@@ -62,7 +63,7 @@ const CourseForm = () => {
           scrollToFirstError
         >
           <Form.Item
-            label="Title"
+            label="Title:"
             name="title"
             rules={[{ required: true, message: 'Please input the title of the course' }]}
           >
@@ -70,7 +71,7 @@ const CourseForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="Description"
+            label="Description:"
             name="description"
             rules={[{ required: true, message: 'Please input the description of the course' }]}
           >
@@ -78,7 +79,7 @@ const CourseForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="Price"
+            label="Price ($):"
             name="price"
             rules={[
               {
@@ -86,7 +87,7 @@ const CourseForm = () => {
                 min: 0,
                 message: 'Please input a valid price',
               },
-              { required: true, message: 'Please input the description of the course' },
+              { required: true, message: 'Please input the price of the course ($)' },
             ]}
           >
             <InputNumber precision={2} />
@@ -95,7 +96,7 @@ const CourseForm = () => {
           <Form.List name="creators">
             {(fields, { add, remove }) => (
               <>
-                <Form.Item label="Additional Creators">
+                <Form.Item label="Additional Creators:">
                   {fields.map((field) => (
                     <>
                       <Space align="middle">
@@ -137,7 +138,11 @@ const CourseForm = () => {
             )}
           </Form.List>
 
-          <Form.Item label="Tags" name="tags">
+          <Form.Item
+            label="Tags:"
+            name="tags"
+            rules={[{ required: true, message: 'Please select at least 1 tag' }]}
+          >
             <Select mode="multiple" allowClear>
               {tags.map((tag) => (
                 <Option key={tag} value={tag}>
@@ -147,7 +152,11 @@ const CourseForm = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item label="Fitness level required" name="fitnessLevel">
+          <Form.Item
+            label="Fitness level required:"
+            name="fitnessLevel"
+            rules={[{ required: true, message: 'Please input the required fitness level' }]}
+          >
             <Select allowClear>
               <Option value="beginner">Beginner</Option>
               <Option value="intermediate">Intermediate</Option>
@@ -156,7 +165,7 @@ const CourseForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="Training duration (minutes)"
+            label="Training duration (minutes):"
             name="trainingDuration"
             rules={[
               {
@@ -175,30 +184,59 @@ const CourseForm = () => {
             <InputNumber />
           </Form.Item>
 
-          <Form.Item name="isVirtual" label="Virtual">
+          <Form.Item
+            name="isVirtual"
+            label="Online course ?"
+            rules={[{ required: true, message: 'Please specify whether this course is online' }]}
+          >
             <Radio.Group>
               <Radio value>Yes</Radio>
               <Radio value={false}>No</Radio>
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item name="gym" label="Requires gym access">
+          <Form.Item
+            name="gym"
+            label="Requires gym access ?"
+            rules={[
+              {
+                required: true,
+                message: 'Please specify whether this course requires a gym access',
+              },
+            ]}
+          >
             <Radio.Group>
               <Radio value>Yes</Radio>
               <Radio value={false}>No</Radio>
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item label="Training equipment required" name="trainingEquipment">
+          <Form.Item
+            label="Training equipment required:"
+            name="trainingEquipment"
+            rules={[
+              {
+                required: true,
+                message: 'Please specify at least 1 equipment',
+              },
+            ]}
+          >
             <Select mode="multiple" allowClear>
               <Option value="dumbbells">Dumbbells</Option>
               <Option value="barbells">Barbells</Option>
               <Option value="resistanceBands">Resistance Bands</Option>
               <Option value="treadmill">Treadmill</Option>
+              <Option value="cardioMachines">Cardio Machines</Option>
+              <Option value="kettlebells">Kettlebells</Option>
+              <Option value="freeWeights">Free weights</Option>
+              <Option value="battleRopes">Battle Ropes</Option>
+              <Option value="jumRope">Jump rope</Option>
+              <Option value="mats">Training mat</Option>
+              <Option value="abWheel">Ab wheel</Option>
             </Select>
           </Form.Item>
 
-          <Form.Item label="Address" name="address">
+          <Form.Item label="Location (if applicable):" name="address">
             <Input />
           </Form.Item>
 
