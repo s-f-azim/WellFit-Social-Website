@@ -21,17 +21,23 @@ const PostList = ({ posts, renderItem, loading }) => (
 PostList.Item = ({ post, onDelete }) => {
   const DeleteButton = ({ id }) => (
     <Popconfirm title="Are you sure?" onConfirm={() => onDelete(id)} okText="Yes" cancelText="No">
-      <Button type="text" icon={<DeleteOutlined />} danger />
+      <Button role="button" aria-label="delete" type="text" icon={<DeleteOutlined />} danger />
     </Popconfirm>
   );
 
   return (
-    <List.Item key={post._id} actions={[onDelete && <DeleteButton id={post._id} />]}>
+    <List.Item
+      role="listitem"
+      key={post._id}
+      actions={onDelete && [<DeleteButton id={post._id} />]}
+    >
       <List.Item.Meta
         title={
-          <Title level={4}>
-            {post.author.fName} {post.author.lName}
-          </Title>
+          <div>
+            <Title level={4}>
+              {post.author.fName} {post.author.lName}
+            </Title>
+          </div>
         }
         description={<Moment date={post.createdAt} fromNow />}
       />
