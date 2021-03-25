@@ -42,7 +42,7 @@ const SearchBar = () => {
   };
   useEffect(() => {
     searchName();
-  }, [searchType]);
+  }, [searchType, currentPage]);
   const handlePaginationChange = (current, updatedPageSize) => {
     setCurrentPage(current);
     setPageSize(updatedPageSize);

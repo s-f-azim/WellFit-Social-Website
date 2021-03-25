@@ -6,10 +6,58 @@ const Banner2 = () => (
     <div className="inner_banner2">
       <h1 className="cardHeader">Choose what works for you</h1>
       <div className="inner_banner2_boxes">
-        <div className="card inner_banner_content2">Take courses</div>
-        <div className="card inner_banner_content2">Engange with trainers</div>
-        <div className="card inner_banner_content2">Get 1-1 support and advice</div>
-        <div className="card inner_banner_content2">What else??</div>
+        <div className="card inner_banner_content2">
+          <div className="cardImage">
+            <Image src="/Asset_1.svg" height="150px" width="150px" />
+          </div>
+          <div className="cardText">
+            <h3>
+              <b>Take courses</b>
+            </h3>
+          </div>
+        </div>
+        <div className="card inner_banner_content2">
+          <div className="cardImage">
+            <Image src="/Asset_3.svg" height="150px" width="150px" />
+          </div>
+          <div className="cardText">
+            <h3>
+              <b>Engange with trainers</b>
+            </h3>
+          </div>
+        </div>
+        <div className="card inner_banner_content2">
+          <div className="cardImage">
+            <Image src="/Asset_2.svg" height="150px" width="150px" />
+          </div>
+          <div className="cardText">
+            <h3>
+              <b>Get 1-1 support and advice</b>
+            </h3>
+          </div>
+        </div>
+        <div className="card inner_banner_content2">
+          <div className="cardImage">
+            <Image src="/Asset_4.svg" height="150px" width="150px" />
+          </div>
+
+          <div className="cardText">
+            <h3>
+              <b>What else??</b>
+              <span
+                style={{
+                  display: 'inline',
+                  verticalAlign: 'super',
+                  fontSize: '0.8rem',
+                  color: 'brown',
+                }}
+              >
+                Soon&#8482;
+              </span>
+            </h3>
+            <p>Discover something else idk what to put</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
