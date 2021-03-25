@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { Button } from 'antd';
 
 const Banner2 = () => (
   <div className="banner2">

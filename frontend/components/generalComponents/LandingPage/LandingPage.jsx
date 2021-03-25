@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Row, Col, Button } from 'antd';
 import Banner1 from './banner-1';
 import Banner2 from './banner-2';
+import Banner3 from './banner-3';
 import TrendingUsers from '../../userComponents/TrendingUsers';
 
 const LandingText = () => (
@@ -36,6 +37,7 @@ const LandingPage = () => (
   <>
     <Banner1 />
     <Banner2 />
+    <Banner3 />
     <div style={{ padding: '2rem', backgroundColor: 'white' }}>
       <Row>
         <Col md={{ span: 5 }} span={0} />
