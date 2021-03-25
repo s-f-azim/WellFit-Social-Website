@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import {
   AntDesignOutlined,
   SettingOutlined,
-  HistoryOutlined,
   EditOutlined,
   LogoutOutlined,
   CheckOutlined,
