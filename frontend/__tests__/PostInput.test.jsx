@@ -6,13 +6,13 @@ jest.mock('react-player/lazy', () => ({
   canPlay: () => true,
 }));
 
-it('renders the fields', () => {
+it('renders fields', () => {
   render(<PostInput />);
   expect(screen.getByRole('textbox', { name: 'content' })).toBeInTheDocument();
   expect(screen.getByRole('textbox', { name: 'videoUrl' })).toBeInTheDocument();
 });
 
-it('calls onSubmit when form is submitted with valid data', async () => {
+it('calls onSubmit when submitted with valid data', async () => {
   const handleSubmit = jest.fn();
   render(<PostInput onSubmit={handleSubmit} />);
 
@@ -27,5 +27,17 @@ it('calls onSubmit when form is submitted with valid data', async () => {
   expect(videoUrlField).toHaveValue('test');
 
   userEvent.click(postButton);
-  await waitFor(() => expect(handleSubmit).toHaveBeenCalledTimes(1));
+  await waitFor(() =>
+    expect(handleSubmit).toHaveBeenCalledWith({ content: 'test', videoUrl: 'test' })
+  );
+});
+
+it('does not call onSubmit when submitted with invalid data', async () => {
+  const handleSubmit = jest.fn();
+  render(<PostInput onSubmit={handleSubmit} />);
+
+  const postButton = screen.getByRole('button', { name: 'post' });
+  userEvent.click(postButton);
+
+  await waitFor(() => expect(handleSubmit).toHaveBeenCalledTimes(0));
 });
