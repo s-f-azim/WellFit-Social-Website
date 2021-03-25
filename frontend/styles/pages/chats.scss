@@ -55,6 +55,7 @@
 .chat-box {
   padding: 1rem;
   overflow-y: auto;
+  overflow-x: hidden;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -64,6 +65,12 @@
   }
   .chat-bubble.incoming {
     flex-direction: row-reverse;
+    &:last-child {
+      animation: slideFromRight 0.5s;
+    }
+  }
+  .chat-bubble.outgoing:last-child {
+    animation: slideFromLeft 0.5s;
   }
   .chat-bubble {
     width: 100%;
@@ -92,5 +99,25 @@
 @media screen and (max-width: 1024px) {
   .ant-row {
     min-width: 0vw;
+  }
+}
+@keyframes slideFromLeft {
+  0% {
+    margin-left: -20rem;
+    opacity: 0;
+  }
+  100% {
+    margin-left: 0rem;
+    opacity: 1;
+  }
+}
+@keyframes slideFromRight {
+  0% {
+    margin-right: -20rem;
+    opacity: 0;
+  }
+  100% {
+    margin-right: 0rem;
+    opacity: 1;
   }
 }
