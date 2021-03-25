@@ -21,7 +21,6 @@ const PostList = ({ posts, renderItem, loading }) => (
 PostList.Item = ({ post, onDelete, onLike }) => {
   const LikeButton = ({ id }) => (
     <Button
-      role="button"
       aria-label="like"
       type="text"
       onClick={() => onLike(id)}
@@ -32,13 +31,13 @@ PostList.Item = ({ post, onDelete, onLike }) => {
 
   const DeleteButton = ({ id }) => (
     <Popconfirm title="Are you sure?" onConfirm={() => onDelete(id)} okText="Yes" cancelText="No">
-      <Button role="button" aria-label="delete" type="text" icon={<DeleteOutlined />} danger />
+      <Button aria-label="delete" type="text" icon={<DeleteOutlined />} danger />
     </Popconfirm>
   );
 
   return (
     <List.Item
-      role="listitem"
+      aria-label="post"
       key={post._id}
       actions={[onLike && <LikeButton id={post._id} />, onDelete && <DeleteButton id={post._id} />]}
     >

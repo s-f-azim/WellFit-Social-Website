@@ -24,8 +24,8 @@ const UserFeed = () => {
   }, [session]);
 
   const handleSubmit = async (values) => {
-    const response = await createPost(values);
-    setPosts([response.data.data, ...posts]);
+    const post = await createPost(values);
+    setPosts([post, ...posts]);
   };
 
   const handleLike = (postId) => {
@@ -47,7 +47,7 @@ const UserFeed = () => {
         renderItem={(p) => (
           <PostList.Item
             post={p}
-            onLike={user && user._id === p.author._id ? handleLike : undefined}
+            onLike={user && user._id !== p.author._id ? handleLike : undefined}
             onDelete={user && user._id === p.author._id ? handleDelete : undefined}
           />
         )}

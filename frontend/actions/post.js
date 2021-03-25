@@ -1,6 +1,9 @@
 import api from '../services/api';
 
-const createPost = async (values) => api.post('/posts', { ...values });
+const createPost = async (values) => {
+  const res = api.post('/posts', { ...values });
+  return res.data.data;
+};
 
 const getPostsByAuthor = async (id) => {
   const res = await api.get(`/posts/author/${id}`);

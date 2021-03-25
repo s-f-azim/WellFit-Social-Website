@@ -18,7 +18,6 @@ const PostInput = ({ onSubmit }) => {
           rules={[{ required: true, message: 'Please input some content' }]}
         >
           <Input.TextArea
-            role="textbox"
             aria-label="content"
             placeholder="Share some thoughts"
             autoSize={{ minRows: 2, maxRows: 4 }}
@@ -38,17 +37,10 @@ const PostInput = ({ onSubmit }) => {
             },
           ]}
         >
-          <Input role="textbox" aria-label="videoUrl" placeholder="Video URL" />
+          <Input aria-label="videoUrl" placeholder="Video URL" />
         </Form.Item>
 
-        <Button
-          role="button"
-          aria-label="post"
-          type="primary"
-          htmlType="submit"
-          icon={<SendOutlined />}
-          block
-        />
+        <Button aria-label="post" type="primary" htmlType="submit" icon={<SendOutlined />} block />
       </Form>
     </Card>
   );

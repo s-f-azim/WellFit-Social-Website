@@ -15,7 +15,7 @@ const posts = [1, 2, 3, 4].map((n) => ({
 it('renders posts', () => {
   render(<PostList posts={posts} renderItem={(p) => <PostList.Item post={p} />} loading={false} />);
 
-  expect(screen.getAllByRole('listitem')).toHaveLength(posts.length);
+  expect(screen.getAllByRole('listitem', { name: 'post' })).toHaveLength(posts.length);
 
   posts.forEach((post) => {
     expect(screen.getByText(`${post.author.fName} ${post.author.lName}`)).toBeInTheDocument();

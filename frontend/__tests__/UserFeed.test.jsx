@@ -16,14 +16,14 @@ jest.mock('next-auth/client', () => ({
 }));
 
 it('renders post to list when post is submitted', async () => {
-  render(<UserFeed />);
-
   const post = { content: 'test' };
   createPost.mockReturnValueOnce({ _id: '1', content: post.content, author: user });
   getFeedPosts.mockReturnValue([]);
 
+  render(<UserFeed />);
+
   userEvent.type(screen.getByRole('textbox', { name: 'content' }), post.content);
   userEvent.click(screen.getByRole('button', { name: 'post' }));
 
-  await waitFor(() => expect(screen.getAllByRole('listitem')).toHaveLength(1));
+  await waitFor(() => expect(screen.getAllByRole('listitem', { name: 'post' })).toHaveLength(1));
 });
