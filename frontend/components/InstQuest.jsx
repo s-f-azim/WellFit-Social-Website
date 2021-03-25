@@ -4,6 +4,7 @@ import {
   Row,
   Space,
   Input,
+  InputNumber,
   Select,
   Collapse,
   Button,
@@ -121,7 +122,7 @@ const InstQuest = ({ session }) => {
               <Form.Item name="speciality" label="Field of expertise">
                 <Input
                   defaultValue={user.speciality ? user.speciality : null}
-                  placeholder="bodybuilding, Yoga, nutrition..."
+                  placeholder="bodybuilding, yoga, nutrition..."
                 />
               </Form.Item>
 
@@ -160,6 +161,12 @@ const InstQuest = ({ session }) => {
                   </>
                 )}
               </Form.List>
+
+              <br />
+              <br />
+              <Form.Item name="yearsExperience" label="Years of experience:">
+                <InputNumber min={0} />
+              </Form.Item>
             </Panel>
 
             <Panel header={communicationText} key="2">

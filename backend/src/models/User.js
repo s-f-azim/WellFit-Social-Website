@@ -152,6 +152,9 @@ const UserSchema = new mongoose.Schema(
     qualifications: {
       type: [String],
     },
+    yearsExperience: {
+      type: Number,
+    },
     speciality: {
       type: String,
     },
@@ -266,7 +269,7 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-  
+
     following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
     follower: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
     isBanned: {
