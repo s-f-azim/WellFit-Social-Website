@@ -96,7 +96,7 @@ const Profile = () => {
               </Col>
               <Col span={1} />
               <Col className="profile-info">
-                <p style={{ fontSize: '3rem' }}>{session.user.name}</p>
+                <p style={{ fontSize: '2rem' }}>{`${session.user.fName} ${session.user.lName}`}</p>
                 <Space direction="horizontal" size="large" style={{ fontSize: '1.5rem' }}>
                   <p>Followers: 37</p>
                   <p>Following: {session.user.following.length}</p>
