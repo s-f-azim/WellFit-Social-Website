@@ -2,11 +2,11 @@ import { Input, Select, Radio, Pagination } from 'antd';
 import { useEffect, useState } from 'react';
 import { getInstructorsFiltered } from '../actions/user';
 import { getCourses } from '../actions/course';
-import InstructorResults from '../components/Search/InstructorResults';
-import CourseResults from '../components/Search/CourseResults';
+import InstructorResults from '../components/generalComponents/Search/InstructorResults';
+import CourseResults from '../components/generalComponents/Search/CourseResults';
 import equip from '../data/equipment';
-import InstructorFilter from '../components/Search/InstructorFilters';
-import CourseFilter from '../components/Search/CourseFilters';
+import InstructorFilter from '../components/generalComponents/Search/InstructorFilters';
+import CourseFilter from '../components/generalComponents/Search/CourseFilters';
 
 const { Option } = Select;
 const { Search } = Input;

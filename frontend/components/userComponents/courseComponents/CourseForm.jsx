@@ -47,7 +47,7 @@ const CourseForm = () => {
       }
       setError(null);
     } catch (err) {
-      if (err.response.data) setError(err.response.data.error);
+      if (err.response.data) setError('something went wrong');
     }
   };
 

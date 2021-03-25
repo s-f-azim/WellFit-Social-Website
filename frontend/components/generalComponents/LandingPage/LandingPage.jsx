@@ -44,9 +44,6 @@ const LandingPage = () => (
           <LandingImage />
         </Col>
         <Col md={{ span: 10 }} span={0} />
-        <Col md={{ span: 10 }} span={0}>
-          <TrendingUsers />
-        </Col>
       </Row>
       <Row style={{ paddingTop: '2rem' }}>
         <Col lg={{ span: 8 }} span={0} />
