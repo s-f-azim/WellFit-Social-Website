@@ -266,7 +266,7 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-  
+
     following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
     follower: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
     isBanned: {
@@ -319,6 +319,7 @@ UserSchema.pre('save', async function (next) {
 });
 // Geocode and create location field
 UserSchema.pre('save', async function (next) {
+  if (!this.address) next();
   if (this.isModified('address')) {
     const loc = await geocoder.geocode(this.address);
     const {

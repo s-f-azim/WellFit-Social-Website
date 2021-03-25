@@ -1,11 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import Questionnaire from '../components/Questionnaire';
 
-jest.mock('next/router');
-jest.mock('../utils/user', () => {
-  jest.fn();
-});
-
 it('renders the fields', () => {
   render(<Questionnaire />);
 

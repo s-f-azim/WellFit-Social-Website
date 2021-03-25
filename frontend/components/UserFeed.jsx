@@ -1,13 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/client';
-import { Divider, Typography } from 'antd';
+import { Divider } from 'antd';
 import PostInput from './PostInput';
 import PostList from './PostList';
 
 import { createPost, getFeedPosts, deletePost } from '../actions/post';
-
-const { Title } = Typography;
 
 const UserFeed = () => {
   const [session, loading] = useSession();
