@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import PostList from '../components/PostList';
 
 const posts = [1, 2, 3, 4].map((n) => ({
+  _id: `${n}`,
   content: `content ${n}`,
   createdAt: Date.now(),
   author: {

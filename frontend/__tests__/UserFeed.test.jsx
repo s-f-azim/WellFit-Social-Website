@@ -1,18 +1,18 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import UserFeed from '../components/UserFeed';
-import { createPost, getFeedPosts, deletePost } from '../actions/post';
+import { createPost, getFeedPosts } from '../actions/post';
 
 const user = { _id: '1', fName: 'user', lName: 'test' };
+
+jest.mock('next-auth/client', () => ({
+  useSession: () => [{ user }, false],
+}));
 
 jest.mock('../actions/post', () => ({
   createPost: jest.fn(),
   getFeedPosts: jest.fn(),
   deletePost: jest.fn(),
-}));
-
-jest.mock('next-auth/client', () => ({
-  useSession: () => [{ user }, false],
 }));
 
 it('renders post to list when post is submitted', async () => {
@@ -28,7 +28,7 @@ it('renders post to list when post is submitted', async () => {
   await waitFor(() => expect(screen.getAllByRole('listitem', { name: 'post' })).toHaveLength(1));
 });
 
-it('removes post when delete button is clicked', async () => {
+it('deletes post when delete button is clicked', async () => {
   const post = { _id: '1', content: 'content', author: user };
   getFeedPosts.mockReturnValue([post]);
 

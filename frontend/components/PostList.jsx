@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { List, Button, Popconfirm, Typography, Card } from 'antd';
 import { DeleteOutlined, HeartOutlined } from '@ant-design/icons';
-import { useEffect } from 'react';
 import Moment from 'react-moment';
 import VideoPlayer from './VideoPlayer';
 

@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Questionnaire from '../components/Questionnaire';
 
 it('renders the fields', () => {
@@ -12,15 +12,4 @@ it('renders the fields', () => {
   expect(
     screen.getByLabelText('What training equipment do you have available?')
   ).toBeInTheDocument();
-});
-
-it('calls updateUser when submit clicked', async () => {
-  render(<Questionnaire />);
-
-  fireEvent.click(screen.getByText('NEXT'));
-  fireEvent.click(screen.getByText('NEXT'));
-  fireEvent.click(screen.getByText('NEXT'));
-  fireEvent.click(screen.getByText('NEXT'));
-
-  await screen.findByText('SUBMIT');
 });
