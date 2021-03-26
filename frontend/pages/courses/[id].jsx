@@ -177,4 +177,4 @@ export const getStaticPaths = async () => {
   return { fallback: true, paths };
 };
 
-export default course;
+export default Course;

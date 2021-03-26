@@ -1,34 +1,82 @@
 /* eslint-disable no-underscore-dangle */
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/client';
+import { Card } from 'antd';
 import ReviewList from './ReviewList';
 import ReviewInput from './ReviewInput';
 
-export default function Review({ reviewUser }) {
-  const [session] = useSession();
-  let user;
-  const [review, setReview] = useState();
-  let { reviews } = reviewUser;
+import {
+  createUserReview,
+  getUserReviews,
+  deleteUserReview,
+  createCourseReview,
+  getCourseReviews,
+  deleteCourseReview,
+} from '../actions/review';
+
+const Review = ({ getReviews, onSubmit, onDelete }) => {
+  const [session, loading] = useSession();
+  const [user, setUser] = useState();
+  const [reviews, setReviews] = useState();
+  const [hasReviewed, setHasReviewed] = useState(false);
 
   useEffect(() => {
-    if (session && session.user) {
-      user = session.user;
-      setReview(reviews.find(({ reviewer }) => reviewer._id === user._id));
-      reviews = reviews.filter(({ reviewer }) => reviewer._id !== user._id);
+    async function fetchData() {
+      setReviews(await getReviews());
     }
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (session) setUser(session.user);
+  }, [session]);
+
+  useEffect(() => {
+    setHasReviewed(user && reviews && reviews.find((r) => r.author._id === user._id));
+  }, [user, reviews]);
+
+  const handleSubmit = async (values) => {
+    const response = await onSubmit(values);
+    setReviews([response.data.data, ...reviews]);
+  };
+
+  const handleDelete = () => {
+    onDelete();
+    setReviews(reviews.filter((r) => r.author._id !== user._id));
+  };
+
   return (
-    <>
-      <div>
-        <ReviewList>
-          {review && <ReviewList.Item review={review} onDelete={() => setReview(null)} showMenu />}
-          {reviews.map((r) => (
-            <ReviewList.Item review={r} showMenu={false} />
-          ))}
-        </ReviewList>
-        {user && !review && <ReviewInput reviewedId={reviewUser._id} onSubmit={setReview} />}
-      </div>
-    </>
+    <Card>
+      <ReviewList
+        reviews={reviews}
+        loading={loading}
+        renderItem={(r) => (
+          <ReviewList.Item
+            review={r}
+            onDelete={user && user._id === r.author._id ? handleDelete : undefined}
+          />
+        )}
+      />
+      {user && !hasReviewed && <ReviewInput onSubmit={handleSubmit} />}
+    </Card>
   );
-}
+};
+
+const UserReview = ({ id }) => {
+  <Review
+    getReviews={() => getUserReviews(id)}
+    onSubmit={(values) => createUserReview(id, values)}
+    onDelete={() => deleteUserReview(id)}
+  />;
+};
+
+const CourseReview = ({ id }) => (
+  <Review
+    getReviews={() => getCourseReviews(id)}
+    onSubmit={(values) => createCourseReview(id, values)}
+    onDelete={() => deleteCourseReview(id)}
+  />
+);
+
+export { CourseReview, UserReview };
