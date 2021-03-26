@@ -12,7 +12,7 @@ import {
   createCourseReview,
   getCourseReviews,
   deleteCourseReview,
-} from '../actions/review';
+} from '../../../actions/review';
 
 const Review = ({ getReviews, onSubmit, onDelete }) => {
   const [session, loading] = useSession();

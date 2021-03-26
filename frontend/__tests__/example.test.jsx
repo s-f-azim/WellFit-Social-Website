@@ -74,7 +74,7 @@ it('renders the component', () => {
   expect(screen.getByRole('button', { name: 'post' })).toBeInTheDocument();
 
   // you can assign components to variables
-  const ageField = expect(screen.getByRole('textbox', { name: 'age' })).toBeInTheDocument();
+  const ageField = screen.getByRole('textbox', { name: 'age' });
 
   // refer by label
   expect(screen.getByLabelText('What is your age?')).toBeInTheDocument();
@@ -107,12 +107,6 @@ it('submits the form', async () => {
   // type something
   userEvent.type(screen.getByRole('textbox', { name: 'age' }), '10');
   expect(screen.getByRole('textbox', { name: 'age' })).toHaveValue('10');
-
-  // this does not work!
-  const ageField = expect(screen.getByRole('textbox', { name: 'age' })).toBeInTheDocument();
-  userEvent.type(ageField, '10');
-  // expect(ageField).toHaveValue('10'); // test fails if this is uncommented
-  // I think it's because it is referring to the old ageField and not the re-rendered one
 
   // click the button to submit
   userEvent.click(screen.getByRole('button', { name: 'post' }));
