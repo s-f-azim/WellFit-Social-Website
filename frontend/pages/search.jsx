@@ -48,6 +48,7 @@ const SearchBar = () => {
     setCurrentPage(current);
     setPageSize(updatedPageSize);
   };
+
   /* can be replaced by data/tags  */
   const tags = [
     'GetFit',
