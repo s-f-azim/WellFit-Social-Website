@@ -1,4 +1,5 @@
-import { CheckOutlined, QuestionOutlined } from '@ant-design/icons';
+import { CheckOutlined, QuestionOutlined,
+	InstagramOutlined,GoogleOutlined,FacebookOutlined,TwitterOutlined} from '@ant-design/icons';
 import { useState } from 'react';
 import Router from 'next/router';
 import {
@@ -20,6 +21,7 @@ import updateUser from '../actions/user';
 import InstQuest from '../components/userComponents/questionnaires/InstQuest';
 import AccessDenied from '../components/generalComponents/AccessDenied';
 import ClientQuest from '../components/userComponents/questionnaires/clientQuest';
+import API from '../config';
 
 const { Option } = Select;
 
@@ -58,6 +60,26 @@ const tags = [
   'Workout',
 ];
 
+const facebookOuthHandler = (e) => {
+  e.preventDefault();
+  window.open(`${API}/users/oauth/facebook`, '_self');
+
+};
+const googleOuthHandler = (e) => {
+  e.preventDefault();
+  window.open(`${API}/users/oauth/google`, '_self');
+
+};
+// Insta oauth login
+const instaOauthHandler = (e) => {
+  e.preventDefault();
+  window.open(`${API}/users/oauth/instagram`, '_self');
+};
+
+ const twitterOauthHandler = (e) => {
+  e.preventDefault();
+  window.open(`${API}/users/oauth/twitter`, '_self');
+};
 const editProfilePage = () => {
   const [session, loading] = useSession();
 
@@ -290,6 +312,33 @@ const editProfilePage = () => {
                   </Form.Item>
                 </Form>
               </TabPane>
+              <TabPane tab="Link Social Media" key="4">
+								<h1>Add/Edit basic profile information</h1>
+								
+						    <Form.Item className="fbLogin" {...tailFormItemLayout}>
+						    	<Button type="primary" onClick={facebookOuthHandler}>
+						        <FacebookOutlined />
+						    	</Button>
+						    </Form.Item>
+						    
+						    <Form.Item className="instaLogin" {...tailFormItemLayout}>
+		          		<Button type="primary" onClick={instaOauthHandler}>
+		            		<InstagramOutlined />
+		          		</Button>
+		        		</Form.Item>
+		        		
+								<Form.Item className="googleLogin" {...tailFormItemLayout}>
+		          		<Button type="primary" onClick={googleOuthHandler}>
+		            		<GoogleOutlined />
+		          		</Button>
+		        		</Form.Item>
+		        		
+		        		<Form.Item className="twitterLogin" {...tailFormItemLayout}>
+		          		<Button type="primary" onClick={twitterOauthHandler}>
+		            		<TwitterOutlined />
+		          		</Button>
+		        		</Form.Item>
+		        	</TabPane>
             </Tabs>
           </Card>
         </Row>
