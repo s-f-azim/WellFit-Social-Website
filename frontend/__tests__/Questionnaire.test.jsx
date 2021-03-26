@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import { render, screen, fireEvent } from '@testing-library/react';
-import Questionnaire from '../components/userComponents/questionnaires/Questionnaire';
-=======
 import { render, screen } from '@testing-library/react';
-import Questionnaire from '../components/Questionnaire';
->>>>>>> main
+import Questionnaire from '../components/userComponents/questionnaires/Questionnaire';
 
 it('renders the fields', () => {
   render(<Questionnaire />);
