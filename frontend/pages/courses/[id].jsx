@@ -12,7 +12,7 @@ import checkout from '../../actions/payment';
 
 const columnStyle = { width: 350, height: 'auto' };
 
-const course = ({ course }) => {
+const Course = ({ course }) => {
   const router = useRouter();
   if (router.isFallback) {
     return <Skeleton active />;
@@ -20,6 +20,11 @@ const course = ({ course }) => {
   const [session, loading] = useSession();
 
   if (typeof window !== 'undefined' && loading) return null;
+
+  // state to indicate whether or not the user's wish list has been fetched yet
+  const [wishListFetched, setWishListFetched] = useState(false);
+  // the courses in the user's wish list
+  const [courses, setCourses] = useState({});
 
   if (course) {
     useEffect(async () => {
@@ -34,6 +39,7 @@ const course = ({ course }) => {
         }
       }
     }, []);
+
     // Add this course to the user's wish list and then remove the add to wish list button
     function addToWishList() {
       /* eslint-disable no-underscore-dangle */
@@ -45,10 +51,6 @@ const course = ({ course }) => {
       });
       ReactDOM.render(<></>, document.getElementById('wishListButton'));
     }
-    // state to indicate whether or not the user's wish list has been fetched yet
-    const [wishListFetched, setWishListFetched] = useState(false);
-    // the courses in the user's wish list
-    const [courses, setCourses] = useState({});
 
     // handle the payment
     const handleClick = async (e) => {
@@ -102,7 +104,7 @@ const course = ({ course }) => {
           />
         </Col>
         <Col md={6}>
-          <Space direction="vertical" wrap>
+          <Space direction="vertical" wrap={true}>
             <Typography.Title
               level={1}
               style={{ fontSize: '2.3rem', fontFamily: 'Poppins', ...columnStyle }}
@@ -135,7 +137,7 @@ const course = ({ course }) => {
                  * the wish list, display nothing. If this course is not in the wish list, display a
                  * button to add the course to the wish list.
                  */}
-                {session && wishListFetched ? (
+                {wishListFetched ? (
                   courses.find((c) => c._id === course._id) ? null : (
                     <Button
                       type="primary"
@@ -177,4 +179,4 @@ export const getStaticPaths = async () => {
   return { fallback: true, paths };
 };
 
-export default course;
+export default Course;

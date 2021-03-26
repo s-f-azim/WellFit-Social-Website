@@ -313,10 +313,23 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-UserSchema.virtual('reviews', {
-  ref: 'Review',
+// connect the creator of courses to the user (ex user.courses)
+UserSchema.virtual('courses', {
+  ref: 'Course',
   localField: '_id',
-  foreignField: 'reviewed',
+  foreignField: 'creators',
+});
+
+UserSchema.virtual('reviews', {
+  ref: 'UserReview',
+  localField: '_id',
+  foreignField: 'user',
+});
+
+UserSchema.virtual('posts', {
+  ref: 'Post',
+  localField: '_id',
+  foreignField: 'author',
 });
 
 // connect the creator of requests to the user
@@ -342,6 +355,7 @@ UserSchema.pre('save', async function (next) {
 });
 // Geocode and create location field
 UserSchema.pre('save', async function (next) {
+  if (!this.address) next();
   if (this.isModified('address')) {
     const loc = await geocoder.geocode(this.address);
     const {
