@@ -39,6 +39,13 @@
   column-gap: 1rem;
   grid-template-columns: repeat(12, 1fr);
 }
+.banner3_screen {
+  display: block;
+  padding-left: 8rem;
+}
+.banner3_screen > div {
+  display: block;
+}
 .infoCard {
   grid-column: auto/span 6;
 }
@@ -48,6 +55,7 @@
   }
   .inner_banner3_image {
     grid-column: auto/span 12;
+    display: none;
   }
   .ant-btn.banner3_button {
     min-width: 10rem;

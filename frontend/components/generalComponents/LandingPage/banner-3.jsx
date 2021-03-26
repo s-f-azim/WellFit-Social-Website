@@ -1,4 +1,5 @@
 import { Button } from 'antd';
+import Image from 'next/image';
 import { CreditCardOutlined, DislikeOutlined } from '@ant-design/icons';
 
 const Banner3 = () => (
@@ -36,7 +37,11 @@ const Banner3 = () => (
           </div>
         </div>
       </div>
-      <div className="inner_banner3_image">This will be an image maybe of screenshot?</div>
+      <div className="inner_banner3_image">
+        <div className="banner3_screen">
+          <Image src="/mediai_mage.png" width="231px" height="500px" />
+        </div>
+      </div>
     </div>
   </div>
 );
