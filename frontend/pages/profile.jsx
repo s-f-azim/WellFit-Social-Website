@@ -301,14 +301,14 @@ const ProfilePage = (props) => {
                   </Row>
                 </TabPane>
                 <TabPane tab="Following" key="2">
-									<GetFollow />
-								</TabPane>
-								<TabPane tab="Wishlist" key="3">
-									<WishList />
-								</TabPane>
-								<TabPane tab="Suggested Instructors" key="4">
-									<Suggestions />
-								</TabPane>
+			<GetFollow />
+		</TabPane>
+		<TabPane tab="Wishlist" key="3">
+			<WishList />
+		</TabPane>
+		TabPane tab="Suggested Instructors" key="4">
+			<Suggestions />
+		</TabPane>
               </Tabs>
             </Card>
           </Row>
