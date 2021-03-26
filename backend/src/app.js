@@ -15,6 +15,7 @@ import courseReviewRoutes from './routes/courseReview.js';
 import postRoutes from './routes/post.js';
 import requestRoutes from './routes/request.js';
 import conversationRoutes from './routes/conversation.js';
+import paymentRoutes from './routes/payment.js';
 import passport from '../config/passport-setup.js';
 
 // connect to the database
@@ -54,6 +55,7 @@ app.use('/api/courses/:id/reviews', courseReviewRoutes);
 app.use('/api/requests', requestRoutes);
 app.use('/api/conversation', conversationRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/payment', paymentRoutes);
 
 // 404 if the route doesn't match
 // eslint-disable-next-line no-unused-vars

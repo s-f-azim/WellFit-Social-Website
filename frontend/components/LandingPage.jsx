@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Row, Col, Button } from 'antd';
+import TrendingUsers from '../components/TrendingUsers';
 
 const LandingText = () => (
   <div
@@ -37,12 +38,18 @@ const LandingPage = () => (
         <Col xs={{ span: 24 }} md={{ span: 4 }} style={{}}>
           <LandingText />
         </Col>
-        <Col md={{ span: 5 }} span={0} />
+        <Col md={{ span: 2 }} span={0} />
         <Col md={{ span: 10 }} xs={{ span: 24 }}>
           <LandingImage />
         </Col>
+        <Col md={{span: 10}} span={0}/>
+        <Col md={{ span: 10}} span={0}>
+          <TrendingUsers />
+        </Col>
+        
+        
       </Row>
-      <Row style={{ paddingTop: '1rem' }}>
+      <Row style={{ paddingTop: '2rem' }}>
         <Col lg={{ span: 8 }} span={0} />
         <Col lg={{ span: 8 }} span={24} style={{ fontSize: '1.5rem' }}>
           <Row
