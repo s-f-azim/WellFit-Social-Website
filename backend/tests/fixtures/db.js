@@ -101,14 +101,15 @@ const userFive = {
   role: 'admin',
 };
 
-<<<<<<< HEAD
-const reviewOne = {
-  _id: reviewOneId,
-  reviewed: userOneId,
-  reviewer: userTwoId,
-  rate: 5,
-  comment: 'reviewOne',
-};
+// const reviewOneId = new mongoose.Types.ObjectId();
+
+// const reviewOne = {
+//   _id: reviewOneId,
+//   reviewed: userOneId,
+//   reviewer: userTwoId,
+//   rate: 5,
+//   comment: 'reviewOne',
+// };
 
 // create Instructors
 const instructorOneId = new mongoose.Types.ObjectId();
@@ -204,8 +205,6 @@ const instructorSix = {
   role: 'instructor',
 };
 
-=======
->>>>>>> main
 // create courses
 
 const courseOne = {
@@ -422,7 +421,6 @@ const setupInstructors = async () => {
 };
 
 export {
-  setupDatabase,
   userOne,
   userTwo,
   userThree,
