@@ -1,4 +1,5 @@
 import { Input, Select, Radio, Pagination } from 'antd';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getInstructorsFiltered } from '../actions/user';
 import { getCourses } from '../actions/course';
@@ -22,7 +23,7 @@ const SearchBar = () => {
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchType, setSearchType] = useState('Instructors');
-
+  const router = useRouter();
   const searchName = async () => {
     let response = 'Nothing';
     if (searchType === 'Instructors') {
@@ -95,7 +96,7 @@ const SearchBar = () => {
           onChange={(e) => {
             setSearchType(e.target.value);
           }}
-          defaultValue="Instructors"
+          defaultValue={router.query.tab ? router.query.tab : 'Instructors'}
           size="large"
         >
           <Radio.Button value="Instructors">Instructors</Radio.Button>

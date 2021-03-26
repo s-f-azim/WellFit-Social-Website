@@ -5,7 +5,6 @@ import {
   UserOutlined,
   MenuOutlined,
   CloseOutlined,
-  ContactsOutlined,
   ProfileOutlined,
   CheckCircleTwoTone,
   SearchOutlined,
@@ -30,9 +29,9 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
   const courseMenu = (
     <Menu>
       <Menu.Item>
-        <Link href="/courses">
+        <Link href={{ pathname: '/search', query: { tab: 'Courses' } }}>
           <Button type="text" className="menuButton" onClick={closeMobileMenu}>
-            <SearchOutlined /> Browse
+            <SearchOutlined /> Find
           </Button>
         </Link>
       </Menu.Item>
@@ -58,7 +57,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
                 </Button>
               </Dropdown>
             ) : (
-              <Link href="/courses">
+              <Link href="/search">
                 <Button type="link" className="menuButton">
                   <ProfileOutlined /> Courses
                 </Button>
@@ -68,8 +67,8 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
           <li className="option" onClick={closeMobileMenu}>
             <Link href="/search">
               <Button type="link" className="menuButton">
-                <ContactsOutlined />
-                Instructors
+                <SearchOutlined />
+                Browse
               </Button>
             </Link>
           </li>
