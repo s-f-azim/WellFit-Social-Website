@@ -11,7 +11,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import React, { useState } from 'react';
-import { Button, Row, Col, Card, Tabs, Rate } from 'antd';
+import { Button, Row, Card, Tabs, Rate } from 'antd';
 import '../styles/pages/profile.scss';
 import { useSession, getSession } from 'next-auth/client';
 import { Timeline } from 'react-twitter-widgets';
