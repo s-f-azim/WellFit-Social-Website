@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/client';
 import PostList from './PostList';
 
-import { getPostsByAuthor, deletePost } from '../actions/post';
+import { getPostsByAuthor, deletePost } from '../../../actions/post';
 
 const UserFeed = ({ id }) => {
   const [session, loading] = useSession();

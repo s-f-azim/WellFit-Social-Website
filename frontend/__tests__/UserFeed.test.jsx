@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import UserFeed from '../components/UserFeed';
+import UserFeed from '../components/userComponents/postComponents/UserFeed';
 import { createPost, getFeedPosts } from '../actions/post';
 
 const user = { _id: '1', fName: 'user', lName: 'test' };

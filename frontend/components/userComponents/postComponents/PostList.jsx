@@ -2,7 +2,7 @@
 import { List, Button, Popconfirm, Typography, Card } from 'antd';
 import { DeleteOutlined, HeartOutlined } from '@ant-design/icons';
 import Moment from 'react-moment';
-import VideoPlayer from './VideoPlayer';
+import VideoPlayer from '../../generalComponents/VideoPlayer';
 
 const { Title, Paragraph } = Typography;
 

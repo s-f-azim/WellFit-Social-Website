@@ -5,7 +5,7 @@ import { Divider } from 'antd';
 import PostInput from './PostInput';
 import PostList from './PostList';
 
-import { createPost, getFeedPosts, deletePost } from '../actions/post';
+import { createPost, getFeedPosts, deletePost } from '../../../actions/post';
 
 const UserFeed = () => {
   const [session, loading] = useSession();
