@@ -2,13 +2,14 @@ import { Row, Col, Button, Typography, Space, Divider, Rate, notification, Skele
 import { CheckOutlined } from '@ant-design/icons';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
-import api from '../../services/api';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import NotFound from '../../components/404';
 import { useSession } from 'next-auth/client';
+import NotFound from '../../components/generalComponents/404';
+import api from '../../services/api';
 import stripePromise from '../../services/stripe';
 import checkout from '../../actions/payment';
+
 const columnStyle = { width: 350, height: 'auto' };
 
 const course = ({ course }) => {
@@ -17,10 +18,6 @@ const course = ({ course }) => {
     return <Skeleton active />;
   }
   const [session, loading] = useSession();
-  // state to indicate whether or not the user's wish list has been fetched yet
-  const [wishListFetched, setWishListFetched] = useState(false);
-  // the courses in the user's wish list
-  const [courses, setCourses] = useState({});
 
   if (typeof window !== 'undefined' && loading) return null;
 
@@ -48,6 +45,10 @@ const course = ({ course }) => {
       });
       ReactDOM.render(<></>, document.getElementById('wishListButton'));
     }
+    // state to indicate whether or not the user's wish list has been fetched yet
+    const [wishListFetched, setWishListFetched] = useState(false);
+    // the courses in the user's wish list
+    const [courses, setCourses] = useState({});
 
     // handle the payment
     const handleClick = async (e) => {
@@ -101,7 +102,7 @@ const course = ({ course }) => {
           />
         </Col>
         <Col md={6}>
-          <Space direction="vertical" wrap={true}>
+          <Space direction="vertical" wrap>
             <Typography.Title
               level={1}
               style={{ fontSize: '2.3rem', fontFamily: 'Poppins', ...columnStyle }}
@@ -168,13 +169,11 @@ export const getStaticProps = async ({ params }) => {
 // each page will be at url/courses/id
 export const getStaticPaths = async () => {
   const { data } = await api.get(`/courses?limit=50`);
-  const paths = data.data.map((course) => {
-    return {
-      params: {
-        id: course._id.toString(),
-      },
-    };
-  });
+  const paths = data.data.map((course) => ({
+    params: {
+      id: course._id.toString(),
+    },
+  }));
   return { fallback: true, paths };
 };
 

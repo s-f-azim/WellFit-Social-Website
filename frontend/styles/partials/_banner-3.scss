@@ -1,0 +1,65 @@
+.banner3 {
+  padding-top: 3rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+.inner_banner3 {
+  width: 100%;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+  max-width: 1024px;
+  margin-right: auto;
+  margin-left: auto;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(12, 1fr);
+}
+.inner_banner3_content {
+  grid-column: auto/span 6;
+}
+.inner_banner3_content h1 {
+  font-size: 2rem;
+  font-weight: 400;
+}
+.inner_banner3_content p {
+}
+.ant-btn.banner3_button {
+  margin-top: 0.8rem;
+  min-width: 8rem;
+  background-color: $secondary-color;
+  font-family: 'Poppins';
+  font-size: 0.8rem;
+}
+.inner_banner3_image {
+  grid-column: auto/span 6;
+}
+.infoGrid {
+  padding-top: 3rem;
+  display: grid;
+  column-gap: 1rem;
+  grid-template-columns: repeat(12, 1fr);
+}
+.banner3_screen {
+  display: block;
+  padding-left: 8rem;
+}
+.banner3_screen > div {
+  display: block;
+}
+.infoCard {
+  grid-column: auto/span 6;
+}
+@media only screen and (max-width: 780px) {
+  .inner_banner3_content {
+    grid-column: auto/span 12;
+  }
+  .inner_banner3_image {
+    grid-column: auto/span 12;
+    display: none;
+  }
+  .ant-btn.banner3_button {
+    min-width: 10rem;
+    background-color: $secondary-color;
+    font-family: 'Poppins';
+  }
+}

@@ -2,9 +2,9 @@ import { Space, Button, Row, Col } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
-import Suggestions from '../components/SuggestedInstructors';
-import AccessDenied from '../components/AccessDenied';
-import WishList from '../components/WishList';
+import Suggestions from '../components/userComponents/SuggestedInstructors';
+import AccessDenied from '../components/generalComponents/AccessDenied';
+import WishList from '../components/userComponents/WishList';
 
 const Profile = () => {
   const [session, loading] = useSession();

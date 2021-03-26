@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
 import { Card, Space, Button } from 'antd';
-import FollowButton from '../components/FollowButton';
-import GetFollow from '../components/GetFollow';
-import { getFollowingList, addingFollowUser, getFollowerList } from '../actions/user';
+import FollowButton from '../components/userComponents/FollowButton';
+import AccessDenied from '../components/generalComponents/AccessDenied';
+import GetFollow from '../components/userComponents/GetFollow';
+import {
+  getFollowingList,
+  addingFollowUser,
+  getFollowerList,
+  getSuggestedInstructors,
+} from '../actions/user';
+import TrendingUsers from '../components/userComponents/TrendingUsers';
 
 export default function FollowPage() {
   const [session, loading] = useSession();
@@ -23,22 +30,18 @@ export default function FollowPage() {
     }, []);
 
     const addFollowUser = async () => {
-      await addingFollowUser('6050ca769110b216e6e638c9');
+      console.log('clicked');
     };
 
     return (
       <>
         <br />
-        <Card>
-          <Space>
-            <h2>Default Follow Button</h2>
-            <br />
-            <Button type="primary" onClick={addFollowUser}>
-              Follow
-            </Button>
-            {/* <FollowButton userId= /> */}
-          </Space>
-        </Card>
+
+        <Space>
+          <TrendingUsers />
+          {session.user.role === 'client' && <getSuggestedInstructors />}
+        </Space>
+
         <br />
         <Card>
           <h2>Following List</h2>
@@ -52,7 +55,7 @@ export default function FollowPage() {
       </>
     );
   }
-  return <p>Access Denied</p>;
+  return <AccessDenied />;
   // Instead of the hard coded userID there should be a programmed get userID from visiting profile
 }
 

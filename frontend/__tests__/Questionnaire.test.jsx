@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Questionnaire from '../components/Questionnaire';
+import Questionnaire from '../components/userComponents/questionnaires/Questionnaire';
 
 jest.mock('next/router');
 jest.mock('../utils/user', () => {

@@ -1,0 +1,38 @@
+.banner4 {
+  padding-top: 2rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  background-color: $two-tone;
+}
+.inner_banner4 {
+  width: 100%;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+  max-width: 1024px;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+}
+.inner_banner4 h1 {
+  font-family: 'Poppins';
+}
+.banner4_boxes {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 3rem;
+}
+.instructorCard {
+  grid-column: auto/span 4;
+}
+.instructorCard Card {
+  background-color: white;
+}
+@media only screen and (max-width: 780px) {
+  .instructorCard {
+    grid-column: auto/span 12;
+  }
+  .banner4_boxes {
+    grid-gap: 0rem;
+    row-gap: 3rem;
+  }
+}

@@ -273,6 +273,66 @@ const instagramOauth = asyncHandler(async (req, res) => {
 
 /**
  * @async
+ * @desc get Instructors that match filters
+ * @route GET /api/users/isntructors?=screenname=&&age=&&gender=&&tags=&&offset=&&limit=
+ * @access public
+ */
+const getInstructors = asyncHandler(async (req, res) => {
+  /* get Age from birthday to filter by age */
+  const getAge = (birthday) =>
+    (new Date() - birthday) / 1000 / 60 / 60 / 24 / 365;
+  const s = req.query.q;
+  const regex = new RegExp(s, 'i');
+  /* get all instructors that match given filters */
+  let instr = await User.find({
+    role: 'instructor',
+    ...(req.query.q ? { screenname: { $regex: regex } } : {}),
+    ...(req.query.gender ? { gender: req.query.gender } : {}),
+    ...(req.query.tags ? { tags: { $all: req.query.tags.split(',') } } : {}),
+  });
+  /* check if age is present and filter 
+      age>62 returns all older than 62
+      age=0 returns all
+      otherwise return instructors within age range of +-5 */
+  if (req.query.age) {
+    if (parseInt(req.query.age, 10) !== 0) {
+      if (parseInt(req.query.age, 10) >= 62) {
+        instr = instr.filter((inst) => {
+          if (inst.birthday) {
+            return getAge(inst.birthday) >= 62;
+          }
+          return false;
+        });
+      } else {
+        instr = instr.filter((inst) => {
+          if (inst.birthday) {
+            return (
+              getAge(inst.birthday) >= parseInt(req.query.age, 10) - 5 &&
+              getAge(inst.birthday) <= parseInt(req.query.age, 10) + 5
+            );
+          }
+          return false;
+        });
+      }
+    }
+  }
+  /* save length and paginate according to offset and limit */
+  const TotalC = instr.length;
+  if (req.query.pageSize && req.query.offset) {
+    instr = instr.slice(
+      parseInt(req.query.offset, 10),
+      parseInt(req.query.offset, 10) + parseInt(req.query.pageSize, 10)
+    );
+  }
+  res.status(200).send({
+    success: true,
+    total: TotalC,
+    count: instr.length,
+    data: instr,
+  });
+});
+/**
+ * @async
  * @desc upload images
  * @route POST /api/users/avatar
  * @access private
@@ -385,7 +445,7 @@ const getTrendingUsers = asyncHandler(async (req, res) => {
     success: true,
     data: users
       .sort((u1, u2) => u2.follower.length - u1.follower.length)
-      .slice(0, 10),
+      .slice(0, req.query.limit || 10),
   });
 });
 
@@ -428,6 +488,7 @@ const updateInterestedUsers = asyncHandler(async (req, res) => {
 
 export {
   getUsers,
+  getInstructors,
   getUsersWithinRadius,
   createUser,
   loginUser,

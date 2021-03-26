@@ -126,6 +126,100 @@ const reviewOne = {
   comment: 'reviewOne',
 };
 
+// create Instructors
+const instructorOneId = new mongoose.Types.ObjectId();
+
+const instructorOne = {
+  _id: instructorOneId,
+  email: 'testEmail32@test.com',
+  password: '12345678',
+  fName: 'Alex',
+  lName: 'Test2',
+  gender: 'Male',
+  birthday: new Date(2001, 2, 23),
+  nickname: 'testicles',
+  bio: 'I have no balls',
+  role: 'instructor',
+  tags: ['Cardio'],
+};
+
+const instructorTwoId = new mongoose.Types.ObjectId();
+
+const instructorTwo = {
+  _id: instructorTwoId,
+  email: 'test20@test.com',
+  password: 'password@123',
+  fName: 'Dave',
+  lName: 'Test2',
+  gender: 'Female',
+  birthday: new Date(1948, 2, 23),
+  nickname: 'Notesticles',
+  bio: 'I have many balls',
+  role: 'instructor',
+};
+
+const instructorThreeId = new mongoose.Types.ObjectId();
+
+const instructorThree = {
+  _id: instructorThreeId,
+  email: 'test6@test.com',
+  password: '12345678',
+  fName: 'Emilia',
+  lName: 'Test2',
+  gender: 'Non-Binary',
+  birthday: new Date(2000, 9, 20),
+  nickname: 'testicles',
+  bio: 'I have no balls',
+  role: 'instructor',
+  tags: ['Cycling', 'Sweat'],
+};
+
+const instructorFourId = new mongoose.Types.ObjectId();
+
+const instructorFour = {
+  _id: instructorFourId,
+  email: 'test7@test.com',
+  password: 'password@123',
+  fName: 'Mandela',
+  lName: 'Test2',
+  gender: 'Female',
+  birthday: new Date(1976, 2, 25),
+  nickname: 'Notesticles',
+  bio: 'I have many balls',
+  role: 'instructor',
+  tags: ['Cycling'],
+};
+
+const instructorFiveId = new mongoose.Types.ObjectId();
+
+const instructorFive = {
+  _id: instructorFiveId,
+  email: 'test8@test.com',
+  password: '12345678',
+  fName: 'Anna',
+  lName: 'Test2',
+  gender: 'Female',
+  birthday: new Date(1988, 2, 25),
+  nickname: 'testicles',
+  bio: 'I have no balls',
+  role: 'instructor',
+};
+
+const instructorSixId = new mongoose.Types.ObjectId();
+
+const instructorSix = {
+  _id: instructorSixId,
+  email: 'test71@test.com',
+  password: 'password@123',
+  fName: 'Kate',
+  lName: 'Test2',
+  gender: 'Female',
+  birthday: new Date(1987, 2, 25),
+  nickname: 'Notesticles',
+  bio: 'I have many balls',
+  role: 'instructor',
+};
+
 // create courses
 
 const courseOne = {
@@ -148,6 +242,32 @@ const courseTwo = {
   creators: [userOneId],
   price: 0,
   tags: ['Cardio'],
+  trainingEquipment: ['treadmill'],
+};
+
+const courseThreeId = new mongoose.Types.ObjectId();
+
+const courseThree = {
+  _id: courseThreeId,
+  title: 'Course 3',
+  description: 'lose your weight today',
+  address: 'E20 1GS',
+  creators: [userFiveId],
+  price: 0,
+  tags: ['Cardio', 'FitFam'],
+};
+
+const courseFourId = new mongoose.Types.ObjectId();
+
+const courseFour = {
+  _id: courseFourId,
+  title: 'Course 4',
+  description: 'lose your weight today',
+  address: 'E20 1GS',
+  creators: [userFourId],
+  price: 0,
+  tags: ['Cardio', 'FitFam'],
+  trainingEquipment: ['treadmill'],
 };
 const conversationOneId = new mongoose.Types.ObjectId();
 const conversationOne = {
@@ -199,7 +319,15 @@ const requestFour = {
 
 const reviews = [reviewOne];
 const users = [userOne, userTwo, userThree, userFour, userFive, userSix];
-const courses = [courseOne, courseTwo];
+const instructors = [
+  instructorOne,
+  instructorTwo,
+  instructorThree,
+  instructorFour,
+  instructorFive,
+  instructorSix,
+];
+const courses = [courseOne, courseTwo, courseThree, courseFour];
 const requests = [requestOne, requestTwo, requestThree, requestFour];
 const conversations = [conversationOne, conversationTwo];
 // token
@@ -245,6 +373,17 @@ const setupDatabase = async () => {
     await newConv.save();
   }
 };
+const instTokens = [];
+const setupInstructors = async () => {
+  await User.deleteMany({});
+  // eslint-disable-next-line no-restricted-syntax
+  for (const i of instructors) {
+    const user = new User(i);
+    // eslint-disable-next-line no-await-in-loop
+    await user.save();
+    instTokens.push(user.getSignedJWTToken());
+  }
+};
 
 export {
   userOne,
@@ -257,14 +396,21 @@ export {
   requestTwo,
   requestThree,
   requestFour,
+  instructorOne,
+  instructorTwo,
+  instructorThree,
+  instructorFour,
+  instructorFive,
+  instructorSix,
   courseOne,
   courseTwo,
+  setupDatabase,
+  setupInstructors,
   userOneId,
   userTwoId,
   userFiveId,
   userSixId,
   tokens,
-  setupDatabase,
   conversationOne,
   conversationTwo,
 };
