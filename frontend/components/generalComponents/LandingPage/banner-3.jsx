@@ -17,7 +17,7 @@ const Banner3 = () => (
           <br /> Made by your favorite creators.
         </p>
         <div className="banner_button_box">
-          <Button size="large" className="banner3_button">
+          <Button size="large" href="/search" className="banner3_button">
             What are you looking for?
           </Button>
         </div>

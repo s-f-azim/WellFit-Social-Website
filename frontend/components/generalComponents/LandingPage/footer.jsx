@@ -10,7 +10,7 @@ const Footer = () => (
         <h3>
           <b>Curious?</b>
         </h3>
-        <Button className="footerButton" size="large">
+        <Button className="footerButton" href="/signup" size="large">
           Join now!
         </Button>
       </div>
