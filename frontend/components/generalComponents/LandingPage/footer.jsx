@@ -21,7 +21,11 @@ const Footer = () => (
         <ul>
           <li>Privacy Policy</li>
           <li>GDPR Notice</li>
-          <li>Terms of Use</li>
+          <li>
+            <a style={{ textDecoration: 'none', color: 'black' }} href="/TandCs">
+              Terms of Use
+            </a>
+          </li>
         </ul>
       </div>
       <div className="footer_box_links">
