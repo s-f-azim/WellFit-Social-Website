@@ -1,9 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { List, Card } from 'antd';
+import { List} from 'antd';
 
 const GetFollow = ({ data }) => (
   <>
-    <Card>
       <List
         itemLayout="vertical"
         size="large"
@@ -13,7 +12,6 @@ const GetFollow = ({ data }) => (
         dataSource={data}
         renderItem={(r) => <GetFollow.Item follow={r} />}
       />
-    </Card>
   </>
 );
 

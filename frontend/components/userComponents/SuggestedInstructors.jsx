@@ -62,13 +62,11 @@ const Suggestions = () => {
   return (
     <Animate transitionName="fade">
       {showState ? (
-        <Card title="Suggested Instructors">
           <Space className="suggested-instructors" direction="horizontal" size="large">
             {list.map((item) => (
               <Suggestion key={item._id} user={item} />
             ))}
           </Space>
-        </Card>
       ) : null}
     </Animate>
   );
