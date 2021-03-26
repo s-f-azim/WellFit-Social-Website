@@ -1,6 +1,6 @@
 import { CheckOutlined, QuestionOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import {
   Space,
   Form,
@@ -60,7 +60,8 @@ const tags = [
 
 const editProfilePage = () => {
   const [session, loading] = useSession();
-
+  const router = useRouter();
+  const { tab } = router.query ? router.query : '1';
   if (typeof window !== 'undefined' && loading) return null;
 
   if (session) {
@@ -120,7 +121,7 @@ const editProfilePage = () => {
       <div className="EditProfile">
         <Row type="flex" justify="center" align="middle">
           <Card>
-            <Tabs defaultActiveKey="1" tabPosition="left">
+            <Tabs defaultActiveKey={tab} tabPosition="left">
               <TabPane tab="Basic Info" key="1">
                 <Form form={form} name="Update my info" onFinish={onFinish} scrollToFirstError>
                   <Space direction="vertical" size="middle">

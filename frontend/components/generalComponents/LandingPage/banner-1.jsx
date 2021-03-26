@@ -10,7 +10,7 @@ const Banner1 = () => (
         </h1>
         <h2>Wellfit helps you connect with health enthusiast and learn what works for you.</h2>
         <div className="banner_button_box">
-          <Button className="banner_button" size="large">
+          <Button className="banner_button" href="/signup" size="large">
             <b>Join Wellfit</b>
           </Button>
         </div>
