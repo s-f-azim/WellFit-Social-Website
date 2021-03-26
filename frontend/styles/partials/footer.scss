@@ -1,0 +1,49 @@
+.footer_banner {
+  width: 100%;
+  padding-top: 2rem;
+  padding-right: 3rem;
+  padding-left: 3rem;
+}
+.inner_footer_banner {
+  width: 100%;
+  max-width: 1024px;
+  margin-right: auto;
+  margin-left: auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-flow: row;
+}
+.inner_footer_banner .copyright {
+  padding-top: 3rem;
+  grid-column: auto/span 12;
+  text-align: center;
+}
+.footer_box {
+  grid-column: auto/span 6;
+}
+.footer_box_links {
+  grid-column: auto/span 3;
+}
+
+.footer_box_links li {
+  text-decoration: none;
+  padding-top: 0.5rem;
+}
+.footer_box_links ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.footer_box h2 {
+  font-size: 2rem;
+  font-family: 'Poppins';
+  font-style: italic;
+}
+.footer_box h3 {
+  font-size: 1.5rem;
+  font-family: 'Poppins';
+}
+.ant-btn.footerButton {
+  background-color: $secondary-color;
+  font-family: 'Poppins';
+  font-style: italic;
+}

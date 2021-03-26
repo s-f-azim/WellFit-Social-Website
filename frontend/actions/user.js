@@ -38,6 +38,8 @@ const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
 
 const getTrendingUsers = () => api.get('/users/trendingUsers');
 
+const getTrendingUsersLimit = (limit) => api.get(`/users/trendingUsers?limit=${limit}`);
+
 const getFollowingList = () => api.get('/users/getFollowing');
 
 const getFollowerList = (pageNum) => api.get(`/users/getFollower/?page=${pageNum}`);
@@ -61,4 +63,5 @@ export {
   banUser,
   getUserIdByEmail,
   getTrendingUsers,
+  getTrendingUsersLimit,
 };

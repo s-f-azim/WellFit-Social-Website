@@ -3,6 +3,8 @@ import { Row, Col, Button } from 'antd';
 import Banner1 from './banner-1';
 import Banner2 from './banner-2';
 import Banner3 from './banner-3';
+import Banner4 from './banner-4';
+import Footer from './footer';
 import TrendingUsers from '../../userComponents/TrendingUsers';
 
 const LandingText = () => (
@@ -38,59 +40,8 @@ const LandingPage = () => (
     <Banner1 />
     <Banner2 />
     <Banner3 />
-    <div style={{ padding: '2rem', backgroundColor: 'white' }}>
-      <Row>
-        <Col md={{ span: 5 }} span={0} />
-        <Col md={{ span: 2 }} span={0} />
-        <Col md={{ span: 10 }} xs={{ span: 24 }}>
-          <LandingImage />
-        </Col>
-        <Col md={{ span: 10 }} span={0} />
-      </Row>
-      <Row style={{ paddingTop: '2rem' }}>
-        <Col lg={{ span: 8 }} span={0} />
-        <Col lg={{ span: 8 }} span={24} style={{ fontSize: '1.5rem' }}>
-          <Row
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {/* TODO: Link to QUIZ */}
-            <Button shape="round" size="large" type="primary">
-              What are you looking for?
-            </Button>
-          </Row>
-          <Row
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            OR
-          </Row>
-          <Row
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {/* TODO: Link to all CONTENT */}
-            <u>
-              <a href="" style={{ color: 'black' }}>
-                Browse our content
-              </a>
-            </u>
-          </Row>
-        </Col>
-        <Col lg={{ span: 8 }} span={0} />
-      </Row>
-      {/* TODO: Add more CONTENT */}
-    </div>
-    <LandingFooter />
+    <Banner4 />
+    <Footer />
   </>
 );
 

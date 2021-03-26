@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Button } from 'antd';
 import { CreditCardOutlined, DislikeOutlined } from '@ant-design/icons';
-import { getTrendingUsers } from '../../../actions/user';
 
 const Banner3 = () => (
   <div className="banner3">
