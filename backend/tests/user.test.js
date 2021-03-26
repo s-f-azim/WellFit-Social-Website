@@ -5,11 +5,9 @@ import {
   tokens,
   userOne,
   userTwo,
-  userSix,
   setupDatabase,
   userOneId,
   userTwoId,
-  userSixId,
   courseOne,
   courseTwo,
 } from './fixtures/db.js';
@@ -407,52 +405,4 @@ it('Should get top ten users that are not admins', async () => {
   expect(
     response.body.data.every((user) => user.role !== 'admin')
   ).toBeTruthy();
-});
-
-/**
- * @test updateInterestedUsers
- * @desc Testing adding/removing interested users
- */
-
-it('Trying to update interested users while not logged in gives 401', async () => {
-  await request(app)
-    .patch(`/api/users/updateInterestedUsers/${userSixId}`)
-    .send()
-    .expect(401);
-});
-
-it('Adding user already in interestedUsers to interestedUsers removes user', async () => {
-  await request(app)
-    .patch(`/api/users/updateInterestedUsers/${userSixId}`)
-    .send()
-    .set('Cookie', [`token=${tokens[0]}`])
-    .expect(200);
-  expect(userSix.interestedUsers.length === 0);
-});
-
-it('Adding user not already in interestedUsers to interestedUsers adds user', async () => {
-  await request(app)
-    .patch(`/api/users/updateInterestedUsers/${userSixId}`)
-    .send()
-    .set('Cookie', [`token=${tokens[1]}`])
-    .expect(200);
-  expect(userSix.interestedUsers.length === 2);
-});
-
-it('User cannot be in their own interestedUsers list', async () => {
-  await request(app)
-    .patch(`/api/users/updateInterestedUsers/${userSixId}`)
-    .send()
-    .set('Cookie', [`token=${tokens[5]}`])
-    .expect(200);
-  expect(userSix.interestedUsers.length === 1);
-});
-
-it('Cannot add a user to interestedUsers of a non-instructor user', async () => {
-  await request(app)
-    .patch(`/api/users/updateInterestedUsers/${userOneId}`)
-    .send()
-    .set('Cookie', [`token=${tokens[5]}`])
-    .expect(200);
-  expect(userOne.interestedUsers.length === 0);
 });

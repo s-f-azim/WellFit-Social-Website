@@ -25,7 +25,6 @@ import {
   getFollower,
   getTrendingUsers,
   banUser,
-  updateInterestedUsers,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -37,9 +36,8 @@ import cookieParser from 'cookie-parser';
 const router = new express.Router();
 
 router.use(cookieParser());
-router.use(passport.initialize())
-router.use(passport.session())
-
+router.use(passport.initialize());
+router.use(passport.session());
 
 router.route('/oauth/twitter').get(
   passport.authenticate('twitter', {
@@ -159,13 +157,6 @@ router
   .get(passport.authenticate('jwt', { session: false }), getFollower);
 
 router.route('/trendingUsers').get(getTrendingUsers);
-
-router
-  .route('/updateInterestedUsers/:id')
-  .patch(
-    passport.authenticate('jwt', { session: false }),
-    updateInterestedUsers
-  );
 
 router.route('/').get(paginate(User), getUsers);
 

@@ -309,7 +309,6 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    interestedUsers: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );

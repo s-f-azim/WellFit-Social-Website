@@ -126,15 +126,6 @@ const user = ({ user }) => {
               <Button type="text" onClick={youtubeLink} icon={<GoogleOutlined />} />
               <Button type="text" onClick={twitterLink} icon={<TwitterOutlined />} />
             </Row>
-            <Row style={{ minHeight: '1rem' }}></Row>
-            <Row>Would you be interested in doing business with this instructor?</Row>
-            <Row style={{ minHeight: '1rem' }}></Row>
-            <Row>
-              <Button type="primary">Yes</Button>
-              <Button type="primary" style={{ marginLeft: '5px' }}>
-                No
-              </Button>
-            </Row>
           </Card>
         </div>
 

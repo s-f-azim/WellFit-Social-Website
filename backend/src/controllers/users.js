@@ -464,28 +464,6 @@ const banUser = asyncHandler(async (req, res) => {
   sendTokenResponse(user, 200, res);
 });
 
-/**
- * @async
- * @desc add the current user to list of interested users if not already in the list, else remove from the list
- * @route PATCH /api/users/updateInterestedUsers/:id
- * @access private
- */
-const updateInterestedUsers = asyncHandler(async (req, res) => {
-  if (`${req.params.id}` !== `${req.user._id}`) {
-    const user = await User.findById(req.params.id);
-    if (user.role === 'instructor') {
-      const index = user.interestedUsers.indexOf(req.user._id);
-      if (index === -1) {
-        user.interestedUsers.push(req.user._id);
-      } else {
-        user.interestedUsers.splice(index, 1);
-      }
-      await user.save();
-    }
-  }
-  sendTokenResponse(req.user, 200, res);
-});
-
 export {
   getUsers,
   getInstructors,
@@ -512,5 +490,4 @@ export {
   getFollower,
   getTrendingUsers,
   banUser,
-  updateInterestedUsers,
 };

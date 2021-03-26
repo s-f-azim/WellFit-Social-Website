@@ -111,21 +111,6 @@ const Profile = () => {
           <Col style={{ minHeight: '3rem' }} />
         </Row>
 
-        {session.user.role === 'instructor' ? (
-          <>
-            <div style={{ textAlign: 'center', fontSize: '1rem' }}>
-              You have {session.user.interestedUsers.length} {console.log(session.user)}
-              {session.user.interestedUsers.length === 1 ? <> user </> : <> users </>}
-              interested in doing business with you
-            </div>
-            <Row>
-              <Col style={{ minHeight: '3rem' }} />
-            </Row>
-          </>
-        ) : (
-          <></>
-        )}
-
         <Row type="flex" justify="center">
           <Suggestions />
         </Row>

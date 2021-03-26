@@ -26,7 +26,6 @@ const userOne = {
   verified: false,
   role: 'client',
   isBanned: 'false',
-  interestedUsers: [],
 };
 
 const userTwoId = new mongoose.Types.ObjectId();
@@ -97,25 +96,6 @@ const userFive = {
   tags: ['Workout', 'Sweat'],
   gender: 'Male',
   role: 'admin',
-};
-
-const userSixId = new mongoose.Types.ObjectId();
-
-const userSix = {
-  _id: userSixId,
-  email: 'test6@test.com',
-  password: 'password123',
-  fName: 'testUser',
-  lName: '66',
-  location: 'Europe',
-  birthday: new Date(),
-  nickname: 'FitnessGeeza',
-  bio: 'This is my bio',
-  tags: ['Workout', 'Sweat', 'Cycling'],
-  verified: false,
-  role: 'instructor',
-  yearsExperience: 10,
-  interestedUsers: [userOneId],
 };
 
 const reviewOne = {
@@ -318,7 +298,7 @@ const requestFour = {
 };
 
 const reviews = [reviewOne];
-const users = [userOne, userTwo, userThree, userFour, userFive, userSix];
+const users = [userOne, userTwo, userThree, userFour, userFive];
 const instructors = [
   instructorOne,
   instructorTwo,
@@ -391,7 +371,6 @@ export {
   userThree,
   userFour,
   userFive,
-  userSix,
   requestOne,
   requestTwo,
   requestThree,
@@ -409,7 +388,6 @@ export {
   userOneId,
   userTwoId,
   userFiveId,
-  userSixId,
   tokens,
   conversationOne,
   conversationTwo,
