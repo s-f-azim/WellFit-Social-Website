@@ -40,7 +40,7 @@ const UserFeed = () => {
   return (
     <>
       <PostInput onSubmit={handleSubmit} />
-      <Divider dashed />
+      <Divider />
       <PostList
         posts={posts}
         loading={loading && posts}

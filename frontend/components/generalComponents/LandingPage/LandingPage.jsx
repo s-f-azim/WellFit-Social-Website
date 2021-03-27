@@ -5,7 +5,6 @@ import Banner2 from './banner-2';
 import Banner3 from './banner-3';
 import Banner4 from './banner-4';
 import Footer from './footer';
-import TrendingUsers from '../../userComponents/TrendingUsers';
 
 const LandingText = () => (
   <div

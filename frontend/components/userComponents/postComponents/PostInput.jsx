@@ -37,7 +37,7 @@ const PostInput = ({ onSubmit }) => {
             },
           ]}
         >
-          <Input aria-label="videoUrl" placeholder="Video URL" />
+          <Input aria-label="videoUrl" placeholder="add a Video URL" />
         </Form.Item>
 
         <Button aria-label="post" type="primary" htmlType="submit" icon={<SendOutlined />} block />
