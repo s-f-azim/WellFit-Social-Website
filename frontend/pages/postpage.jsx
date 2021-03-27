@@ -1,5 +1,5 @@
 import { Row, Col } from 'antd';
-import UserFeed from '../components/UserFeed';
+import UserFeed from '../components/userComponents/postComponents/UserFeed';
 
 export default function PostPage() {
   return (
