@@ -16,17 +16,13 @@ it('calls onSubmit when submitted with valid data', async () => {
   const commentField = screen.getByRole('textbox', { name: 'comment' });
   const reviewButton = screen.getByRole('button', { name: 'review' });
 
+  const review = { rate: 1, comment: 'test' };
+  userEvent.type(commentField, review.comment);
+  expect(commentField).toHaveValue(review.comment);
+
   userEvent.click(screen.getAllByRole('radio')[0]);
-
-  userEvent.type(commentField, 'test');
-  expect(commentField).toHaveValue('test');
-
   userEvent.click(reviewButton);
-  await waitFor(() => expect(handleSubmit).toHaveBeenCalledWith({ rate: 1, comment: 'test' }));
-
-  userEvent.click(screen.getAllByRole('radio')[4]);
-  userEvent.click(reviewButton);
-  await waitFor(() => expect(handleSubmit).toHaveBeenCalledWith({ rate: 5, comment: 'test' }));
+  await waitFor(() => expect(handleSubmit).toHaveBeenCalledWith(review));
 });
 
 it('does not call onSubmit when submitted with invalid data', async () => {
