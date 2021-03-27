@@ -1,53 +1,21 @@
 .userPage {
-  @mixin flexCenter() {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  padding: 10px;
+
+  .ant-card-bordered {
+    border: 0px solid #f0f0f0;
   }
 
-  .userPanel {
-    grid-row: 1/2;
-    grid-column: 2/3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .userImage {
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
   }
 
-  .leftPanel {
-    grid-row: 2/4;
-    grid-column: 2/3;
-
-    .row {
-      display: flex;
-      justify-content: center;
-    }
+  .suggested {
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
   }
 
-  .infoPanel {
-    grid-row: 1/2;
-    grid-column: 3/5;
+  .ant-divider-horizontal {
+    border-top-color: black;
   }
-
-  .mainPanel {
-    grid-row: 2/3;
-    grid-column: 3/4;
-  }
-
-  .feedPanel {
-    grid-row: 2/4;
-    grid-column: 4/5;
-    .twitterFeed {
-      font-size: 121px;
-    }
-  }
-
-  .reviewPanel {
-    grid-row: 3/4;
-    grid-column: 3/5;
-  }
-  display: grid;
-  grid-template-columns: 0.1fr 0.5fr 1.5fr 0.9fr 0.1fr;
-  grid-template-rows: 1fr 1.8fr 0.7fr;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
 }

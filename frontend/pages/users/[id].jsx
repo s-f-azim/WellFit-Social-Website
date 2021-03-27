@@ -9,13 +9,26 @@ import {
   ManOutlined,
   WomanOutlined,
   UserOutlined,
+  FileOutlined,
+  EditOutlined,
+  CheckCircleTwoTone,
+  CloseCircleOutlined,
+  SearchOutlined,
+  RiseOutlined,
 } from '@ant-design/icons';
 import React, { useState } from 'react';
-import { Button, Row, Card, Tabs, Rate } from 'antd';
-import { useSession } from 'next-auth/client';
+import { Button, Row, Card, Tabs, Rate, Col, Divider } from 'antd';
+import '../../styles/pages/profile.scss';
+import { useSession, getSession } from 'next-auth/client';
 import { Timeline } from 'react-twitter-widgets';
 import FollowButton from '../../components/userComponents/FollowButton';
+import ReportButton from '../../components/userComponents/ReportButton';
 import AccessDenied from '../../components/generalComponents/AccessDenied';
+import Suggestions from '../../components/userComponents/SuggestedInstructors';
+import WishList from '../../components/userComponents/WishList';
+import UserFeed from '../../components/userComponents/postComponents/UserFeed';
+import UserPosts from '../../components/userComponents/postComponents/UserPosts';
+import TrendingUsers from '../../components/userComponents/TrendingUsers';
 import api from '../../services/api';
 
 const placeholderpic =
@@ -69,31 +82,95 @@ const User = ({ user }) => {
       window.location.href = `https://www.twitter.com/${user.twitterScreenName}`;
     };
 
+    const { TabPane } = Tabs;
+
+    const verified = (
+      <p>
+        Verified User <CheckCircleTwoTone twoToneColor="#096dd9" />
+      </p>
+    );
+
+    const unverified = (
+      <p style={{ color: 'red' }}>
+        Unverified User <CloseCircleOutlined />
+      </p>
+    );
+
+    const trendingInstructors = (
+      <h3>
+        <strong>
+          Trending Instructors <RiseOutlined />
+        </strong>
+      </h3>
+    );
+
+    const qualifs = (
+      <h4>
+        <strong>Qualifications: </strong>
+        {user.qualifications.join(', ')}
+      </h4>
+    );
+
+    const speciality = (
+      <h4>
+        <strong>Speciality: </strong>
+        {user.speciality}
+      </h4>
+    );
+
+    const communicationFrequency = (
+      <h4>
+        <strong>Can meet: </strong>
+        {user.communicationFrequency}
+      </h4>
+    );
+
+    const communicationModes = (
+      <h4>
+        <strong>Joinable via: </strong>
+        {user.communicationModes.join(', ')}
+      </h4>
+    );
+
+    const paymentFrequency = (
+      <h4>
+        <strong>Pay for services: </strong>
+        {user.paymentFrequency}
+      </h4>
+    );
+
+    const paymentOptions = (
+      <h4>
+        <strong>Accepts Payment by: </strong>
+        {user.paymentOptions.join(', ')}
+      </h4>
+    );
+
+    const format = (
+      <h4>
+        <strong>Services are: </strong>
+        {user.serviceFormat.join(', ')}
+      </h4>
+    );
+
     return (
       <div className="userPage">
-        <div className="userPanel">
-          <img src={placeholderpic} />
-        </div>
-
-        <div className="infoPanel">
-          <Card>
-            <Row style={{ float: 'right' }}>
-              <Rate
-                className="priceRange"
-                value={user ? (user.priceRange ? user.priceRange : 1) : 1}
-                style={{ color: 'green' }}
-                character={<PoundOutlined />}
-                disabled="true"
-              />
-            </Row>
-            <Row>
+        {console.log(user)}
+        <Divider>
+          <h2>
+            My Profile <UserOutlined />
+          </h2>
+        </Divider>
+        <Row justify="space-around">
+          <Col>
+            <Card>
+              <h3>{user.verified ? verified : unverified}</h3>
               <h1>
-                {' '}
-                {user ? `${user.fName} ${user.lName}` : 'NA'}{' '}
+                {user ? `${user.fName} ${user.lName} ` : 'Name not Found'}
                 {user ? (
                   user.gender === 'Male' ? (
                     <ManOutlined />
-                  ) : user.gender == 'Female' ? (
+                  ) : user.gender === 'Female' ? (
                     <WomanOutlined />
                   ) : (
                     <UserOutlined />
@@ -102,249 +179,110 @@ const User = ({ user }) => {
                   <UserOutlined />
                 )}
               </h1>
-            </Row>
-            <Row style={{ float: 'right' }}>
-              <FollowButton userId={user._id} />
-              <Button type="primary" style={{ marginLeft: '5px' }}>
-                Report
-              </Button>
-            </Row>
+              <h3>
+                <strong>Socials: </strong>
+                <Button type="text" onClick={facebookLink} icon={<FacebookOutlined />} />
+                <Button type="text" onClick={facebookLink} icon={<InstagramOutlined />} />
+                <Button type="text" onClick={youtubeLink} icon={<GoogleOutlined />} />
+                <Button type="text" onClick={twitterLink} icon={<TwitterOutlined />} />
+              </h3>
+              <h3>
+                <strong>Registered as: </strong>
+                <h2>
+                  {user.role === 'instructor'
+                    ? user.trainerType && user.trainerType !== 'Other'
+                      ? user.trainerType
+                      : 'Instructor'
+                    : 'Client'}
+                </h2>
+              </h3>
 
-            <Row>
+              <h4>
+                <strong> About me: </strong>
+                {user.bio ? user.bio : 'No bio entered, edit your profile to display it.'}
+              </h4>
+              <h5 style={{ color: 'grey' }}>Followed by {user.follower.length} user(s).</h5>
+              <h5 style={{ color: 'grey' }}>Follows {user.following.length} other user(s).</h5>
+            </Card>
+          </Col>
+          <Col>
+            <Card
+              className="userImage"
+              style={{ width: 300 }}
+              actions={[<EditOutlined key="edit" />]}
+            >
+              <img className="profilePic" src={placeholderpic} />
+            </Card>
+          </Col>
+          {user.role === 'instructor' && (
+            <Col>
+              <br />
+              <br />
+              <br />
+              <div>
+                <h3> {user.qualifications.length > 0 && qualifs} </h3>
+                <h3>{user.speciality && speciality}</h3>
+                <h3>{user.communicationFrequency && communicationFrequency}</h3>
+                <h3>{user.communicationModes.length > 0 && communicationModes}</h3>
+                <h3>{user.paymentFrequency && paymentFrequency}</h3>
+                <h3>{user.paymentOptions.length > 0 && paymentOptions}</h3>
+                <h3>{user.serviceFormat.length > 0 && format}</h3>
+              </div>
+            </Col>
+          )}
+        </Row>
+
+        <Divider>
+          <h2>
+            My Feed <FileOutlined />
+          </h2>
+        </Divider>
+        <Row justify="space-around">
+          <Col span={20}>
+            <UserFeed />
+          </Col>
+        </Row>
+        <Divider>
+          <h2>
+            My Posts <FileOutlined />
+          </h2>
+        </Divider>
+        <Row justify="space-around">
+          <Col span={20}>
+            <UserPosts id={user._id} />
+          </Col>
+        </Row>
+        {user.role === 'client' && (
+          <div>
+            <Divider>
               <h2>
-                {' '}
-                {user
-                  ? user.trainerType
-                    ? user.trainerType
-                    : 'General Trainer'
-                  : 'General Trainer'}{' '}
+                My Course Wishlist <SearchOutlined />
               </h2>
+            </Divider>
+            <Row justify="space-around">
+              <Col>
+                <WishList />
+              </Col>
             </Row>
-            <Row>
-              <Button type="text" onClick={facebookLink} icon={<FacebookOutlined />} />
-              <Button type="text" onClick={facebookLink} icon={<InstagramOutlined />} />
-              <Button type="text" onClick={youtubeLink} icon={<GoogleOutlined />} />
-              <Button type="text" onClick={twitterLink} icon={<TwitterOutlined />} />
-            </Row>
-          </Card>
-        </div>
-
-        <div className="leftPanel">
-          <Row className="row">
-            <Card className="card">
-              <Tabs className="content">
-                <TabPane tab="Qualifications">
-                  <div className="qualifications">
-                    <h3> {user ? (user.qualifications ? user.qualifications : '') : ''} </h3>
-                    <h3>
-                      {' '}
-                      Speciality: {user
-                        ? user.speciality
-                          ? user.speciality
-                          : 'Non Given'
-                        : ''}{' '}
-                    </h3>
-                    <h3>
-                      {' '}
-                      Sessions:{' '}
-                      {user
-                        ? user.communicationFrequency
-                          ? user.communicationFrequency
-                          : 'N/A'
-                        : ''}
-                    </h3>
-                  </div>
-
-                  <div className="clientPreferences">
-                    <h3>
-                      {' '}
-                      Gender Preference:{' '}
-                      {user
-                        ? user.clientGenderPreference
-                          ? user.clientGenderPreference
-                          : 'Any'
-                        : ''}
-                    </h3>
-                    <h3>
-                      {' '}
-                      Fitness Level:{' '}
-                      <Rate
-                        style={{ color: 'green' }}
-                        character={<PlusOutlined />}
-                        value={user ? (user.clientFitness ? user.clientFitness[1] / 20 : 1) : 1}
-                        disabled="true"
-                      />
-                    </h3>
-                    <h3>
-                      {' '}
-                      Strength Level:{' '}
-                      <Rate
-                        style={{ color: 'green' }}
-                        character={<PlusOutlined />}
-                        value={user ? (user.clientStrength ? user.clientStrength[1] / 20 : 1) : 1}
-                        disabled="true"
-                      />
-                    </h3>
-                    <h3>
-                      {' '}
-                      Hypertrophy Level:{' '}
-                      <Rate
-                        style={{ color: 'green' }}
-                        character={<PlusOutlined />}
-                        value={
-                          user ? (user.clientHypertrophy ? user.clientHypertrophy[1] / 20 : 1) : 1
-                        }
-                        disabled="true"
-                      />
-                    </h3>
-                  </div>
-                </TabPane>
-              </Tabs>
-            </Card>
-          </Row>
-        </div>
-
-        <div className="mainPanel">
-          <Row>
-            <Card>
-              <Tabs defaultActiveKey="1">
-                <TabPane tab="About" key="1">
-                  <Row style={{ float: 'right' }}>
-                    {' '}
-                    <h3 className="nickname">
-                      {' '}
-                      {user ? (user.nickname ? `Nickname: ${user.nickname}` : '') : ''}{' '}
-                    </h3>{' '}
-                  </Row>
-                  <Row>
-                    {' '}
-                    <h3 className="loc">
-                      {' '}
-                      Location: {user
-                        ? user.location
-                          ? user.location
-                          : 'Not given'
-                        : 'Not given'}{' '}
-                    </h3>{' '}
-                  </Row>
-                  <Row style={{ float: 'right' }}>
-                    {' '}
-                    <h3 className="age">
-                      {' '}
-                      Age:{' '}
-                      {user
-                        ? user.birthday
-                          ? getAge(user.birthday.slice(0, 10))
-                          : 'Not given'
-                        : 'Not given'}{' '}
-                    </h3>{' '}
-                  </Row>
-                  <Row>
-                    {' '}
-                    <h3 className="bio"> {user ? (user.bio ? user.bio : '') : ''} </h3>{' '}
-                  </Row>
-                  <Row>
-                    {' '}
-                    <h3 className="tags">
-                      {' '}
-                      {user ? (user.tags ? `Interests: ${user.tags.join(', ')}` : '') : ''}{' '}
-                    </h3>{' '}
-                  </Row>
-
-                  <Row />
-                  <Row style={{ float: 'right' }}>
-                    {' '}
-                    <h3 className="coms">
-                      {' '}
-                      Contact:{' '}
-                      {user
-                        ? user.communicationModes
-                          ? user.communicationModes.join(', ')
-                          : 'Not given'
-                        : ''}{' '}
-                    </h3>{' '}
-                  </Row>
-                  <Row>
-                    {' '}
-                    <h3 className="serv">
-                      {' '}
-                      Service Format:{' '}
-                      {user
-                        ? user.serviceFormat
-                          ? user.serviceFormat.join(', ')
-                          : 'Not given'
-                        : ''}{' '}
-                    </h3>{' '}
-                  </Row>
-                  <Row>
-                    {' '}
-                    <h3>
-                      {' '}
-                      Accepted Payment Methods:{' '}
-                      {user
-                        ? user.paymentOptions
-                          ? user.paymentOptions.join(', ')
-                          : 'Not given'
-                        : ''}{' '}
-                    </h3>{' '}
-                  </Row>
-                  <Row>
-                    {' '}
-                    <h3 className="story">
-                      {' '}
-                      {user
-                        ? user.customerStories
-                          ? `Customer Stories: ${user.customerStories.join(', ')}`
-                          : ''
-                        : ''}{' '}
-                    </h3>{' '}
-                  </Row>
-                </TabPane>
-              </Tabs>
-            </Card>
-          </Row>
-        </div>
-
-        <div className="feedPanel">
-          <Card>
-            <Tabs tab="Linked Videos" defaultActiveKey="1">
-              <TabPane tab="Linked Videos" key="1">
-                <iframe
-                  src={`https://www.youtube.com/embed/${videoID}`}
-                  frameBorder="0"
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen="true"
-                  title="video"
-                />
-              </TabPane>
-              <TabPane tab="Tweets" key="2">
-                <div className="twitterFeed">
-                  <Timeline
-                    dataSource={{
-                      sourceType: 'profile',
-                      screenName: user.twitterScreenName ? user.twitterScreenName : 'reactjs',
-                    }}
-                    options={{
-                      height: '400',
-                      header: 'false',
-                      nofooter: 'true',
-                      noborders: 'true',
-                    }}
-                  />
-                </div>
-              </TabPane>
-            </Tabs>
-          </Card>
-        </div>
-        <div className="reviewPanel">
-          <Row>
-            <Card>
-              <Tabs>
-                <TabPane tab="Reviews">PLACEHOLDER</TabPane>
-              </Tabs>
-            </Card>
-          </Row>
-        </div>
+          </div>
+        )}
+        <Divider>
+          <h2>
+            Discover Trending Users <SearchOutlined />
+          </h2>
+        </Divider>
+        <Row justify="space-around">
+          <Col>
+            <Card title={trendingInstructors} />
+            <Suggestions />
+          </Col>
+        </Row>
+        <Divider />
+        <Row justify="space-around">
+          <Col>
+            <TrendingUsers />
+          </Col>
+        </Row>
       </div>
     );
   }

@@ -11,7 +11,12 @@ import {
   Space,
   Radio,
 } from 'antd';
-import { MinusCircleOutlined, PlusOutlined, CheckOutlined } from '@ant-design/icons';
+import {
+  MinusCircleOutlined,
+  PlusOutlined,
+  CheckOutlined,
+  ProfileOutlined,
+} from '@ant-design/icons';
 
 import { useSession } from 'next-auth/client';
 import createCourse from '../../../actions/course';
@@ -51,9 +56,15 @@ const CourseForm = () => {
     }
   };
 
+  const title = (
+    <h2>
+      Create and Upload a Course <ProfileOutlined />
+    </h2>
+  );
+
   return (
-    <>
-      <Card title="Create a course">
+    <h2>
+      <Card title={title}>
         {error && <Alert type="error" message={error} banner />}
         <Form
           name="courseForm"
@@ -247,7 +258,7 @@ const CourseForm = () => {
           </Form.Item>
         </Form>
       </Card>
-    </>
+    </h2>
   );
 };
 

@@ -204,13 +204,6 @@ const InstQuest = ({ session }) => {
             </Panel>
 
             <Panel header={paymentText} key="3">
-              <Form.Item name="priceRange" label="Price range">
-                <Rate
-                  defaultValue={user.priceRange ? user.priceRange : 1}
-                  style={{ color: 'green' }}
-                  character={<PoundOutlined />}
-                />
-              </Form.Item>
               <Form.Item name="paymentFrequency" label="Payment frequency">
                 <Select
                   defaultValue={user.paymentFrequency ? user.paymentFrequency : null}

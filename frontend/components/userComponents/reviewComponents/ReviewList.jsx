@@ -1,12 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-<<<<<<< HEAD:frontend/components/userComponents/reviewComponents/ReviewList.jsx
-import { List, Rate, Button, Menu, Dropdown, Card } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
-import { deleteReview } from '../../../actions/review';
-=======
 import { List, Rate, Button, Popconfirm, Typography } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
->>>>>>> main:frontend/components/ReviewList.jsx
 
 const ReviewList = ({ reviews, renderItem, loading }) => (
   <List
@@ -14,7 +8,7 @@ const ReviewList = ({ reviews, renderItem, loading }) => (
     itemLayout="vertical"
     size="large"
     pagination={{
-      pageSize: 4,
+      pageSize: 5,
     }}
     dataSource={reviews}
     renderItem={renderItem}
@@ -25,12 +19,13 @@ const ReviewList = ({ reviews, renderItem, loading }) => (
 ReviewList.Item = ({ review, onDelete }) => {
   const DeleteButton = () => (
     <Popconfirm title="Are you sure?" onConfirm={onDelete} okText="Yes" cancelText="No">
-      <Button type="danger" icon={<DeleteOutlined />} />
+      <Button aria-label="delete" type="danger" icon={<DeleteOutlined />} />
     </Popconfirm>
   );
 
   return (
     <List.Item
+      aria-label="review"
       key={review._id}
       actions={[onDelete && <DeleteButton />]}
       extra={<Rate disabled defaultValue={review.rate} />}

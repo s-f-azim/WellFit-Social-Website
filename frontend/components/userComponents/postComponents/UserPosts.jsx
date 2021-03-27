@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/client';
 import PostList from './PostList';
 
-import { getPostsByAuthor, deletePost } from '../actions/post';
+import { getPostsByAuthor, deletePost } from '../../../actions/post';
 
 const UserFeed = ({ id }) => {
   const [session, loading] = useSession();
@@ -27,8 +27,12 @@ const UserFeed = ({ id }) => {
   };
 
   const handleDelete = (postId) => {
-    deletePost(postId);
-    setPosts(posts.filter((p) => p._id !== postId));
+    try {
+      deletePost(postId);
+      setPosts(posts.filter((p) => p._id !== postId));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

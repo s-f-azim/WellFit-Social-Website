@@ -4,11 +4,13 @@ import CourseForm from '../../components/userComponents/courseComponents/CourseF
 
 export default function Create() {
   return (
-    <Row justify="center" align="middle">
-      <Col>
-        <CourseForm />
-      </Col>
-    </Row>
+    <div className="create">
+      <Row justify="center" align="middle">
+        <Col span={6}>
+          <CourseForm />
+        </Col>
+      </Row>
+    </div>
   );
 }
 
