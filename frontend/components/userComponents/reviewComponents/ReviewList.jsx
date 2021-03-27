@@ -8,7 +8,7 @@ const ReviewList = ({ reviews, renderItem, loading }) => (
     itemLayout="vertical"
     size="large"
     pagination={{
-      pageSize: 4,
+      pageSize: 5,
     }}
     dataSource={reviews}
     renderItem={renderItem}
@@ -19,12 +19,13 @@ const ReviewList = ({ reviews, renderItem, loading }) => (
 ReviewList.Item = ({ review, onDelete }) => {
   const DeleteButton = () => (
     <Popconfirm title="Are you sure?" onConfirm={onDelete} okText="Yes" cancelText="No">
-      <Button type="danger" icon={<DeleteOutlined />} />
+      <Button aria-label="delete" type="danger" icon={<DeleteOutlined />} />
     </Popconfirm>
   );
 
   return (
     <List.Item
+      aria-label="review"
       key={review._id}
       actions={[onDelete && <DeleteButton />]}
       extra={<Rate disabled defaultValue={review.rate} />}

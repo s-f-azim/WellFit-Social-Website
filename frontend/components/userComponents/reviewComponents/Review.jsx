@@ -37,8 +37,8 @@ const Review = ({ getReviews, onSubmit, onDelete }) => {
   }, [user, reviews]);
 
   const handleSubmit = async (values) => {
-    const response = await onSubmit(values);
-    setReviews([response.data.data, ...reviews]);
+    const review = await onSubmit(values);
+    setReviews([review, ...reviews]);
   };
 
   const handleDelete = () => {
@@ -79,4 +79,4 @@ const CourseReview = ({ id }) => (
   />
 );
 
-export { CourseReview, UserReview };
+export { CourseReview, UserReview, Review };

@@ -1,12 +1,15 @@
 import { Form, Rate, Input, Button } from 'antd';
 
 const ReviewInput = ({ onSubmit }) => {
+  const [form] = Form.useForm();
+
   const onFinish = (values) => {
     onSubmit(values);
+    form.resetFields();
   };
 
   return (
-    <Form onFinish={onFinish}>
+    <Form form={form} onFinish={onFinish}>
       <Form.Item name="rate" rules={[{ required: true, message: 'Please input a rating!' }]}>
         <Rate aria-label="rate" allowHalf allowClear />
       </Form.Item>

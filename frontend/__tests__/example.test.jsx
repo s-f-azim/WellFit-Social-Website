@@ -36,6 +36,11 @@ jest.mock('../actions/post', () => ({
   // write createPost.mockReturnedValue(valueToReturn) in a test case
 }));
 
+// resets above mocks after each test case
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 // ======================================================================
 
 // example component
