@@ -12,7 +12,7 @@ import checkout from '../../actions/payment';
 
 const columnStyle = { width: 350, height: 'auto' };
 
-const course = ({ course }) => {
+const Course = ({ course }) => {
   const router = useRouter();
   if (router.isFallback) {
     return <Skeleton active />;

@@ -8,6 +8,7 @@ import CourseResults from '../components/generalComponents/Search/CourseResults'
 import equip from '../data/equipment';
 import InstructorFilter from '../components/generalComponents/Search/InstructorFilters';
 import CourseFilter from '../components/generalComponents/Search/CourseFilters';
+import tags from '../data/tags';
 
 const { Option } = Select;
 const { Search } = Input;
@@ -48,29 +49,6 @@ const SearchBar = () => {
     setCurrentPage(current);
     setPageSize(updatedPageSize);
   };
-
-  /* can be replaced by data/tags  */
-  const tags = [
-    'GetFit',
-    'Cardio',
-    'Cycling',
-    'FitFam',
-    'FitLife',
-    'Fitness',
-    'FitnessMotivation',
-    'FitnessAddict',
-    'GetStrong',
-    'LiftHeavy',
-    'GirlsWhoLift',
-    'GymLife',
-    'GymTime',
-    'NoPainNoGain',
-    'PersonalTrainer',
-    'Sweat',
-    'Weights',
-    'WeightLifting',
-    'Workout',
-  ];
   const tagsOption = tags.map((tag) => (
     <Option key={tag.id} value={tag}>
       {tag}
