@@ -101,16 +101,6 @@ const userFive = {
   role: 'admin',
 };
 
-// const reviewOneId = new mongoose.Types.ObjectId();
-
-// const reviewOne = {
-//   _id: reviewOneId,
-//   reviewed: userOneId,
-//   reviewer: userTwoId,
-//   rate: 5,
-//   comment: 'reviewOne',
-// };
-
 // create Instructors
 const instructorOneId = new mongoose.Types.ObjectId();
 
