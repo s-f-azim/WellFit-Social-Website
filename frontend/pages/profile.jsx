@@ -213,20 +213,19 @@ const ProfilePage = (props) => {
               <img className="profilePic" src={placeholderpic} />
             </Card>
           </Col>
-
           {user.role === 'instructor' && (
             <Col>
               <br />
               <br />
               <br />
               <div>
-                <h3> {user.qualifications && qualifs} </h3>
+                <h3> {user.qualifications.length > 0 && qualifs} </h3>
                 <h3>{user.speciality && speciality}</h3>
                 <h3>{user.communicationFrequency && communicationFrequency}</h3>
-                <h3>{user.communicationModes && communicationModes}</h3>
+                <h3>{user.communicationModes.length > 0 && communicationModes}</h3>
                 <h3>{user.paymentFrequency && paymentFrequency}</h3>
-                <h3>{user.paymentOptions && paymentOptions}</h3>
-                <h3>{user.serviceFormat && format}</h3>
+                <h3>{user.paymentOptions.length > 0 && paymentOptions}</h3>
+                <h3>{user.serviceFormat.length > 0 && format}</h3>
               </div>
             </Col>
           )}
