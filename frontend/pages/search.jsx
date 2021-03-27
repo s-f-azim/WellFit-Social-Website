@@ -78,31 +78,30 @@ const SearchBar = () => {
           defaultValue={router.query.tab ? router.query.tab : 'Instructors'}
           size="large"
         >
-          <Radio.Button value="Instructors">Instructors</Radio.Button>
+          <Radio.Button value="Questionnaire">Questionnaire</Radio.Button>
+          <Radio.Button value="People">People</Radio.Button>
           <Radio.Button value="Courses">Courses</Radio.Button>
-          <Radio.Button disabled value="Collections">
-            Collections
-          </Radio.Button>
         </Radio.Group>
-        <Search
-          type="text"
-          enterButton="Search"
-          size="large"
-          onSearch={searchName}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search me..."
-          style={{ width: '90%' }}
-        />
-        {/* TODO: ADD LINK TO PROFILE! */}
-        {/* COLLECTIONS? */}
-        {searchType === 'Instructors' ? (
+        {searchType !== 'Questionnaire' && (
+          <Search
+            type="text"
+            enterButton="Search"
+            size="large"
+            onSearch={searchName}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search me..."
+            style={{ width: '90%' }}
+          />
+        )}
+        {searchType === 'People' && (
           <InstructorFilter
             setGender={setGender}
             setAge={setAge}
             setTags={setTags}
             tagsOption={tagsOption}
           />
-        ) : (
+        )}{' '}
+        {searchType === 'Courses' && (
           <CourseFilter
             setTags={setTags}
             setETags={setETags}
@@ -111,21 +110,25 @@ const SearchBar = () => {
           />
         )}
       </div>
-      {searchType === 'Instructors' ? (
+      {searchType === 'People' ? (
         <InstructorResults data={data} />
-      ) : (
+      ) : searchType === 'Courses' ? (
         <CourseResults data={data} />
+      ) : (
+        ''
       )}
-      <Pagination
-        responsive
-        showTotal={(totalQ) => `Total ${totalQ} items`}
-        showSizeChanger
-        onShowSizeChange={handlePaginationChange}
-        defaultCurrent={0}
-        total={total}
-        style={{ marginTop: '2rem', alignItems: 'center' }}
-        onChange={handlePaginationChange}
-      />
+      {searchType !== 'Questionnaire' && (
+        <Pagination
+          responsive
+          showTotal={(totalQ) => `Total ${totalQ} items`}
+          showSizeChanger
+          onShowSizeChange={handlePaginationChange}
+          defaultCurrent={0}
+          total={total}
+          style={{ marginTop: '2rem', alignItems: 'center' }}
+          onChange={handlePaginationChange}
+        />
+      )}
     </>
   );
 };
