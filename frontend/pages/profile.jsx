@@ -23,13 +23,12 @@ import '../styles/pages/profile.scss';
 import { useSession, getSession } from 'next-auth/client';
 import { Timeline } from 'react-twitter-widgets';
 import FollowButton from '../components/userComponents/FollowButton';
+import ReportButton from '../components/userComponents/ReportButton';
 import AccessDenied from '../components/generalComponents/AccessDenied';
 import Suggestions from '../components/userComponents/SuggestedInstructors';
 import WishList from '../components/userComponents/WishList';
-import GetFollow from '../components/userComponents/GetFollow';
 import UserFeed from '../components/userComponents/postComponents/UserFeed';
 import UserPosts from '../components/userComponents/postComponents/UserPosts';
-import { getFollowerList } from '../actions/user';
 import TrendingUsers from '../components/userComponents/TrendingUsers';
 
 const placeholderpic =
@@ -171,10 +170,34 @@ const ProfilePage = (props) => {
           </h2>
         </Divider>
         <Row justify="space-around">
-          <Col span={24}>
+          <Col span={20}>
             <UserFeed />
           </Col>
         </Row>
+        <Divider>
+          <h2>
+            My Posts <FileOutlined />
+          </h2>
+        </Divider>
+        <Row justify="space-around">
+          <Col span={20}>
+            <UserPosts id={user._id} />
+          </Col>
+        </Row>
+        {user.role === 'client' && (
+          <div>
+            <Divider>
+              <h2>
+                My Course Wishlist <SearchOutlined />
+              </h2>
+            </Divider>
+            <Row justify="space-around">
+              <Col>
+                <WishList />
+              </Col>
+            </Row>
+          </div>
+        )}
         <Divider>
           <h2>
             Discover Trending Users <SearchOutlined />
@@ -190,16 +213,6 @@ const ProfilePage = (props) => {
         <Row justify="space-around">
           <Col>
             <TrendingUsers />
-          </Col>
-        </Row>
-        <Divider>
-          <h2>
-            My Posts <FileOutlined />
-          </h2>
-        </Divider>
-        <Row justify="space-around">
-          <Col span={24}>
-            <UserPosts id={user._id} />
           </Col>
         </Row>
       </div>

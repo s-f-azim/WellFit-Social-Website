@@ -33,8 +33,12 @@ const UserFeed = () => {
   };
 
   const handleDelete = (postId) => {
-    deletePost(postId);
-    setPosts(posts.filter((p) => p._id !== postId));
+    try {
+      deletePost(postId);
+      setPosts(posts.filter((p) => p._id !== postId));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
