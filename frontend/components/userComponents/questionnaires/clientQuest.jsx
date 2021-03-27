@@ -83,7 +83,7 @@ const InstQuest = ({ session }) => {
                   },
                 ]}
               >
-                <InputNumber defaultValue={user.weight ? user.weight : null} />
+                <InputNumber aria-label="weight" defaultValue={user.weight ? user.weight : null} />
               </Form.Item>
               <Form.Item
                 label="What is your height? (cm)"
@@ -96,10 +96,14 @@ const InstQuest = ({ session }) => {
                   },
                 ]}
               >
-                <InputNumber defaultValue={user.height ? user.height : null} />
+                <InputNumber aria-label="height" defaultValue={user.height ? user.height : null} />
               </Form.Item>
               <Form.Item label="What is your Fitness Level?" name="fitnessLevel">
-                <Select allowClear defaultValue={user.fitnessLevel ? user.fitnessLevel : null}>
+                <Select
+                  aria-label="fitness level"
+                  allowClear
+                  defaultValue={user.fitnessLevel ? user.fitnessLevel : null}
+                >
                   <Option value="beginner">Beginner</Option>
                   <Option value="intermediate">Intermediate</Option>
                   <Option value="advanced">Advanced</Option>
@@ -109,6 +113,7 @@ const InstQuest = ({ session }) => {
             <Panel header={preferencesText} key="2">
               <Form.Item label="Preferred instructor's gender?" name="preferredGender">
                 <Select
+                  aria-label="instructor gender"
                   allowClear
                   defaultValue={user.preferredGender ? user.preferredGender : null}
                 >
@@ -134,12 +139,16 @@ const InstQuest = ({ session }) => {
                   },
                 ]}
               >
-                <InputNumber defaultValue={user.trainingDuration ? user.trainingDuration : null} />
+                <InputNumber
+                  aria-label="training duration"
+                  defaultValue={user.trainingDuration ? user.trainingDuration : null}
+                />
               </Form.Item>
             </Panel>
             <Panel header={additionalText} key="3">
               <Form.Item label="What equipment do you have?" name="trainingEquipment">
                 <Select
+                  aria-label="training equipment"
                   mode="multiple"
                   allowClear
                   defaultValue={user.trainingEquipment ? user.trainingEquipment : null}
