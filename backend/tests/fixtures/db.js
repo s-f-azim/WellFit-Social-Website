@@ -1,13 +1,16 @@
+/* eslint-disable no-unused-vars */
 import mongoose from 'mongoose';
 import User from '../../src/models/User.js';
-import Review from '../../src/models/Review.js';
 import Course from '../../src/models/Course.js';
+import Review from '../../src/models/Review.js';
+import UserReview from '../../src/models/UserReview.js';
+import CourseReview from '../../src/models/CourseReview.js';
 import Request from '../../src/models/Request.js';
 import Conversation from '../../src/models/Conversation.js';
+import Post from '../../src/models/Post.js';
 
-const userOneId = new mongoose.Types.ObjectId();
-const reviewOneId = new mongoose.Types.ObjectId();
 const courseOneId = new mongoose.Types.ObjectId();
+const userOneId = new mongoose.Types.ObjectId();
 
 // create users
 const userOne = {
@@ -20,7 +23,6 @@ const userOne = {
   birthday: new Date(),
   nickname: 'testicles',
   bio: 'I have no balls',
-  reviews: [reviewOneId],
   tags: ['Sweat', 'Cardio'],
   clientGenderPreference: 'Female',
   verified: false,
@@ -43,6 +45,7 @@ const userTwo = {
   tags: ['Sweat'],
   verified: false,
   role: 'instructor',
+  following: [userOneId],
 };
 
 const userThreeId = new mongoose.Types.ObjectId();
@@ -98,14 +101,6 @@ const userFive = {
   role: 'admin',
 };
 
-const reviewOne = {
-  _id: reviewOneId,
-  reviewed: userOneId,
-  reviewer: userTwoId,
-  rate: 5,
-  comment: 'reviewOne',
-};
-
 // create courses
 
 const courseOne = {
@@ -142,6 +137,52 @@ const conversationTwo = {
   messages: [],
 };
 
+// create reviews
+
+const userReviewOneId = new mongoose.Types.ObjectId();
+
+const userReviewOne = {
+  kind: 'UserReview',
+  _id: userReviewOneId,
+  author: userTwoId,
+  rate: 5,
+  comment: 'userReviewOne',
+  user: userOneId,
+};
+
+const courseReviewOneId = new mongoose.Types.ObjectId();
+
+const courseReviewOne = {
+  kind: 'CourseReview',
+  _id: courseReviewOneId,
+  author: userTwoId,
+  rate: 5,
+  comment: 'courseReviewOne',
+  course: courseOneId,
+};
+
+// create posts
+
+const postOneId = new mongoose.Types.ObjectId();
+
+const postOne = {
+  _id: postOneId,
+  author: userOneId,
+  content: 'postOne',
+  youtubelink: 'postOne',
+};
+
+const postTwoId = new mongoose.Types.ObjectId();
+
+const postTwo = {
+  _id: postTwoId,
+  author: userOneId,
+  content: 'postTwo',
+  youtubelink: 'postTwo',
+};
+
+// create fixtures
+
 const requestOneId = new mongoose.Types.ObjectId();
 const requestTwoId = new mongoose.Types.ObjectId();
 const requestThreeId = new mongoose.Types.ObjectId();
@@ -177,19 +218,24 @@ const requestFour = {
   content: 'user report #1',
 };
 
-const reviews = [reviewOne];
+const reviews = [userReviewOne, courseReviewOne];
 const users = [userOne, userTwo, userThree, userFour, userFive];
 const courses = [courseOne, courseTwo];
 const requests = [requestOne, requestTwo, requestThree, requestFour];
 const conversations = [conversationOne, conversationTwo];
+const posts = [postOne, postTwo];
+
 // token
 const tokens = [];
+
 const setupDatabase = async () => {
   await User.deleteMany();
   await Review.deleteMany();
   await Course.deleteMany();
   await Request.deleteMany();
   await Conversation.deleteMany();
+  await Post.deleteMany();
+
   // seed users
 
   // eslint-disable-next-line no-restricted-syntax
@@ -199,6 +245,7 @@ const setupDatabase = async () => {
     await user.save();
     tokens.push(user.getSignedJWTToken());
   }
+
   // eslint-disable-next-line no-restricted-syntax
   for (const c of courses) {
     const course = new Course(c);
@@ -206,12 +253,10 @@ const setupDatabase = async () => {
     await course.save();
   }
 
-  // eslint-disable-next-line no-restricted-syntax
-  for (const r of reviews) {
-    const review = new Review(r);
-    // eslint-disable-next-line no-await-in-loop
-    await review.save();
-  }
+  await Review.create(reviews);
+
+  await Post.create(posts);
+
   // eslint-disable-next-line no-restricted-syntax
   for (const r of requests) {
     const request = new Request(r);
@@ -227,6 +272,7 @@ const setupDatabase = async () => {
 };
 
 export {
+  setupDatabase,
   userOne,
   userTwo,
   userThree,
@@ -242,7 +288,7 @@ export {
   userTwoId,
   userFiveId,
   tokens,
-  setupDatabase,
   conversationOne,
   conversationTwo,
+  postOne,
 };

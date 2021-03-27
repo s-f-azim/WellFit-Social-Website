@@ -101,6 +101,12 @@ const CourseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+CourseSchema.virtual('reviews', {
+  ref: 'CourseReview',
+  localField: '_id',
+  foreignField: 'course',
+});
+
 // Geocode and create location field
 CourseSchema.pre('save', async function (next) {
   if (!this.address) next();

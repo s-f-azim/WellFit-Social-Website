@@ -2,7 +2,6 @@ import { Row, Col, Button, Typography, Space, Divider, Rate, notification, Skele
 import { CheckOutlined } from '@ant-design/icons';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
-import api from '../../services/api';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import NotFound from '../../components/404';
@@ -48,6 +47,14 @@ const course = ({ course }) => {
       });
       ReactDOM.render(<></>, document.getElementById('wishListButton'));
     }
+<<<<<<< HEAD
+    width={300}
+    height={300}
+  />;
+
+  return (
+    <div>
+=======
 
     // handle the payment
     const handleClick = async (e) => {
@@ -80,6 +87,7 @@ const course = ({ course }) => {
       height={300}
     />;
     return (
+>>>>>>> main
       <Row
         align="middle"
         justify="center"
@@ -101,7 +109,11 @@ const course = ({ course }) => {
           />
         </Col>
         <Col md={6}>
+<<<<<<< HEAD
+          <Space direction="vertical" wrap>
+=======
           <Space direction="vertical" wrap={true}>
+>>>>>>> main
             <Typography.Title
               level={1}
               style={{ fontSize: '2.3rem', fontFamily: 'Poppins', ...columnStyle }}
@@ -124,6 +136,40 @@ const course = ({ course }) => {
                 <h3>{`#${tag}`}</h3>
               ))}
             </Space>
+<<<<<<< HEAD
+            <Button type="primary" shape="round" size="large">
+              Would like to buy it
+            </Button>
+          </Space>
+          <Space direction="horizontal" size="large">
+            <Button type="primary" shape="round" size="large">
+              Would like to buy it
+            </Button>
+            <div id="wishListButton">
+              {/**
+               * If the wish list has not yet been fetched or it has but this course is already in
+               * the wish list, display nothing. If this course is not in the wish list, display a
+               * button to add the course to the wish list.
+               */}
+              {wishListFetched ? (
+                courses.find((c) => c._id === course._id) ? null : (
+                  <Button type="primary" shape="round" size="large" onClick={() => addToWishList()}>
+                    Add to wish list
+                  </Button>
+                )
+              ) : null}
+            </div>
+          </Space>
+        </Col>
+      </Row>
+      <Row align="middle" justify="center">
+        <Col xs={22} sm={22} md={22} lg={16}>
+          <CourseReview id={course._id} />
+        </Col>
+      </Row>
+    </div>
+  );
+=======
             <Space direction="horizontal" size="large">
               <Button onClick={handleClick} type="primary" shape="round" size="large">
                 Buy
@@ -154,6 +200,7 @@ const course = ({ course }) => {
     );
   }
   return <NotFound />;
+>>>>>>> main
 };
 
 // check if the id was given and prerender the page using the above template
@@ -167,6 +214,15 @@ export const getStaticProps = async ({ params }) => {
 // create all the pages possible for each individual course and make it static to improve performance significantly
 // each page will be at url/courses/id
 export const getStaticPaths = async () => {
+<<<<<<< HEAD
+  const { data } = await api.get(`/courses?limit=${Number.MAX_SAFE_INTEGER}`);
+  const paths = data.data.map((course) => ({
+    params: {
+      id: course._id.toString(),
+    },
+  }));
+  return { fallback: false, paths };
+=======
   const { data } = await api.get(`/courses?limit=50`);
   const paths = data.data.map((course) => {
     return {
@@ -176,6 +232,7 @@ export const getStaticPaths = async () => {
     };
   });
   return { fallback: true, paths };
+>>>>>>> main
 };
 
-export default course;
+export default Course;

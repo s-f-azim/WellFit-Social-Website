@@ -2,12 +2,7 @@ import mongoose from 'mongoose';
 
 const ReviewSchema = new mongoose.Schema(
   {
-    reviewed: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'User',
-    },
-
-    reviewer: {
+    author: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
     },
@@ -21,10 +16,8 @@ const ReviewSchema = new mongoose.Schema(
       type: String,
     },
   },
-  { timestamps: true }
+  { discriminatorKey: 'kind', timestamps: true }
 );
-
-ReviewSchema.index({ reviewed: 1, reviewer: 1 }, { unique: true });
 
 const Review = mongoose.model('Review', ReviewSchema);
 
