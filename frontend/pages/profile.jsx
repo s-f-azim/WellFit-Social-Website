@@ -20,6 +20,8 @@ import AccessDenied from '../components/generalComponents/AccessDenied';
 import Suggestions from '../components/userComponents/SuggestedInstructors';
 import WishList from '../components/userComponents/WishList';
 import GetFollow from '../components/userComponents/GetFollow';
+import UserFeed from '../components/userComponents/postComponents/UserFeed';
+import UserPosts from '../components/userComponents/postComponents/UserPosts';
 
 const placeholderpic =
   'data:image/jpeg;base64,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';
@@ -315,7 +317,15 @@ const ProfilePage = (props) => {
           <Row>
             <Card>
               <Tabs>
-                <TabPane tab="Reviews">PLACEHOLDER</TabPane>
+                <TabPane tab="Reviews" key="1">
+                  PLACEHOLDER
+                </TabPane>
+                <TabPane tab="My Posts" key="2">
+                  <UserFeed />
+                </TabPane>
+                <TabPane tab="My Feed" key="3">
+                  <UserFeed id={session.user._id} />
+                </TabPane>
               </Tabs>
             </Card>
           </Row>
