@@ -151,7 +151,7 @@ const InstQuest = ({ session }) => {
                   aria-label="training equipment"
                   mode="multiple"
                   allowClear
-                  defaultValue={user.trainingEquipment ? user.trainingEquipment : null}
+                  defaultValue={user.trainingEquipment ? user.trainingEquipment : []}
                 >
                   <Option value="dumbbells">Dumbbells</Option>
                   <Option value="barbells">Barbells</Option>
@@ -170,7 +170,7 @@ const InstQuest = ({ session }) => {
           </Collapse>
 
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button aria-label="save" type="primary" htmlType="submit">
               Save info
             </Button>
           </Form.Item>
