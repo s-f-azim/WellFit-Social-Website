@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Suggestions from '../components/SuggestedInstructors';
 import AccessDenied from '../components/AccessDenied';
 import WishList from '../components/WishList';
+import Favourites from '../components/FavouriteList';
 
 const Profile = () => {
   const [session, loading] = useSession();
@@ -113,6 +114,10 @@ const Profile = () => {
 
         <Row type="flex" justify="center">
           <Suggestions />
+        </Row>
+
+        <Row type="flex" justify="center">
+          <Favourites/>
         </Row>
 
         <Row>
