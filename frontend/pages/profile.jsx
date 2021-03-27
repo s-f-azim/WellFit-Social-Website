@@ -102,6 +102,56 @@ const ProfilePage = (props) => {
         </strong>
       </h3>
     );
+
+    const qualifs = (
+      <h4>
+        <strong>Qualifications: </strong>
+        {user.qualifications.join(', ')}
+      </h4>
+    );
+
+    const speciality = (
+      <h4>
+        <strong>Speciality: </strong>
+        {user.speciality}
+      </h4>
+    );
+
+    const communicationFrequency = (
+      <h4>
+        <strong>Can meet: </strong>
+        {user.communicationFrequency}
+      </h4>
+    );
+
+    const communicationModes = (
+      <h4>
+        <strong>Joinable via: </strong>
+        {user.communicationModes.join(', ')}
+      </h4>
+    );
+
+    const paymentFrequency = (
+      <h4>
+        <strong>Pay for services: </strong>
+        {user.paymentFrequency}
+      </h4>
+    );
+
+    const paymentOptions = (
+      <h4>
+        <strong>Accepts Payment by: </strong>
+        {user.paymentOptions.join(', ')}
+      </h4>
+    );
+
+    const format = (
+      <h4>
+        <strong>Services are: </strong>
+        {user.serviceFormat.join(', ')}
+      </h4>
+    );
+
     return (
       <div className="profilePage">
         {console.log(user)}
@@ -163,7 +213,25 @@ const ProfilePage = (props) => {
               <img className="profilePic" src={placeholderpic} />
             </Card>
           </Col>
+
+          {user.role === 'instructor' && (
+            <Col>
+              <br />
+              <br />
+              <br />
+              <div>
+                <h3> {user.qualifications && qualifs} </h3>
+                <h3>{user.speciality && speciality}</h3>
+                <h3>{user.communicationFrequency && communicationFrequency}</h3>
+                <h3>{user.communicationModes && communicationModes}</h3>
+                <h3>{user.paymentFrequency && paymentFrequency}</h3>
+                <h3>{user.paymentOptions && paymentOptions}</h3>
+                <h3>{user.serviceFormat && format}</h3>
+              </div>
+            </Col>
+          )}
         </Row>
+
         <Divider>
           <h2>
             My Feed <FileOutlined />
