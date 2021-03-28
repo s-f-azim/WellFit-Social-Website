@@ -40,9 +40,9 @@ const ProfileCard = ({ content }) => {
                   'Not specified'
                 )}
               </p>
-              <Link href="/">
-                <Button type="primary">Go to profile</Button>
-              </Link>
+              <Button type="primary" href={`/users/${content._id}`}>
+                Go to profile
+              </Button>
             </Col>
           </Row>
         </Card>
