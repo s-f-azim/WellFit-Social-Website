@@ -1,7 +1,6 @@
 import express from 'express';
 import {
   getUsers,
-  getInstructors,
   getUsersWithinRadius,
   createUser,
   loginUser,
@@ -36,9 +35,8 @@ import cookieParser from 'cookie-parser';
 const router = new express.Router();
 
 router.use(cookieParser());
-router.use(passport.initialize())
-router.use(passport.session())
-
+router.use(passport.initialize());
+router.use(passport.session());
 
 router.route('/oauth/twitter').get(
   passport.authenticate('twitter', {
@@ -55,7 +53,6 @@ router
   .route('/radius/:zipcode/:distance')
   .get(paginate(User), getUsersWithinRadius);
 router.route('/signup').post(createUser);
-router.route('/instructors').get(getInstructors);
 router.route('/login').post(loginUser);
 
 router.route('/logout').get(logoutUser);
@@ -162,7 +159,5 @@ router.route('/trendingUsers').get(getTrendingUsers);
 router.route('/').get(paginate(User), getUsers);
 
 router.route('/:id').get(getUser);
-
-
 
 export default router;
