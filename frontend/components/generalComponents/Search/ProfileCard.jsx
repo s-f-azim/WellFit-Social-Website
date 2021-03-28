@@ -1,18 +1,31 @@
-import { Card, Row, Col, Space, Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Space, Button, Typography } from 'antd';
 import Image from 'next/image';
-import Link from 'next/link';
-import api from '../../../services/api';
+import { useState } from 'react';
 
 const ProfileCard = ({ content }) => {
+  const profileDetails = {
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+  };
+
   return (
     <>
-      <div>
-        <Card className="profile-card" style={{ borderColor: 'black', borderRadius: '1rem' }}>
-          <div style={{ paddingBottom: '5rem' }}>
-            <h1 className="title">{`${content.fName} ${content.lName}`}</h1>
-          </div>
-          <Row style={{ maxHeight: '50%' }}>
+      <div className="profile-card">
+        <Card style={{ borderColor: 'black', borderRadius: '1rem' }}>
+          <Row style={{ paddingBottom: '1rem' }}>
+            <Col span={24}>
+              <Typography.Title
+                className="title"
+                onClick={() => setVisible(true)}
+                ellipsis={true}
+                style={{ width: '100%' }}
+              >
+                {content.fName} {content.lName}
+              </Typography.Title>
+            </Col>
+          </Row>
+          <Row>
             <Col className="card-image">
               <Image
                 src={
@@ -26,22 +39,24 @@ const ProfileCard = ({ content }) => {
                 height={100}
               />
             </Col>
-            <Col>
+            <Col className="profile-details">
               <p>Gender:{content.gender ? ` ${content.gender}` : ' Not specified'}</p>
-              <p>
+
+              <p style={profileDetails}>
                 Tags:{' '}
                 {content.tags.length > 0 ? (
-                  <Space direction="horizontal">
+                  <>
                     {content.tags.map((tag) => (
-                      <div className="emphasised-item">{tag}</div>
+                      <div className="tags">{tag}</div>
                     ))}
-                  </Space>
+                  </>
                 ) : (
                   'Not specified'
                 )}
               </p>
-              <Button type="primary" href={`/users/${content._id}`}>
-                Go to profile
+
+              <Button type="primary" href={`/users/${content._id}`} key={content._id}>
+                Go to profile page
               </Button>
             </Col>
           </Row>
