@@ -5,10 +5,7 @@ import geocoder from '../utils/geocoder.js';
 const paginateAndFilter = (model) =>
   asyncHandler(async (req, res, next) => {
     let query;
-    // remove empty values or null values
-    let reqQuery = Object.fromEntries(
-      Object.entries(req.query).filter(([_, v]) => v != null && v.length > 1)
-    );
+    let reqQuery = { ...req.query };
     const removeFields = ['select', 'sort', 'page', 'limit', 'name'];
     removeFields.forEach((param) => delete reqQuery[param]);
     // check for geospaital search
