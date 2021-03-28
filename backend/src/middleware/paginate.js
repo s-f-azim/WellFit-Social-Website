@@ -6,6 +6,9 @@ const paginateAndFilter = (model) =>
   asyncHandler(async (req, res, next) => {
     let query;
     let reqQuery = { ...req.query };
+    // let reqQuery = Object.fromEntries(
+    //   Object.entries(req.query).filter(([_, v]) => v != null && v.length > 1)
+    // );
     const removeFields = ['select', 'sort', 'page', 'limit', 'name'];
     removeFields.forEach((param) => delete reqQuery[param]);
     // check for geospaital search
@@ -28,8 +31,13 @@ const paginateAndFilter = (model) =>
       };
     }
     // if name or title is given match it with a regex
-    if (req.query.name) {
-      reqQuery = { name: { $regex: req.query.name, $options: 'i' } };
+    if (req.query.fName || req.query.lName) {
+      reqQuery = {
+        $or: [
+          { fName: { $regex: req.query.fName, $options: 'i' } },
+          { lName: { $regex: req.query.lName, $options: 'i' } },
+        ],
+      };
     }
     if (req.query.title) {
       reqQuery = { title: { $regex: req.query.title, $options: 'i' } };
