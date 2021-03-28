@@ -22,13 +22,18 @@ const getAdmins = () => api.get(`users?role=admin&&limit=${Number.MAX_SAFE_INTEG
 
 const getClients = () => api.get(`users?role=client&&limit=${Number.MAX_SAFE_INTEGER}`);
 
-const getInstructorsFiltered = (q, gender, age, tags, pageSize, offset) =>
-  /* api.get(`/users/role=instructors&&name=${q}&&gender=${gender}&&age=${age}&&tags[in]=${tags.join(',')}`) */
-  api.get(
-    `/users/instructors?q=${q}&&gender=${gender}&&pageSize=${pageSize}&&offset=${offset}&&age=${age}&&tags=${tags.join(
-      ','
-    )}`
-  );
+const getPeople = (name, gender, role, tags, pageSize, offset) =>
+  api.get('users', {
+    params: {
+      ...(role.length > 0 && { role }),
+      ...(name.length > 0 && { fName: name }),
+      ...(name.length > 0 && { lName: name }),
+      ...(gender > 0 && { gender }),
+      ...(tags.length > 0 && { 'tags[in]': tags.join(',') }),
+      limit: pageSize,
+      page: offset,
+    },
+  });
 
 const getInstructors = () => api.get(`users?role=instructor&&limit=${Number.MAX_SAFE_INTEGER}`);
 
@@ -55,7 +60,7 @@ export {
   getAdmins,
   getClients,
   getInstructors,
-  getInstructorsFiltered,
+  getPeople,
   addingFollowUser,
   getFollowingList,
   getFollowerList,

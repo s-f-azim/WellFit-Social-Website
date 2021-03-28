@@ -429,7 +429,6 @@ export {
   instructorSix,
   courseOne,
   courseTwo,
-  setupDatabase,
   setupInstructors,
   userOneId,
   userTwoId,

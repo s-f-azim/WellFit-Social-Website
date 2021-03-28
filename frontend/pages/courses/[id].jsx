@@ -12,7 +12,7 @@ import checkout from '../../actions/payment';
 
 const columnStyle = { width: 350, height: 'auto' };
 
-const course = ({ course }) => {
+const Course = ({ course }) => {
   const router = useRouter();
   if (router.isFallback) {
     return <Skeleton active />;
@@ -126,7 +126,7 @@ const course = ({ course }) => {
               ))}
             </Space>
             <Space direction="horizontal" size="large">
-              <Button onClick={handleClick} type="primary" shape="round" size="large">
+              <Button onClick={handleClick} type="primary" size="large">
                 Buy
               </Button>
               <div id="wishListButton">
@@ -137,12 +137,7 @@ const course = ({ course }) => {
                  */}
                 {session && wishListFetched ? (
                   courses.find((c) => c._id === course._id) ? null : (
-                    <Button
-                      type="primary"
-                      shape="round"
-                      size="large"
-                      onClick={() => addToWishList()}
-                    >
+                    <Button type="primary" size="large" onClick={() => addToWishList()}>
                       Add to wish list
                     </Button>
                   )

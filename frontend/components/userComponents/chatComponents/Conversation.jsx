@@ -82,12 +82,7 @@ const Conversation = ({ conversation }) => {
           />
         </Form.Item>
         <Form.Item>
-          <Button
-            type="text"
-            shape="round"
-            htmlType="submit"
-            style={{ border: '1px solid #dddddd' }}
-          >
+          <Button type="text" htmlType="submit" style={{ border: '1px solid #dddddd' }}>
             <SendOutlined />
           </Button>
         </Form.Item>

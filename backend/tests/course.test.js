@@ -194,43 +194,40 @@ it('Should get all the creators of a course when there are several', async () =>
   expect(response.body.data[1]._id === userOne._id);
 });
 it('Should get all the courses', async () => {
-  const response = await request(app)
-    .get('/api/courses/filtered')
-    .send()
-    .expect(200);
+  const response = await request(app).get('/api/courses').send().expect(200);
   expect(response.body.data.length).toBe(4);
 });
 it('Should get all courses with title lose', async () => {
   const response = await request(app)
-    .get('/api/courses/filtered?title=lose')
+    .get('/api/courses?title=lose')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(2);
 });
 it('Should get all courses with title weight', async () => {
   const response = await request(app)
-    .get('/api/courses/filtered?title=weight')
+    .get('/api/courses?title=weight')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(1);
 });
 it('Should get no courses with title b', async () => {
   const response = await request(app)
-    .get('/api/courses/filtered?title=b')
+    .get('/api/courses?title=b')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(0);
 });
 it('Should get 1 course with title weight and tag GetFit', async () => {
   const response = await request(app)
-    .get('/api/courses/filtered?title=weight&&tags=GetFit')
+    .get('/api/courses?title=weight&&tags[in]=GetFit')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(1);
 });
 it('Should get 3 courses with no title and tag Cardio', async () => {
   const response = await request(app)
-    .get('/api/courses/filtered?title=&&tags=Cardio')
+    .get('/api/courses?tags[in]=Cardio')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(3);
@@ -238,28 +235,28 @@ it('Should get 3 courses with no title and tag Cardio', async () => {
 
 it('Should get no course with tag Cycling', async () => {
   const response = await request(app)
-    .get('/api/courses/filtered?title=&&tags=Cycling')
+    .get('/api/courses?tags[in]=Cycling')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(0);
 });
 it('Should get no course with tag Cycling', async () => {
   const response = await request(app)
-    .get('/api/courses/filtered?title=&&tags=Cycling')
+    .get('/api/courses?tags[in]=Cycling')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(0);
 });
 it('Should get 2 courses with equipment treadmill', async () => {
   const response = await request(app)
-    .get('/api/courses/filtered?title=&&tags=&&equipment=treadmill')
+    .get('/api/courses?trainingEquipment[in]=treadmill')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(2);
 });
 it('Should get 1 course with equipment treadmill and tag FitFam', async () => {
   const response = await request(app)
-    .get('/api/courses/filtered?title=&&tags=FitFam&&equipment=treadmill')
+    .get('/api/courses?tags[in]=FitFam&&trainingEquipment[in]=treadmill')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(1);
