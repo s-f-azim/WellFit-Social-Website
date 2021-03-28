@@ -154,7 +154,6 @@ const ProfilePage = (props) => {
 
     return (
       <div className="profilePage">
-        {console.log(user)}
         <Divider>
           <h2>
             My Profile <UserOutlined />

@@ -6,9 +6,7 @@ export default function Create() {
   return (
     <div className="create">
       <Row justify="center" align="middle">
-        <Col span={6}>
-          <CourseForm />
-        </Col>
+        <CourseForm />
       </Row>
     </div>
   );
