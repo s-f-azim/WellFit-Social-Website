@@ -1,4 +1,4 @@
-import { Card, Row, Col, Modal, Space, Button } from 'antd';
+import { Card, Row, Col, Modal, Space, Button, Typography } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
@@ -19,26 +19,43 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
     setShowState(true);
   }, []);
 
+  const courseDetails = {
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+  };
+
   return (
     <>
       {/* If showState is currently false, display nothing. Once it is true, display the card */}
       {showState ? (
-        <div>
-          <Card className="course-card" style={{ borderColor: 'black', borderRadius: '1rem' }}>
-            <div style={{ paddingBottom: '5rem' }}>
-              <h1 className="title" onClick={() => setVisible(true)}>
-                {content.title}
-              </h1>
+        <div className="course-card">
+          <Card style={{ borderColor: 'black', borderRadius: '1rem' }}>
+            <Row style={{ paddingBottom: '1rem' }}>
+              <Col span={20}>
+                <Typography.Title
+                  className="title"
+                  onClick={() => setVisible(true)}
+                  ellipsis={true}
+                  style={{ width: '100%' }}
+                >
+                  {content.title}
+                </Typography.Title>
+              </Col>
               {/* If isWish is true, the card is in the wish list and therefore should have a
                * delete icon so that it can be removed from the wish list. */}
               {isWish === true ? (
-                <DeleteOutlined className="delete-icon" onClick={() => removeFromWishList()} />
+                <Col span={4}>
+                  <DeleteOutlined className="delete-icon" onClick={() => removeFromWishList()} />
+                </Col>
               ) : (
-                <div style={{ minWidth: '2rem' }} />
+                <Col span={4}>
+                  <div style={{ minWidth: '2rem' }} />
+                </Col>
               )}
-            </div>
+            </Row>
 
-            <Row style={{ maxHeight: '50%' }}>
+            <Row>
               <Col className="card-image">
                 <Image
                   src={
@@ -52,29 +69,24 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
                   height={100}
                 />
               </Col>
-              <Col>
-                <p>
-                  Location:
-                  {content.address ? content.address : ' No location specified'}
+              <Col className="course-details">
+                <p style={courseDetails}>
+                  Location: {content.address ? content.address : ' No location specified'}
                 </p>
                 <p>Price: £{content.price}</p>
-                <p>
+                <p style={courseDetails}>
                   Creators:{' '}
-                  <Space direction="horizontal">
-                    {creators.map((creator) => (
-                      <div>
-                        {creator.fName} {creator.lName}
-                      </div>
-                    ))}
-                  </Space>
+                  {creators.map((creator) => (
+                    <div className="creators">
+                      {creator.fName} {creator.lName}
+                    </div>
+                  ))}
                 </p>
-                <p>
+                <p style={courseDetails}>
                   Tags:{' '}
-                  <Space direction="horizontal">
-                    {content.tags.map((tag) => (
-                      <div className="emphasised-item">{tag}</div>
-                    ))}
-                  </Space>
+                  {content.tags.map((tag) => (
+                    <div className="tags">{tag}</div>
+                  ))}
                 </p>
               </Col>
             </Row>
@@ -126,7 +138,7 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
                   Tags:{' '}
                   <Space direction="horizontal">
                     {content.tags.map((tag) => (
-                      <div className="emphasised-item">{tag}</div>
+                      <div className="tags">{tag}</div>
                     ))}
                   </Space>
                 </p>
