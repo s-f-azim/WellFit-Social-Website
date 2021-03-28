@@ -137,7 +137,7 @@ router
   .get(passport.authenticate('jwt', { session: false }), getWishList);
 
 router
-  .route('/profile')
+  .route('/suggestedInstructors')
   .get(
     passport.authenticate('jwt', { session: false }),
     getSuggestedInstructors

@@ -266,7 +266,7 @@ it('Should get id of users by email', async () => {
  */
 it('Should query similar instructors based on tags and client gender preference', async () => {
   const response = await request(app)
-    .get('/api/users/profile')
+    .get('/api/users/suggestedinstructors')
     .send()
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
@@ -282,7 +282,7 @@ it('Should query similar instructors based on tags and client gender preference'
 
 it('Should not include other instructors not relevevant to the query', async () => {
   const response = await request(app)
-    .get('/api/users/profile')
+    .get('/api/users/suggestedinstructors')
     .send()
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
@@ -298,7 +298,7 @@ it('Should not include other instructors not relevevant to the query', async () 
 
 it('Should not return the user logged in themselves if they are an instructor', async () => {
   const response = await request(app)
-    .get('/api/users/profile')
+    .get('/api/users/suggestedinstructors')
     .send()
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
@@ -309,7 +309,7 @@ it('Should not return the user logged in themselves if they are an instructor', 
 
 it('Should not return more than 3 suggested instructors', async () => {
   const response = await request(app)
-    .get('/api/users/profile')
+    .get('/api/users/suggestedinstructors')
     .send()
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
