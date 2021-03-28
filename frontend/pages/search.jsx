@@ -1,7 +1,7 @@
 import { Input, Select, Radio, Pagination } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getInstructorsFiltered } from '../actions/user';
+import { getPeople } from '../actions/user';
 import { getCourses } from '../actions/course';
 import PeopleResults from '../components/generalComponents/Search/PeopleResults';
 import CourseResults from '../components/generalComponents/Search/CourseResults';
@@ -14,7 +14,7 @@ const { Option } = Select;
 const { Search } = Input;
 
 const SearchBar = () => {
-  const [q, setQuery] = useState('');
+  const [name, setName] = useState('');
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const [stags, setTags] = useState([]);
@@ -23,14 +23,14 @@ const SearchBar = () => {
   const [total, setTotal] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchType, setSearchType] = useState('Instructors');
+  const [searchType, setSearchType] = useState('People');
   const router = useRouter();
   const searchName = async () => {
     let response = null;
-    if (searchType === 'Instructors') {
+    if (searchType === 'People') {
       try {
-        response = await getInstructorsFiltered(
-          q,
+        response = await getPeople(
+          name,
           gender,
           age,
           stags,
@@ -42,7 +42,13 @@ const SearchBar = () => {
       }
     } else if (searchType === 'Courses') {
       try {
-        response = await getCourses(q, stags, etags, pageSize, currentPage * pageSize - pageSize);
+        response = await getCourses(
+          name,
+          stags,
+          etags,
+          pageSize,
+          currentPage * pageSize - pageSize
+        );
       } catch (err) {
         console.log(err);
       }
@@ -88,7 +94,7 @@ const SearchBar = () => {
           onChange={(e) => {
             setSearchType(e.target.value);
           }}
-          defaultValue={router.query.tab ? router.query.tab : 'Instructors'}
+          defaultValue={router.query.tab ? router.query.tab : 'People'}
           size="large"
         >
           <Radio.Button value="Questionnaire">Questionnaire</Radio.Button>
@@ -101,7 +107,7 @@ const SearchBar = () => {
             enterButton="Search"
             size="large"
             onSearch={searchName}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             placeholder="Search me..."
             style={{ width: '90%' }}
           />
