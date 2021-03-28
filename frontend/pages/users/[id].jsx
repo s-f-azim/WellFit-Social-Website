@@ -41,14 +41,22 @@ const User = ({ user }) => {
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
   const [following, setFollowing] = useState([]);
   const [follower, setFollower] = useState([]);
+  const [currentUser, setCurrentUser] = useState(false);
 
   let followingData;
   let followerData;
+
   useEffect(async () => {
-    followingData = await getFollowingList();
-    followerData = await getFollowerList();
-    setFollowing(followingData.data.data);
-    setFollower(followerData.data.data);
+    console.log('session: ', session);
+    if (session && session.user._id === user._id) {
+      console.log('session.user: ', session.user);
+      console.log('user: ', user);
+      setCurrentUser(true);
+      followingData = await getFollowingList();
+      followerData = await getFollowerList();
+      setFollowing(followingData.data.data);
+      setFollower(followerData.data.data);
+    }
   }, []);
 
   const fetchData = async (user) => {
@@ -86,7 +94,6 @@ const User = ({ user }) => {
   };
 
   if (session) {
-    //const { user } = session;
     fetchData(user);
 
     const twitterLink = () => {
@@ -216,7 +223,7 @@ const User = ({ user }) => {
                 </Card>
               </Col>
               <Col>
-                <Card>
+                <Card style={{ border: '0px' }}>
                   <h3>{user.verified ? verified : unverified}</h3>
                   <h1>
                     {user ? `${user.fName} ${user.lName} ` : 'Name not Found'}
@@ -309,7 +316,7 @@ const User = ({ user }) => {
                 My Social Hub <TeamOutlined />
               </h2>{' '}
             </Divider>
-            <Card>
+            <Card style={{ border: '0px' }} y>
               <Collapse bordered={false} ghost>
                 <Panel
                   header={
@@ -339,7 +346,7 @@ const User = ({ user }) => {
                     </Col>
                   </Row>
                 </Panel>
-                {user.role === 'client' && (
+                {user.role === 'client' && currentUser && (
                   <>
                     <Panel
                       header={
