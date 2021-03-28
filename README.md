@@ -44,7 +44,7 @@ yarn test
 
 # Team Name
 
-    Assasin Monks
+    Assassin Monks
 
 # Team Members
 
@@ -71,17 +71,17 @@ yarn test
 
 # Credentials - to access the website
 
-    Username:           user_role     (Password)
+    Username:                 user_role     (Password)
 
-    - Admin:             admin        ()
-    - Ahmed Alahmadi:    instructor   ()
-    - Alexandre Chouman: instructor   ()
-    - Fahim Ahmed:       instructor   ()
-    - Issa Kabir:        instructor   ()
-    - Jonathan Rivera    client       ()
-    - Oskar Ribbe        client       ()
-    - Shah Azim          client       ()
-    - Savraj Bassi       client       ()
+    - admin.admin@gmail.com:    admin        ()
+    - Ahmed Alahmadi:           instructor   ()
+    - Alexandre Chouman:        instructor   ()
+    - Fahim Ahmed:              instructor   ()
+    - Issa Kabir:               instructor   ()
+    - Jonathan Rivera           client       ()
+    - Oskar Ribbe               client       ()
+    - Shah Azim                 client       ()
+    - Savraj Bassi              client       ()
 
 - Note: Only the admin is important where the other users can be created using the website via SignUP
 
