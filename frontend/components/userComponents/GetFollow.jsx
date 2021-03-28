@@ -1,17 +1,17 @@
 /* eslint-disable no-underscore-dangle */
-import { List} from 'antd';
+import { List } from 'antd';
 
 const GetFollow = ({ data }) => (
   <>
-      <List
-        itemLayout="vertical"
-        size="large"
-        pagination={{
-          pageSize: 2,
-        }}
-        dataSource={data}
-        renderItem={(r) => <GetFollow.Item follow={r} />}
-      />
+    <List
+      itemLayout="vertical"
+      size="large"
+      pagination={{
+        pageSize: 2,
+      }}
+      dataSource={data}
+      renderItem={(r) => <GetFollow.Item follow={r} />}
+    />
   </>
 );
 
