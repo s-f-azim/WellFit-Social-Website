@@ -17,17 +17,13 @@ const PeopleFilter = ({ setGender, setAge, setTags, tagsOption }) => (
     </Select>
 
     <Select
-      defaultValue="All Ages"
+      defaultValue="instructor"
       style={{ marginLeft: '1rem', marginRight: '1rem' }}
-      placeholder="Age"
+      placeholder="Role"
       onChange={setAge}
     >
-      <Option value="0">All Ages</Option>
-      <Option value="23">18-28</Option>
-      <Option value="34">29-39</Option>
-      <Option value="45">40-50</Option>
-      <Option value="56">51-61</Option>
-      <Option value="62">62+</Option>
+      <Option value="instructor">instructor</Option>
+      <Option value="client">client</Option>
     </Select>
     <Select
       style={{
@@ -47,4 +43,4 @@ const PeopleFilter = ({ setGender, setAge, setTags, tagsOption }) => (
   </div>
 );
 
-export default InstructorFilter;
+export default PeopleFilter;
