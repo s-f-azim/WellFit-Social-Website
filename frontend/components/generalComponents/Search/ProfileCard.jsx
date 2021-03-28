@@ -15,12 +15,7 @@ const ProfileCard = ({ content }) => {
         <Card style={{ borderColor: 'black', borderRadius: '1rem' }}>
           <Row style={{ paddingBottom: '1rem' }}>
             <Col span={24}>
-              <Typography.Title
-                className="title"
-                onClick={() => setVisible(true)}
-                ellipsis={true}
-                style={{ width: '100%' }}
-              >
+              <Typography.Title className="title" ellipsis={true} style={{ width: '100%' }}>
                 {content.fName} {content.lName}
               </Typography.Title>
             </Col>
