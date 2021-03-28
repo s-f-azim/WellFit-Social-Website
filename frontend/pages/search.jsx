@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getInstructorsFiltered } from '../actions/user';
 import { getCourses } from '../actions/course';
-import InstructorResults from '../components/generalComponents/Search/InstructorResults';
+import PeopleResults from '../components/generalComponents/Search/PeopleResults';
 import CourseResults from '../components/generalComponents/Search/CourseResults';
 import equip from '../data/equipment';
-import InstructorFilter from '../components/generalComponents/Search/InstructorFilters';
+import PeopleFilter from '../components/generalComponents/Search/PeopleFilters';
 import CourseFilter from '../components/generalComponents/Search/CourseFilters';
 import tags from '../data/tags';
 
@@ -26,29 +26,42 @@ const SearchBar = () => {
   const [searchType, setSearchType] = useState('Instructors');
   const router = useRouter();
   const searchName = async () => {
-    let response = 'Nothing';
+    let response = null;
     if (searchType === 'Instructors') {
-      response = await getInstructorsFiltered(
-        q,
-        gender,
-        age,
-        stags,
-        pageSize,
-        currentPage * pageSize - pageSize
-      );
+      try {
+        response = await getInstructorsFiltered(
+          q,
+          gender,
+          age,
+          stags,
+          pageSize,
+          currentPage * pageSize - pageSize
+        );
+      } catch (err) {
+        console.log(err);
+      }
     } else if (searchType === 'Courses') {
-      response = await getCourses(q, stags, etags, pageSize, currentPage * pageSize - pageSize);
+      try {
+        response = await getCourses(q, stags, etags, pageSize, currentPage * pageSize - pageSize);
+      } catch (err) {
+        console.log(err);
+      }
     }
-    setData(response.data.data);
-    setTotal(response.data.total);
+    if (response) {
+      console.log(response);
+      setData(response.data.data);
+      setTotal(response.data.total);
+    }
   };
   useEffect(() => {
     searchName();
   }, [searchType, currentPage]);
+
   const handlePaginationChange = (current, updatedPageSize) => {
     setCurrentPage(current);
     setPageSize(updatedPageSize);
   };
+
   const tagsOption = tags.map((tag) => (
     <Option key={tag.id} value={tag}>
       {tag}
@@ -94,7 +107,7 @@ const SearchBar = () => {
           />
         )}
         {searchType === 'People' && (
-          <InstructorFilter
+          <PeopleFilter
             setGender={setGender}
             setAge={setAge}
             setTags={setTags}
@@ -111,7 +124,7 @@ const SearchBar = () => {
         )}
       </div>
       {searchType === 'People' ? (
-        <InstructorResults data={data} />
+        <PeopleResults data={data} />
       ) : searchType === 'Courses' ? (
         <CourseResults data={data} />
       ) : (
