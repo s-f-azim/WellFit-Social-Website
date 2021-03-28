@@ -41,9 +41,7 @@ const ProfileCard = ({ content }) => {
                 )}
               </p>
               <Link href="/">
-                <Button type="primary" shape="round">
-                  Go to profile
-                </Button>
+                <Button type="primary">Go to profile</Button>
               </Link>
             </Col>
           </Row>
