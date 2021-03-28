@@ -1,7 +1,6 @@
 import express from 'express';
 import {
   getUsers,
-  getInstructors,
   getUsersWithinRadius,
   createUser,
   loginUser,
@@ -54,7 +53,6 @@ router
   .route('/radius/:zipcode/:distance')
   .get(paginate(User), getUsersWithinRadius);
 router.route('/signup').post(createUser);
-router.route('/instructors').get(getInstructors);
 router.route('/login').post(loginUser);
 
 router.route('/logout').get(logoutUser);
