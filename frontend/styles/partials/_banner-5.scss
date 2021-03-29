@@ -1,0 +1,40 @@
+.banner5 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+.inner_banner5 {
+  height: 100%;
+  max-width: 1024px;
+  margin-right: auto;
+  margin-left: auto;
+  display: grid;
+  column-gap: 2rem;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-flow: row;
+}
+.banner5_chats {
+  grid-column: auto/span 6;
+}
+.banner5_content {
+  padding-top: 2rem;
+  grid-column: auto/span 6;
+}
+.banner5_content h1 {
+  font-size: 2rem;
+  font-weight: 400;
+}
+@media only screen and (max-width: 780px) {
+  Image {
+    width: 200px;
+    height: 50px;
+  }
+
+  .banner5_chats {
+    grid-column: auto/span 6;
+  }
+  .banner5_content {
+    grid-column: auto/span 12;
+  }
+}

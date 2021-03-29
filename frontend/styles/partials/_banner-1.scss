@@ -51,6 +51,7 @@
     justify-content: center;
   }
   .ant-btn.banner_button {
+    min-width: 0px;
     width: 20rem;
     background-color: $secondary-color;
     font-family: 'Poppins';
