@@ -2,34 +2,44 @@
   .ant-card {
     min-width: 25rem;
     max-width: 25rem;
-    min-height: 18rem;
+    min-height: 15rem;
+    max-height: 15rem;
   }
 
   .title {
     float: left;
   }
 
-  .title:hover {
-    cursor: pointer;
-    float: left;
-  }
-
   .card-image {
     padding-right: 2rem;
+    min-width: 25%;
   }
 
-  .emphasised-item {
+  .profile-details {
+    max-width: 60%;
+  }
+
+  .tags {
     border-radius: 1rem;
     background-color: #f5f5f5;
+    max-width: min-content;
+    display: inline-block;
+    margin-right: 0.5rem;
   }
 
   @media screen and (max-width: 1024px) {
     .ant-card {
       min-width: 20rem;
-      min-height: 35rem;
+      max-width: 20rem;
+      min-height: 23rem;
+      max-height: 23rem;
     }
 
     .card-image {
+      min-width: 100%;
+    }
+
+    .profile-details {
       min-width: 100%;
     }
   }

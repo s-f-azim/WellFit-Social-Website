@@ -11,7 +11,7 @@ import {
   deleteUser,
   deleteSpecificUser,
   getWishList,
-  addToWishList,
+  updateWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -129,15 +129,15 @@ router
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
 
 router
-  .route('/addToWishList/:id')
-  .patch(passport.authenticate('jwt', { session: false }), addToWishList);
+  .route('/updatewishlist/:id')
+  .patch(passport.authenticate('jwt', { session: false }), updateWishList);
 
 router
   .route('/wishlist')
   .get(passport.authenticate('jwt', { session: false }), getWishList);
 
 router
-  .route('/profile')
+  .route('/suggestedInstructors')
   .get(
     passport.authenticate('jwt', { session: false }),
     getSuggestedInstructors

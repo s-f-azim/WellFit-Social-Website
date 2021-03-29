@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-nested-ternary */
 import {
@@ -17,22 +18,22 @@ import {
   TeamOutlined,
 } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
-import { Button, Row, Card, Tabs, Rate, Col, Divider, Modal, Collapse, Avatar } from 'antd';
-import '../styles/pages/profile.scss';
+import { Button, Row, Card, Col, Divider, Modal, Collapse, Avatar } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
-import { Timeline } from 'react-twitter-widgets';
-import FollowButton from '../components/userComponents/FollowButton';
-import ReportButton from '../components/userComponents/ReportButton';
-import AccessDenied from '../components/generalComponents/AccessDenied';
-import Suggestions from '../components/userComponents/SuggestedInstructors';
-import WishList from '../components/userComponents/WishList';
-import UserFeed from '../components/userComponents/postComponents/UserFeed';
-import UserPosts from '../components/userComponents/postComponents/UserPosts';
-import TrendingUsers from '../components/userComponents/TrendingUsers';
-import GetFollow from '../components/userComponents/GetFollow';
-import { getFollowingList, getFollowerList } from '../actions/user';
+import { useRouter } from 'next/router';
+import FollowButton from '../../components/userComponents/FollowButton';
+import ReportButton from '../../components/userComponents/ReportButton';
+import AccessDenied from '../../components/generalComponents/AccessDenied';
+import Suggestions from '../../components/userComponents/SuggestedInstructors';
+import WishList from '../../components/userComponents/WishList';
+import UserFeed from '../../components/userComponents/postComponents/UserFeed';
+import UserPosts from '../../components/userComponents/postComponents/UserPosts';
+import TrendingUsers from '../../components/userComponents/TrendingUsers';
+import GetFollow from '../../components/userComponents/GetFollow';
+import { getFollowingList, getFollowerList } from '../../actions/user';
+import api from '../../services/api';
 
-const ProfilePage = (props) => {
+const User = ({ user }) => {
   const [session, loading] = useSession();
   const [youtubeChannel, setyoutubeChannel] = useState([]);
   const [videoID, setvideoID] = useState([]);
@@ -41,15 +42,20 @@ const ProfilePage = (props) => {
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
   const [following, setFollowing] = useState([]);
   const [follower, setFollower] = useState([]);
+  const [currentUser, setCurrentUser] = useState(false);
+  const router = useRouter();
 
-  let followingData;
-  let followerData;
   useEffect(async () => {
-    followingData = await getFollowingList();
-    followerData = await getFollowerList();
-    setFollowing(followingData.data.data);
-    setFollower(followerData.data.data);
-  }, []);
+    if (session && session.user._id === user._id) {
+      setCurrentUser(true);
+      const followingData = await getFollowingList();
+      const followerData = await getFollowerList();
+      setFollowing(followingData.data.data);
+      setFollower(followerData.data.data);
+    }
+    setFollowerIsModalVisible(false);
+    setIsFollowingModalVisible(false);
+  }, [router.query]);
 
   const fetchData = async (user) => {
     if (user) {
@@ -86,7 +92,6 @@ const ProfilePage = (props) => {
   };
 
   if (session) {
-    const { user } = session;
     fetchData(user);
 
     const twitterLink = () => {
@@ -179,18 +184,18 @@ const ProfilePage = (props) => {
     );
 
     return (
-      <div className="profilePage">
+      <div className="userPage">
         <Row justify="space-around">
           <Col>
             <Divider>
               <h2>
-                My Profile <UserOutlined />
+                Profile <UserOutlined />
               </h2>
             </Divider>
             <Row justify="space-around">
               <Col>
                 <Card
-                  className="profileImage"
+                  className="userImage"
                   style={{ width: 300 }}
                   actions={[<EditOutlined key="edit" />]}
                 >
@@ -209,7 +214,7 @@ const ProfilePage = (props) => {
                 </Card>
               </Col>
               <Col>
-                <Card>
+                <Card style={{ border: '0px' }}>
                   <h3>{user.verified ? verified : unverified}</h3>
                   <h1>
                     {user ? `${user.fName} ${user.lName} ` : 'Name not Found'}
@@ -244,11 +249,13 @@ const ProfilePage = (props) => {
                   </h3>
 
                   <h4>
-                    <strong> About me: </strong>
+                    <strong> About: </strong>
                     {user.bio ? user.bio : 'No bio entered, edit your profile to display it.'}
                   </h4>
                   <Button type="link" onClick={showFollowerModal} size="small">
-                    <h5 style={{ color: 'grey' }}>Followed by {user.follower.length} user(s).</h5>
+                    <h5 style={{ color: '#ffa277' }}>
+                      Followed by {user.follower.length} user(s).
+                    </h5>
                   </Button>
                   <Modal
                     title="Followers"
@@ -262,7 +269,7 @@ const ProfilePage = (props) => {
                     </Card>
                   </Modal>
                   <Button type="link" onClick={showFollowingModal} size="small">
-                    <h5 style={{ color: 'grey' }}>
+                    <h5 style={{ color: '#ffa277' }}>
                       Follows {user.following.length} other user(s).
                     </h5>
                   </Button>
@@ -297,34 +304,19 @@ const ProfilePage = (props) => {
               )}
             </Row>
             <Divider>
-              {' '}
               <h2>
-                My Social Hub <TeamOutlined />
-              </h2>{' '}
+                Social Hub <TeamOutlined />
+              </h2>
             </Divider>
-            <Card>
+            <Card style={{ border: '0px' }}>
               <Collapse bordered={false} ghost>
                 <Panel
                   header={
                     <h2>
-                      My Feed <FileOutlined />
+                      Published Posts <FileOutlined />
                     </h2>
                   }
                   key="1"
-                >
-                  <Row justify="space-around">
-                    <Col span={20}>
-                      <UserFeed />
-                    </Col>
-                  </Row>
-                </Panel>
-                <Panel
-                  header={
-                    <h2>
-                      My Posts <FileOutlined />
-                    </h2>
-                  }
-                  key="2"
                 >
                   <Row justify="space-around">
                     <Col span={20}>
@@ -332,46 +324,64 @@ const ProfilePage = (props) => {
                     </Col>
                   </Row>
                 </Panel>
-                {user.role === 'client' && (
+                {session && session.user._id === user._id && (
                   <>
                     <Panel
                       header={
                         <h2>
-                          My Course Wishlist <SearchOutlined />
+                          My Feed <FileOutlined />
                         </h2>
                       }
-                      key="3"
+                      key="2"
+                    >
+                      <Row justify="space-around">
+                        <Col span={20}>
+                          <UserFeed />
+                        </Col>
+                      </Row>
+                    </Panel>
+                    {user.role === 'client' && currentUser && (
+                      <>
+                        <Panel
+                          header={
+                            <h2>
+                              My Course Wishlist <SearchOutlined />
+                            </h2>
+                          }
+                          key="3"
+                        >
+                          <Row justify="space-around">
+                            <Col>
+                              <WishList />
+                            </Col>
+                          </Row>
+                        </Panel>
+                      </>
+                    )}
+                    <Panel
+                      header={
+                        <h2>
+                          Discover Trending Users <SearchOutlined />
+                        </h2>
+                      }
+                      key="4"
                     >
                       <Row justify="space-around">
                         <Col>
-                          <WishList />
+                          <Card title={trendingInstructors} />
+                          <Suggestions />
+                        </Col>
+                      </Row>
+
+                      <Divider />
+                      <Row justify="space-around">
+                        <Col>
+                          <TrendingUsers />
                         </Col>
                       </Row>
                     </Panel>
                   </>
                 )}
-                <Panel
-                  header={
-                    <h2>
-                      Discover Trending Users <SearchOutlined />
-                    </h2>
-                  }
-                  key="3"
-                >
-                  <Row justify="space-around">
-                    <Col>
-                      <Card title={trendingInstructors} />
-                      <Suggestions />
-                    </Col>
-                  </Row>
-
-                  <Divider />
-                  <Row justify="space-around">
-                    <Col>
-                      <TrendingUsers />
-                    </Col>
-                  </Row>
-                </Panel>
               </Collapse>
             </Card>
           </Col>
@@ -382,11 +392,24 @@ const ProfilePage = (props) => {
   return <AccessDenied />;
 };
 
-export default ProfilePage;
+// check if the id was given and prerender the page using the above template
+// this is using incremental static regeneration to rehydrate the page every 10 minutes
+export const getStaticProps = async ({ params }) => {
+  const userId = params ? params.id : undefined;
+  const response = await api.get(`/users/${userId}`);
+  return { props: { user: response.data.data }, revalidate: 60 * 10 };
+};
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  return {
-    props: { session },
-  };
-}
+// create all the pages possible for each individual user and make it static to improve performance significantly
+// each page will be at url/users/id
+export const getStaticPaths = async () => {
+  const { data } = await api.get(`/users?limit=50`);
+  const paths = data.data.map((user) => ({
+    params: {
+      id: user._id.toString(),
+    },
+  }));
+  return { fallback: true, paths };
+};
+
+export default User;
