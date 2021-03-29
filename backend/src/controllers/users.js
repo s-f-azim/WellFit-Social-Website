@@ -162,7 +162,7 @@ const getFollowing = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc get user follower list
- * @route GET /api/users/getFollower?page=`{$pageNumber}`
+ * @route GET /api/users/getFollower?page=`${pageNumber}`
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
