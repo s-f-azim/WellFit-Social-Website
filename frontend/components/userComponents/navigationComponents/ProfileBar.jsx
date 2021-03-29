@@ -68,12 +68,6 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
         </h1>
       </div>
       <div className="item">
-        <HeartOutlined />
-        <h1>
-          <Link href="/followPage">Follow</Link>
-        </h1>
-      </div>
-      <div className="item">
         <SettingOutlined />
         <h1>
           <Link href="/settings">Settings</Link>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-nested-ternary */
 import {
@@ -17,9 +18,9 @@ import {
   TeamOutlined,
 } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
-import { Button, Row, Card, Tabs, Rate, Col, Divider, Modal, Collapse, Avatar } from 'antd';
+import { Button, Row, Card, Col, Divider, Modal, Collapse, Avatar } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
-import { Timeline } from 'react-twitter-widgets';
+import { useRouter } from 'next/router';
 import FollowButton from '../../components/userComponents/FollowButton';
 import ReportButton from '../../components/userComponents/ReportButton';
 import AccessDenied from '../../components/generalComponents/AccessDenied';
@@ -42,22 +43,19 @@ const User = ({ user }) => {
   const [following, setFollowing] = useState([]);
   const [follower, setFollower] = useState([]);
   const [currentUser, setCurrentUser] = useState(false);
-
-  let followingData;
-  let followerData;
+  const router = useRouter();
 
   useEffect(async () => {
-    console.log('session: ', session);
     if (session && session.user._id === user._id) {
-      console.log('session.user: ', session.user);
-      console.log('user: ', user);
       setCurrentUser(true);
-      followingData = await getFollowingList();
-      followerData = await getFollowerList();
+      const followingData = await getFollowingList();
+      const followerData = await getFollowerList();
       setFollowing(followingData.data.data);
       setFollower(followerData.data.data);
     }
-  }, []);
+    setFollowerIsModalVisible(false);
+    setIsFollowingModalVisible(false);
+  }, [router.query]);
 
   const fetchData = async (user) => {
     if (user) {
@@ -191,7 +189,7 @@ const User = ({ user }) => {
           <Col>
             <Divider>
               <h2>
-                My Profile <UserOutlined />
+                Profile <UserOutlined />
               </h2>
             </Divider>
             <Row justify="space-around">
@@ -251,11 +249,13 @@ const User = ({ user }) => {
                   </h3>
 
                   <h4>
-                    <strong> About me: </strong>
+                    <strong> About: </strong>
                     {user.bio ? user.bio : 'No bio entered, edit your profile to display it.'}
                   </h4>
                   <Button type="link" onClick={showFollowerModal} size="small">
-                    <h5 style={{ color: 'grey' }}>Followed by {user.follower.length} user(s).</h5>
+                    <h5 style={{ color: '#ffa277' }}>
+                      Followed by {user.follower.length} user(s).
+                    </h5>
                   </Button>
                   <Modal
                     title="Followers"
@@ -269,7 +269,7 @@ const User = ({ user }) => {
                     </Card>
                   </Modal>
                   <Button type="link" onClick={showFollowingModal} size="small">
-                    <h5 style={{ color: 'grey' }}>
+                    <h5 style={{ color: '#ffa277' }}>
                       Follows {user.following.length} other user(s).
                     </h5>
                   </Button>
@@ -304,34 +304,19 @@ const User = ({ user }) => {
               )}
             </Row>
             <Divider>
-              {' '}
               <h2>
-                My Social Hub <TeamOutlined />
-              </h2>{' '}
+                Social Hub <TeamOutlined />
+              </h2>
             </Divider>
-            <Card style={{ border: '0px' }} y>
+            <Card style={{ border: '0px' }}>
               <Collapse bordered={false} ghost>
                 <Panel
                   header={
                     <h2>
-                      My Feed <FileOutlined />
+                      Published Posts <FileOutlined />
                     </h2>
                   }
                   key="1"
-                >
-                  <Row justify="space-around">
-                    <Col span={20}>
-                      <UserFeed />
-                    </Col>
-                  </Row>
-                </Panel>
-                <Panel
-                  header={
-                    <h2>
-                      My Posts <FileOutlined />
-                    </h2>
-                  }
-                  key="2"
                 >
                   <Row justify="space-around">
                     <Col span={20}>
@@ -339,46 +324,64 @@ const User = ({ user }) => {
                     </Col>
                   </Row>
                 </Panel>
-                {user.role === 'client' && currentUser && (
+                {session && session.user._id === user._id && (
                   <>
                     <Panel
                       header={
                         <h2>
-                          My Course Wishlist <SearchOutlined />
+                          My Feed <FileOutlined />
                         </h2>
                       }
-                      key="3"
+                      key="2"
+                    >
+                      <Row justify="space-around">
+                        <Col span={20}>
+                          <UserFeed />
+                        </Col>
+                      </Row>
+                    </Panel>
+                    {user.role === 'client' && currentUser && (
+                      <>
+                        <Panel
+                          header={
+                            <h2>
+                              My Course Wishlist <SearchOutlined />
+                            </h2>
+                          }
+                          key="3"
+                        >
+                          <Row justify="space-around">
+                            <Col>
+                              <WishList />
+                            </Col>
+                          </Row>
+                        </Panel>
+                      </>
+                    )}
+                    <Panel
+                      header={
+                        <h2>
+                          Discover Trending Users <SearchOutlined />
+                        </h2>
+                      }
+                      key="4"
                     >
                       <Row justify="space-around">
                         <Col>
-                          <WishList />
+                          <Card title={trendingInstructors} />
+                          <Suggestions />
+                        </Col>
+                      </Row>
+
+                      <Divider />
+                      <Row justify="space-around">
+                        <Col>
+                          <TrendingUsers />
                         </Col>
                       </Row>
                     </Panel>
                   </>
                 )}
-                <Panel
-                  header={
-                    <h2>
-                      Discover Trending Users <SearchOutlined />
-                    </h2>
-                  }
-                  key="3"
-                >
-                  <Row justify="space-around">
-                    <Col>
-                      <Card title={trendingInstructors} />
-                      <Suggestions />
-                    </Col>
-                  </Row>
-
-                  <Divider />
-                  <Row justify="space-around">
-                    <Col>
-                      <TrendingUsers />
-                    </Col>
-                  </Row>
-                </Panel>
               </Collapse>
             </Card>
           </Col>

@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import { List } from 'antd';
+import { List, Button } from 'antd';
+import Link from 'next/link';
 
 const GetFollow = ({ data }) => (
   <>
@@ -19,9 +20,14 @@ GetFollow.Item = ({ follow }) => (
   <>
     <List.Item key={follow.id}>
       {/* <List.Item.Meta/> */}
-      <h5>{`${follow.fName.charAt(0).toUpperCase() + follow.fName.substr(1).toLowerCase()} ${
-        follow.lName.charAt(0).toUpperCase() + follow.lName.substr(1).toLowerCase()
-      }`}</h5>
+      <h5>
+        {`${follow.fName.charAt(0).toUpperCase() + follow.fName.substr(1).toLowerCase()} ${`${
+          follow.lName.charAt(0).toUpperCase() + follow.lName.substr(1).toLowerCase()
+        } `}`}
+        <Link href={`/users/${follow._id}`}>
+          <Button>Profile</Button>
+        </Link>
+      </h5>
     </List.Item>
   </>
 );
