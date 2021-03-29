@@ -16,6 +16,7 @@ import {
   PlusOutlined,
   CheckOutlined,
   ProfileOutlined,
+  InfoCircleOutlined,
 } from '@ant-design/icons';
 
 import { useSession } from 'next-auth/client';
@@ -100,6 +101,10 @@ const CourseForm = () => {
               },
               { required: true, message: 'Please input the price of the course ($)' },
             ]}
+            tooltip={{
+              title: 'Input 0 for a free course',
+              icon: <InfoCircleOutlined />,
+            }}
           >
             <InputNumber precision={2} />
           </Form.Item>
@@ -247,9 +252,9 @@ const CourseForm = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item label="Location (if applicable):" name="address">
+          {/* <Form.Item label="Location (if applicable):" name="address">
             <Input />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item>
             <Button type="primary" htmlType="submit">

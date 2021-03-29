@@ -1,10 +1,13 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-inner-declarations */
 import { Row, Col, Button, Typography, Space, Divider, Rate, notification, Skeleton } from 'antd';
-import { CheckOutlined } from '@ant-design/icons';
+import { CheckOutlined, SearchOutlined, HomeOutlined, CarOutlined } from '@ant-design/icons';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
+import Link from 'next/link';
 import NotFound from '../../components/generalComponents/404';
 import api from '../../services/api';
 import stripePromise from '../../services/stripe';
@@ -79,76 +82,113 @@ const Course = ({ course }) => {
           ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
           : '/not-found.png'
       }
-      width={300}
-      height={300}
     />;
     return (
-      <Row
-        align="middle"
-        justify="center"
-        gutter={[
-          { xs: 8, sm: 26, md: 44, lg: 52 },
-          { xs: 8, sm: 6, md: 14, lg: 22 },
-        ]}
-        style={{ margin: '2rem' }}
-      >
-        <Col md={10}>
-          <Image
-            src={
-              course.photos[0]
-                ? `data:image/png;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
-                : '/image-not-found.svg'
-            }
-            width={600}
-            height={600}
-          />
-        </Col>
-        <Col md={6}>
-          <Space direction="vertical" wrap={true}>
-            <Typography.Title
-              level={1}
-              style={{ fontSize: '2.3rem', fontFamily: 'Poppins', ...columnStyle }}
-            >
-              {course.title}
-            </Typography.Title>
-            <Divider />
-            <Rate disabled defaultValue={4} />
-            <Divider />
-            <Typography.Title level={2}>
-              {course.price > 0 ? `Price: $${course.price}` : 'Free'}
-            </Typography.Title>
-            <Divider />
-            <Typography.Paragraph style={{ fontSize: '1.4rem', color: 'grey' }}>
-              Description: {course.description}
-            </Typography.Paragraph>
-            <Divider />
-            <Space>
-              {course.tags.map((tag) => (
-                <h3>{`#${tag}`}</h3>
-              ))}
+      <div style={{ padding: '2em' }}>
+        <Row justify="center">
+          <Typography.Title
+            level={1}
+            style={{ fontSize: '2.3rem', fontFamily: 'Poppins', ...columnStyle }}
+          >
+            {course.title}
+          </Typography.Title>
+        </Row>
+        <Row
+          align="middle"
+          justify="center"
+          gutter={[
+            { xs: 8, sm: 26, md: 44, lg: 52 },
+            { xs: 8, sm: 6, md: 14, lg: 22 },
+          ]}
+          style={{ margin: '2rem' }}
+        >
+          <Col>
+            <Image
+              src={
+                course.photos[0]
+                  ? `data:image/png;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
+                  : '/image-not-found.svg'
+              }
+              width={300}
+              height={300}
+            />
+          </Col>
+          <Col md={6}>
+            <Space direction="vertical" wrap>
+              {console.log({ course })}
+              <>
+                <Link href={`/users/${course.creators}`}>
+                  <Button type="text">
+                    <h2 style={{ color: '#ffa277' }}>
+                      <SearchOutlined /> Go To Uploader's Profile
+                    </h2>
+                  </Button>
+                </Link>
+              </>
+              <Divider />
+              <Typography.Paragraph style={{ fontSize: '1.4rem', color: 'grey' }}>
+                <strong>Course Description: </strong>
+                <h6 style={{ color: 'grey' }}>{course.description}</h6>
+                <br />
+                <strong>Recommended level: </strong>
+                {course.fitnessLevel}
+                <br />
+                {course.trainingDuration && (
+                  <div>
+                    <strong>Session duration (min): </strong>
+                    {course.trainingDuration}
+                  </div>
+                )}
+              </Typography.Paragraph>
+
+              <Divider />
+              <Typography.Paragraph style={{ fontSize: '1.4rem', color: 'black' }}>
+                {course.gym ? (
+                  <h5>
+                    You need access to a gym for this course <CarOutlined />
+                  </h5>
+                ) : (
+                  <h5>
+                    You can take this course from home <HomeOutlined />!
+                  </h5>
+                )}
+              </Typography.Paragraph>
+              <Divider />
+              <Typography.Title level={2}>
+                {course.price > 0 ? `Price: $${course.price}` : 'Free'}
+              </Typography.Title>
+              <Divider />
+              <h2>
+                <strong>Course Tagged with:</strong>
+              </h2>
+              <Space>
+                {course.tags.map((tag) => (
+                  <h3>{`#${tag}`}</h3>
+                ))}
+              </Space>
+              <Space direction="horizontal" size="large">
+                <Button onClick={handleClick} type="primary" size="large">
+                  Buy
+                </Button>
+                <div id="wishListButton">
+                  {/**
+                   * If the wish list has not yet been fetched or it has but this course is already in
+                   * the wish list, display nothing. If this course is not in the wish list, display a
+                   * button to add the course to the wish list.
+                   */}
+                  {wishListFetched ? (
+                    courses.find((c) => c._id === course._id) ? null : (
+                      <Button type="primary" size="large" onClick={() => addToWishList()}>
+                        Add to wish list
+                      </Button>
+                    )
+                  ) : null}
+                </div>
+              </Space>
             </Space>
-            <Space direction="horizontal" size="large">
-              <Button onClick={handleClick} type="primary" size="large">
-                Buy
-              </Button>
-              <div id="wishListButton">
-                {/**
-                 * If the wish list has not yet been fetched or it has but this course is already in
-                 * the wish list, display nothing. If this course is not in the wish list, display a
-                 * button to add the course to the wish list.
-                 */}
-                {wishListFetched ? (
-                  courses.find((c) => c._id === course._id) ? null : (
-                    <Button type="primary" size="large" onClick={() => addToWishList()}>
-                      Add to wish list
-                    </Button>
-                  )
-                ) : null}
-              </div>
-            </Space>
-          </Space>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </div>
     );
   }
   return <NotFound />;
