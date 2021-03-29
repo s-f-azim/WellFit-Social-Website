@@ -49,22 +49,18 @@ const ChatList = ({ setConversation, setReciver }) => {
   };
   // handle the click of the conversation or user
   const handleClick = async (user) => {
-    try {
-      const usersIds = [user._id];
-      const response = await api.get(`/conversation/${usersIds.join(',')}`);
-      if (response.data.success) {
-        // if conversation exists return that
-        if (response.data.data) {
-          setConversation({ ...response.data.data });
-        } else {
-          // otherwise make a new conversation
-          const newConversation = await api.post('/conversation', { users: [usersIds] });
-          setConversation(newConversation.data.data);
-        }
-        setReciver(user);
+    const usersIds = [user._id];
+    const response = await api.get(`/conversation/${usersIds.join(',')}`);
+    if (response.data.success) {
+      // if conversation exists return that
+      if (response.data.data) {
+        setConversation({ ...response.data.data });
+      } else {
+        // otherwise make a new conversation
+        const newConversation = await api.post('/conversation', { users: [usersIds] });
+        setConversation(newConversation.data.data);
       }
-    } catch (err) {
-      console.log(err);
+      setReciver(user);
     }
   };
   const addMsg = async (id) => {

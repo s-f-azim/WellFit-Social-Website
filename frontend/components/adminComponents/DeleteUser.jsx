@@ -54,11 +54,11 @@ const DeleteUser = ({ users }) => {
               },
             ]}
           >
-            <Input />
+            <Input aria-label="email" />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button aria-label="delete" type="primary" htmlType="submit">
               <WarningOutlined /> Delete user
             </Button>
           </Form.Item>

@@ -77,12 +77,14 @@ const Conversation = ({ conversation }) => {
       >
         <Form.Item name="message" style={{ width: '70%' }}>
           <Input
+            aria-label="message"
             style={{ textAlign: 'center', borderRadius: '2000rem' }}
             placeholder="Enter your message..."
           />
         </Form.Item>
         <Form.Item>
           <Button
+            aria-label="send"
             type="text"
             shape="round"
             htmlType="submit"

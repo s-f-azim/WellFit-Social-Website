@@ -53,11 +53,11 @@ const BanUser = ({ users }) => {
               },
             ]}
           >
-            <Input />
+            <Input aria-label="email" />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button aria-label="ban" type="primary" htmlType="submit">
               <WarningOutlined /> Perma ban user
             </Button>
           </Form.Item>

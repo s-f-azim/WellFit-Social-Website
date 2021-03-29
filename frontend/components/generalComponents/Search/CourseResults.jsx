@@ -25,17 +25,11 @@ const CourseResults = ({ data }) => (
           style={{ width: '90%', marginTop: '2rem' }}
           extra={<a href="/profile">Coursepage</a>}
         >
-          <p>
-            {' '}
-            Tags:{' '}
-            {val.tags.map((tag) => (
-              <>{tag} </>
-            ))}
-          </p>
+          <p> Tags: {val.tags && val.tags.map((tag) => <>{tag} </>)}</p>
           <p>
             {' '}
             Equipment needed:{' '}
-            {val.trainingEquipment.length !== 0
+            {val.trainingEquipment && val.trainingEquipment.length !== 0
               ? val.trainingEquipment.map((tag) => <>{tag} </>)
               : 'None'}
           </p>
