@@ -16,8 +16,9 @@ const ChatList = ({ setConversation, setReciver }) => {
   let totalUsers;
   useEffect(async () => {
     const response = await api.get('/users');
+    const res = await api.get('/users/getFollower');
     totalUsers = response.data.pagination.total;
-    setUsers([...response.data.data]);
+    setUsers([...res.data.data]);
   }, []);
   // load images of users
   const image = (user) => {
@@ -40,7 +41,7 @@ const ChatList = ({ setConversation, setReciver }) => {
       return;
     }
     if (type === 'users') {
-      response = await api.get(`/users?limit=${params}`);
+      response = await api.get(`/users/getFollower?limit=${params}`);
     } else {
       response = await api.get(`/conversation/me?limit=${params}`);
     }
@@ -84,7 +85,7 @@ const ChatList = ({ setConversation, setReciver }) => {
   return (
     <>
       <Tabs defaultActiveKey="1" centered="true">
-        <Tabs.TabPane tab="Following/followers" key="1">
+        <Tabs.TabPane tab="Following" key="1">
           <div className="infinite-container">
             <InfiniteScroll
               initialLoad={false}
@@ -96,7 +97,7 @@ const ChatList = ({ setConversation, setReciver }) => {
               <List
                 dataSource={users}
                 renderItem={(item) => {
-                  if (item._id !== session.user._id) {
+                  if (item && item._id !== session.user._id) {
                     return (
                       <List.Item
                         className="user"

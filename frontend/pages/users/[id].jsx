@@ -109,13 +109,6 @@ const User = ({ user }) => {
       setFollowerIsModalVisible(true);
     };
 
-    const handleFollowingOk = () => {
-      setIsFollowingModalVisible(false);
-    };
-    const handleFollowerOk = () => {
-      setFollowerIsModalVisible(false);
-    };
-
     const handleFollowingCancel = () => {
       setIsFollowingModalVisible(false);
     };
@@ -261,15 +254,14 @@ const User = ({ user }) => {
                     <strong> About me: </strong>
                     {user.bio ? user.bio : 'No bio entered, edit your profile to display it.'}
                   </h4>
-                  {/* <h5 style={{ color: 'grey' }}>Followed by {user.follower.length} user(s).</h5>
-                  <h5 style={{ color: 'grey' }}>Follows {user.following.length} other user(s).</h5> */}
                   <Button type="link" onClick={showFollowerModal} size="small">
                     <h5 style={{ color: 'grey' }}>Followed by {user.follower.length} user(s).</h5>
                   </Button>
                   <Modal
                     title="Followers"
                     visible={isFollowerModalVisible}
-                    onOk={handleFollowerOk}
+                    okButtonProps={{ style: { display: 'none' } }}
+                    cancelButtonProps={{ style: { display: 'none' } }}
                     onCancel={handleFollowerCancel}
                   >
                     <Card>
@@ -284,7 +276,8 @@ const User = ({ user }) => {
                   <Modal
                     title="Following"
                     visible={isFollowingModalVisible}
-                    onOk={handleFollowingOk}
+                    okButtonProps={{ style: { display: 'none' } }}
+                    cancelButtonProps={{ style: { display: 'none' } }}
                     onCancel={handleFollowingCancel}
                   >
                     <Card>

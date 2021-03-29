@@ -51,6 +51,7 @@ const SearchCard = ({ category }) => {
         />
       </Col>
       <Modal
+        className="search-popup"
         title={category.name}
         centered
         visible={visible}

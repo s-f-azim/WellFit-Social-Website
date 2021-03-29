@@ -8,6 +8,7 @@ import CourseResults from '../components/generalComponents/Search/CourseResults'
 import equip from '../data/equipment';
 import PeopleFilter from '../components/generalComponents/Search/PeopleFilters';
 import CourseFilter from '../components/generalComponents/Search/CourseFilters';
+import SearchQuestionaire from '../components/generalComponents/Search/Search';
 import tags from '../data/tags';
 
 const { Option } = Select;
@@ -101,6 +102,7 @@ const SearchBar = () => {
           <Radio.Button value="People">People</Radio.Button>
           <Radio.Button value="Courses">Courses</Radio.Button>
         </Radio.Group>
+        {searchType === 'Questionnaire' && <SearchQuestionaire />}
         {searchType !== 'Questionnaire' && (
           <Search
             type="text"

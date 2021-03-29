@@ -44,7 +44,7 @@ yarn test
 
 # Team Name
 
-    Assasin Monks
+    Assassin Monks
 
 # Team Members
 
@@ -66,22 +66,22 @@ yarn test
     MERN:
         - M MongoDB
         - E Express
-        - R React
+        - R React (nextjs)
         - N NodeJS
 
 # Credentials - to access the website
 
-    Username:           user_role     (Password)
-
-    - Admin:             admin        ()
-    - Ahmed Alahmadi:    instructor   ()
-    - Alexandre Chouman: instructor   ()
-    - Fahim Ahmed:       instructor   ()
-    - Issa Kabir:        instructor   ()
-    - Jonathan Rivera    client       ()
-    - Oskar Ribbe        client       ()
-    - Shah Azim          client       ()
-    - Savraj Bassi       client       ()
+|Email						|  user role			|password
+|---						|---					|---
+|admin.admin@gmail.com		| admin					| ()
+|ahmed.alahmadi@test.com	| instructor			| ()
+|alex.chouman@test.com		| instructor			| ()
+|fahim.ahmed@gmail.com		| instructor			| ()
+|issa.kabir@gmail.com		| instructor			| ()
+|jon.riv@gmail.com			| client				| ()
+|oskar.ribbe@gmail.com		| client				| ()
+|shah.azim@gmail.com		| client				| ()
+|savraj.bassi@gmail.com		| client				| ()
 
 - Note: Only the admin is important where the other users can be created using the website via SignUP
 
