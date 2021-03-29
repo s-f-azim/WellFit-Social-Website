@@ -1,8 +1,8 @@
 import { Row } from 'antd';
-import SearchCard from '../components/userComponents/navigationComponents/SearchCard';
-import { categories } from '../data/questions';
+import SearchCard from './SearchCard';
+import { categories } from '../../../data/questions';
 
-const searchPage = () => (
+const Search = () => (
   <Row
     type="flex"
     justify="center"
@@ -18,4 +18,4 @@ const searchPage = () => (
     ))}
   </Row>
 );
-export default searchPage;
+export default Search;
