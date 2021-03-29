@@ -1,6 +1,5 @@
-import { Card, Row, Col, Space, Button, Typography } from 'antd';
+import { Card, Row, Col, Button, Typography } from 'antd';
 import Image from 'next/image';
-import { useState } from 'react';
 
 const ProfileCard = ({ content }) => {
   const profileDetails = {
