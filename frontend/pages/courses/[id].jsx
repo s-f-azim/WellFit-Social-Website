@@ -1,7 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-inner-declarations */
 import { Row, Col, Button, Typography, Space, Divider, Rate, notification, Skeleton } from 'antd';
-import { CheckOutlined, SearchOutlined, HomeOutlined, CarOutlined } from '@ant-design/icons';
+import {
+  CheckOutlined,
+  UserOutlined,
+  HomeOutlined,
+  CarOutlined,
+  DesktopOutlined,
+  InfoCircleOutlined,
+  ProfileOutlined,
+  CameraOutlined,
+  ShoppingCartOutlined,
+  HeartOutlined,
+} from '@ant-design/icons';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
@@ -28,6 +40,7 @@ const Course = ({ course }) => {
   const [wishListFetched, setWishListFetched] = useState(false);
   // the courses in the user's wish list
   const [courses, setCourses] = useState({});
+  const [creators, setCreators] = useState([]);
 
   if (course) {
     useEffect(async () => {
@@ -37,6 +50,10 @@ const Course = ({ course }) => {
           setCourses(response.data.data);
           // now that the courses from the wish list have been fetched, update the state
           setWishListFetched(true);
+          const response2 = await api.get(`/courses/${course._id}/creators`);
+          setCreators(response2.data.data);
+          // now that the creators of the course have been fetched, the course card can be shown
+          setShowState(true);
         } catch (error) {
           console.log(error);
         }
@@ -86,16 +103,18 @@ const Course = ({ course }) => {
     return (
       <div style={{ padding: '2em' }}>
         <Row justify="center">
-          <Typography.Title
-            level={1}
-            style={{ fontSize: '2.3rem', fontFamily: 'Poppins', ...columnStyle }}
-          >
-            {course.title}
+          <Typography.Title level={1} style={{ fontSize: '2.3rem', fontFamily: 'Poppins' }}>
+            {course.title} <ProfileOutlined />
           </Typography.Title>
         </Row>
+        <Divider>
+          <h3>
+            Course information <InfoCircleOutlined />
+          </h3>
+        </Divider>
         <Row
-          align="middle"
-          justify="center"
+          align="top"
+          justify="space-around"
           gutter={[
             { xs: 8, sm: 26, md: 44, lg: 52 },
             { xs: 8, sm: 6, md: 14, lg: 22 },
@@ -103,6 +122,11 @@ const Course = ({ course }) => {
           style={{ margin: '2rem' }}
         >
           <Col>
+            <h2>
+              Course Preview <CameraOutlined />
+            </h2>
+
+            <Divider />
             <Image
               src={
                 course.photos[0]
@@ -115,16 +139,18 @@ const Course = ({ course }) => {
           </Col>
           <Col md={6}>
             <Space direction="vertical" wrap>
-              {console.log({ course })}
-              <>
-                <Link href={`/users/${course.creators}`}>
-                  <Button type="text">
-                    <h2 style={{ color: '#ffa277' }}>
-                      <SearchOutlined /> Go To Uploader's Profile
-                    </h2>
-                  </Button>
-                </Link>
-              </>
+              <h1 style={{ color: 'grey' }}>
+                <strong> Course creator(s):</strong>
+                {creators.map((creator) => (
+                  <Link href={`/users/${creator._id}`}>
+                    <Button type="text">
+                      <h2 style={{ color: '#ffa277' }}>
+                        <UserOutlined /> Go To {creator.fName}'s Profile
+                      </h2>
+                    </Button>
+                  </Link>
+                ))}
+              </h1>
               <Divider />
               <Typography.Paragraph style={{ fontSize: '1.4rem', color: 'grey' }}>
                 <strong>Course Description: </strong>
@@ -133,6 +159,7 @@ const Course = ({ course }) => {
                 <strong>Recommended level: </strong>
                 {course.fitnessLevel}
                 <br />
+                <br />
                 {course.trainingDuration && (
                   <div>
                     <strong>Session duration (min): </strong>
@@ -140,52 +167,66 @@ const Course = ({ course }) => {
                   </div>
                 )}
               </Typography.Paragraph>
-
               <Divider />
               <Typography.Paragraph style={{ fontSize: '1.4rem', color: 'black' }}>
-                {course.gym ? (
+                <ul>
                   <h5>
-                    You need access to a gym for this course <CarOutlined />
+                    {course.gym ? (
+                      <li>
+                        You need access to a gym for this course <CarOutlined />.
+                      </li>
+                    ) : (
+                      <li>
+                        You can take this course from home <HomeOutlined />.
+                      </li>
+                    )}
+                    {course.isVirtual ? (
+                      <li>
+                        This is an in-person course <UserOutlined />.
+                      </li>
+                    ) : (
+                      <li>
+                        This is a virtual course <DesktopOutlined />.
+                      </li>
+                    )}
                   </h5>
-                ) : (
-                  <h5>
-                    You can take this course from home <HomeOutlined />!
-                  </h5>
-                )}
+                </ul>
               </Typography.Paragraph>
-              <Divider />
-              <Typography.Title level={2}>
-                {course.price > 0 ? `Price: $${course.price}` : 'Free'}
-              </Typography.Title>
-              <Divider />
-              <h2>
-                <strong>Course Tagged with:</strong>
-              </h2>
-              <Space>
-                {course.tags.map((tag) => (
-                  <h3>{`#${tag}`}</h3>
-                ))}
-              </Space>
-              <Space direction="horizontal" size="large">
-                <Button onClick={handleClick} type="primary" size="large">
-                  Buy
-                </Button>
-                <div id="wishListButton">
-                  {/**
-                   * If the wish list has not yet been fetched or it has but this course is already in
-                   * the wish list, display nothing. If this course is not in the wish list, display a
-                   * button to add the course to the wish list.
-                   */}
-                  {wishListFetched ? (
-                    courses.find((c) => c._id === course._id) ? null : (
-                      <Button type="primary" size="large" onClick={() => addToWishList()}>
-                        Add to wish list
-                      </Button>
-                    )
-                  ) : null}
-                </div>
-              </Space>
             </Space>
+          </Col>
+          <Col>
+            <Typography.Title level={2}>
+              {course.price > 0 ? `Price: $${course.price}` : 'Free'}
+            </Typography.Title>
+            <Divider />
+            <h2>
+              <strong>Course Tagged with:</strong>
+            </h2>
+            <Space>
+              {course.tags.map((tag) => (
+                <h3>{`#${tag}`}</h3>
+              ))}
+            </Space>
+            <br />
+            <Button onClick={handleClick} type="primary" size="large">
+              Purchase this course <ShoppingCartOutlined />
+            </Button>
+            <br />
+            <br />
+            <div id="wishListButton">
+              {/**
+               * If the wish list has not yet been fetched or it has but this course is already in
+               * the wish list, display nothing. If this course is not in the wish list, display a
+               * button to add the course to the wish list.
+               */}
+              {wishListFetched ? (
+                courses.find((c) => c._id === course._id) ? null : (
+                  <Button type="primary" size="large" onClick={() => addToWishList()}>
+                    Or Add to your wish list <HeartOutlined />
+                  </Button>
+                )
+              ) : null}
+            </div>
           </Col>
         </Row>
       </div>
