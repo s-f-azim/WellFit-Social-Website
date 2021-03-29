@@ -214,10 +214,10 @@ const deleteSpecificUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc add specified course to user's wish list - if it already exists, remove it
- * @route PATCH /api/users/addtowishlist/:id
+ * @route PATCH /api/users/updatewishlist/:id
  * @access private
  */
-const addToWishList = asyncHandler(async (req, res) => {
+const updateWishList = asyncHandler(async (req, res) => {
   if (Course.findById(req.params.id)) {
     const index = req.user.wishlist.indexOf(req.params.id);
     if (index === -1) {
@@ -344,7 +344,7 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
  * @async
  * @desc Get suggested instructors for user based on random tag selected, client gender preference
  * @param {User} user - a user
- * @route GET /api/users/profile
+ * @route GET /api/users/suggestedInstructors/
  */
 const getSuggestedInstructors = asyncHandler(async (req, res) => {
   const users = await User.find({
@@ -387,7 +387,8 @@ const getTrendingUsers = asyncHandler(async (req, res) => {
       .slice(0, req.query.limit || 10),
   });
 });
-/*
+
+/**
  * @desc ban a user
  * @route PATCH api/users/ban/:id
  * @access private
@@ -415,7 +416,7 @@ export {
   deleteUser,
   deleteSpecificUser,
   getWishList,
-  addToWishList,
+  updateWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,

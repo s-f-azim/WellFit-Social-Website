@@ -18,21 +18,21 @@ import {
 } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
 import { Button, Row, Card, Tabs, Rate, Col, Divider, Modal, Collapse, Avatar } from 'antd';
-import '../styles/pages/profile.scss';
 import { useSession, getSession } from 'next-auth/client';
 import { Timeline } from 'react-twitter-widgets';
-import FollowButton from '../components/userComponents/FollowButton';
-import ReportButton from '../components/userComponents/ReportButton';
-import AccessDenied from '../components/generalComponents/AccessDenied';
-import Suggestions from '../components/userComponents/SuggestedInstructors';
-import WishList from '../components/userComponents/WishList';
-import UserFeed from '../components/userComponents/postComponents/UserFeed';
-import UserPosts from '../components/userComponents/postComponents/UserPosts';
-import TrendingUsers from '../components/userComponents/TrendingUsers';
-import GetFollow from '../components/userComponents/GetFollow';
-import { getFollowingList, getFollowerList } from '../actions/user';
+import FollowButton from '../../components/userComponents/FollowButton';
+import ReportButton from '../../components/userComponents/ReportButton';
+import AccessDenied from '../../components/generalComponents/AccessDenied';
+import Suggestions from '../../components/userComponents/SuggestedInstructors';
+import WishList from '../../components/userComponents/WishList';
+import UserFeed from '../../components/userComponents/postComponents/UserFeed';
+import UserPosts from '../../components/userComponents/postComponents/UserPosts';
+import TrendingUsers from '../../components/userComponents/TrendingUsers';
+import GetFollow from '../../components/userComponents/GetFollow';
+import { getFollowingList, getFollowerList } from '../../actions/user';
+import api from '../../services/api';
 
-const ProfilePage = (props) => {
+const User = ({ user }) => {
   const [session, loading] = useSession();
   const [youtubeChannel, setyoutubeChannel] = useState([]);
   const [videoID, setvideoID] = useState([]);
@@ -41,14 +41,22 @@ const ProfilePage = (props) => {
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
   const [following, setFollowing] = useState([]);
   const [follower, setFollower] = useState([]);
+  const [currentUser, setCurrentUser] = useState(false);
 
   let followingData;
   let followerData;
+
   useEffect(async () => {
-    followingData = await getFollowingList();
-    followerData = await getFollowerList();
-    setFollowing(followingData.data.data);
-    setFollower(followerData.data.data);
+    console.log('session: ', session);
+    if (session && session.user._id === user._id) {
+      console.log('session.user: ', session.user);
+      console.log('user: ', user);
+      setCurrentUser(true);
+      followingData = await getFollowingList();
+      followerData = await getFollowerList();
+      setFollowing(followingData.data.data);
+      setFollower(followerData.data.data);
+    }
   }, []);
 
   const fetchData = async (user) => {
@@ -86,7 +94,6 @@ const ProfilePage = (props) => {
   };
 
   if (session) {
-    const { user } = session;
     fetchData(user);
 
     const twitterLink = () => {
@@ -179,7 +186,7 @@ const ProfilePage = (props) => {
     );
 
     return (
-      <div className="profilePage">
+      <div className="userPage">
         <Row justify="space-around">
           <Col>
             <Divider>
@@ -190,7 +197,7 @@ const ProfilePage = (props) => {
             <Row justify="space-around">
               <Col>
                 <Card
-                  className="profileImage"
+                  className="userImage"
                   style={{ width: 300 }}
                   actions={[<EditOutlined key="edit" />]}
                 >
@@ -209,7 +216,7 @@ const ProfilePage = (props) => {
                 </Card>
               </Col>
               <Col>
-                <Card>
+                <Card style={{ border: '0px' }}>
                   <h3>{user.verified ? verified : unverified}</h3>
                   <h1>
                     {user ? `${user.fName} ${user.lName} ` : 'Name not Found'}
@@ -302,7 +309,7 @@ const ProfilePage = (props) => {
                 My Social Hub <TeamOutlined />
               </h2>{' '}
             </Divider>
-            <Card>
+            <Card style={{ border: '0px' }} y>
               <Collapse bordered={false} ghost>
                 <Panel
                   header={
@@ -332,7 +339,7 @@ const ProfilePage = (props) => {
                     </Col>
                   </Row>
                 </Panel>
-                {user.role === 'client' && (
+                {user.role === 'client' && currentUser && (
                   <>
                     <Panel
                       header={
@@ -382,11 +389,24 @@ const ProfilePage = (props) => {
   return <AccessDenied />;
 };
 
-export default ProfilePage;
+// check if the id was given and prerender the page using the above template
+// this is using incremental static regeneration to rehydrate the page every 10 minutes
+export const getStaticProps = async ({ params }) => {
+  const userId = params ? params.id : undefined;
+  const response = await api.get(`/users/${userId}`);
+  return { props: { user: response.data.data }, revalidate: 60 * 10 };
+};
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  return {
-    props: { session },
-  };
-}
+// create all the pages possible for each individual user and make it static to improve performance significantly
+// each page will be at url/users/id
+export const getStaticPaths = async () => {
+  const { data } = await api.get(`/users?limit=50`);
+  const paths = data.data.map((user) => ({
+    params: {
+      id: user._id.toString(),
+    },
+  }));
+  return { fallback: true, paths };
+};
+
+export default User;

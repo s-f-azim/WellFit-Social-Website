@@ -2,7 +2,7 @@ import { List, notification } from 'antd';
 import { CheckOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import CourseCard from './courseComponents/CourseCard';
+import CourseCard from '../generalComponents/Search/CourseCard';
 import api from '../../services/api';
 
 const WishList = () => {
@@ -24,7 +24,7 @@ const WishList = () => {
    * has a margin.
    */
   function removeFromWishList(id) {
-    api.patch(`/users/addToWishList/${id}`, {});
+    api.patch(`/users/updatewishlist/${id}`, {});
     notification.open({
       message: 'Wish list updated!',
       duration: 2,

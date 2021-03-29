@@ -170,6 +170,9 @@ const UserSchema = new mongoose.Schema(
     qualifications: {
       type: [String],
     },
+    yearsExperience: {
+      type: Number,
+    },
     speciality: {
       type: String,
     },

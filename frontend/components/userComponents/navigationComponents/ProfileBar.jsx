@@ -55,7 +55,7 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
       />
       <h1 className="item">
         <UserOutlined />
-        <Link href="/profile">{session.user.fName}</Link>
+        <Link href={`/users/${session.user._id}`}>{session.user.fName}</Link>
       </h1>
       <div className="item edit" onClick={GoToeditProfile}>
         <EditOutlined />

@@ -37,7 +37,7 @@ const getPeople = (name, gender, role, tags, pageSize, offset) =>
 
 const getInstructors = () => api.get(`users?role=instructor&&limit=${Number.MAX_SAFE_INTEGER}`);
 
-const getSuggestedInstructors = () => api.get('users/profile');
+const getSuggestedInstructors = () => api.get('users/suggestedInstructors');
 
 const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
 
