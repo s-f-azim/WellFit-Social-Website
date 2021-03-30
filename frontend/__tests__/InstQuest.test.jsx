@@ -19,7 +19,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-it('renders fields', () => {
+it.only('renders fields', () => {
   const session = { user: {} };
   render(<InstQuest session={session} />);
 
@@ -51,7 +51,7 @@ it('renders fields', () => {
   expect(screen.getByRole('button', { name: 'save' })).toBeInTheDocument();
 });
 
-it.only('updates user when submitted with valid data', async () => {
+it('updates user when submitted with valid data', async () => {
   const session = { user: {} };
   updateUser.mockReturnValue({ data: { success: true, data: {} } });
   render(<InstQuest session={session} />);

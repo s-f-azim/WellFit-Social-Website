@@ -291,6 +291,7 @@ const UserSchema = new mongoose.Schema(
     ],
     photos: {
       type: [Buffer],
+      default: [],
     },
 
     role: {

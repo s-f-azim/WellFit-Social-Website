@@ -19,6 +19,10 @@ jest.mock('socket.io-client', () => {
   return jest.fn(() => socket);
 });
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 it('renders messages', () => {
   const conversation = {
     messages: [
@@ -47,4 +51,13 @@ it('sends valid message through socket', async () => {
   userEvent.click(screen.getByRole('button', { name: 'send' }));
   const socket = io();
   await waitFor(() => expect(socket.emit).toHaveBeenCalledTimes(1));
+});
+
+it('does not send empty message through socket', async () => {
+  const conversation = { _id: '1', messages: [] };
+  render(<Conversation conversation={conversation} />);
+
+  userEvent.click(screen.getByRole('button', { name: 'send' }));
+  const socket = io();
+  await waitFor(() => expect(socket.emit).toHaveBeenCalledTimes(0));
 });

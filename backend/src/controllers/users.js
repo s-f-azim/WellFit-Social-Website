@@ -154,12 +154,12 @@ const getFollowing = asyncHandler(async (req, res) => {
   const startIndex = (page - 1) * limit;
   const followings = await User.findById(req.params.id).populate({
     path: 'following',
-    select: ['fName', 'lName'],
+    select: ['fName', 'lName', 'photos'],
   });
   const result = followings.following.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: result,
+    data: result ? result : [],
     pagination: {
       total: followings.following.length,
     },
@@ -178,12 +178,12 @@ const getFollower = asyncHandler(async (req, res) => {
   const startIndex = (page - 1) * limit;
   const followers = await User.findById(req.params.id).populate({
     path: 'follower',
-    select: ['fName', 'lName'],
+    select: ['fName', 'lName', 'photos'],
   });
   const result = followers.follower.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: result,
+    data: result ? result : [],
     pagination: {
       total: followers.follower.length,
     },
