@@ -303,8 +303,8 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
 
-    following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-    follower: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+    following: [{ type: mongoose.Schema.ObjectId, ref: 'User', default: [] }],
+    follower: [{ type: mongoose.Schema.ObjectId, ref: 'User', default: [] }],
     isBanned: {
       type: Boolean,
       default: false,
