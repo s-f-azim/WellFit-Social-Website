@@ -236,11 +236,13 @@ const deleteSpecificUser = asyncHandler(async (req, res) => {
  */
 const updateWishList = asyncHandler(async (req, res) => {
   if (Course.findById(req.params.id)) {
-    const index = req.user.wishlist.indexOf(req.params.id);
-    if (index === -1) {
-      req.user.wishlist.push(req.params.id);
-    } else {
-      req.user.wishlist.splice(index, 1);
+    if (req.user.role === 'client') {
+      const index = req.user.wishlist.indexOf(req.params.id);
+      if (index === -1) {
+        req.user.wishlist.push(req.params.id);
+      } else {
+        req.user.wishlist.splice(index, 1);
+      }
     }
   }
   const updatedUser = await req.user.save();

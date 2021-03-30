@@ -47,10 +47,13 @@ const Course = ({ course }) => {
     useEffect(async () => {
       if (session) {
         try {
-          const response = await api.get('/users/wishlist');
-          setCourses(response.data.data);
-          // now that the courses from the wish list have been fetched, update the state
-          setWishListFetched(true);
+          // only attempt to fetch wish list if the current user is a client
+          if (session.user.role === 'client') {
+            const response = await api.get('/users/wishlist');
+            setCourses(response.data.data);
+            // now that the courses from the wish list have been fetched, update the state
+            setWishListFetched(true);
+          }
           const response2 = await api.get(`/courses/${course._id}/creators`);
           setCreators(response2.data.data);
           // now that the creators of the course have been fetched, the course card can be shown
