@@ -10,6 +10,7 @@ import {
   WomanOutlined,
   UserOutlined,
   FileOutlined,
+  CheckOutlined,
   EditOutlined,
   CheckCircleTwoTone,
   CloseCircleOutlined,
@@ -19,7 +20,18 @@ import {
   FileDoneOutlined,
 } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
-import { Button, Space, Row, Card, Col, Divider, Modal, Collapse, Avatar } from 'antd';
+import {
+  Button,
+  Space,
+  Row,
+  Card,
+  Col,
+  Divider,
+  Modal,
+  Collapse,
+  Avatar,
+  notification,
+} from 'antd';
 import { useSession, getSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import FollowButton from '../../components/userComponents/FollowButton';
@@ -137,6 +149,11 @@ const User = ({ user }) => {
     const handleReport = async (id) => {
       try {
         await createReport('report', 'something', id);
+        notification.open({
+          message: 'Report submitted, thanks for helping us!',
+          duration: 3,
+          icon: <CheckOutlined />,
+        });
       } catch (err) {
         console.log(err);
       }
