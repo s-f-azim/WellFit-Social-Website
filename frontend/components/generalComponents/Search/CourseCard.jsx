@@ -2,7 +2,7 @@ import { Card, Row, Col, Modal, Button, Typography } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import api from '../../../services/api';
+import { getCourseCreators } from '../../../actions/course';
 
 const CourseCard = ({ content, isWish, removeFromWishList }) => {
   // state for the modal pop up
@@ -14,7 +14,7 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
 
   useEffect(async () => {
     try {
-      const response = await api.get(`/courses/${content._id}/creators`);
+      const response = await getCourseCreators(content._id);
       setCreators(response.data.data);
       // now that the creators of the course have been fetched, the course card can be shown
       setShowState(true);
