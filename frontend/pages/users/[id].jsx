@@ -31,7 +31,7 @@ import UserFeed from '../../components/userComponents/postComponents/UserFeed';
 import UserPosts from '../../components/userComponents/postComponents/UserPosts';
 import TrendingUsers from '../../components/userComponents/TrendingUsers';
 import GetFollow from '../../components/userComponents/GetFollow';
-import { createRequest } from '../../actions/request';
+import { createReport } from '../../actions/request';
 import { getFollowingList, getFollowerList, addingFollowUser } from '../../actions/user';
 import api from '../../services/api';
 import { CourseReview, UserReview } from '../../components/userComponents/reviewComponents/Review';
@@ -123,11 +123,9 @@ const User = ({ user }) => {
       try {
         await addingFollowUser(id);
         if (!session.user.following.includes(id)) {
-          console.log('hey there');
           session.user.following = [id, ...session.user.following];
           setIsFollowing(true);
         } else {
-          console.log('hmm');
           const index = session.user.following.indexOf(id);
           session.user.following.splice(index, 1);
           setIsFollowing(false);
@@ -138,7 +136,7 @@ const User = ({ user }) => {
     };
     const handleReport = async (id) => {
       try {
-        await createRequest('report', 'something', id);
+        await createReport('report', 'something', id);
       } catch (err) {
         console.log(err);
       }
