@@ -16,6 +16,7 @@ import {
   SearchOutlined,
   RiseOutlined,
   TeamOutlined,
+  FileDoneOutlined,
 } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
 import { Button, Row, Card, Col, Divider, Modal, Collapse, Avatar } from 'antd';
@@ -32,6 +33,8 @@ import TrendingUsers from '../../components/userComponents/TrendingUsers';
 import GetFollow from '../../components/userComponents/GetFollow';
 import { getFollowingList, getFollowerList } from '../../actions/user';
 import api from '../../services/api';
+import { CourseReview, UserReview } from '../../components/userComponents/reviewComponents/Review';
+import Course from '../courses/[id]';
 
 const User = ({ user }) => {
   const [session, loading] = useSession();
@@ -378,6 +381,22 @@ const User = ({ user }) => {
                         <Col>
                           <TrendingUsers />
                         </Col>
+                      </Row>
+                    </Panel>
+                  </>
+                )}
+                {session && session.user._id !== user._id && (
+                  <>
+                    <Panel
+                      header={
+                        <h2>
+                          User reviews <FileDoneOutlined />
+                        </h2>
+                      }
+                      key="5"
+                    >
+                      <Row justify="space-around">
+                        <Col>{/* <UserReview id={user._id} /> */}</Col>
                       </Row>
                     </Panel>
                   </>

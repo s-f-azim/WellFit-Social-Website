@@ -57,7 +57,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
                 </Button>
               </Dropdown>
             ) : (
-              <Link href="/search">
+              <Link href={{ pathname: '/search', query: { tab: 'Courses' } }}>
                 <Button type="link" className="menuButton">
                   <ProfileOutlined /> Courses
                 </Button>

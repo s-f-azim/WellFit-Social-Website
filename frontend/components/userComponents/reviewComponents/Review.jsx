@@ -47,7 +47,7 @@ const Review = ({ getReviews, onSubmit, onDelete }) => {
   };
 
   return (
-    <Card>
+    <Card style={{ border: '0px solid #f0f0f0' }}>
       <ReviewList
         reviews={reviews}
         loading={loading}

@@ -24,6 +24,7 @@ import NotFound from '../../components/generalComponents/404';
 import api from '../../services/api';
 import stripePromise from '../../services/stripe';
 import checkout from '../../actions/payment';
+import { CourseReview } from '../../components/userComponents/reviewComponents/Review';
 
 const columnStyle = { width: 350, height: 'auto' };
 
@@ -227,6 +228,11 @@ const Course = ({ course }) => {
                 )
               ) : null}
             </div>
+          </Col>
+        </Row>
+        <Row justify="space-around">
+          <Col span={20}>
+            <CourseReview id={course._id} />
           </Col>
         </Row>
       </div>
