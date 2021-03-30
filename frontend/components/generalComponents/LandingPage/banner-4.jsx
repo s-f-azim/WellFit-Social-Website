@@ -26,7 +26,7 @@ const Banner4 = () => {
     <div className="banner4">
       <div className="inner_banner4">
         <h1>Explore leading instructors </h1>
-
+        <h3>Anything from fitness to meditation</h3>
         {showState ? (
           <div className="banner4_boxes">
             {list.map((item) => (

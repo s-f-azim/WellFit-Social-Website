@@ -12,9 +12,7 @@ const Banner5 = () => (
           <b>Get individual help</b>
         </h1>
         <p>Benefit from interactions with your favorite instructors</p>
-        <p>Chat in real time with your instructors or other users.</p>
-        <p> Have questions about your workouts or nutrition?</p>
-        <p> Send a message and get a fast answer</p>
+        <p> Get fast answers to your questions about workouts or nutrition.</p>
       </div>
       <div className="banner5_chats">
         <Image layout="intrinsic" src="/computer.svg" width="500px" height="500px" />
@@ -22,6 +20,16 @@ const Banner5 = () => (
       <div className="banner5_content">
         <h1>
           <b>Follow and Interact</b>
+        </h1>
+        <p>Follow other users and instructors</p>
+        <p>Chat in real time with your friends and instructors</p>
+      </div>
+      <div className="banner5_chats">
+        <Image layout="intrinsic" src="/Group.svg" width="500px" height="500px" />
+      </div>
+      <div className="banner5_content">
+        <h1>
+          <b>Build a Community</b>
         </h1>
         <p>Follow other users and instructors</p>
         <p>Post your thought or links to other resources</p>
