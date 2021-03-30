@@ -133,7 +133,7 @@ const SearchBar = () => {
       </div>
       {searchType === 'People' ? (
         <PeopleResults data={data} />
-      ) : searchType === 'Courses' ? (
+      ) : searchType === 'Courses' && data.length > 0 ? (
         <CourseResults data={data} />
       ) : (
         ''

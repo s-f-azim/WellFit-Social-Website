@@ -30,6 +30,7 @@ import {
   Modal,
   Collapse,
   Avatar,
+  Skeleton,
   notification,
 } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
@@ -61,12 +62,19 @@ const User = ({ user }) => {
   const [follower, setFollower] = useState([]);
   const [currentUser, setCurrentUser] = useState(false);
   const router = useRouter();
+  if (router.isFallback) {
+    return <Skeleton active />;
+  }
 
   useEffect(async () => {
     if (session && session.user._id === user._id) {
       setCurrentUser(true);
     }
-    if (session && session.user) setIsFollowing(session.user.following.includes(user._id));
+    // console.log(session.user.following);
+    if (session && session.user) {
+      console.log(session.user);
+      setIsFollowing(session.user.following.includes(user._id));
+    }
     const followingData = await getFollowingList(user._id);
     const followerData = await getFollowerList(user._id);
     setFollowing(followingData.data.data);
@@ -88,7 +96,6 @@ const User = ({ user }) => {
               setvideoID(z.items[0].id.videoId);
             });
         } catch {
-          console.log('fail');
           setvideoID('dGcsHMXbSOA');
           setyoutubeChannel('UCQR2B4SkuyugJV1GZm61rQA');
         }
@@ -227,7 +234,6 @@ const User = ({ user }) => {
         {user.serviceFormat.join(', ')}
       </h4>
     );
-
     return (
       <div className="userPage">
         <Row justify="space-around">
@@ -471,6 +477,13 @@ const User = ({ user }) => {
 export const getStaticProps = async ({ params }) => {
   const userId = params ? params.id : undefined;
   const response = await api.get(`/users/${userId}`);
+  console.log(response);
+  if (!response.data.data) {
+    console.log('hmm');
+    return {
+      notFound: true,
+    };
+  }
   return { props: { user: response.data.data }, revalidate: 60 * 10 };
 };
 
