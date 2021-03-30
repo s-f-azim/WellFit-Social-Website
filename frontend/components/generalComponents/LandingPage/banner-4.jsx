@@ -12,7 +12,7 @@ const Banner4 = () => {
   // Fetches suggested instructors once after initial render
   useEffect(async () => {
     try {
-      const response = await getTrendingUsersLimit(3);
+      const response = await getTrendingUsersLimit(6);
       if (response.data.success && response.data.data.length !== 0) {
         setList(response.data.data);
         setShowState(true);
@@ -31,7 +31,7 @@ const Banner4 = () => {
           <div className="banner4_boxes">
             {list.map((item) => (
               <div className="instructorCard">
-                <a href={`profile/${item._id}`}>
+                <a href={`users/${item._id}`}>
                   <Card
                     hoverable
                     cover={

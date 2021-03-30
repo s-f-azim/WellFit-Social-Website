@@ -5,7 +5,8 @@
   padding-right: 2.5rem;
 }
 .inner_banner5 {
-  height: 100%;
+  width: 100%;
+  height: 80vh;
   max-width: 1024px;
   margin-right: auto;
   margin-left: auto;
@@ -15,26 +16,24 @@
   grid-auto-flow: row;
 }
 .banner5_chats {
-  grid-column: auto/span 6;
+  grid-column: auto/span 4;
 }
 .banner5_content {
   padding-top: 2rem;
-  grid-column: auto/span 6;
+  grid-column: auto/span 8;
 }
 .banner5_content h1 {
   font-size: 2rem;
   font-weight: 400;
 }
 @media only screen and (max-width: 780px) {
-  Image {
-    width: 200px;
-    height: 50px;
-  }
-
   .banner5_chats {
     grid-column: auto/span 6;
   }
   .banner5_content {
-    grid-column: auto/span 12;
+    grid-column: auto/span;
+  }
+  .inner_banner5 {
+    height: 100%;
   }
 }

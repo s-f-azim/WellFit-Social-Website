@@ -6,6 +6,8 @@
 }
 .inner_banner4 {
   width: 100%;
+  min-height: 80vh;
+
   padding-top: 1.5rem;
   padding-bottom: 2rem;
   max-width: 1024px;
@@ -28,6 +30,9 @@
   background-color: white;
 }
 @media only screen and (max-width: 780px) {
+  .inner_banner4 {
+    height: 100%;
+  }
   .instructorCard {
     grid-column: auto/span 12;
   }
