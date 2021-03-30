@@ -40,7 +40,7 @@ const tailFormItemLayout = {
 };
 
 // Instructor Questionnaire
-const InstQuest = ({ session }) => {
+const clientQuest = ({ session }) => {
   const router = useRouter();
   const { user } = session;
   const [hasError, setHasError] = useState(false);
@@ -179,4 +179,4 @@ const InstQuest = ({ session }) => {
     </>
   );
 };
-export default InstQuest;
+export default clientQuest;

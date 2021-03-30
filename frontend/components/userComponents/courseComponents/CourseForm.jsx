@@ -11,7 +11,13 @@ import {
   Space,
   Radio,
 } from 'antd';
-import { MinusCircleOutlined, PlusOutlined, CheckOutlined } from '@ant-design/icons';
+import {
+  MinusCircleOutlined,
+  PlusOutlined,
+  CheckOutlined,
+  ProfileOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
 
 import { useSession } from 'next-auth/client';
 import createCourse from '../../../actions/course';
@@ -51,9 +57,15 @@ const CourseForm = () => {
     }
   };
 
+  const title = (
+    <h2>
+      Create and Upload a Course <ProfileOutlined />
+    </h2>
+  );
+
   return (
-    <>
-      <Card title="Create a course">
+    <h2>
+      <Card title={title}>
         {error && <Alert type="error" message={error} banner />}
         <Form
           name="courseForm"
@@ -89,6 +101,10 @@ const CourseForm = () => {
               },
               { required: true, message: 'Please input the price of the course ($)' },
             ]}
+            tooltip={{
+              title: 'Input 0 for a free course',
+              icon: <InfoCircleOutlined />,
+            }}
           >
             <InputNumber precision={2} />
           </Form.Item>
@@ -236,9 +252,9 @@ const CourseForm = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item label="Location (if applicable):" name="address">
+          {/* <Form.Item label="Location (if applicable):" name="address">
             <Input />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item>
             <Button type="primary" htmlType="submit">
@@ -247,7 +263,7 @@ const CourseForm = () => {
           </Form.Item>
         </Form>
       </Card>
-    </>
+    </h2>
   );
 };
 

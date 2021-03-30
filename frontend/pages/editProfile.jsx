@@ -181,7 +181,11 @@ const editProfilePage = () => {
                     </Form.Item>
 
                     <Form.Item name="bio" label="Bio">
-                      <Input.TextArea maxLength={300} defaultValue={user.bio ? user.bio : null} />
+                      <Input.TextArea
+                        maxLength={200}
+                        showCount
+                        defaultValue={user.bio ? user.bio : null}
+                      />
                     </Form.Item>
 
                     <Form.Item name="tags" label="Tags">

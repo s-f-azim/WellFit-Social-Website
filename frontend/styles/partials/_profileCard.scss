@@ -1,17 +1,12 @@
-.course-card {
+.profile-card {
   .ant-card {
     min-width: 25rem;
     max-width: 25rem;
-    min-height: 16rem;
-    max-height: 16rem;
+    min-height: 15rem;
+    max-height: 15rem;
   }
 
   .title {
-    float: left;
-  }
-
-  .title:hover {
-    cursor: pointer;
     float: left;
   }
 
@@ -20,27 +15,8 @@
     min-width: 25%;
   }
 
-  .course-details {
+  .profile-details {
     max-width: 60%;
-  }
-
-  .delete-icon {
-    font-size: 2rem;
-    color: black;
-    float: right;
-  }
-
-  .delete-icon:hover {
-    font-size: 2rem;
-    color: black;
-    cursor: pointer;
-    float: right;
-  }
-
-  .creators {
-    max-width: auto;
-    display: inline-block;
-    margin-right: 0.5rem;
   }
 
   .tags {
@@ -49,10 +25,6 @@
     max-width: min-content;
     display: inline-block;
     margin-right: 0.5rem;
-  }
-
-  .modal-image {
-    padding-right: 2rem;
   }
 
   @media screen and (max-width: 1024px) {
@@ -67,7 +39,7 @@
       min-width: 100%;
     }
 
-    .course-details {
+    .profile-details {
       min-width: 100%;
     }
   }

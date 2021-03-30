@@ -13,7 +13,7 @@ const Banner2 = () => (
             <h3>
               <b>Take courses</b>
             </h3>
-            <p>Need to put some text in here soon i guess.</p>
+            <p>Explore courses from fitness to nutrition or general wellness.</p>
           </div>
         </div>
         <div className="card inner_banner_content2">
@@ -24,9 +24,7 @@ const Banner2 = () => (
             <h3>
               <b>Engange with trainers</b>
             </h3>
-            <p>
-              Mauris tincidunt, augue vel pharetra pretium, sem eros mattis felis, eu fermentum.{' '}
-            </p>
+            <p>Follow your favorite trainers and instructors to see what they have to say.</p>
           </div>
         </div>
         <div className="card inner_banner_content2">
@@ -37,7 +35,7 @@ const Banner2 = () => (
             <h3>
               <b>Get 1-1 support and advice</b>
             </h3>
-            <p>Maybe the clients know what she wants</p>
+            <p>Chat and interact with your instructor.</p>
           </div>
         </div>
         <div className="card inner_banner_content2">

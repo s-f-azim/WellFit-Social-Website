@@ -1,6 +1,15 @@
 import { Button } from 'antd';
 import Image from 'next/image';
 import { CreditCardOutlined, DislikeOutlined } from '@ant-design/icons';
+import tags from '../../../data/tags';
+
+const TagCard = tags.map((tag) => (
+  <div className="scroll_item">
+    <a href="/search" style={{ color: 'black', textDecoration: 'none' }}>
+      {tag}
+    </a>
+  </div>
+));
 
 const Banner3 = () => (
   <div className="banner3">
@@ -41,6 +50,13 @@ const Banner3 = () => (
         <div className="banner3_screen">
           <Image src="/mediai_mage.png" width="231px" height="500px" />
         </div>
+      </div>
+      <div className="inner_banner3_tagscroll">
+        <h1>
+          <b>Explore our tags and categories</b>
+        </h1>
+        <p>Wide range of tags and categories to help you find whats right for you.</p>
+        <div className="scrollable">{TagCard}</div>
       </div>
     </div>
   </div>

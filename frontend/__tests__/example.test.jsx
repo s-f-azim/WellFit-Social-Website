@@ -47,7 +47,7 @@ afterEach(() => {
 import { Button, Form, Input } from 'antd';
 import { useState } from 'react';
 
-const Component = ({ props }) => {
+const Component = () => {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -80,6 +80,7 @@ it('renders the component', () => {
 
   // you can assign components to variables
   const ageField = screen.getByRole('textbox', { name: 'age' });
+  ageField;
 
   // refer by label
   expect(screen.getByLabelText('What is your age?')).toBeInTheDocument();

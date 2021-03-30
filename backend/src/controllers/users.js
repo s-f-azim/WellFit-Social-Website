@@ -162,7 +162,7 @@ const getFollowing = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc get user follower list
- * @route GET /api/users/getFollower?page=`{$pageNumber}`
+ * @route GET /api/users/getFollower?page=`${pageNumber}`
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
@@ -214,10 +214,10 @@ const deleteSpecificUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc add specified course to user's wish list - if it already exists, remove it
- * @route PATCH /api/users/addtowishlist/:id
+ * @route PATCH /api/users/updatewishlist/:id
  * @access private
  */
-const addToWishList = asyncHandler(async (req, res) => {
+const updateWishList = asyncHandler(async (req, res) => {
   if (Course.findById(req.params.id)) {
     const index = req.user.wishlist.indexOf(req.params.id);
     if (index === -1) {
@@ -269,67 +269,6 @@ const facebookOauth = asyncHandler(async (req, res) => {
  */
 const instagramOauth = asyncHandler(async (req, res) => {
   sendTokenResponseOauth(req.user, 200, res);
-});
-
-/**
- * @async
- * @desc get Instructors that match filters
- * @route GET /api/users/isntructors?=screenname=&&age=&&gender=&&tags=&&offset=&&limit=
- * @access public
- */
-const getInstructors = asyncHandler(async (req, res) => {
-  /* get Age from birthday to filter by age */
-  const getAge = (birthday) =>
-    (new Date() - birthday) / 1000 / 60 / 60 / 24 / 365;
-  const s = req.query.q;
-  const regex = new RegExp(s, 'i');
-  /* get all instructors that match given filters */
-  let instr = await User.find({
-    role: 'instructor',
-    ...(req.query.q ? { screenname: { $regex: regex } } : {}),
-    ...(req.query.gender ? { gender: req.query.gender } : {}),
-    ...(req.query.tags ? { tags: { $all: req.query.tags.split(',') } } : {}),
-  });
-  /* check if age is present and filter 
-      age>62 returns all older than 62
-      age=0 returns all
-      otherwise return instructors within age range of +-5 */
-  if (req.query.age) {
-    if (parseInt(req.query.age, 10) !== 0) {
-      if (parseInt(req.query.age, 10) >= 62) {
-        instr = instr.filter((inst) => {
-          if (inst.birthday) {
-            return getAge(inst.birthday) >= 62;
-          }
-          return false;
-        });
-      } else {
-        instr = instr.filter((inst) => {
-          if (inst.birthday) {
-            return (
-              getAge(inst.birthday) >= parseInt(req.query.age, 10) - 5 &&
-              getAge(inst.birthday) <= parseInt(req.query.age, 10) + 5
-            );
-          }
-          return false;
-        });
-      }
-    }
-  }
-  /* save length and paginate according to offset and limit */
-  const TotalC = instr.length;
-  if (req.query.pageSize && req.query.offset) {
-    instr = instr.slice(
-      parseInt(req.query.offset, 10),
-      parseInt(req.query.offset, 10) + parseInt(req.query.pageSize, 10)
-    );
-  }
-  res.status(200).send({
-    success: true,
-    total: TotalC,
-    count: instr.length,
-    data: instr,
-  });
 });
 /**
  * @async
@@ -405,7 +344,7 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
  * @async
  * @desc Get suggested instructors for user based on random tag selected, client gender preference
  * @param {User} user - a user
- * @route GET /api/users/profile
+ * @route GET /api/users/suggestedInstructors/
  */
 const getSuggestedInstructors = asyncHandler(async (req, res) => {
   const users = await User.find({
@@ -448,7 +387,8 @@ const getTrendingUsers = asyncHandler(async (req, res) => {
       .slice(0, req.query.limit || 10),
   });
 });
-/*
+
+/**
  * @desc ban a user
  * @route PATCH api/users/ban/:id
  * @access private
@@ -465,7 +405,6 @@ const banUser = asyncHandler(async (req, res) => {
 
 export {
   getUsers,
-  getInstructors,
   getUsersWithinRadius,
   createUser,
   loginUser,
@@ -477,7 +416,7 @@ export {
   deleteUser,
   deleteSpecificUser,
   getWishList,
-  addToWishList,
+  updateWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,

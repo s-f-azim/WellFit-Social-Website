@@ -411,7 +411,6 @@ const setupInstructors = async () => {
 };
 
 export {
-  setupDatabase,
   userOne,
   userTwo,
   userThree,
@@ -429,8 +428,8 @@ export {
   instructorSix,
   courseOne,
   courseTwo,
-  setupDatabase,
   setupInstructors,
+  setupDatabase,
   userOneId,
   userTwoId,
   userFiveId,

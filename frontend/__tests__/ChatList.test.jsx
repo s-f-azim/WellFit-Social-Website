@@ -21,7 +21,7 @@ const users = [2, 3, 4, 5].map((n) => ({
 }));
 
 it('renders users', async () => {
-  api.get.mockReturnValueOnce({
+  api.get.mockReturnValue({
     data: { success: true, data: users, pagination: { total: users.length } },
   });
   await act(async () => {
@@ -34,6 +34,9 @@ it('renders users', async () => {
 });
 
 it('opens conversation when user is clicked', async () => {
+  api.get.mockReturnValueOnce({
+    data: { success: true, data: users, pagination: { total: users.length } },
+  });
   api.get.mockReturnValueOnce({
     data: { success: true, data: users, pagination: { total: users.length } },
   });

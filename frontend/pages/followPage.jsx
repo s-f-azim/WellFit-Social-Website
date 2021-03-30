@@ -10,7 +10,6 @@ import {
   getFollowerList,
   getSuggestedInstructors,
 } from '../actions/user';
-import TrendingUsers from '../components/userComponents/TrendingUsers';
 
 export default function FollowPage() {
   const [session, loading] = useSession();
@@ -37,10 +36,7 @@ export default function FollowPage() {
       <>
         <br />
 
-        <Space>
-          <TrendingUsers />
-          {session.user.role === 'client' && <getSuggestedInstructors />}
-        </Space>
+        <Space>{session.user.role === 'client' && <getSuggestedInstructors />}</Space>
 
         <br />
         <Card>

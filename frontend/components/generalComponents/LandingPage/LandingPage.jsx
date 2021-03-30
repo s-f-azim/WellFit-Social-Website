@@ -4,8 +4,8 @@ import Banner1 from './banner-1';
 import Banner2 from './banner-2';
 import Banner3 from './banner-3';
 import Banner4 from './banner-4';
+import Banner5 from './banner-5';
 import Footer from './footer';
-import TrendingUsers from '../../userComponents/TrendingUsers';
 
 const LandingText = () => (
   <div
@@ -41,6 +41,7 @@ const LandingPage = () => (
     <Banner2 />
     <Banner3 />
     <Banner4 />
+    <Banner5 />
     <Footer />
   </>
 );

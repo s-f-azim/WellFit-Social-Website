@@ -57,7 +57,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
                 </Button>
               </Dropdown>
             ) : (
-              <Link href="/search">
+              <Link href={{ pathname: '/search', query: { tab: 'Courses' } }}>
                 <Button type="link" className="menuButton">
                   <ProfileOutlined /> Courses
                 </Button>
@@ -106,16 +106,14 @@ const LoggedOutMenu = () => {
         <ul className={click ? 'nav-options activs' : 'nav-options'}>
           <li className="option" onClick={closeMobileMenu}>
             <Link href="/login">
-              <Button size="large" shape="round" type="primary">
+              <Button size="large" type="primary">
                 Sign In
               </Button>
             </Link>
           </li>
           <li className="option" onClick={closeMobileMenu}>
             <Link href="/signup">
-              <Button size="large" shape="round">
-                Sign up
-              </Button>
+              <Button size="large">Sign up</Button>
             </Link>
           </li>
         </ul>

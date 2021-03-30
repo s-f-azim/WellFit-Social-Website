@@ -47,7 +47,7 @@ const Review = ({ getReviews, onSubmit, onDelete }) => {
   };
 
   return (
-    <Card>
+    <Card style={{ border: '0px solid #f0f0f0' }}>
       <ReviewList
         reviews={reviews}
         loading={loading}
@@ -63,13 +63,13 @@ const Review = ({ getReviews, onSubmit, onDelete }) => {
   );
 };
 
-const UserReview = ({ id }) => {
+const UserReview = ({ id }) => (
   <Review
     getReviews={() => getUserReviews(id)}
     onSubmit={(values) => createUserReview(id, values)}
     onDelete={() => deleteUserReview(id)}
-  />;
-};
+  />
+);
 
 const CourseReview = ({ id }) => (
   <Review

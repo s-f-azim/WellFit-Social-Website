@@ -33,14 +33,18 @@ const UserFeed = () => {
   };
 
   const handleDelete = (postId) => {
-    deletePost(postId);
-    setPosts(posts.filter((p) => p._id !== postId));
+    try {
+      deletePost(postId);
+      setPosts(posts.filter((p) => p._id !== postId));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <>
       <PostInput onSubmit={handleSubmit} />
-      <Divider dashed />
+      <Divider />
       <PostList
         posts={posts}
         loading={loading && posts}

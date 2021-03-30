@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { Row, Col, Card } from 'antd';
-import CourseCard from './CourseCard';
+import ProfileCard from './ProfileCard';
 
-const CourseResults = ({ data }) => (
+const PeopleResults = ({ data }) => (
   <Row
     type="flex"
     align="middle"
@@ -13,12 +13,11 @@ const CourseResults = ({ data }) => (
       { xs: 8, sm: 16, md: 24, lg: 32 },
     ]}
   >
-    {data.map((course) => (
-      <Col key={course._id}>
-        <CourseCard content={course} isWish={false} />
+    {data.map((user) => (
+      <Col key={user._id}>
+        <ProfileCard content={user} />
       </Col>
     ))}
   </Row>
 );
-
-export default CourseResults;
+export default PeopleResults;

@@ -29,7 +29,7 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
       icon: <CheckOutlined style={{ color: '#70FF00' }} />,
     });
     signOut({ redirect: false });
-    router.push('/');
+    router.push('/landing');
   };
 
   const GoToeditProfile = () => {
@@ -55,7 +55,7 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
       />
       <h1 className="item">
         <UserOutlined />
-        <Link href="/profile">{session.user.fName}</Link>
+        <Link href={`/users/${session.user._id}`}>{session.user.fName}</Link>
       </h1>
       <div className="item edit" onClick={GoToeditProfile}>
         <EditOutlined />
@@ -65,12 +65,6 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
         <SendOutlined />
         <h1>
           <Link href="/chats">Chats</Link>
-        </h1>
-      </div>
-      <div className="item">
-        <HeartOutlined />
-        <h1>
-          <Link href="/followPage">Follow</Link>
         </h1>
       </div>
       <div className="item">

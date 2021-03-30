@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Card, List, Avatar, Descriptions } from 'antd';
-import { UserOutlined, BarChartOutlined } from '@ant-design/icons';
+import { UserOutlined, BarChartOutlined, RiseOutlined } from '@ant-design/icons';
 import { getTrendingUsers } from '../../actions/user';
 
 const { Item } = List;
@@ -25,8 +25,11 @@ const TrendingUsers = () => {
         <Card
           title={
             <div style={{ display: 'flex', paddingBottom: 0 }}>
-              <BarChartOutlined style={{ fontSize: '24px', paddingRight: 4 }} />
-              <h3>Trending Users</h3>
+              <h3>
+                <strong>
+                  Trending Users <RiseOutlined style={{ fontSize: '24px', paddingRight: 4 }} />
+                </strong>
+              </h3>
             </div>
           }
           style={{ width: 350 }}

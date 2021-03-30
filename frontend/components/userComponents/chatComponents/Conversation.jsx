@@ -83,13 +83,7 @@ const Conversation = ({ conversation }) => {
           />
         </Form.Item>
         <Form.Item>
-          <Button
-            aria-label="send"
-            type="text"
-            shape="round"
-            htmlType="submit"
-            style={{ border: '1px solid #dddddd' }}
-          >
+          <Button aria-label="send" type="text" htmlType="submit" style={{ border: '1px solid #dddddd' }}>
             <SendOutlined />
           </Button>
         </Form.Item>

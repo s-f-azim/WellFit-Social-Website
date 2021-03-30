@@ -4,6 +4,7 @@ import {
   Row,
   Space,
   Input,
+  InputNumber,
   Select,
   Collapse,
   Button,
@@ -129,7 +130,7 @@ const InstQuest = ({ session }) => {
                 <Input
                   aria-label="speciality"
                   defaultValue={user.speciality ? user.speciality : null}
-                  placeholder="bodybuilding, Yoga, nutrition..."
+                  placeholder="bodybuilding, yoga, nutrition..."
                 />
               </Form.Item>
 
@@ -168,6 +169,12 @@ const InstQuest = ({ session }) => {
                   </>
                 )}
               </Form.List>
+
+              <br />
+              <br />
+              <Form.Item name="yearsExperience" label="Years of experience:">
+                <InputNumber min={0} />
+              </Form.Item>
             </Panel>
 
             <Panel header={communicationText} key="2">
@@ -207,13 +214,6 @@ const InstQuest = ({ session }) => {
             </Panel>
 
             <Panel header={paymentText} key="3">
-              <Form.Item name="priceRange" label="Price range">
-                <Rate
-                  defaultValue={user.priceRange ? user.priceRange : 1}
-                  style={{ color: 'green' }}
-                  character={<PoundOutlined />}
-                />
-              </Form.Item>
               <Form.Item name="paymentFrequency" label="Payment frequency">
                 <Select
                   aria-label="payment frequency"
