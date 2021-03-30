@@ -16,13 +16,17 @@ import {
 
 const Review = ({ getReviews, onSubmit, onDelete }) => {
   const [session, loading] = useSession();
-  const [user, setUser] = useState();
-  const [reviews, setReviews] = useState();
+  const [user, setUser] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [hasReviewed, setHasReviewed] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      setReviews(await getReviews());
+      try {
+        setReviews(await getReviews());
+      } catch (err) {
+        console.log(err);
+      }
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -30,7 +34,7 @@ const Review = ({ getReviews, onSubmit, onDelete }) => {
 
   useEffect(() => {
     if (session) setUser(session.user);
-  }, [session]);
+  }, []);
 
   useEffect(() => {
     setHasReviewed(user && reviews && reviews.find((r) => r.author._id === user._id));

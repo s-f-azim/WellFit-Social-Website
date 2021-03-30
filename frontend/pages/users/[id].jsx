@@ -310,7 +310,7 @@ const User = ({ user }) => {
                     </h2>
                   </h3>
 
-                  <h4>
+                  <h4 style={{ minwidth: '30%' }}>
                     <strong> About: </strong>
                     {user.bio ? user.bio : 'No bio entered, edit your profile to display it.'}
                   </h4>
@@ -445,22 +445,20 @@ const User = ({ user }) => {
                   </>
                 )}
                 {session && session.user._id !== user._id && (
-                  <>
-                    <Panel
-                      header={
-                        <h2>
-                          User reviews <FileDoneOutlined />
-                        </h2>
-                      }
-                      key="5"
-                    >
-                      <Row justify="space-around">
-                        <Col>
-                          <UserReview id={user._id} />
-                        </Col>
-                      </Row>
-                    </Panel>
-                  </>
+                  <Panel
+                    header={
+                      <h2>
+                        User reviews <FileDoneOutlined />
+                      </h2>
+                    }
+                    key="5"
+                  >
+                    <Row justify="space-around">
+                      <Col span={24}>
+                        <UserReview id={user._id} />
+                      </Col>
+                    </Row>
+                  </Panel>
                 )}
               </Collapse>
             </Card>
