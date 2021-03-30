@@ -18,7 +18,7 @@ const ChatList = ({ setConversation, setReciver }) => {
     const response = await api.get('/users');
     const res = await api.get('/users/getFollower');
     totalUsers = response.data.pagination.total;
-    setUsers([...res.data.data]);
+    setUsers([...response.data.data]);
   }, []);
   // load images of users
   const image = (user) => {
