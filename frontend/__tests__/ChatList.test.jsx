@@ -20,7 +20,7 @@ const users = [2, 3, 4, 5].map((n) => ({
   photos: [],
 }));
 
-it('renders users', async () => {
+it.only('renders users', async () => {
   api.get.mockReturnValue({
     data: { success: true, data: users, pagination: { total: users.length } },
   });
