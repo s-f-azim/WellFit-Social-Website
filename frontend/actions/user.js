@@ -45,9 +45,11 @@ const getTrendingUsers = () => api.get('/users/trendingUsers');
 
 const getTrendingUsersLimit = (limit) => api.get(`/users/trendingUsers?limit=${limit}`);
 
-const getFollowingList = () => api.get('/users/getFollowing');
+const getFollowingList = (id, pageNum) =>
+  api.get(`/users/getFollowing/${id}${pageNum ? `?pageNum=${pageNum}` : ''}`);
 
-const getFollowerList = (pageNum) => api.get(`/users/getFollower/?page=${pageNum}`);
+const getFollowerList = (id, pageNum) =>
+  api.get(`/users/getFollower/${id}${pageNum ? `?pageNum=${pageNum}` : ''}`);
 
 const banUser = (userId) => api.patch(`/users/ban/${userId}`, {});
 

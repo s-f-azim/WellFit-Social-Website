@@ -19,7 +19,7 @@ import {
   FileDoneOutlined,
 } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
-import { Button, Row, Card, Col, Divider, Modal, Collapse, Avatar } from 'antd';
+import { Button, Space, Row, Card, Col, Divider, Modal, Collapse, Avatar } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import FollowButton from '../../components/userComponents/FollowButton';
@@ -31,7 +31,8 @@ import UserFeed from '../../components/userComponents/postComponents/UserFeed';
 import UserPosts from '../../components/userComponents/postComponents/UserPosts';
 import TrendingUsers from '../../components/userComponents/TrendingUsers';
 import GetFollow from '../../components/userComponents/GetFollow';
-import { getFollowingList, getFollowerList } from '../../actions/user';
+import { createRequest } from '../../actions/request';
+import { getFollowingList, getFollowerList, addingFollowUser } from '../../actions/user';
 import api from '../../services/api';
 import { CourseReview, UserReview } from '../../components/userComponents/reviewComponents/Review';
 import Course from '../courses/[id]';
@@ -40,6 +41,7 @@ const User = ({ user }) => {
   const [session, loading] = useSession();
   const [youtubeChannel, setyoutubeChannel] = useState([]);
   const [videoID, setvideoID] = useState([]);
+  const [isFollowing, setIsFollowing] = useState(false);
   const [didLoad, setDidLoad] = useState(false);
   const [isFollowingModalVisible, setIsFollowingModalVisible] = useState(false);
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
@@ -51,11 +53,12 @@ const User = ({ user }) => {
   useEffect(async () => {
     if (session && session.user._id === user._id) {
       setCurrentUser(true);
-      const followingData = await getFollowingList();
-      const followerData = await getFollowerList();
-      setFollowing(followingData.data.data);
-      setFollower(followerData.data.data);
     }
+    if (session && session.user) setIsFollowing(session.user.following.includes(user._id));
+    const followingData = await getFollowingList(user._id);
+    const followerData = await getFollowerList(user._id);
+    setFollowing(followingData.data.data);
+    setFollower(followerData.data.data);
     setFollowerIsModalVisible(false);
     setIsFollowingModalVisible(false);
   }, [router.query]);
@@ -115,6 +118,30 @@ const User = ({ user }) => {
     };
     const handleFollowerCancel = () => {
       setFollowerIsModalVisible(false);
+    };
+    const handleFollow = async (id) => {
+      try {
+        await addingFollowUser(id);
+        if (!session.user.following.includes(id)) {
+          console.log('hey there');
+          session.user.following = [id, ...session.user.following];
+          setIsFollowing(true);
+        } else {
+          console.log('hmm');
+          const index = session.user.following.indexOf(id);
+          session.user.following.splice(index, 1);
+          setIsFollowing(false);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const handleReport = async (id) => {
+      try {
+        await createRequest('report', 'something', id);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     const verified = (
@@ -233,6 +260,17 @@ const User = ({ user }) => {
                       <UserOutlined />
                     )}
                   </h1>
+                  {session && session.user._id !== user._id && (
+                    <Space style={{ marginBottom: '0.5rem' }}>
+                      <Button
+                        type={isFollowing ? 'default' : 'primary'}
+                        onClick={() => handleFollow(user._id)}
+                      >
+                        {isFollowing ? 'Unfollow' : 'Follow'}
+                      </Button>
+                      <Button onClick={() => handleReport(user._id)}>Report</Button>
+                    </Space>
+                  )}
                   <h3>
                     <strong>Socials: </strong>
                     <Button type="text" onClick={facebookLink} icon={<FacebookOutlined />} />
