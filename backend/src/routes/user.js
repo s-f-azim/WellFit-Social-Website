@@ -147,11 +147,11 @@ router
   .patch(passport.authenticate('jwt', { session: false }), followUser);
 
 router
-  .route('/getFollowing')
+  .route('/getFollowing/:id')
   .get(passport.authenticate('jwt', { session: false }), getFollowing);
 
 router
-  .route('/getFollower')
+  .route('/getFollower/:id')
   .get(passport.authenticate('jwt', { session: false }), getFollower);
 
 router.route('/trendingUsers').get(getTrendingUsers);
