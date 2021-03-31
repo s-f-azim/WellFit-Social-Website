@@ -19,7 +19,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-it.only('renders fields', () => {
+it('renders fields', () => {
   const session = { user: {} };
   render(<InstQuest session={session} />);
 
@@ -28,22 +28,23 @@ it.only('renders fields', () => {
   userEvent.click(screen.getByRole('button', { name: 'add qualification' }));
   expect(screen.getByRole('textbox', { name: 'qualification' })).toBeInTheDocument();
   expect(screen.getByRole('textbox', { name: 'speciality' })).toBeInTheDocument();
-  // expect(screen.getByRole('textbox', { name: 'customer stories' })).toBeInTheDocument();
+  userEvent.click(screen.getByRole('button', { name: 'add customer story' }));
+  expect(screen.getByRole('textbox', { name: 'customer story' })).toBeInTheDocument();
 
   userEvent.click(
     screen.getByRole('button', { name: 'right Client Communication (if applicable)' })
   );
-  expect(screen.getByRole('combobox', { name: 'communication modes' })).toBeInTheDocument();
+  expect(screen.getByRole('listbox', { name: 'communication modes' })).toBeInTheDocument();
   expect(screen.getByRole('combobox', { name: 'communication frequency' })).toBeInTheDocument();
 
   userEvent.click(
     screen.getByRole('button', { name: 'right Payment information (if applicable)' })
   );
   expect(screen.getByRole('combobox', { name: 'payment frequency' })).toBeInTheDocument();
-  expect(screen.getByRole('combobox', { name: 'payment options' })).toBeInTheDocument();
+  expect(screen.getByRole('listbox', { name: 'payment options' })).toBeInTheDocument();
 
   userEvent.click(screen.getByRole('button', { name: 'right Additional information' }));
-  expect(screen.getByRole('combobox', { name: 'service format' })).toBeInTheDocument();
+  expect(screen.getByRole('listbox', { name: 'service format' })).toBeInTheDocument();
   expect(screen.getByRole('combobox', { name: 'client gender' })).toBeInTheDocument();
   // expect(screen.getByRole('slider', { name: 'client fitness' })).toBeInTheDocument();
   // expect(screen.getByRole('slider', { name: 'client hypertrophy' })).toBeInTheDocument();
@@ -52,7 +53,7 @@ it.only('renders fields', () => {
   expect(screen.getByRole('button', { name: 'save' })).toBeInTheDocument();
 });
 
-it('updates user when submitted with valid data', async () => {
+it.only('updates user when submitted with valid data', async () => {
   const session = { user: {} };
   updateUser.mockReturnValue({ data: { success: true, data: {} } });
   render(<InstQuest session={session} />);
@@ -60,46 +61,51 @@ it('updates user when submitted with valid data', async () => {
   const user = {
     trainerType: 'Lifestyle trainer',
     speciality: 'Nutrition',
-    communicationModes: ['Email', 'Phone calls'],
+    communicationModes: ['Email', 'Phone calls', 'Whatsapp'],
     communicationFrequency: 'Daily',
     paymentFrequency: 'One time',
-    paymentOptions: ['Paypal'],
+    paymentOptions: ['Paypal', 'Cash'],
     serviceFormat: ['Non-client-specific videos'],
     clientGenderPreference: 'Female',
   };
 
   userEvent.click(screen.getByRole('button', { name: 'right Your career' }));
-  userEvent.click(screen.getByRole('combobox', { name: 'trainer type' }));
-  userEvent.click(screen.getByText(user.trainerType));
+  userEvent.selectOptions(screen.getByRole('combobox', { name: 'trainer type' }), user.trainerType);
   userEvent.type(screen.getByRole('textbox', { name: 'speciality' }), user.speciality);
 
   userEvent.click(
     screen.getByRole('button', { name: 'right Client Communication (if applicable)' })
   );
-  userEvent.click(screen.getByRole('combobox', { name: 'communication modes' }));
-  user.communicationModes.forEach((cm) =>
-    userEvent.click(screen.getByRole('option', { name: cm }))
+  userEvent.selectOptions(
+    screen.getByRole('listbox', { name: 'communication modes' }),
+    user.communicationModes
   );
-  userEvent.click(screen.getByRole('combobox', { name: 'communication frequency' }));
-  userEvent.click(screen.getByRole('option', { name: user.communicationFrequency }));
-  userEvent.click(screen.getByRole('combobox', { name: 'communication frequency' }));
+  userEvent.selectOptions(
+    screen.getByRole('combobox', { name: 'communication frequency' }),
+    user.communicationFrequency
+  );
 
   userEvent.click(
     screen.getByRole('button', { name: 'right Payment information (if applicable)' })
   );
-  userEvent.click(screen.getByRole('combobox', { name: 'payment frequency' }));
-  userEvent.click(screen.getByRole('option', { name: user.paymentFrequency }));
-  userEvent.click(screen.getByRole('combobox', { name: 'payment options' }));
-  user.paymentOptions.forEach((po) => userEvent.click(screen.getByRole('option', { name: po })));
+  userEvent.selectOptions(
+    screen.getByRole('combobox', { name: 'payment frequency' }),
+    user.paymentFrequency
+  );
+  userEvent.selectOptions(
+    screen.getByRole('listbox', { name: 'payment options' }),
+    user.paymentOptions
+  );
 
   userEvent.click(screen.getByRole('button', { name: 'right Additional information' }));
-  userEvent.click(screen.getByRole('combobox', { name: 'service format' }));
-  screen.getByRole('option', { name: 'Non-client-specific videos' });
-  /* user.serviceFormat.forEach((sf) =>
-    userEvent.click(userEvent.click(screen.getByRole('option', { name: sf })))
-  ); */
-  userEvent.click(screen.getByRole('combobox', { name: 'client gender' }));
-  userEvent.click(screen.getByRole('option', { name: user.clientGenderPreference }));
+  userEvent.selectOptions(
+    screen.getByRole('listbox', { name: 'service format' }),
+    user.serviceFormat
+  );
+  userEvent.selectOptions(
+    screen.getByRole('combobox', { name: 'client gender' }),
+    user.clientGenderPreference
+  );
 
   userEvent.click(screen.getByRole('button', { name: 'save' }));
   await waitFor(() => expect(updateUser).toHaveBeenCalledWith(user));

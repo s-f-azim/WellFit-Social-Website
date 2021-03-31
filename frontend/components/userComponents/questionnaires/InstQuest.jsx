@@ -103,7 +103,7 @@ const InstQuest = ({ session }) => {
                       >
                         <Form.Item {...field} fieldKey={[field.fieldKey, 'qualification']}>
                           <Input
-                            arial-label="qualification"
+                            aria-label="qualification"
                             style={{ width: '90%' }}
                             placeholder="Enter your qualification"
                           />
@@ -147,7 +147,7 @@ const InstQuest = ({ session }) => {
                         <Form.Item {...field} fieldKey={[field.fieldKey, 'customerStory']}>
                           <Row>
                             <TextArea
-                              aria-label="add customer story"
+                              aria-label="customer story"
                               style={{ width: '90%' }}
                               showCount
                               maxLength={200}
