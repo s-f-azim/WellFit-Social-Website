@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { Input, Select, Radio, Pagination } from 'antd';
+import { Input, Select, Radio, Pagination, Row, Col } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getPeople } from '../actions/user';
@@ -103,34 +103,45 @@ const SearchBar = () => {
           <Radio.Button value="People">People</Radio.Button>
           <Radio.Button value="Courses">Courses</Radio.Button>
         </Radio.Group>
-        {searchType === 'Questionnaire' && <SearchQuestionaire />}
-        {searchType !== 'Questionnaire' && (
-          <Search
-            type="text"
-            enterButton="Search"
-            size="large"
-            onSearch={searchName}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Search me..."
-            style={{ width: '90%' }}
-          />
-        )}
-        {searchType === 'People' && (
-          <PeopleFilter
-            setGender={setGender}
-            setAge={setAge}
-            setTags={setTags}
-            tagsOption={tagsOption}
-          />
-        )}
-        {searchType === 'Courses' && (
-          <CourseFilter
-            setTags={setTags}
-            setETags={setETags}
-            tagsOption={tagsOption}
-            equipOptions={equipOptions}
-          />
-        )}
+        <Col>
+          {searchType === 'Questionnaire' && (
+            <Row>
+              <SearchQuestionaire />
+            </Row>
+          )}
+          {searchType !== 'Questionnaire' && (
+            <Row style={{ padding: '2em' }}>
+              <Search
+                type="text"
+                enterButton="Search"
+                size="large"
+                onSearch={searchName}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Search for something..."
+              />
+            </Row>
+          )}
+          {searchType === 'People' && (
+            <Row justify="center">
+              <PeopleFilter
+                setGender={setGender}
+                setAge={setAge}
+                setTags={setTags}
+                tagsOption={tagsOption}
+              />
+            </Row>
+          )}
+          {searchType === 'Courses' && (
+            <Row justify="center">
+              <CourseFilter
+                setTags={setTags}
+                setETags={setETags}
+                tagsOption={tagsOption}
+                equipOptions={equipOptions}
+              />
+            </Row>
+          )}
+        </Col>
       </div>
       {searchType === 'People' ? (
         <PeopleResults data={data} />
@@ -139,18 +150,19 @@ const SearchBar = () => {
       ) : (
         ''
       )}
-      {searchType !== 'Questionnaire' && (
-        <Pagination
-          responsive
-          showTotal={(totalQ) => `Total ${totalQ} items`}
-          showSizeChanger
-          onShowSizeChange={handlePaginationChange}
-          defaultCurrent={0}
-          total={total}
-          style={{ marginTop: '2rem', alignItems: 'center' }}
-          onChange={handlePaginationChange}
-        />
-      )}
+      <Row justify="center">
+        {searchType !== 'Questionnaire' && (
+          <Pagination
+            responsive
+            showSizeChanger
+            onShowSizeChange={handlePaginationChange}
+            defaultCurrent={0}
+            total={total}
+            style={{ margin: '2rem', alignItems: 'center' }}
+            onChange={handlePaginationChange}
+          />
+        )}
+      </Row>
     </>
   );
 };

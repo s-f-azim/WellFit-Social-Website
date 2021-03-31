@@ -1,5 +1,5 @@
 import { Row } from 'antd';
-import SearchCard from '../components/userComponents/navigationComponents/Search';
+import SearchCard from '../components/generalComponents/Search/SearchCard';
 import { categories } from '../data/questions';
 
 const searchPage = () => (

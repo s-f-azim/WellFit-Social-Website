@@ -25,9 +25,7 @@ const SearchCard = ({ category }) => {
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState(0);
   const [searchTarget, setSearchTarget] = useState(null);
-  const onFinish = useCallback((values) => {
-    console.log('hmm', values);
-  }, []);
+  const onFinish = useCallback((values) => {}, []);
   const closePopup = useCallback(() => {
     setVisible(false);
     setCurrent(1);

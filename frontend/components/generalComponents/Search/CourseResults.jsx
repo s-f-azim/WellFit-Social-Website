@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Row, Col, Card } from 'antd';
 import CourseCard from './CourseCard';
 
