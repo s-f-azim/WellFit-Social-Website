@@ -18,4 +18,6 @@ const getCourses = (title, tags, etags, pageSize, offset) =>
     },
   });
 
-export { createCourse as default, getCourses };
+const getCourseCreators = (courseId) => api.get(`/courses/${courseId}/creators`);
+
+export { createCourse as default, getCourses, getCourseCreators };

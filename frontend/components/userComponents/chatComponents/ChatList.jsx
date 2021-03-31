@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useSession } from 'next-auth/client';
 import api from '../../../services/api';
+import { getFollowingList } from '../../../actions/user';
+import { createConversation, getConversation } from '../../../actions/conversation';
 
 const loadingIcon = <LoadingOutlined spin />;
 const ChatList = ({ setConversation, setReciver }) => {
@@ -15,10 +17,10 @@ const ChatList = ({ setConversation, setReciver }) => {
   const [lastMsgs, setLastMsgs] = useState({});
   let totalUsers;
   useEffect(async () => {
-    const response = await api.get('/users');
-    const res = await api.get('/users/getFollower');
+    const response = await getFollowingList(session.user._id);
+    console.log(response);
     totalUsers = response.data.pagination.total;
-    setUsers([...res.data.data]);
+    setUsers([...response.data.data]);
   }, []);
   // load images of users
   const image = (user) => {
@@ -33,43 +35,34 @@ const ChatList = ({ setConversation, setReciver }) => {
   };
   // handle the infinite scroll
   const handleScroll = async (params, total, type) => {
-    let response;
     setLoading(true);
     if (users.length >= total) {
       setLoading(false);
       setHasMore(false);
       return;
     }
-    if (type === 'users') {
-      response = await api.get(`/users/getFollower?limit=${params}`);
-    } else {
-      response = await api.get(`/conversation/me?limit=${params}`);
-    }
+
+    const response = await getFollowingList(session.user._id, params);
     setUsers([...response.data.data]);
     setLoading(false);
   };
   // handle the click of the conversation or user
   const handleClick = async (user) => {
-    try {
-      const usersIds = [user._id];
-      const response = await api.get(`/conversation/${usersIds.join(',')}`);
-      if (response.data.success) {
-        // if conversation exists return that
-        if (response.data.data) {
-          setConversation({ ...response.data.data });
-        } else {
-          // otherwise make a new conversation
-          const newConversation = await api.post('/conversation', { users: [usersIds] });
-          setConversation(newConversation.data.data);
-        }
-        setReciver(user);
+    const response = await getConversation(user._id);
+    if (response.data.success) {
+      // if conversation exists return that
+      if (response.data.data) {
+        setConversation({ ...response.data.data });
+      } else {
+        // otherwise make a new conversation
+        const newConversation = await createConversation(user._id);
+        setConversation(newConversation.data.data);
       }
-    } catch (err) {
-      console.log(err);
+      setReciver(user);
     }
   };
   const addMsg = async (id) => {
-    const res = await api.get(`/conversation/${id}`);
+    const res = await getConversation(id);
     const msg =
       res.data.data && res.data.data.messages.length > 0
         ? res.data.data.messages.slice(-1)[0].content

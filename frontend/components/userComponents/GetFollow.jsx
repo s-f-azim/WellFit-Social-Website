@@ -18,14 +18,12 @@ const GetFollow = ({ data }) => (
 
 GetFollow.Item = ({ follow }) => (
   <>
-    <List.Item key={follow.id}>
-      {/* <List.Item.Meta/> */}
+    <List.Item aria-label="list" key={follow.id}>
       <h5>
-        {`${follow.fName.charAt(0).toUpperCase() + follow.fName.substr(1).toLowerCase()} ${`${
-          follow.lName.charAt(0).toUpperCase() + follow.lName.substr(1).toLowerCase()
-        } `}`}
         <Link href={`/users/${follow._id}`}>
-          <Button>Profile</Button>
+          {`${follow.fName.charAt(0).toUpperCase() + follow.fName.substr(1).toLowerCase()} ${`${
+            follow.lName.charAt(0).toUpperCase() + follow.lName.substr(1).toLowerCase()
+          } `}`}
         </Link>
       </h5>
     </List.Item>

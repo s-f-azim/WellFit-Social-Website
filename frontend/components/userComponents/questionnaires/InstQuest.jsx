@@ -70,7 +70,13 @@ const InstQuest = ({ session }) => {
 
   return (
     <>
-      <Form form={form} name="Update my info" onFinish={onFinish} scrollToFirstError>
+      <Form
+        form={form}
+        name="Update my info"
+        initialValues={session ? session.user : undefined}
+        onFinish={onFinish}
+        scrollToFirstError
+      >
         <Space direction="vertical" size="middle">
           {hasError && (
             <Alert type="error" message="something went wrong, please try again" banner />
@@ -78,10 +84,7 @@ const InstQuest = ({ session }) => {
           <Collapse bordered={false} ghost>
             <Panel header={yourCareerText} key="1">
               <Form.Item name="trainerType" label="Trainer type">
-                <Select
-                  placeholder="Select your qualification"
-                  defaultValue={user.trainerType ? user.trainerType : null}
-                >
+                <Select aria-label=" trainer type" placeholder="Select your qualification">
                   <Option value="Physique trainer">Physique trainer</Option>
                   <Option value="Performance trainer">Performance trainer</Option>
                   <Option value="Lifestyle trainer">Lifestyle trainer</Option>
@@ -99,7 +102,11 @@ const InstQuest = ({ session }) => {
                         align="baseline"
                       >
                         <Form.Item {...field} fieldKey={[field.fieldKey, 'qualification']}>
-                          <Input style={{ width: '90%' }} placeholder="Enter your qualification" />
+                          <Input
+                            arial-label="qualification"
+                            style={{ width: '90%' }}
+                            placeholder="Enter your qualification"
+                          />
                         </Form.Item>
                         <CloseOutlined
                           style={{ color: 'red', margin: '7px' }}
@@ -121,6 +128,7 @@ const InstQuest = ({ session }) => {
               <br />
               <Form.Item name="speciality" label="Field of expertise">
                 <Input
+                  aria-label="speciality"
                   defaultValue={user.speciality ? user.speciality : null}
                   placeholder="bodybuilding, yoga, nutrition..."
                 />
@@ -172,6 +180,7 @@ const InstQuest = ({ session }) => {
             <Panel header={communicationText} key="2">
               <Form.Item name="communicationModes" label="Communication modes">
                 <Select
+                  aria-label="communication modes"
                   defaultValue={user.communicationModes ? user.communicationModes : null}
                   mode="multiple"
                   placeholder="Select multiple"
@@ -182,13 +191,14 @@ const InstQuest = ({ session }) => {
                   <Option value="Whatsapp">Whatsapp</Option>
                   <Option value="Social Media">Social Media</Option>
                   <Option value="In person preferred">In person only</Option>
-                  <Option value="Messaging app">Email</Option>
+                  <Option value="Messaging app">Messaging app</Option>
                   <Option value="Other">Other</Option>
                 </Select>
               </Form.Item>
 
               <Form.Item name="communicationFrequency" label="Communication frequency">
                 <Select
+                  aria-label="communication frequency"
                   defaultValue={user.communicationFrequency ? user.communicationFrequency : null}
                   placeholder="Select preferred"
                 >
@@ -206,6 +216,7 @@ const InstQuest = ({ session }) => {
             <Panel header={paymentText} key="3">
               <Form.Item name="paymentFrequency" label="Payment frequency">
                 <Select
+                  aria-label="payment frequency"
                   defaultValue={user.paymentFrequency ? user.paymentFrequency : null}
                   placeholder="Select preferred"
                 >
@@ -220,6 +231,7 @@ const InstQuest = ({ session }) => {
 
               <Form.Item name="paymentOptions" label="Payment options">
                 <Select
+                  aria-label="payment options"
                   defaultValue={user.paymentOptions ? user.paymentOptions : null}
                   mode="multiple"
                   placeholder="Select multiple"
@@ -237,6 +249,7 @@ const InstQuest = ({ session }) => {
             <Panel header={additionalText} destroyInactivePanel key="4">
               <Form.Item name="serviceFormat" label="Service format">
                 <Select
+                  aria-label="service format"
                   defaultValue={user.serviceFormat ? user.serviceFormat : null}
                   mode="multiple"
                   placeholder="Select multiple"
@@ -260,6 +273,7 @@ const InstQuest = ({ session }) => {
 
               <Form.Item name="clientGenderPreference" label="Client gender preference">
                 <Select
+                  aria-label="client gender"
                   defaultValue={user.clientGenderPreference ? user.clientGenderPreference : null}
                   placeholder="Select your preferred client gender"
                 >
@@ -271,7 +285,11 @@ const InstQuest = ({ session }) => {
               </Form.Item>
               <br />
               <Form.Item name="clientFitness" label="Client overall fitness level preference">
-                <Slider defaultValue={user.clientFitness ? user.clientFitness : [0, 100]} range />
+                <Slider
+                  aria-label="client fitness"
+                  defaultValue={user.clientFitness ? user.clientFitness : [0, 100]}
+                  range
+                />
               </Form.Item>
               <br />
               <Form.Item
@@ -279,19 +297,24 @@ const InstQuest = ({ session }) => {
                 label="Client overall hypertrophy level preference"
               >
                 <Slider
+                  aria-label="client hypertrophy"
                   range
                   defaultValue={user.clientHypertrophy ? user.clientHypertrophy : [0, 100]}
                 />
               </Form.Item>
               <br />
               <Form.Item name="clientStrength" label="Client overall strength level preference">
-                <Slider range defaultValue={user.clientStrength ? user.clientStrength : [0, 100]} />
+                <Slider
+                  aria-label="client strength"
+                  range
+                  defaultValue={user.clientStrength ? user.clientStrength : [0, 100]}
+                />
               </Form.Item>
             </Panel>
           </Collapse>
 
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button aria-label="save" type="primary" htmlType="submit">
               Save info
             </Button>
           </Form.Item>

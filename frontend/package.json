@@ -6,7 +6,7 @@
     "dev": "BABEL_ENV=dev next dev -p 8000",
     "build": "next build",
     "start": "next start -p 8000",
-    "test": "jest",
+    "test": "BABEL_ENV=test jest",
     "lint": "eslint --quiet --fix-dry-run ."
   },
   "dependencies": {

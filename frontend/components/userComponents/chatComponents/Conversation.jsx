@@ -75,14 +75,24 @@ const Conversation = ({ conversation }) => {
         onFinish={sendMsg}
         scrollToFirstError
       >
-        <Form.Item name="message" style={{ width: '70%' }}>
+        <Form.Item
+          name="message"
+          style={{ width: '70%' }}
+          rules={[{ required: true, message: 'Please add a message' }]}
+        >
           <Input
+            aria-label="message"
             style={{ textAlign: 'center', borderRadius: '2000rem' }}
             placeholder="Enter your message..."
           />
         </Form.Item>
         <Form.Item>
-          <Button type="text" htmlType="submit" style={{ border: '1px solid #dddddd' }}>
+          <Button
+            aria-label="send"
+            type="text"
+            htmlType="submit"
+            style={{ border: '1px solid #dddddd' }}
+          >
             <SendOutlined />
           </Button>
         </Form.Item>

@@ -11,7 +11,7 @@ const ReportButton = ({ RecipientID }) => {
   };
 
   return (
-    <Button type="danger" onClick={reportUser}>
+    <Button aria-label="report" type="danger" onClick={reportUser}>
       Report User!
     </Button>
   );

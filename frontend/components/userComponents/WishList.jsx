@@ -3,7 +3,7 @@ import { CheckOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import CourseCard from '../generalComponents/Search/CourseCard';
-import api from '../../services/api';
+import { getWishList, updateWishList } from '../../actions/user';
 
 const WishList = () => {
   // state for the wish list
@@ -12,7 +12,7 @@ const WishList = () => {
   const [courses, setCourses] = useState({});
 
   useEffect(async () => {
-    const response = await api.get('/users/wishlist');
+    const response = await getWishList();
     setCourses(response.data.data);
     // wish list can be shown once the courses in the wish list have been fetched
     setShowState(true);
@@ -24,7 +24,7 @@ const WishList = () => {
    * has a margin.
    */
   function removeFromWishList(id) {
-    api.patch(`/users/updatewishlist/${id}`, {});
+    updateWishList(id);
     notification.open({
       message: 'Wish list updated!',
       duration: 2,

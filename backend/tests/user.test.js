@@ -214,25 +214,25 @@ it('Should get all users', async () => {
   expect(response.body.count).toBe(count);
 });
 
-// // assert get users with filters
-// it('Should get all users with filter', async () => {
-//   const response = await request(app)
-//     .get('/api/users?lName=11')
-//     .send()
-//     .expect(200);
-//   expect(response.body.count).toBe(1);
-// });
+// assert get users with filters
+it('Should get all users with filter', async () => {
+  const response = await request(app)
+    .get('/api/users?lName=11')
+    .send()
+    .expect(200);
+  expect(response.body.count).toBe(1);
+});
 
-// // assert get users with filters and select specific fields
-// it('Should get all users with filters and select specific fields', async () => {
-//   const response = await request(app)
-//     .get('/api/users?lName=11&&select=fName')
-//     .send()
-//     .expect(200);
-//   expect(response.body.count).toBe(1);
-//   expect(response.body.data[0].email).toEqual(undefined);
-//   expect(response.body.data[0].fName).toEqual(userOne.fName);
-// });
+// assert get users with filters and select specific fields
+it('Should get all users with filters and select specific fields', async () => {
+  const response = await request(app)
+    .get('/api/users?lName=11&&select=fName')
+    .send()
+    .expect(200);
+  expect(response.body.count).toBe(1);
+  expect(response.body.data[0].email).toEqual(undefined);
+  expect(response.body.data[0].fName).toEqual(userOne.fName);
+});
 
 // assert get users within radius
 it('Should get all users within radius', async () => {
@@ -326,7 +326,7 @@ it('Should get wish list when logged in', async () => {
   const response = await request(app)
     .get('/api/users/wishlist')
     .send()
-    .set('Cookie', [`token=${tokens[4]}`])
+    .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
   expect(response.body.data.length === 1);
 });
@@ -342,7 +342,7 @@ it('Adding course already in wish list to the wish list removes it if logged in'
   const response = await request(app)
     .patch(`/api/users/updatewishlist/${courseOne._id}`)
     .send()
-    .set('Cookie', [`token=${tokens[4]}`])
+    .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
   expect(response.body.data.length === 0);
 });
@@ -358,7 +358,7 @@ it('Adding course not already in wish list to the wish list adds it if logged in
   const response = await request(app)
     .patch(`/api/users/updatewishlist/${courseTwo._id}`)
     .send()
-    .set('Cookie', [`token=${tokens[4]}`])
+    .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
   expect(response.body.data.length === 2);
 });
@@ -374,8 +374,26 @@ it('Adding course that does not exist to the wish list does not work if logged i
   await request(app)
     .patch('/api/users/updatewishlist/123456')
     .send()
-    .set('Cookie', [`token=${tokens[4]}`])
+    .set('Cookie', [`token=${tokens[0]}`])
     .expect(404);
+});
+
+it('Admin cannot add courses to wish list', async () => {
+  const response = await request(app)
+    .patch(`/api/users/updatewishlist/${courseTwo._id}`)
+    .send()
+    .set('Cookie', [`token=${tokens[4]}`])
+    .expect(200);
+  expect(response.body.data.length === 0);
+});
+
+it('Instructor cannot add courses to wish list', async () => {
+  const response = await request(app)
+    .patch(`/api/users/updatewishlist/${courseTwo._id}`)
+    .send()
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(200);
+  expect(response.body.data.length === 0);
 });
 
 /**

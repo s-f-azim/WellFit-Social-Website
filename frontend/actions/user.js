@@ -45,11 +45,17 @@ const getTrendingUsers = () => api.get('/users/trendingUsers');
 
 const getTrendingUsersLimit = (limit) => api.get(`/users/trendingUsers?limit=${limit}`);
 
-const getFollowingList = () => api.get('/users/getFollowing');
+const getFollowingList = (id, limit) =>
+  api.get(`/users/getFollowing/${id}${limit ? `?limit=${limit}` : ''}`);
 
-const getFollowerList = (pageNum) => api.get(`/users/getFollower/?page=${pageNum}`);
+const getFollowerList = (id, pageNum) =>
+  api.get(`/users/getFollower/${id}${pageNum ? `?pageNum=${pageNum}` : ''}`);
 
 const banUser = (userId) => api.patch(`/users/ban/${userId}`, {});
+
+const getWishList = () => api.get('/users/wishlist');
+
+const updateWishList = (courseId) => api.patch(`/users/updatewishlist/${courseId}`, {});
 
 export {
   updateUser as default,
@@ -69,4 +75,6 @@ export {
   getUserIdByEmail,
   getTrendingUsers,
   getTrendingUsersLimit,
+  getWishList,
+  updateWishList,
 };

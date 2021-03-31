@@ -24,6 +24,9 @@ import NotFound from '../../components/generalComponents/404';
 import api from '../../services/api';
 import stripePromise from '../../services/stripe';
 import checkout from '../../actions/payment';
+import { CourseReview } from '../../components/userComponents/reviewComponents/Review';
+import { getWishList, updateWishList } from '../../actions/user';
+import { getCourseCreators } from '../../actions/course';
 
 const columnStyle = { width: 350, height: 'auto' };
 
@@ -40,20 +43,22 @@ const Course = ({ course }) => {
   const [wishListFetched, setWishListFetched] = useState(false);
   // the courses in the user's wish list
   const [courses, setCourses] = useState({});
+  // list of creators of this course
   const [creators, setCreators] = useState([]);
 
   if (course) {
     useEffect(async () => {
       if (session) {
         try {
-          const response = await api.get('/users/wishlist');
-          setCourses(response.data.data);
-          // now that the courses from the wish list have been fetched, update the state
-          setWishListFetched(true);
-          const response2 = await api.get(`/courses/${course._id}/creators`);
+          // only attempt to fetch wish list if the current user is a client
+          if (session.user.role === 'client') {
+            const response = await getWishList();
+            setCourses(response.data.data);
+            // now that the courses from the wish list have been fetched, update the state
+            setWishListFetched(true);
+          }
+          const response2 = await getCourseCreators(course._id);
           setCreators(response2.data.data);
-          // now that the creators of the course have been fetched, the course card can be shown
-          setShowState(true);
         } catch (error) {
           console.log(error);
         }
@@ -63,7 +68,7 @@ const Course = ({ course }) => {
     // Add this course to the user's wish list and then remove the add to wish list button
     function addToWishList() {
       /* eslint-disable no-underscore-dangle */
-      api.patch(`/users/updatewishlist/${course._id}`, {});
+      updateWishList(course._id);
       notification.open({
         message: 'Course added to wish list!',
         duration: 2,
@@ -227,6 +232,11 @@ const Course = ({ course }) => {
                 )
               ) : null}
             </div>
+          </Col>
+        </Row>
+        <Row justify="space-around">
+          <Col span={20}>
+            <CourseReview id={course._id} />
           </Col>
         </Row>
       </div>

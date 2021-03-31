@@ -119,7 +119,7 @@ const updateUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc add following user profile
- * @route PATCH /api/users/follow
+ * @route PATCH /api/users/follow/:id
  * @access private
  */
 const followUser = asyncHandler(async (req, res) => {
@@ -145,32 +145,49 @@ const followUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc get user following list
- * @route GET /api/users/getFollowing?page=`{$pageNumber}`
+ * @route GET /api/users/getFollowing/:id?page=pageNumber&&limit=
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  const followings = await User.findById(req.user._id).populate({
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 12;
+  const startIndex = (page - 1) * limit;
+  const followings = await User.findById(req.params.id).populate({
     path: 'following',
-    select: ['fName', 'lName'],
+    select: ['fName', 'lName', 'photos'],
   });
+  const result = followings.following.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: followings.following,
+    data: result ? result : [],
+    pagination: {
+      total: followings.following.length,
+    },
   });
 });
 
 /**
  * @async
  * @desc get user follower list
- * @route GET /api/users/getFollower?page=`${pageNumber}`
+ * @route GET /api/users/getFollower/:id?page=pageNumber&&limit=`
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
-  const followers = await User.findById(req.user._id).populate({
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 12;
+  const startIndex = (page - 1) * limit;
+  const followers = await User.findById(req.params.id).populate({
     path: 'follower',
-    select: ['fName', 'lName'],
+    select: ['fName', 'lName', 'photos'],
   });
-  res.status(200).send({ success: true, data: followers.follower });
+  const result = followers.follower.slice(startIndex, limit);
+  res.status(200).send({
+    success: true,
+    data: result ? result : [],
+    pagination: {
+      total: followers.follower.length,
+    },
+  });
 });
 
 /**
@@ -219,11 +236,13 @@ const deleteSpecificUser = asyncHandler(async (req, res) => {
  */
 const updateWishList = asyncHandler(async (req, res) => {
   if (Course.findById(req.params.id)) {
-    const index = req.user.wishlist.indexOf(req.params.id);
-    if (index === -1) {
-      req.user.wishlist.push(req.params.id);
-    } else {
-      req.user.wishlist.splice(index, 1);
+    if (req.user.role === 'client') {
+      const index = req.user.wishlist.indexOf(req.params.id);
+      if (index === -1) {
+        req.user.wishlist.push(req.params.id);
+      } else {
+        req.user.wishlist.splice(index, 1);
+      }
     }
   }
   const updatedUser = await req.user.save();
