@@ -115,6 +115,7 @@ const InstQuest = ({ session }) => {
                       </Space>
                     ))}
                     <Button
+                      aria-label="add qualification"
                       onClick={() => add()}
                       block
                       icon={<PlusOutlined style={{ color: '#33FF49' }} />}
@@ -146,6 +147,7 @@ const InstQuest = ({ session }) => {
                         <Form.Item {...field} fieldKey={[field.fieldKey, 'customerStory']}>
                           <Row>
                             <TextArea
+                              aria-label="add customer story"
                               style={{ width: '90%' }}
                               showCount
                               maxLength={200}
@@ -160,6 +162,7 @@ const InstQuest = ({ session }) => {
                       </Space>
                     ))}
                     <Button
+                      aria-label="add customer story"
                       onClick={() => add()}
                       block
                       icon={<PlusOutlined style={{ color: '#33FF49' }} />}

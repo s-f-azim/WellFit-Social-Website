@@ -25,7 +25,8 @@ it.only('renders fields', () => {
 
   userEvent.click(screen.getByRole('button', { name: 'right Your career' }));
   expect(screen.getByRole('combobox', { name: 'trainer type' })).toBeInTheDocument();
-  // expect(screen.getByRole('textbox', { name: 'qualification' })).toBeInTheDocument();
+  userEvent.click(screen.getByRole('button', { name: 'add qualification' }));
+  expect(screen.getByRole('textbox', { name: 'qualification' })).toBeInTheDocument();
   expect(screen.getByRole('textbox', { name: 'speciality' })).toBeInTheDocument();
   // expect(screen.getByRole('textbox', { name: 'customer stories' })).toBeInTheDocument();
 
