@@ -3,7 +3,9 @@ import {
   CarOutlined,
   DeleteOutlined,
   DesktopOutlined,
+  FileOutlined,
   HomeOutlined,
+  ProfileOutlined,
   UserOutlined,
   ZoomInOutlined,
 } from '@ant-design/icons';
@@ -107,7 +109,11 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
             </Row>
           </Card>
           <Modal
-            title={<h1>{content.title}</h1>}
+            title={
+              <h1>
+                <ProfileOutlined /> {content.title}
+              </h1>
+            }
             centered
             visible={visible}
             onOk={() => setVisible(false)}
