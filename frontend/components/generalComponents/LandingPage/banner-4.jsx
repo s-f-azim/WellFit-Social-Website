@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Card, Anchor } from 'antd';
+import { useSession } from 'next-auth/client';
 import { getTrendingUsersLimit } from '../../../actions/user';
 
 const { Meta } = Card;
@@ -9,6 +10,7 @@ const Banner4 = () => {
   // List of suggested instructors
   const [showState, setShowState] = useState(false);
   const [list, setList] = useState({});
+  const [session, loading] = useSession();
   // Fetches suggested instructors once after initial render
   useEffect(async () => {
     try {
@@ -22,6 +24,15 @@ const Banner4 = () => {
     }
   }, []);
 
+  const InstrCard = (item) => {
+    const life = '';
+    return (
+      <a>
+        <h1>fefhe</h1>
+      </a>
+    );
+  };
+
   return (
     <div className="banner4">
       <div className="inner_banner4">
@@ -31,7 +42,7 @@ const Banner4 = () => {
           <div className="banner4_boxes">
             {list.map((item) => (
               <div className="instructorCard">
-                <a href={`users/${item._id}`}>
+                <a href={session ? `users/${item._id}` : ''}>
                   <Card
                     hoverable
                     cover={

@@ -53,6 +53,10 @@ const getFollowerList = (id, pageNum) =>
 
 const banUser = (userId) => api.patch(`/users/ban/${userId}`, {});
 
+const getWishList = () => api.get('/users/wishlist');
+
+const updateWishList = (courseId) => api.patch(`/users/updatewishlist/${courseId}`, {});
+
 export {
   updateUser as default,
   deleteUser,
@@ -71,4 +75,6 @@ export {
   getUserIdByEmail,
   getTrendingUsers,
   getTrendingUsersLimit,
+  getWishList,
+  updateWishList,
 };
