@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Input, Select, Radio, Pagination } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -121,7 +122,7 @@ const SearchBar = () => {
             setTags={setTags}
             tagsOption={tagsOption}
           />
-        )}{' '}
+        )}
         {searchType === 'Courses' && (
           <CourseFilter
             setTags={setTags}

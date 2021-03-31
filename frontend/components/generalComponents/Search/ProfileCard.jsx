@@ -11,10 +11,10 @@ const ProfileCard = ({ content }) => {
   return (
     <>
       <div className="profile-card">
-        <Card style={{ borderColor: 'black', borderRadius: '1rem' }}>
+        <Card style={{ borderColor: '#ffa277', borderRadius: '0.5rem', background: '#ffeee6' }}>
           <Row style={{ paddingBottom: '1rem' }}>
             <Col span={24}>
-              <Typography.Title className="title" ellipsis={true} style={{ width: '100%' }}>
+              <Typography.Title className="title" ellipsis style={{ width: '100%' }}>
                 {content.fName} {content.lName}
               </Typography.Title>
             </Col>
