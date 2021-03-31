@@ -116,7 +116,6 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
             }
             centered
             visible={visible}
-            onOk={() => setVisible(false)}
             onCancel={() => setVisible(false)}
             width={700}
             footer={[
