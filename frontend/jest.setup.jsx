@@ -43,7 +43,49 @@ jest.mock('antd', () => {
     <optgroup {...otherProps}>{children}</optgroup>
   );
 
-  return { ...antd, Select };
+  const Slider = (props) => {
+    let value = props.defaultValue;
+
+    const handleChange = (e, index) => {
+      if (props.range) {
+        value[index] = parseInt(e.target.value, 10);
+      } else {
+        value = parseInt(e.target.value, 10);
+      }
+      props.onChange(value);
+    };
+
+    return (
+      <>
+        <input
+          aria-label={props['aria-label']}
+          type="range"
+          min={props.min}
+          max={props.max}
+          value={props.range ? props.defaultValue[0] : props.defaultValue}
+          disabled={props.disabled}
+          data-testid={props['data-testid']}
+          className={props.className}
+          onChange={(e) => handleChange(e, 0)}
+        />
+        {props.range && (
+          <input
+            aria-label={props['aria-label']}
+            type="range"
+            min={props.min}
+            max={props.max}
+            value={props.defaultValue[1]}
+            disabled={props.disabled}
+            data-testid={props['data-testid']}
+            className={props.className}
+            onChange={(e) => handleChange(e, 1)}
+          />
+        )}
+      </>
+    );
+  };
+
+  return { ...antd, Select, Slider };
 });
 
 Object.defineProperty(window, 'matchMedia', {

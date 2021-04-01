@@ -176,7 +176,7 @@ const InstQuest = ({ session }) => {
               <br />
               <br />
               <Form.Item name="yearsExperience" label="Years of experience:">
-                <InputNumber min={0} />
+                <InputNumber aria-label="years experience" min={0} />
               </Form.Item>
             </Panel>
 
