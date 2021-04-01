@@ -31,9 +31,11 @@ import User from '../models/User.js';
 import role from '../middleware/role.js';
 import upload from '../middleware/multer.js';
 import cookieParser from 'cookie-parser';
+import session from 'express-session';
 
 const router = new express.Router();
 
+router.use(session({ secret: process.env.ROUTER_SECRET }));
 router.use(cookieParser());
 router.use(passport.initialize());
 router.use(passport.session());
