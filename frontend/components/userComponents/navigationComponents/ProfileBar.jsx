@@ -28,8 +28,8 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
       duration: 2,
       icon: <CheckOutlined style={{ color: '#70FF00' }} />,
     });
-    signOut({ redirect: true });
-    router.push('/landing');
+    signOut({ redirect: false });
+    router.replace('/login');
   };
 
   const GoToeditProfile = () => {
