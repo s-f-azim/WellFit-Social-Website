@@ -2,12 +2,21 @@ import { Select } from 'antd';
 
 const CourseFilter = ({ tagsOption, equipOptions, setTags, setETags }) => (
   <>
-    <div id="filterrow" style={{ display: 'block', paddingTop: '2rem', width: '80%' }}>
+    <div
+      id="filterrow"
+      style={{
+        display: 'flex',
+        flexFlow: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: '2rem',
+        width: '80%',
+      }}
+    >
       <Select
         style={{
           marginLeft: '1rem',
           marginRight: '1rem',
-          marginTop: '1rem',
           display: 'inline-block',
           width: '40%',
           minWidth: '400px',
@@ -22,7 +31,6 @@ const CourseFilter = ({ tagsOption, equipOptions, setTags, setETags }) => (
         style={{
           marginLeft: '1rem',
           marginRight: '1rem',
-          marginTop: '1rem',
           display: 'inline-block',
           width: '40%',
           minWidth: '400px',
