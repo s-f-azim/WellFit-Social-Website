@@ -105,7 +105,7 @@ const Login = () => {
         duration: 2,
         icon: <SmileOutlined style={{ color: '#63D0FF' }} />,
       });
-      router.push('/');
+      router.push(`/user/${res.data.data._id}`);
     } catch (err) {
       setHasError(true);
     }
