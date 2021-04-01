@@ -1,11 +1,11 @@
-import { Col, Select } from 'antd';
+import { Select } from 'antd';
 
 const { Option } = Select;
 
 const PeopleFilter = ({ setGender, setAge, setTags, tagsOption }) => (
   <div id="filterrow">
     <Select
-      defaultValue="All Genders"
+      initialValues="All Genders"
       className="peopleSelectDrop"
       placeholder="Gender"
       onChange={setGender}

@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { notification } from 'antd';
 import InstQuest from '../components/userComponents/questionnaires/InstQuest';
+import ClientQuest from '../components/userComponents/questionnaires/clientQuest';
 
 import updateUser from '../actions/user';
 
@@ -95,8 +96,8 @@ it('updates user when submitted with valid data', async () => {
   userEvent.click(screen.getByRole('combobox', { name: 'service format' }));
   screen.getByRole('option', { name: 'Non-client-specific videos' });
   /* user.serviceFormat.forEach((sf) =>
-    userEvent.click(userEvent.click(screen.getByRole('option', { name: sf })))
-  ); */
+	  userEvent.click(userEvent.click(screen.getByRole('option', { name: sf })))
+	); */
   userEvent.click(screen.getByRole('combobox', { name: 'client gender' }));
   userEvent.click(screen.getByRole('option', { name: user.clientGenderPreference }));
 
