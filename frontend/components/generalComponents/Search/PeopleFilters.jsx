@@ -3,17 +3,7 @@ import { Col, Select } from 'antd';
 const { Option } = Select;
 
 const PeopleFilter = ({ setGender, setAge, setTags, tagsOption }) => (
-  <div
-    id="filterrow"
-    style={{
-      display: 'flex',
-      flexFlow: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingTop: '2rem',
-      width: '80%',
-    }}
-  >
+  <div id="filterrow">
     <Select
       defaultValue="All Genders"
       style={{ marginLeft: '1rem', marginRight: '1rem' }}

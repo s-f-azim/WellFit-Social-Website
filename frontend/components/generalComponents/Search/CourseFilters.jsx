@@ -2,17 +2,7 @@ import { Select, Row, Col } from 'antd';
 
 const CourseFilter = ({ tagsOption, equipOptions, setTags, setETags }) => (
   <>
-    <div
-      id="filterrow"
-      style={{
-        display: 'flex',
-        flexFlow: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: '2rem',
-        width: '80%',
-      }}
-    >
+    <div id="filterrow">
       <Select
         style={{
           marginLeft: '1rem',
