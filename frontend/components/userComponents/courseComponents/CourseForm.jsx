@@ -252,9 +252,9 @@ const CourseForm = () => {
             </Select>
           </Form.Item>
 
-          {/* <Form.Item label="Location (if applicable):" name="address">
+          <Form.Item label="Location (if applicable):" name="address">
             <Input />
-          </Form.Item> */}
+          </Form.Item>
 
           <Form.Item>
             <Button type="primary" htmlType="submit">
