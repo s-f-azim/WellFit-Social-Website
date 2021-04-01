@@ -164,7 +164,6 @@ const Course = ({ course }) => {
                 <strong>Recommended level: </strong>
                 {course.fitnessLevel}
                 <br />
-                <br />
                 {course.trainingDuration && (
                   <div>
                     <strong>Session duration (min): </strong>
@@ -173,7 +172,7 @@ const Course = ({ course }) => {
                 )}
               </Typography.Paragraph>
               <Divider />
-              <Typography.Paragraph style={{ fontSize: '1.4rem', color: 'black' }}>
+              <div style={{ fontSize: '1.4rem', color: 'black' }}>
                 <ul>
                   <h5>
                     {course.gym ? (
@@ -196,7 +195,7 @@ const Course = ({ course }) => {
                     )}
                   </h5>
                 </ul>
-              </Typography.Paragraph>
+              </div>
             </Space>
           </Col>
           <Col>

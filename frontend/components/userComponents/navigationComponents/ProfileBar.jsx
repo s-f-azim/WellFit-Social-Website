@@ -28,7 +28,7 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
       duration: 2,
       icon: <CheckOutlined style={{ color: '#70FF00' }} />,
     });
-    signOut({ redirect: false });
+    signOut({ redirect: true });
     router.push('/landing');
   };
 

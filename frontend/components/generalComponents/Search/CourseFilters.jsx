@@ -1,4 +1,4 @@
-import { Select } from 'antd';
+import { Select, Row, Col } from 'antd';
 
 const CourseFilter = ({ tagsOption, equipOptions, setTags, setETags }) => (
   <>

@@ -1,4 +1,6 @@
-import { Card, Row, Col, Button, Typography } from 'antd';
+/* eslint-disable no-nested-ternary */
+import { UserOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Button, Typography, Divider } from 'antd';
 import Image from 'next/image';
 
 const ProfileCard = ({ content }) => {
@@ -11,12 +13,14 @@ const ProfileCard = ({ content }) => {
   return (
     <>
       <div className="profile-card">
-        <Card style={{ borderColor: 'black', borderRadius: '1rem' }}>
+        <Card style={{ borderColor: '#ffa277', borderRadius: '0.5rem', background: '#ffeee6' }}>
           <Row style={{ paddingBottom: '1rem' }}>
             <Col span={24}>
-              <Typography.Title className="title" ellipsis={true} style={{ width: '100%' }}>
-                {content.fName} {content.lName}
+              <Typography.Title className="title" ellipsis style={{ width: '100%' }}>
+                <UserOutlined /> {content.fName} {content.lName}
               </Typography.Title>
+              <Divider style={{ borderTop: '1px solid #ffa277' }} />
+              {console.log(content)}
             </Col>
           </Row>
           <Row>
@@ -34,8 +38,14 @@ const ProfileCard = ({ content }) => {
               />
             </Col>
             <Col className="profile-details">
-              <p>Gender:{content.gender ? ` ${content.gender}` : ' Not specified'}</p>
-
+              <p>
+                <strong>Registered as: </strong>
+                {content.role === 'instructor'
+                  ? content.trainerType && content.trainerType !== 'Other'
+                    ? content.trainerType
+                    : 'Instructor'
+                  : 'Client'}
+              </p>
               <p style={profileDetails}>
                 Tags:{' '}
                 {content.tags.length > 0 ? (
@@ -45,11 +55,23 @@ const ProfileCard = ({ content }) => {
                     ))}
                   </>
                 ) : (
-                  'Not specified'
+                  'None Specified'
                 )}
               </p>
-
-              <Button type="primary" href={`/users/${content._id}`} key={content._id}>
+              <p>
+                <h5 style={{ color: '#ffa277' }}>
+                  Followed by {content.follower ? content.follower.length : '0'} user(s).
+                </h5>
+                <h5 style={{ color: '#ffa277' }}>
+                  Follows {content.follower ? content.following.length : '0'} other user(s).
+                </h5>
+              </p>
+              <Button
+                style={{ color: '#ffa277' }}
+                type="primary"
+                href={`/users/${content._id}`}
+                key={content._id}
+              >
                 Go to profile page
               </Button>
             </Col>

@@ -1,5 +1,14 @@
-import { Card, Row, Col, Modal, Button, Typography } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { Card, Row, Col, Modal, Button, Typography, Divider } from 'antd';
+import {
+  CarOutlined,
+  DeleteOutlined,
+  DesktopOutlined,
+  FileOutlined,
+  HomeOutlined,
+  ProfileOutlined,
+  UserOutlined,
+  ZoomInOutlined,
+} from '@ant-design/icons';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { getCourseCreators } from '../../../actions/course';
@@ -34,17 +43,18 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
       {/* If showState is currently false, display nothing. Once it is true, display the card */}
       {showState ? (
         <div className="course-card">
-          <Card style={{ borderColor: 'black', borderRadius: '1rem' }}>
-            <Row style={{ paddingBottom: '1rem' }}>
+          <Card style={{ borderColor: '#ffa277', borderRadius: '0.5rem', background: '#ffeee6' }}>
+            <Row>
               <Col span={20}>
                 <Typography.Title
                   className="title"
                   onClick={() => setVisible(true)}
-                  ellipsis={true}
+                  ellipsis
                   style={{ width: '100%' }}
                 >
-                  {content.title}
+                  <ZoomInOutlined /> {content.title}
                 </Typography.Title>
+                <Divider style={{ borderTop: '1px solid #ffa277' }} />
               </Col>
               {/* If isWish is true, the card is in the wish list and therefore should have a
                * delete icon so that it can be removed from the wish list. */}
@@ -74,12 +84,11 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
                 />
               </Col>
               <Col className="course-details">
-                <p style={courseDetails}>
-                  Location: {content.address ? content.address : ' No location specified'}
+                <p>
+                  <strong>Price:</strong> ${content.price}
                 </p>
-                <p>Price: £{content.price}</p>
                 <p style={courseDetails}>
-                  Creators:{' '}
+                  <strong>Creators: </strong>
                   {creators.map((creator) => (
                     <div className="creators">
                       {creator.fName} {creator.lName}
@@ -87,7 +96,11 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
                   ))}
                 </p>
                 <p style={courseDetails}>
-                  Tags:{' '}
+                  <strong>Difficulty: </strong>
+                  {content.fitnessLevel}
+                </p>
+                <p style={courseDetails}>
+                  <strong>Tags: </strong>
                   {content.tags.map((tag) => (
                     <div className="tags">{tag}</div>
                   ))}
@@ -96,15 +109,19 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
             </Row>
           </Card>
           <Modal
-            title={content.title}
+            title={
+              <h1>
+                <ProfileOutlined /> {content.title}
+              </h1>
+            }
             centered
             visible={visible}
             onOk={() => setVisible(false)}
             onCancel={() => setVisible(false)}
-            width={1000}
+            width={700}
             footer={[
               <Button type="primary" href={`/courses/${content._id}`} key={content._id}>
-                Go to course page
+                <div style={{ color: '#ffa277' }}>Go to course page</div>
               </Button>,
             ]}
           >
@@ -122,24 +139,48 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
                   height={200}
                 />
               </Col>
+              <Divider />
               <Col>
-                <p>Location: {content.address ? content.address : ' No location specified'}</p>
-                <p>Price: £{content.price}</p>
                 <p>
-                  Creators:{' '}
+                  <strong>Price: </strong>${content.price}
+                </p>
+                <p>
+                  <strong>Creators: </strong>
                   {creators.map((creator) => (
                     <div className="creators">
-                      {creator.fName} {creator.lName}
+                      {creator.fName} {creator.lName} <strong>|</strong>
                     </div>
                   ))}
                 </p>
                 <p>
-                  Tags:{' '}
+                  <strong>Tags: </strong>
                   {content.tags.map((tag) => (
                     <div className="tags">{tag}</div>
                   ))}
                 </p>
-                <p>Description: {content.description}</p>
+                <p>
+                  <strong>Description: </strong>
+                  {content.description}
+                </p>
+
+                {content.gym ? (
+                  <li>
+                    - You need access to a gym for this course <CarOutlined />.
+                  </li>
+                ) : (
+                  <li>
+                    - You can take this course from home <HomeOutlined />.
+                  </li>
+                )}
+                {content.isVirtual ? (
+                  <li>
+                    - This is an in-person course <UserOutlined />.
+                  </li>
+                ) : (
+                  <li>
+                    - This is a virtual course <DesktopOutlined />.
+                  </li>
+                )}
               </Col>
             </Row>
           </Modal>

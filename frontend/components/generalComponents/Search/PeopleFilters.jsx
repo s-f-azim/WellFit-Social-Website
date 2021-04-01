@@ -1,4 +1,4 @@
-import { Select } from 'antd';
+import { Col, Select } from 'antd';
 
 const { Option } = Select;
 
@@ -27,7 +27,7 @@ const PeopleFilter = ({ setGender, setAge, setTags, tagsOption }) => (
     </Select>
 
     <Select
-      defaultValue="instructor"
+      defaultValue="Registered as "
       style={{ marginLeft: '1rem', marginRight: '1rem' }}
       placeholder="Role"
       onChange={setAge}

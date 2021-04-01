@@ -34,14 +34,19 @@ ReviewList.Item = ({ review, onDelete }) => {
   );
 
   return (
-    <List.Item
-      aria-label="review"
-      key={review._id}
-      actions={[onDelete && <DeleteButton />]}
-      extra={extraStuff}
-    >
-      <List.Item.Meta title={`${review.author.fName} ${review.author.lName}`} />
-      {review.comment}
+    <List.Item aria-label="review" key={review._id} actions={[onDelete && <DeleteButton />]}>
+      <List.Item.Meta
+        title={
+          <div>
+            <strong>Author:</strong> {review.author.fName} {review.author.lName}
+          </div>
+        }
+      />
+      <div style={{ minwidth: '30%' }}>
+        <strong>{extraStuff}</strong>
+        <br />
+        {review.comment}
+      </div>
     </List.Item>
   );
 };
