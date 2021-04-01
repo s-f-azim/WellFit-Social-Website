@@ -6,7 +6,7 @@ const PeopleFilter = ({ setGender, setAge, setTags, tagsOption }) => (
   <div id="filterrow">
     <Select
       defaultValue="All Genders"
-      style={{ marginLeft: '1rem', marginRight: '1rem' }}
+      className="peopleSelectDrop"
       placeholder="Gender"
       onChange={setGender}
     >
@@ -18,25 +18,14 @@ const PeopleFilter = ({ setGender, setAge, setTags, tagsOption }) => (
 
     <Select
       defaultValue="Registered as "
-      style={{ marginLeft: '1rem', marginRight: '1rem' }}
+      className="peopleSelectDrop"
       placeholder="Role"
       onChange={setAge}
     >
       <Option value="instructor">instructor</Option>
       <Option value="client">client</Option>
     </Select>
-    <Select
-      style={{
-        marginLeft: '1rem',
-        marginRight: '1rem',
-        display: 'inline-block',
-        width: '50%',
-        minWidth: '400px',
-      }}
-      mode="multiple"
-      placeholder="Tags"
-      onChange={setTags}
-    >
+    <Select className="peopleSelectTags" mode="multiple" placeholder="Tags" onChange={setTags}>
       {tagsOption}
     </Select>
   </div>
