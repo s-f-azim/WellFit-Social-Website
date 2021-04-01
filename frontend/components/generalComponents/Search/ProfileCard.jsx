@@ -20,7 +20,6 @@ const ProfileCard = ({ content }) => {
                 <UserOutlined /> {content.fName} {content.lName}
               </Typography.Title>
               <Divider style={{ borderTop: '1px solid #ffa277' }} />
-              {console.log(content)}
             </Col>
           </Row>
           <Row>

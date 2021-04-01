@@ -65,9 +65,7 @@ const User = ({ user }) => {
     if (session && session.user._id === user._id) {
       setCurrentUser(true);
     }
-    // console.log(session.user.following);
     if (session && session.user) {
-      console.log(session.user);
       setIsFollowing(session.user.following.includes(user._id));
     }
     const followingData = await getFollowingList(user._id);
@@ -435,7 +433,6 @@ export const getStaticProps = async ({ params }) => {
   const response = await api.get(`/users/${userId}`);
   console.log(response);
   if (!response.data.data) {
-    console.log('hmm');
     return {
       notFound: true,
     };
