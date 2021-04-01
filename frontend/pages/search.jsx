@@ -56,7 +56,6 @@ const SearchBar = () => {
       }
     }
     if (response) {
-      console.log(response);
       setData(response.data.data);
       setTotal(response.data.total);
     }

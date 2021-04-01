@@ -9,8 +9,8 @@ export default function Home() {
 
   if (session && session.user.role === 'admin') {
     Router.push('/adminDashboard');
-  } else if (session) {
-    Router.replace(`/users/${session.user._id}`);
+  } else {
+    return <LandingPage />;
   }
-  return <LandingPage />;
+  return <> </>;
 }

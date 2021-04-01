@@ -18,7 +18,6 @@ const ChatList = ({ setConversation, setReciver }) => {
   let totalUsers;
   useEffect(async () => {
     const response = await getFollowingList(session.user._id);
-    console.log(response);
     totalUsers = response.data.pagination.total;
     setUsers([...response.data.data]);
   }, []);
