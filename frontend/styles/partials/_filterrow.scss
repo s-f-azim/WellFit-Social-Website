@@ -1,0 +1,22 @@
+#filterrow {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2rem;
+  width: 80%;
+}
+
+@media only screen and (max-width: 780px) {
+  #filterrow {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0.3rem;
+    width: 80%;
+  }
+  #filterrow > .ant-select {
+    padding: 0.5rem;
+  }
+}
