@@ -66,6 +66,7 @@ const ProfileCard = ({ content }) => {
                 </h5>
               </p>
               <Button
+                aria-label="goToProfilePage"
                 style={{ color: '#ffa277' }}
                 type="primary"
                 href={`/users/${content._id}`}

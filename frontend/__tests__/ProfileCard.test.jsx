@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { render, screen } from '@testing-library/react';
 import ProfileCard from '../components/generalComponents/Search/ProfileCard';
 
@@ -35,6 +36,8 @@ it('renders instructor profile card correctly', async () => {
   expect(screen.getByText(instructor.tags[1], { exact: false })).toBeInTheDocument();
   expect(screen.getByText('Followed by 0 user(s)', { exact: false })).toBeInTheDocument();
   expect(screen.getByText('Follows 3 other user(s)', { exact: false })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'goToProfilePage' })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'goToProfilePage' })).toHaveAttribute('href', '/users/1');
 });
 
 it('renders client profile card correctly', async () => {
@@ -46,4 +49,6 @@ it('renders client profile card correctly', async () => {
   expect(screen.getByText('None specified', { exact: false })).toBeInTheDocument();
   expect(screen.getByText('Followed by 1 user(s)', { exact: false })).toBeInTheDocument();
   expect(screen.getByText('Follows 0 other user(s)', { exact: false })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'goToProfilePage' })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'goToProfilePage' })).toHaveAttribute('href', '/users/2');
 });

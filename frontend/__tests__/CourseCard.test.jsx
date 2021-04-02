@@ -10,6 +10,7 @@ const courseCreator = {
 };
 
 const course = {
+  _id: '2',
   title: 'course 1',
   photos: [],
   fitnessLevel: 'intermediate',
@@ -54,10 +55,16 @@ it('displays course card modal only when course title is clicked', async () => {
 
   expect(screen.queryByRole('dialog', { name: 'profile course 1' })).not.toBeInTheDocument();
   expect(screen.queryByText(course.description, { exact: false })).not.toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'goToCoursePage' })).not.toBeInTheDocument();
 
   userEvent.click(screen.getByText(course.title, { exact: false }));
   expect(screen.getByRole('dialog', { name: 'profile course 1' })).toBeInTheDocument();
   expect(screen.getByText(course.description, { exact: false })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'goToCoursePage' })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'goToCoursePage' })).toHaveAttribute(
+    'href',
+    '/courses/2'
+  );
 });
 
 it(`modal closes when clicking the 'X' button`, async () => {
