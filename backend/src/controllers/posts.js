@@ -58,10 +58,10 @@ const getFeedPosts = asyncHandler(async (req, res) => {
  * @access private
  */
 const deletePost = asyncHandler(async (req, res) => {
-  await Post.findOneAndDelete(
+  Post.findOneAndDelete(
     { _id: req.params.id, author: req.user._id },
     (err, post) => {
-      if (!post) return res.status(400).send({ success: false });
+      if (!post || err) return res.status(400).send({ success: false });
       return res.status(200).send({ success: true });
     }
   );

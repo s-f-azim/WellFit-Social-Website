@@ -22,19 +22,40 @@ const getAdmins = () => api.get(`users?role=admin&&limit=${Number.MAX_SAFE_INTEG
 
 const getClients = () => api.get(`users?role=client&&limit=${Number.MAX_SAFE_INTEGER}`);
 
+const getPeople = (name, gender, role, tags, pageSize, offset) =>
+  api.get('users', {
+    params: {
+      ...(role.length > 0 && { role }),
+      ...(name.length > 0 && { fName: name }),
+      ...(name.length > 0 && { lName: name }),
+      ...(gender > 0 && { gender }),
+      ...(tags.length > 0 && { 'tags[in]': tags.join(',') }),
+      limit: pageSize,
+      page: offset,
+    },
+  });
+
 const getInstructors = () => api.get(`users?role=instructor&&limit=${Number.MAX_SAFE_INTEGER}`);
 
-const getSuggestedInstructors = () => api.get('users/profile');
+const getSuggestedInstructors = () => api.get('users/suggestedInstructors');
 
 const addingFollowUser = (userId) => api.patch(`/users/follow/${userId}`, {});
 
 const getTrendingUsers = () => api.get('/users/trendingUsers');
 
-const getFollowingList = () => api.get('/users/getFollowing');
+const getTrendingUsersLimit = (limit) => api.get(`/users/trendingUsers?limit=${limit}`);
 
-const getFollowerList = (pageNum) => api.get(`/users/getFollower/?page=${pageNum}`);
+const getFollowingList = (id, limit) =>
+  api.get(`/users/getFollowing/${id}${limit ? `?limit=${limit}` : ''}`);
+
+const getFollowerList = (id, pageNum) =>
+  api.get(`/users/getFollower/${id}${pageNum ? `?pageNum=${pageNum}` : ''}`);
 
 const banUser = (userId) => api.patch(`/users/ban/${userId}`, {});
+
+const getWishList = () => api.get('/users/wishlist');
+
+const updateWishList = (courseId) => api.patch(`/users/updatewishlist/${courseId}`, {});
 
 export {
   updateUser as default,
@@ -45,6 +66,7 @@ export {
   getAdmins,
   getClients,
   getInstructors,
+  getPeople,
   addingFollowUser,
   getFollowingList,
   getFollowerList,
@@ -52,4 +74,7 @@ export {
   banUser,
   getUserIdByEmail,
   getTrendingUsers,
+  getTrendingUsersLimit,
+  getWishList,
+  updateWishList,
 };

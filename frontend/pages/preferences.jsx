@@ -1,5 +1,5 @@
 import { Row, Col } from 'antd';
-import Questionnaire from '../components/Questionnaire';
+import Questionnaire from '../components/userComponents/questionnaires/Questionnaire';
 
 export default function Preferences() {
   return (

@@ -6,7 +6,7 @@ import '../styles/main.scss';
 import Head from 'next/head';
 import Router from 'next/router';
 import { Provider } from 'next-auth/client';
-import Layout from '../components/Layout';
+import Layout from '../components/generalComponents/Layout';
 
 Router.onRouteChangeStart = () => NProgress.start();
 Router.onRouteChangeComplete = () => NProgress.done();
@@ -24,8 +24,9 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link rel="stylesheet" type="text/css" href="/nprogress.css" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:ital,wght@0,400;0,600;1,700&display=swap"
           rel="stylesheet"
         />
       </Head>

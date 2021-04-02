@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import UserPosts from '../components/UserPosts';
+import UserPosts from '../components/userComponents/postComponents/UserPosts';
 import { getPostsByAuthor } from '../actions/post';
 
 const user = { _id: '1', fName: 'user', lName: 'test' };

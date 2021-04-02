@@ -1,0 +1,23 @@
+.login {
+  .ant-row {
+    min-width: 20vw;
+  }
+  .buttons-form {
+    display: flex;
+    flex-direction: space-between;
+    & > * {
+      margin-right: 0.4rem;
+      font-size: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .ant-row {
+      min-width: 52vw;
+    }
+  }
+
+  .ant-card-bordered {
+    border: 0px solid #f0f0f0;
+  }
+}

@@ -222,6 +222,7 @@ it('Should get all users with filter', async () => {
     .expect(200);
   expect(response.body.count).toBe(1);
 });
+
 // assert get users with filters and select specific fields
 it('Should get all users with filters and select specific fields', async () => {
   const response = await request(app)
@@ -232,6 +233,7 @@ it('Should get all users with filters and select specific fields', async () => {
   expect(response.body.data[0].email).toEqual(undefined);
   expect(response.body.data[0].fName).toEqual(userOne.fName);
 });
+
 // assert get users within radius
 it('Should get all users within radius', async () => {
   await request(app)
@@ -266,7 +268,7 @@ it('Should get id of users by email', async () => {
  */
 it('Should query similar instructors based on tags and client gender preference', async () => {
   const response = await request(app)
-    .get('/api/users/profile')
+    .get('/api/users/suggestedinstructors')
     .send()
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
@@ -282,7 +284,7 @@ it('Should query similar instructors based on tags and client gender preference'
 
 it('Should not include other instructors not relevevant to the query', async () => {
   const response = await request(app)
-    .get('/api/users/profile')
+    .get('/api/users/suggestedinstructors')
     .send()
     .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
@@ -298,7 +300,7 @@ it('Should not include other instructors not relevevant to the query', async () 
 
 it('Should not return the user logged in themselves if they are an instructor', async () => {
   const response = await request(app)
-    .get('/api/users/profile')
+    .get('/api/users/suggestedinstructors')
     .send()
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
@@ -309,7 +311,7 @@ it('Should not return the user logged in themselves if they are an instructor', 
 
 it('Should not return more than 3 suggested instructors', async () => {
   const response = await request(app)
-    .get('/api/users/profile')
+    .get('/api/users/suggestedinstructors')
     .send()
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
@@ -324,56 +326,74 @@ it('Should get wish list when logged in', async () => {
   const response = await request(app)
     .get('/api/users/wishlist')
     .send()
-    .set('Cookie', [`token=${tokens[4]}`])
+    .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
   expect(response.body.data.length === 1);
 });
 
 it('Adding course already in wish list to the wish list does not remove it if not logged in', async () => {
   await request(app)
-    .patch(`/api/users/addtowishlist/${courseOne._id}`)
+    .patch(`/api/users/updatewishlist/${courseOne._id}`)
     .send()
     .expect(401);
 });
 
 it('Adding course already in wish list to the wish list removes it if logged in', async () => {
   const response = await request(app)
-    .patch(`/api/users/addtowishlist/${courseOne._id}`)
+    .patch(`/api/users/updatewishlist/${courseOne._id}`)
     .send()
-    .set('Cookie', [`token=${tokens[4]}`])
+    .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
   expect(response.body.data.length === 0);
 });
 
 it('Adding course not already in wish list to the wish list does not add it if not logged in', async () => {
   await request(app)
-    .patch(`/api/users/addtowishlist/${courseTwo._id}`)
+    .patch(`/api/users/updatewishlist/${courseTwo._id}`)
     .send()
     .expect(401);
 });
 
 it('Adding course not already in wish list to the wish list adds it if logged in', async () => {
   const response = await request(app)
-    .patch(`/api/users/addtowishlist/${courseTwo._id}`)
+    .patch(`/api/users/updatewishlist/${courseTwo._id}`)
     .send()
-    .set('Cookie', [`token=${tokens[4]}`])
+    .set('Cookie', [`token=${tokens[0]}`])
     .expect(200);
   expect(response.body.data.length === 2);
 });
 
 it('Adding course that does not exist to the wish list does not work if not logged in', async () => {
   await request(app)
-    .patch('/api/users/addtowishlist/123456')
+    .patch('/api/users/updatewishlist/123456')
     .send()
     .expect(401);
 });
 
 it('Adding course that does not exist to the wish list does not work if logged in', async () => {
   await request(app)
-    .patch('/api/users/addtowishlist/123456')
+    .patch('/api/users/updatewishlist/123456')
+    .send()
+    .set('Cookie', [`token=${tokens[0]}`])
+    .expect(404);
+});
+
+it('Admin cannot add courses to wish list', async () => {
+  const response = await request(app)
+    .patch(`/api/users/updatewishlist/${courseTwo._id}`)
     .send()
     .set('Cookie', [`token=${tokens[4]}`])
-    .expect(404);
+    .expect(200);
+  expect(response.body.data.length === 0);
+});
+
+it('Instructor cannot add courses to wish list', async () => {
+  const response = await request(app)
+    .patch(`/api/users/updatewishlist/${courseTwo._id}`)
+    .send()
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(200);
+  expect(response.body.data.length === 0);
 });
 
 /**
@@ -389,18 +409,20 @@ it('Should get top ten users in the database', async () => {
   expect(response.body.data.length).toBeLessThanOrEqual(10); //check only max 10 users retrieved
 });
 
-it('Should get top ten users in database sorted in ascending order', async() => {
+it('Should get top ten users in database sorted in ascending order', async () => {
   const response = await request(app)
     .get('/api/users/trendingUsers')
     .send()
     .expect(200);
-  expect(response.body.data).toEqual(response.body.data.sort((a, b) => b -a)); //check array is ascending
+  expect(response.body.data).toEqual(response.body.data.sort((a, b) => b - a)); //check array is ascending
 });
 
-it('Should get top ten users that are not admins', async() => {
+it('Should get top ten users that are not admins', async () => {
   const response = await request(app)
     .get('/api/users/trendingUsers')
     .send()
     .expect(200);
-  expect(response.body.data.every( user => user.role !== 'admin')).toBeTruthy();
-})
+  expect(
+    response.body.data.every((user) => user.role !== 'admin')
+  ).toBeTruthy();
+});

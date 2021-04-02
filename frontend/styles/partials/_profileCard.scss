@@ -1,0 +1,47 @@
+.profile-card {
+  .ant-card {
+    min-width: 25rem;
+    max-width: 25rem;
+    min-height: 20rem;
+    max-height: 15rem;
+  }
+
+  .title {
+    float: left;
+    font-size: 2em;
+  }
+
+  .card-image {
+    padding-right: 2rem;
+    min-width: 25%;
+  }
+
+  .profile-details {
+    max-width: 60%;
+  }
+
+  .tags {
+    border-radius: 0.3rem;
+    background-color: #ffa277;
+    max-width: min-content;
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .ant-card {
+      min-width: 20rem;
+      max-width: 20rem;
+      min-height: 26rem;
+      max-height: 23rem;
+    }
+
+    .card-image {
+      min-width: 100%;
+    }
+
+    .profile-details {
+      min-width: 100%;
+    }
+  }
+}

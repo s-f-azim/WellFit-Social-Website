@@ -119,7 +119,7 @@ const updateUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc add following user profile
- * @route PATCH /api/users/follow
+ * @route PATCH /api/users/follow/:id
  * @access private
  */
 const followUser = asyncHandler(async (req, res) => {
@@ -145,32 +145,49 @@ const followUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc get user following list
- * @route GET /api/users/getFollowing?page=`{$pageNumber}`
+ * @route GET /api/users/getFollowing/:id?page=pageNumber&&limit=
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  const followings = await User.findById(req.user._id).populate({
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 12;
+  const startIndex = (page - 1) * limit;
+  const followings = await User.findById(req.params.id).populate({
     path: 'following',
-    select: ['fName', 'lName'],
+    select: ['fName', 'lName', 'photos'],
   });
+  const result = followings.following.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: followings.following,
+    data: result ? result : [],
+    pagination: {
+      total: followings.following.length,
+    },
   });
 });
 
 /**
  * @async
  * @desc get user follower list
- * @route GET /api/users/getFollower?page=`{$pageNumber}`
+ * @route GET /api/users/getFollower/:id?page=pageNumber&&limit=`
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
-  const followers = await User.findById(req.user._id).populate({
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 12;
+  const startIndex = (page - 1) * limit;
+  const followers = await User.findById(req.params.id).populate({
     path: 'follower',
-    select: ['fName', 'lName'],
+    select: ['fName', 'lName', 'photos'],
   });
-  res.status(200).send({ success: true, data: followers.follower });
+  const result = followers.follower.slice(startIndex, limit);
+  res.status(200).send({
+    success: true,
+    data: result ? result : [],
+    pagination: {
+      total: followers.follower.length,
+    },
+  });
 });
 
 /**
@@ -214,16 +231,18 @@ const deleteSpecificUser = asyncHandler(async (req, res) => {
 /**
  * @async
  * @desc add specified course to user's wish list - if it already exists, remove it
- * @route PATCH /api/users/addtowishlist/:id
+ * @route PATCH /api/users/updatewishlist/:id
  * @access private
  */
-const addToWishList = asyncHandler(async (req, res) => {
+const updateWishList = asyncHandler(async (req, res) => {
   if (Course.findById(req.params.id)) {
-    const index = req.user.wishlist.indexOf(req.params.id);
-    if (index === -1) {
-      req.user.wishlist.push(req.params.id);
-    } else {
-      req.user.wishlist.splice(index, 1);
+    if (req.user.role === 'client') {
+      const index = req.user.wishlist.indexOf(req.params.id);
+      if (index === -1) {
+        req.user.wishlist.push(req.params.id);
+      } else {
+        req.user.wishlist.splice(index, 1);
+      }
     }
   }
   const updatedUser = await req.user.save();
@@ -270,7 +289,6 @@ const facebookOauth = asyncHandler(async (req, res) => {
 const instagramOauth = asyncHandler(async (req, res) => {
   sendTokenResponseOauth(req.user, 200, res);
 });
-
 /**
  * @async
  * @desc upload images
@@ -345,7 +363,7 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
  * @async
  * @desc Get suggested instructors for user based on random tag selected, client gender preference
  * @param {User} user - a user
- * @route GET /api/users/profile
+ * @route GET /api/users/suggestedInstructors/
  */
 const getSuggestedInstructors = asyncHandler(async (req, res) => {
   const users = await User.find({
@@ -370,31 +388,26 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
  * @async
  * @desc Gets trending users on the website
  * @route GET /api/users/trendingUsers
- * 
+ *
  */
 const getTrendingUsers = asyncHandler(async (req, res) => {
   const users = await User.find({
     $and: [
       {
-        $or: [
-          {role: 'instructor'},
-          {role: 'client'}
-        ]
+        $or: [{ role: 'instructor' }, { role: 'client' }],
       },
-      { follower: { $exists: true, $ne: []}}
-    ]
-    
+      { follower: { $exists: true, $ne: [] } },
+    ],
   });
-  res.status(200).send( 
-    {
-      success: true, 
-      data: users 
-              .sort( (u1, u2) => u2.follower.length - u1.follower.length )
-              .slice(0, 10)
-    }
-  );
+  res.status(200).send({
+    success: true,
+    data: users
+      .sort((u1, u2) => u2.follower.length - u1.follower.length)
+      .slice(0, req.query.limit || 10),
+  });
 });
-/*
+
+/**
  * @desc ban a user
  * @route PATCH api/users/ban/:id
  * @access private
@@ -422,7 +435,7 @@ export {
   deleteUser,
   deleteSpecificUser,
   getWishList,
-  addToWishList,
+  updateWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,

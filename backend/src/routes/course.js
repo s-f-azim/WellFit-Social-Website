@@ -19,7 +19,6 @@ const router = new express.Router();
 
 router.route('/').get(paginate(Course), getCourses);
 
-
 router.route('/:id/creators').get(getCourseCreators);
 
 router

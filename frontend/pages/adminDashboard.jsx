@@ -1,5 +1,5 @@
 /* eslint-disable import/no-duplicates */
-import { Card, Row, Col, Statistic, Button, Tabs, List, notification } from 'antd';
+import { Card, Row, Col, Statistic, Button, Tabs, List, notification, Badge } from 'antd';
 import {
   FundProjectionScreenOutlined,
   BarChartOutlined,
@@ -13,7 +13,7 @@ import {
   DislikeOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
-import { useSession, getSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 import {
   getUsers,
   getUsersWithLimit,
@@ -22,9 +22,9 @@ import {
   getInstructors,
 } from '../actions/user';
 import { deleteRequest, getRequests, acceptVerify } from '../actions/request';
-import AccessDenied from '../components/AccessDenied';
-import BanUser from '../components/BanUser';
-import DeleteUser from '../components/DeleteUser';
+import AccessDenied from '../components/generalComponents/AccessDenied';
+import BanUser from '../components/adminComponents/BanUser';
+import DeleteUser from '../components/adminComponents/DeleteUser';
 import { banUser } from '../actions/user';
 
 const { TabPane } = Tabs;
@@ -61,7 +61,7 @@ const AdminDashboard = ({
 
     const verifiedTitle = (
       <p>
-        <CheckCircleOutlined /> Verify users
+        <CheckCircleOutlined /> Verify users <Badge count={verifyRequests.length} />
       </p>
     );
 
@@ -73,13 +73,13 @@ const AdminDashboard = ({
 
     const bugTitle = (
       <p>
-        <BugOutlined /> Bug reports
+        <BugOutlined /> Bug reports <Badge count={bugReports.length} />
       </p>
     );
 
     const userTitle = (
       <p>
-        <DislikeOutlined /> User reports
+        <DislikeOutlined /> User reports <Badge count={userReports.length} />
       </p>
     );
 
@@ -231,7 +231,9 @@ const AdminDashboard = ({
                       </h3>
                       <h3>
                         <b>Author: </b>
-                        {getRequestAuthor(report.author)[0].email}
+                        {getRequestAuthor(report.author)
+                          ? getRequestAuthor(report.author)
+                          : 'User has been deleted'}
                       </h3>
 
                       <b>Content: </b>
@@ -265,7 +267,7 @@ const AdminDashboard = ({
                       <h3>
                         <b>Author: </b>
                         {getRequestAuthor(report.author)
-                          ? getRequestAuthor(report.author).email
+                          ? getRequestAuthor(report.author)
                           : 'User has been deleted'}
                       </h3>
 

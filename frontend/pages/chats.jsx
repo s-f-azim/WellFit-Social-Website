@@ -2,9 +2,9 @@ import { Card, Row, Col, Avatar } from 'antd';
 import { UserOutlined, LeftOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
-import ChatList from '../components/ChatList';
-import Conversation from '../components/Conversation';
-import AccessDenied from '../components/AccessDenied';
+import ChatList from '../components/userComponents/chatComponents/ChatList';
+import Conversation from '../components/userComponents/chatComponents/Conversation';
+import AccessDenied from '../components/generalComponents/AccessDenied';
 
 const Chats = () => {
   const [session, loading] = useSession();

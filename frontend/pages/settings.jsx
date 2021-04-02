@@ -25,12 +25,10 @@ import {
   Typography,
 } from 'antd';
 import { useState } from 'react';
-import { useSession, getSession } from 'next-auth/client';
-import { useAuth } from '../services/auth';
+import { useSession } from 'next-auth/client';
 import { createRequest } from '../actions/request';
 import { deleteUser } from '../actions/user';
-import AccessDenied from '../components/AccessDenied';
-import ReportButton from '../components/ReportButton';
+import AccessDenied from '../components/generalComponents/AccessDenied';
 
 const settingsPage = () => {
   const [session, loading] = useSession();
@@ -126,7 +124,6 @@ const settingsPage = () => {
     const [hasVerifyError, setHasVerifyError] = useState(false);
     const [VerifyForm] = Form.useForm();
     const [showVerifyTab, setShowVerifyTab] = useState(user.verified);
-    console.log(showVerifyTab);
     const onBugReport = async (values) => {
       const { report } = values;
       try {
@@ -134,7 +131,7 @@ const settingsPage = () => {
         notification.open({
           message: 'Report submitted, thanks for helping us!',
           duration: 3,
-          icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+          icon: <CheckOutlined />,
         });
         form.resetFields();
       } catch (err) {
@@ -147,9 +144,9 @@ const settingsPage = () => {
       try {
         const response = await createRequest('verify', verifyRequest);
         notification.open({
-          message: 'Request submitted, hope you get verified soon!',
+          message: 'Verify request submitted, make sure to check your profile regularly.',
           duration: 3,
-          icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+          icon: <CheckOutlined />,
         });
         setHasVerifyError(false);
         VerifyForm.resetFields();
@@ -162,7 +159,7 @@ const settingsPage = () => {
       <div className="settings">
         <Row type="flex" justify="left">
           <Card className="mainCard" size="default" title={settingsTitle}>
-            <Tabs size="small" defaultActiveKey="1" tabPosition="left">
+            <Tabs size="large" defaultActiveKey="1" tabPosition="left">
               <TabPane key="1" tab="Account settings">
                 <Card className="settingCard" title={myAccount}>
                   <Button onClick={editCredentials} type="text">
@@ -253,13 +250,11 @@ const settingsPage = () => {
                       </Space>
                     </Form>
                     <Text type="secondary">
-                      **If your request is not excepted in 30 days. You are can to try again
+                      *If your request is not accepted within 30 days, please request your profile
+                      verification again.
                     </Text>
                   </Card>
                 )}
-                <Card className="settingCard" title={UserReport}>
-                  Report something
-                </Card>
                 <Card className="settingCard" title={feedback}>
                   check your inbox
                 </Card>

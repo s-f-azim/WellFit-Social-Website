@@ -42,17 +42,27 @@ const UserSchema = new mongoose.Schema(
       required: [true, 'please enter your last name'],
       minlength: 2,
     },
-
+    screenname: {
+      type: String,
+      required: false,
+      // fix for missing usernames causing validation fail
+    },
     gender: {
       type: String,
       trim: true,
-      enum: ['Male', 'Female', 'Non-Binary', 'Prefer not to say'],
+      enum: [
+        'Male',
+        'Female',
+        'Non-Binary',
+        'Prefer not to say',
+        'Not specified',
+      ],
+      default: 'Not specified',
     },
 
     address: {
       type: String,
     },
-
     location: {
       type: {
         type: String,
@@ -67,6 +77,9 @@ const UserSchema = new mongoose.Schema(
       city: String,
       zipcode: String,
       country: String,
+    },
+    age: {
+      type: Number,
     },
 
     birthday: {
@@ -112,7 +125,19 @@ const UserSchema = new mongoose.Schema(
     trainingEquipment: [
       {
         type: String,
-        enum: ['dumbbells', 'barbells', 'resistanceBands', 'treadmill'],
+        enum: [
+          'dumbbells',
+          'barbells',
+          'resistanceBands',
+          'treadmill',
+          'cardioMachines',
+          'kettlebells',
+          'freeWeights',
+          'battleRopes',
+          'jumpRope',
+          'mats',
+          'abWheel',
+        ],
       },
     ],
 
@@ -151,6 +176,9 @@ const UserSchema = new mongoose.Schema(
     },
     qualifications: {
       type: [String],
+    },
+    yearsExperience: {
+      type: Number,
     },
     speciality: {
       type: String,
@@ -237,6 +265,12 @@ const UserSchema = new mongoose.Schema(
     googleId: {
       type: String,
     },
+    googleAccessToken: {
+      type: String,
+    },
+    googleRefreshToken: {
+      type: String,
+    },
     instaId: {
       type: String,
     },
@@ -244,6 +278,15 @@ const UserSchema = new mongoose.Schema(
       type: String,
     },
     twitterId: {
+      type: String,
+    },
+    twitterAccessToken: {
+      type: String,
+    },
+    twitterRefreshToken: {
+      type: String,
+    },
+    twitterScreenName: {
       type: String,
     },
     wishlist: [
@@ -255,6 +298,7 @@ const UserSchema = new mongoose.Schema(
     ],
     photos: {
       type: [Buffer],
+      default: [],
     },
 
     role: {
@@ -267,8 +311,8 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
 
-    following: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-    follower: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+    following: [{ type: mongoose.Schema.ObjectId, ref: 'User', default: [] }],
+    follower: [{ type: mongoose.Schema.ObjectId, ref: 'User', default: [] }],
     isBanned: {
       type: Boolean,
       default: false,
@@ -342,6 +386,7 @@ UserSchema.pre('save', async function (next) {
     };
     this.address = undefined;
   }
+  this.screenname = `${this.fName} ${this.lName}`;
   next();
 });
 

@@ -11,7 +11,7 @@ import {
   deleteUser,
   deleteSpecificUser,
   getWishList,
-  addToWishList,
+  updateWishList,
   googleOauth,
   facebookOauth,
   instagramOauth,
@@ -30,14 +30,31 @@ import paginate from '../middleware/paginate.js';
 import User from '../models/User.js';
 import role from '../middleware/role.js';
 import upload from '../middleware/multer.js';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 
 const router = new express.Router();
+
+router.use(session({ secret: process.env.ROUTER_SECRET }));
+router.use(cookieParser());
+router.use(passport.initialize());
+router.use(passport.session());
+
+router.route('/oauth/twitter').get(
+  passport.authenticate('twitter', {
+    session: false,
+    scope: ['user_profile'],
+  })
+);
+
+router
+  .route('/oauth/twitter/redirect')
+  .get(passport.authenticate('twitter', { session: false }), instagramOauth);
 
 router
   .route('/radius/:zipcode/:distance')
   .get(paginate(User), getUsersWithinRadius);
 router.route('/signup').post(createUser);
-
 router.route('/login').post(loginUser);
 
 router.route('/logout').get(logoutUser);
@@ -114,15 +131,15 @@ router
   .get(passport.authenticate('facebook', { session: false }), facebookOauth);
 
 router
-  .route('/addToWishList/:id')
-  .patch(passport.authenticate('jwt', { session: false }), addToWishList);
+  .route('/updatewishlist/:id')
+  .patch(passport.authenticate('jwt', { session: false }), updateWishList);
 
 router
   .route('/wishlist')
   .get(passport.authenticate('jwt', { session: false }), getWishList);
 
 router
-  .route('/profile')
+  .route('/suggestedInstructors')
   .get(
     passport.authenticate('jwt', { session: false }),
     getSuggestedInstructors
@@ -132,11 +149,11 @@ router
   .patch(passport.authenticate('jwt', { session: false }), followUser);
 
 router
-  .route('/getFollowing')
+  .route('/getFollowing/:id')
   .get(passport.authenticate('jwt', { session: false }), getFollowing);
 
 router
-  .route('/getFollower')
+  .route('/getFollower/:id')
   .get(passport.authenticate('jwt', { session: false }), getFollower);
 
 router.route('/trendingUsers').get(getTrendingUsers);
@@ -144,7 +161,5 @@ router.route('/trendingUsers').get(getTrendingUsers);
 router.route('/').get(paginate(User), getUsers);
 
 router.route('/:id').get(getUser);
-
-
 
 export default router;
