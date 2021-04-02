@@ -5,14 +5,14 @@ import geocoder from '../utils/geocoder.js';
 const paginateAndFilter = (model) =>
   asyncHandler(async (req, res, next) => {
     let query;
-		if (req.query.tags.all) {
-			req.query.tags.all = req.query.tags.all.split(',');
-		}
-		if (req.query.trainingEquipment) {
+    if (req.query.tags) {
+      req.query.tags.all = req.query.tags.all.split(',');
+    }
+    if (req.query.trainingEquipment) {
       req.query.trainingEquipment.all = req.query.trainingEquipment.all.split(
         ','
       );
-		}
+    }
     let reqQuery = { ...req.query };
     // let reqQuery = Object.fromEntries(
     //   Object.entries(req.query).filter(([_, v]) => v != null && v.length > 1)

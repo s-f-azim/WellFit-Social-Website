@@ -5,7 +5,7 @@ import { setupInstructors } from './fixtures/db.js';
 beforeAll(setupInstructors);
 
 it('Should get all instructors', async () => {
-  const response = await request(app).get('/api/users?role=instructors');
+  const response = await request(app).get('/api/users?role=instructor');
   expect(response.body.data.length).toBe(6);
 });
 it('Should get all instructors with x in name', async () => {
@@ -40,25 +40,19 @@ it('Should get all female instructors', async () => {
 });
 it('Should get all instructors with tag Cycling', async () => {
   const response = await request(app).get(
-    '/api/users?role=instructor&&tags[in]=Cycling'
+    '/api/users?role=instructor&&tags[all]=Cycling'
   );
   expect(response.body.data.length).toBe(2);
 });
 it('Should get all instructors with tag Cycling and Sweat', async () => {
   const response = await request(app).get(
-    '/api/users?role=instructor&&tags[in]=Cycling,Sweat'
+    '/api/users?role=instructor&&tags[all]=Cycling,Sweat'
   );
   expect(response.body.data.length).toBe(1);
 });
 it('Should return no Instructors with invalid tag', async () => {
   const response = await request(app).get(
-    '/api/users?role=instructor&&tags[in]=test'
+    '/api/users?role=instructor&&tags[all]=test'
   );
   expect(response.body.data.length).toBe(0);
-});
-it('Should return one instructor with all filters set', async () => {
-  const response = await request(app).get(
-    '/api/users?role=instructor&&fName=a&&gender=Male&&age=20&&tags[in]=Cardio'
-  );
-  expect(response.body.data.length).toBe(1);
 });
