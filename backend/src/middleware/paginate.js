@@ -52,7 +52,11 @@ const paginateAndFilter = (model) =>
       };
     }
     if (req.query.title) {
-      reqQuery = { title: { $regex: req.query.title, $options: 'i' } };
+      delete reqQuery.title;
+      reqQuery = {
+        title: { $regex: req.query.title, $options: 'i' },
+        ...reqQuery,
+      };
     }
 
     let queryStr = JSON.stringify(reqQuery);
