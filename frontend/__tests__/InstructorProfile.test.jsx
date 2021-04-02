@@ -18,20 +18,15 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-
 const user = { _id: '1', fName: 'John', lName: 'Wick', following:['2'], qualifications:[], speciality:'', communicationModes:[], paymentFrequency:[], paymentOptions:[], serviceFormat:[], verified:false, gender:'Male', role:'client', trainerType:'', follower:[]};
 
 const user2 = { _id: '14', fName: 'Alex', lName: 'Mason', following:[], qualifications:[], speciality:'', communicationModes:[], paymentFrequency:[], paymentOptions:[], serviceFormat:[], verified:true, gender:'Male', role:'instructor', trainerType:'', follower:[]};
 
 
-it("renders client profile", async() => {
-	await act(async () => {
-    render(<UserProfile user = {user} />);
-  });
-  screen.getByText('John Wick', { exact: false }) // display name
-  screen.getByText('Unverified User') // verified = false
-  screen.getByText('Client') // role
-  screen.getByText('No bio entered, edit your profile to display it', { exact: false })
-  screen.getByText('Follows 1 other user(s)', { exact: false })
-  screen.getByText('Followed by 0 user(s)', { exact: false })
+it("render other users profile", async() => {
+  const { getByText, getByLabelText } = render(<UserProfile user = {user2} />);
+  getByText('Alex Mason', { exact: false }) // Correct display name loaded
+  getByText("Report", {exact: false})	// Report button present on different user profiles
+  getByText("Follow") // Follow button present on different user profiles
+  getByText('Instructor') // correct role
 });
