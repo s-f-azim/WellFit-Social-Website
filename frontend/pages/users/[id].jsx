@@ -66,7 +66,7 @@ const User = ({ user }) => {
       setCurrentUser(true);
     }
     if (session && session.user) {
-      setIsFollowing(session.user.following.includes(user._id));
+      setIsFollowing(user.follower.includes(session.user._id));
     }
     const followingData = await getFollowingList(user._id);
     const followerData = await getFollowerList(user._id);
