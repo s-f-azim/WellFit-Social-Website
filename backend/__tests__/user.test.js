@@ -32,6 +32,7 @@ it('Should signup a new user', async () => {
   expect(user).not.toBeNull;
   expect(await User.countDocuments()).toBe(count + 1);
 });
+
 // assert signup with invalid data (duplicate email)
 it('Should not signup a new user', async () => {
   const count = await User.countDocuments();
@@ -406,7 +407,7 @@ it('Should get top ten users in the database', async () => {
     .get('/api/users/trendingUsers')
     .send()
     .expect(200);
-  expect(response.body.data.length).toBeLessThanOrEqual(10); //check only max 10 users retrieved
+  expect(response.body.data.length).toBeLessThanOrEqual(10); // check only max 10 users retrieved
 });
 
 it('Should get top ten users in database sorted in ascending order', async () => {
@@ -414,7 +415,7 @@ it('Should get top ten users in database sorted in ascending order', async () =>
     .get('/api/users/trendingUsers')
     .send()
     .expect(200);
-  expect(response.body.data).toEqual(response.body.data.sort((a, b) => b - a)); //check array is ascending
+  expect(response.body.data).toEqual(response.body.data.sort((a, b) => b - a)); // check array is ascending
 });
 
 it('Should get top ten users that are not admins', async () => {

@@ -31,7 +31,7 @@ it('renders reviews', () => {
   });
 });
 
-it.only('calls onDelete when delete button is clicked', async () => {
+it('calls onDelete when delete button is clicked', async () => {
   const handleDelete = jest.fn();
 
   render(

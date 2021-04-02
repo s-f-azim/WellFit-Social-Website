@@ -65,7 +65,7 @@ it('logs in user when submitted with valid data and redirects', async () => {
   await waitFor(() => expect(router.push).toHaveBeenCalledWith('/'));
 });
 
-it('logs in user when submitted with valid data and redirects', async () => {
+it('does not log in user when submitted with invalid data', async () => {
   render(<Login />);
 
   const user = {
