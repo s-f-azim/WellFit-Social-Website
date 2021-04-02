@@ -16,7 +16,6 @@ const createRequest = asyncHandler(async (req, res) => {
       data: req.user,
     });
   } else {
-    console.log('hmm');
     const request = await Request.create({
       author: req.user._id,
       type: req.body.type,

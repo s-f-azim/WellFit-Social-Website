@@ -98,7 +98,7 @@ const Login = () => {
         password,
         redirect: false,
       });
-      if (res?.error) throw new error('Unable to login');
+      if (res?.error) throw new Error('Unable to login');
       await login(email, password);
       notification.open({
         message: 'Welcome back!',
@@ -149,7 +149,7 @@ const Login = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input aria-label="email" />
               </Form.Item>
               <Form.Item
                 name="password"
@@ -159,7 +159,7 @@ const Login = () => {
                 <Input.Password />
               </Form.Item>
               <Form.Item className="submit" {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit">
+                <Button aria-label="login" type="primary" htmlType="submit">
                   Login
                 </Button>
               </Form.Item>

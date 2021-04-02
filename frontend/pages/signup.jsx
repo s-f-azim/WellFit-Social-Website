@@ -50,7 +50,7 @@ const Signup = () => {
           <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
             <Space direction="vertical" size="large">
               {hasError && (
-                <Alert type="error" message="this user already exists please try again" banner />
+                <Alert type="error" message="this user already exists, please try again" banner />
               )}
               <Form.Item
                 name="role"

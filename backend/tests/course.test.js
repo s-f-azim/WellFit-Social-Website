@@ -220,14 +220,14 @@ it('Should get no courses with title b', async () => {
 });
 it('Should get 1 course with title weight and tag GetFit', async () => {
   const response = await request(app)
-    .get('/api/courses?title=weight&&tags[in]=GetFit')
+    .get('/api/courses?title=weight&&tags[all]=GetFit')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(1);
 });
 it('Should get 3 courses with no title and tag Cardio', async () => {
   const response = await request(app)
-    .get('/api/courses?tags[in]=Cardio')
+    .get('/api/courses?tags[all]=Cardio')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(3);
@@ -235,28 +235,28 @@ it('Should get 3 courses with no title and tag Cardio', async () => {
 
 it('Should get no course with tag Cycling', async () => {
   const response = await request(app)
-    .get('/api/courses?tags[in]=Cycling')
+    .get('/api/courses?tags[all]=Cycling')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(0);
 });
 it('Should get no course with tag Cycling', async () => {
   const response = await request(app)
-    .get('/api/courses?tags[in]=Cycling')
+    .get('/api/courses?tags[all]=Cycling')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(0);
 });
 it('Should get 2 courses with equipment treadmill', async () => {
   const response = await request(app)
-    .get('/api/courses?trainingEquipment[in]=treadmill')
+    .get('/api/courses?trainingEquipment[all]=treadmill')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(2);
 });
 it('Should get 1 course with equipment treadmill and tag FitFam', async () => {
   const response = await request(app)
-    .get('/api/courses?tags[in]=FitFam&&trainingEquipment[in]=treadmill')
+    .get('/api/courses?tags[all]=FitFam&&trainingEquipment[all]=treadmill')
     .send()
     .expect(200);
   expect(response.body.data.length).toBe(1);

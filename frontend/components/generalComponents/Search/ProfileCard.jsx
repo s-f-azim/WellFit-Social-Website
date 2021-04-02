@@ -20,7 +20,6 @@ const ProfileCard = ({ content }) => {
                 <UserOutlined /> {content.fName} {content.lName}
               </Typography.Title>
               <Divider style={{ borderTop: '1px solid #ffa277' }} />
-              {console.log(content)}
             </Col>
           </Row>
           <Row>
@@ -67,6 +66,7 @@ const ProfileCard = ({ content }) => {
                 </h5>
               </p>
               <Button
+                aria-label="goToProfilePage"
                 style={{ color: '#ffa277' }}
                 type="primary"
                 href={`/users/${content._id}`}

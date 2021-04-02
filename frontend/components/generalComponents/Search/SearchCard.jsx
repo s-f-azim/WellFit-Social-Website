@@ -25,10 +25,7 @@ const SearchCard = ({ category }) => {
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState(0);
   const [searchTarget, setSearchTarget] = useState(null);
-  const onFinish = useCallback((values) => {
-    // console.log('hmm');
-    console.log(values);
-  }, []);
+  const onFinish = useCallback((values) => {}, []);
   const closePopup = useCallback(() => {
     setVisible(false);
     setCurrent(1);
@@ -56,10 +53,20 @@ const SearchCard = ({ category }) => {
         <Card
           onClick={() => setVisible(true)}
           title={
-            <Typography.Title style={{ textAlign: 'center' }}>{category.name}</Typography.Title>
+            <Typography.Title className="title" style={{ textAlign: 'center' }}>
+              {category.name}
+            </Typography.Title>
           }
-          style={{ width: 450, height: 450 }}
-          cover={<Image src={category.photo} height={450} width={450} objectFit="contain" />}
+          style={{
+            width: 400,
+            height: 350,
+            borderColor: '#ffa277',
+            borderRadius: '0.5rem',
+            background: '#ffeee6',
+            margin: '1em',
+            padding: '1em',
+          }}
+          cover={category.photo}
         />
       </Col>
       <Modal

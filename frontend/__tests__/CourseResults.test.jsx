@@ -35,6 +35,5 @@ it('renders courses', async () => {
   courses.forEach((c) => {
     expect(screen.getByText(c.title, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(c.price, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(c.address, { exact: false })).toBeInTheDocument();
   });
 });

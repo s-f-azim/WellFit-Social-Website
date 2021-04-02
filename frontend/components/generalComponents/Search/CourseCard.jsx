@@ -116,11 +116,15 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
             }
             centered
             visible={visible}
-            onOk={() => setVisible(false)}
             onCancel={() => setVisible(false)}
             width={700}
             footer={[
-              <Button type="primary" href={`/courses/${content._id}`} key={content._id}>
+              <Button
+                aria-label="goToCoursePage"
+                type="primary"
+                href={`/courses/${content._id}`}
+                key={content._id}
+              >
                 <div style={{ color: '#ffa277' }}>Go to course page</div>
               </Button>,
             ]}

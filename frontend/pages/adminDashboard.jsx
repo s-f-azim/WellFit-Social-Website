@@ -131,7 +131,6 @@ const AdminDashboard = ({
     };
 
     const onAcceptVerify = async (report) => {
-      console.log(report.author);
       await acceptVerify(report.author);
       await deleteRequest(report._id);
       verifyRequest.splice(verifyRequest.indexOf(report), 1);
