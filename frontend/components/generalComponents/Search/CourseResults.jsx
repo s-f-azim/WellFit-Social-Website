@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import { Row, Col, Card } from 'antd';
+import { Row, Col } from 'antd';
 import CourseCard from './CourseCard';
 
 const CourseResults = ({ data }) => (

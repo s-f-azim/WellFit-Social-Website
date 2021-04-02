@@ -10,6 +10,7 @@ import {
   WomanOutlined,
   UserOutlined,
   FileOutlined,
+  CheckOutlined,
   EditOutlined,
   CheckCircleTwoTone,
   CloseCircleOutlined,
@@ -19,11 +20,21 @@ import {
   FileDoneOutlined,
 } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
-import { Button, Row, Card, Col, Divider, Modal, Collapse, Avatar } from 'antd';
+import {
+  Button,
+  Space,
+  Row,
+  Card,
+  Col,
+  Divider,
+  Modal,
+  Collapse,
+  Avatar,
+  Skeleton,
+  notification,
+} from 'antd';
 import { useSession, getSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
-import FollowButton from '../../components/userComponents/FollowButton';
-import ReportButton from '../../components/userComponents/ReportButton';
 import AccessDenied from '../../components/generalComponents/AccessDenied';
 import Suggestions from '../../components/userComponents/SuggestedInstructors';
 import WishList from '../../components/userComponents/WishList';
@@ -31,76 +42,43 @@ import UserFeed from '../../components/userComponents/postComponents/UserFeed';
 import UserPosts from '../../components/userComponents/postComponents/UserPosts';
 import TrendingUsers from '../../components/userComponents/TrendingUsers';
 import GetFollow from '../../components/userComponents/GetFollow';
-import { getFollowingList, getFollowerList } from '../../actions/user';
+import { createReport } from '../../actions/request';
+import { getFollowingList, getFollowerList, addingFollowUser } from '../../actions/user';
 import api from '../../services/api';
-import { CourseReview, UserReview } from '../../components/userComponents/reviewComponents/Review';
-import Course from '../courses/[id]';
+import { UserReview } from '../../components/userComponents/reviewComponents/Review';
 
 const User = ({ user }) => {
   const [session, loading] = useSession();
-  const [youtubeChannel, setyoutubeChannel] = useState([]);
-  const [videoID, setvideoID] = useState([]);
-  const [didLoad, setDidLoad] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+
   const [isFollowingModalVisible, setIsFollowingModalVisible] = useState(false);
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
   const [following, setFollowing] = useState([]);
   const [follower, setFollower] = useState([]);
   const [currentUser, setCurrentUser] = useState(false);
   const router = useRouter();
+  if (router.isFallback) {
+    return <Skeleton active />;
+  }
 
   useEffect(async () => {
     if (session && session.user._id === user._id) {
       setCurrentUser(true);
-      const followingData = await getFollowingList();
-      const followerData = await getFollowerList();
-      setFollowing(followingData.data.data);
-      setFollower(followerData.data.data);
     }
+    if (session && session.user) {
+      setIsFollowing(user.follower.includes(session.user._id));
+    }
+    const followingData = await getFollowingList(user._id);
+    const followerData = await getFollowerList(user._id);
+    setFollowing(followingData.data.data);
+    setFollower(followerData.data.data);
     setFollowerIsModalVisible(false);
     setIsFollowingModalVisible(false);
   }, [router.query]);
 
-  const fetchData = async (user) => {
-    if (user) {
-      if (!didLoad) {
-        setDidLoad(true);
-        try {
-          await fetch(
-            'https://www.googleapis.com/youtube/v3/search?key=AIzaSyDypjf2fxXKDQPhL6H-HuBqkFxxwxzxuek&channelId=UC-fxx_bLuZN0KOdPMKPleFw&part=id&order=date&maxResults=20'
-          )
-            .then((x) => x.json())
-            .then((z) => {
-              setvideoID(z.items[0].id.videoId);
-            });
-        } catch {
-          console.log('fail');
-          setvideoID('dGcsHMXbSOA');
-          setyoutubeChannel('UCQR2B4SkuyugJV1GZm61rQA');
-        }
-      }
-    }
-  };
-
   if (typeof window !== 'undefined' && loading) return null;
 
-  const getAge = (birthDate) =>
-    Math.floor((new Date() - new Date(birthDate).getTime()) / 3.15576e10);
-
-  const youtubeLink = async () => {
-    window.location.href = `https://www.youtube.com/channel/${youtubeChannel}`;
-  };
-
-  const facebookLink = async () => {
-    window.location.href = '/404';
-  };
-
   if (session) {
-    fetchData(user);
-
-    const twitterLink = () => {
-      window.location.href = `https://www.twitter.com/${user.twitterScreenName}`;
-    };
-
     const { Panel } = Collapse;
 
     const showFollowingModal = () => {
@@ -115,6 +93,33 @@ const User = ({ user }) => {
     };
     const handleFollowerCancel = () => {
       setFollowerIsModalVisible(false);
+    };
+    const handleFollow = async (id) => {
+      try {
+        await addingFollowUser(id);
+        if (!session.user.following.includes(id)) {
+          session.user.following = [id, ...session.user.following];
+          setIsFollowing(true);
+        } else {
+          const index = session.user.following.indexOf(id);
+          session.user.following.splice(index, 1);
+          setIsFollowing(false);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const handleReport = async (id) => {
+      try {
+        await createReport('report', 'something', id);
+        notification.open({
+          message: 'Report submitted, thanks for helping us!',
+          duration: 3,
+          icon: <CheckOutlined />,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     const verified = (
@@ -185,7 +190,6 @@ const User = ({ user }) => {
         {user.serviceFormat.join(', ')}
       </h4>
     );
-
     return (
       <div className="userPage">
         <Row justify="space-around">
@@ -233,12 +237,23 @@ const User = ({ user }) => {
                       <UserOutlined />
                     )}
                   </h1>
+                  {session && session.user._id !== user._id && (
+                    <Space style={{ marginBottom: '0.5rem' }}>
+                      <Button
+                        type={isFollowing ? 'default' : 'primary'}
+                        onClick={() => handleFollow(user._id)}
+                      >
+                        {isFollowing ? 'Unfollow' : 'Follow'}
+                      </Button>
+                      <Button onClick={() => handleReport(user._id)}>Report</Button>
+                    </Space>
+                  )}
                   <h3>
                     <strong>Socials: </strong>
-                    <Button type="text" onClick={facebookLink} icon={<FacebookOutlined />} />
-                    <Button type="text" onClick={facebookLink} icon={<InstagramOutlined />} />
-                    <Button type="text" onClick={youtubeLink} icon={<GoogleOutlined />} />
-                    <Button type="text" onClick={twitterLink} icon={<TwitterOutlined />} />
+                    <Button type="text" icon={<FacebookOutlined />} />
+                    <Button type="text" icon={<InstagramOutlined />} />
+                    <Button type="text" icon={<GoogleOutlined />} />
+                    <Button type="text" icon={<TwitterOutlined />} />
                   </h3>
                   <h3>
                     <strong>Registered as: </strong>
@@ -251,7 +266,7 @@ const User = ({ user }) => {
                     </h2>
                   </h3>
 
-                  <h4>
+                  <h4 style={{ minwidth: '30%' }}>
                     <strong> About: </strong>
                     {user.bio ? user.bio : 'No bio entered, edit your profile to display it.'}
                   </h4>
@@ -386,22 +401,20 @@ const User = ({ user }) => {
                   </>
                 )}
                 {session && session.user._id !== user._id && (
-                  <>
-                    <Panel
-                      header={
-                        <h2>
-                          User reviews <FileDoneOutlined />
-                        </h2>
-                      }
-                      key="5"
-                    >
-                      <Row justify="space-around">
-                        <Col>
-                          <UserReview id={user._id} />
-                        </Col>
-                      </Row>
-                    </Panel>
-                  </>
+                  <Panel
+                    header={
+                      <h2>
+                        User reviews <FileDoneOutlined />
+                      </h2>
+                    }
+                    key="5"
+                  >
+                    <Row justify="space-around">
+                      <Col span={24}>
+                        <UserReview id={user._id} />
+                      </Col>
+                    </Row>
+                  </Panel>
                 )}
               </Collapse>
             </Card>
@@ -418,6 +431,11 @@ const User = ({ user }) => {
 export const getStaticProps = async ({ params }) => {
   const userId = params ? params.id : undefined;
   const response = await api.get(`/users/${userId}`);
+  if (!response.data.data) {
+    return {
+      notFound: true,
+    };
+  }
   return { props: { user: response.data.data }, revalidate: 60 * 10 };
 };
 

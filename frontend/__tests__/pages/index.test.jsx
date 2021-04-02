@@ -18,13 +18,6 @@ it('renders application', () => {
   expect(screen.getByText('Join WellFit', { exact: false })).toBeInTheDocument();
 });
 
-it('redirects to profile if user logged in', async () => {
-  const user = { _id: '1', fName: 'user', lName: 'test', role: 'client' };
-  useSession.mockReturnValue([{ user }, false]);
-  render(<Home />);
-  await waitFor(() => expect(Router.push).toHaveBeenCalledWith(`/users/${user._id}`));
-});
-
 it('redirects to admin dashboard if admin logged in', async () => {
   const user = { _id: '1', fName: 'user', lName: 'test', role: 'admin' };
   useSession.mockReturnValue([{ user }, false]);

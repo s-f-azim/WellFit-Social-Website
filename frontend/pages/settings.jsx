@@ -124,7 +124,6 @@ const settingsPage = () => {
     const [hasVerifyError, setHasVerifyError] = useState(false);
     const [VerifyForm] = Form.useForm();
     const [showVerifyTab, setShowVerifyTab] = useState(user.verified);
-    console.log(showVerifyTab);
     const onBugReport = async (values) => {
       const { report } = values;
       try {
