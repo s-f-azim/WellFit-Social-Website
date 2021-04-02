@@ -17,10 +17,8 @@ const Favourites = () => {
     //const postsTest = [{_id: 1}, {_id: 2}];
 		const [posts, setPosts] = useState([]);
 		const [hasMore, setHasMore] = useState(true);
-
 		const fetchMorePosts = () => {
 			const postsTest = Array.from({ length: 20 });
-			console.log(posts);
 			if (posts.length <= 40) { //if 
 				setTimeout(() => {
 					setPosts(posts.concat(postsTest));
@@ -41,7 +39,7 @@ const Favourites = () => {
 
 
     return (
-			<div style={{overflow: "auto", height: 600, width: 350}}>
+			<div style={{overflow: "auto", height: 600, width: 330}}>
 				<InfiniteScroll
 					loadMore={fetchMorePosts}
 					hasMore={hasMore}
@@ -61,7 +59,6 @@ const Favourites = () => {
 										width: 100,
 										height: 100,
 										margin: 4
-										
 									}}
 									cover= {
 										<Image 
