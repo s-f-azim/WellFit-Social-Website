@@ -167,6 +167,7 @@ const editProfilePage = () => {
                     />
                     <Form.Item name="gender" label="Gender">
                       <Select
+                        aria-label="gender"
                         defaultValue={user.gender ? user.gender : null}
                         placeholder="Select your gender"
                       >
@@ -208,11 +209,15 @@ const editProfilePage = () => {
                     </Form.Item>
 
                     <Form.Item name="nickname" label="Nickname">
-                      <Input defaultValue={user.nickname ? user.nickname : null} />
+                      <Input
+                        aria-label="nickname"
+                        defaultValue={user.nickname ? user.nickname : null}
+                      />
                     </Form.Item>
 
                     <Form.Item name="bio" label="Bio">
                       <Input.TextArea
+                        aria-label="bio"
                         maxLength={200}
                         showCount
                         defaultValue={user.bio ? user.bio : null}
@@ -221,6 +226,7 @@ const editProfilePage = () => {
 
                     <Form.Item name="tags" label="Tags">
                       <Select
+                        aria-label="tags"
                         mode="tags"
                         style={{ display: 'flex', flexFlow: 'column wrap', flexGrow: '2' }}
                         placeholder="Select your interests"
@@ -238,7 +244,7 @@ const editProfilePage = () => {
                     </Form.Item>
 
                     <Form.Item {...tailFormItemLayout}>
-                      <Button type="primary" htmlType="submit">
+                      <Button aria-label="update" type="primary" htmlType="submit">
                         Update my info
                       </Button>
                     </Form.Item>
@@ -297,7 +303,7 @@ const editProfilePage = () => {
                       },
                     ]}
                   >
-                    <Input />
+                    <Input aria-label="email" />
                   </Form.Item>
                   <Form.Item name="password" label="New password" hasFeedback>
                     <Input.Password />
@@ -322,7 +328,7 @@ const editProfilePage = () => {
                     <Input.Password />
                   </Form.Item>
                   <Form.Item {...tailFormItemLayout} className="submit">
-                    <Button type="primary" htmlType="submit">
+                    <Button aria-label="confirm" type="primary" htmlType="submit">
                       Confirm
                     </Button>
                   </Form.Item>
