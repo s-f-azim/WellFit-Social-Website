@@ -4,7 +4,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as InstagramStrategy } from 'passport-instagram';
 import { Strategy as TwitterStrategy } from 'passport-twitter';
-import { default as jwtDecode } from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import User from '../src/models/User.js';
 
 // get the cookie out of the request
