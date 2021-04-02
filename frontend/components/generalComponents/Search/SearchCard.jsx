@@ -53,11 +53,13 @@ const SearchCard = ({ category }) => {
         <Card
           onClick={() => setVisible(true)}
           title={
-            <Typography.Title style={{ textAlign: 'center' }}>{category.name}</Typography.Title>
+            <Typography.Title className="title" style={{ textAlign: 'center' }}>
+              {category.name}
+            </Typography.Title>
           }
           style={{
-            width: 450,
-            height: 450,
+            width: 400,
+            height: 350,
             borderColor: '#ffa277',
             borderRadius: '0.5rem',
             background: '#ffeee6',

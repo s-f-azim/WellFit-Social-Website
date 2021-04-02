@@ -104,7 +104,7 @@ const SearchBar = () => {
         </Radio.Group>
         <Col>
           {searchType === 'Questionnaire' && (
-            <Row>
+            <Row justify="center">
               <SearchQuestionaire />
             </Row>
           )}
