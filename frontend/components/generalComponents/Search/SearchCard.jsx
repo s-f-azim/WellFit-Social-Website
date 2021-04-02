@@ -55,8 +55,16 @@ const SearchCard = ({ category }) => {
           title={
             <Typography.Title style={{ textAlign: 'center' }}>{category.name}</Typography.Title>
           }
-          style={{ width: 450, height: 450 }}
-          cover={<Image src={category.photo} height={450} width={450} objectFit="contain" />}
+          style={{
+            width: 450,
+            height: 450,
+            borderColor: '#ffa277',
+            borderRadius: '0.5rem',
+            background: '#ffeee6',
+            margin: '1em',
+            padding: '1em',
+          }}
+          cover={category.photo}
         />
       </Col>
       <Modal

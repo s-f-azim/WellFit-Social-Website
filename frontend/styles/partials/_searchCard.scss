@@ -1,3 +1,16 @@
-.search-popup {
-  padding: 2rem;
+.search-card {
+  color: green;
+  .search-popup {
+    padding: 2rem;
+  }
+  .ant-card .ant-card-bordered {
+    border-color: '#ffa277';
+    border-radius: '0.5rem';
+    background: '#ffeee6';
+  }
+}
+.svg {
+  all: initial;
+  width: 300px;
+  height: 300px;
 }
