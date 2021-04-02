@@ -1,5 +1,14 @@
-import { CheckOutlined, QuestionOutlined,
-	InstagramOutlined,GoogleOutlined,FacebookOutlined,TwitterOutlined} from '@ant-design/icons';
+import {
+  CheckOutlined,
+  QuestionOutlined,
+  InstagramOutlined,
+  GoogleOutlined,
+  FacebookOutlined,
+  TwitterOutlined,
+  LinkOutlined,
+  LockOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { useState } from 'react';
 import Router, { useRouter } from 'next/router';
 import {
@@ -63,12 +72,10 @@ const tags = [
 const facebookOuthHandler = (e) => {
   e.preventDefault();
   window.open(`${API}/users/oauth/facebook`, '_self');
-
 };
 const googleOuthHandler = (e) => {
   e.preventDefault();
   window.open(`${API}/users/oauth/google`, '_self');
-
 };
 // Insta oauth login
 const instaOauthHandler = (e) => {
@@ -76,7 +83,7 @@ const instaOauthHandler = (e) => {
   window.open(`${API}/users/oauth/instagram`, '_self');
 };
 
- const twitterOauthHandler = (e) => {
+const twitterOauthHandler = (e) => {
   e.preventDefault();
   window.open(`${API}/users/oauth/twitter`, '_self');
 };
@@ -150,7 +157,9 @@ const editProfilePage = () => {
                     {hasError && (
                       <Alert type="error" message="something went wrong, please try again" banner />
                     )}
-                    <h1>Add/Edit basic profile information</h1>
+                    <h1>
+                      Add/Edit basic profile information <UserOutlined />
+                    </h1>
                     <Alert
                       message="This helps professionals know about you right away"
                       type="info"
@@ -274,7 +283,9 @@ const editProfilePage = () => {
                         banner
                       />
                     )}
-                    <h1>Change your email or password</h1>
+                    <h1>
+                      Change your email or password <LockOutlined />
+                    </h1>
                   </Space>
                   <Form.Item
                     name="email"
@@ -318,32 +329,44 @@ const editProfilePage = () => {
                 </Form>
               </TabPane>
               <TabPane tab="Link Social Media" key="4">
-								<h1>Add/Edit basic profile information</h1>
-								
-						    <Form.Item className="fbLogin" {...tailFormItemLayout}>
-						    	<Button type="primary" onClick={facebookOuthHandler}>
-						        <FacebookOutlined />
-						    	</Button>
-						    </Form.Item>
-						    
-						    <Form.Item className="instaLogin" {...tailFormItemLayout}>
-		          		<Button type="primary" onClick={instaOauthHandler}>
-		            		<InstagramOutlined />
-		          		</Button>
-		        		</Form.Item>
-		        		
-								<Form.Item className="googleLogin" {...tailFormItemLayout}>
-		          		<Button type="primary" onClick={googleOuthHandler}>
-		            		<GoogleOutlined />
-		          		</Button>
-		        		</Form.Item>
-		        		
-		        		<Form.Item className="twitterLogin" {...tailFormItemLayout}>
-		          		<Button type="primary" onClick={twitterOauthHandler}>
-		            		<TwitterOutlined />
-		          		</Button>
-		        		</Form.Item>
-		        	</TabPane>
+                <h1>
+                  Link your social media accounts <LinkOutlined />
+                </h1>
+                <ul>
+                  <Row>
+                    <li>
+                      <Button type="text" onClick={facebookOuthHandler}>
+                        Link your Facebook account
+                        <FacebookOutlined />
+                      </Button>
+                    </li>
+                  </Row>
+                  <Row>
+                    <li>
+                      <Button type="text" onClick={instaOauthHandler}>
+                        Link your Instagram account
+                        <InstagramOutlined />
+                      </Button>
+                    </li>
+                  </Row>
+                  <Row>
+                    <li>
+                      <Button type="text" onClick={googleOuthHandler}>
+                        Link your Google account
+                        <GoogleOutlined />
+                      </Button>
+                    </li>
+                  </Row>
+                  <Row>
+                    <li>
+                      <Button type="text" onClick={twitterOauthHandler}>
+                        Link your Twitter account
+                        <TwitterOutlined />
+                      </Button>
+                    </li>
+                  </Row>
+                </ul>
+              </TabPane>
             </Tabs>
           </Card>
         </Row>
