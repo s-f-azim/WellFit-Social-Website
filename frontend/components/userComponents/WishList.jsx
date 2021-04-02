@@ -55,7 +55,7 @@ const WishList = () => {
                 <List.Item className="course" id={course._id}>
                   <CourseCard
                     content={course}
-                    isWish
+                    isWish={true}
                     removeFromWishList={() => removeFromWishList(course._id)}
                   />
                 </List.Item>
