@@ -1,20 +1,5 @@
-import { render, screen, act, within, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render } from '@testing-library/react';
 import UserProfile from '../pages/users/[id]';
-
-jest.mock('next-auth/client', () => ({
-  useSession: () => [{ user }, false],
-}));
-
-jest.mock('next/router', () => ({
-  useRouter: () => ({
-    replace: jest.fn(),
-  }),
-}));
-
-afterEach(() => {
-  jest.clearAllMocks();
-});
 
 const user = {
   _id: '1',
@@ -52,8 +37,22 @@ const user2 = {
   follower: [],
 };
 
+jest.mock('next-auth/client', () => ({
+  useSession: () => [{ user }, false],
+}));
+
+jest.mock('next/router', () => ({
+  useRouter: () => ({
+    replace: jest.fn(),
+  }),
+}));
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 it('render other users profile', async () => {
-  const { getByText, getByLabelText } = render(<UserProfile user={user2} />);
+  const { getByText } = render(<UserProfile user={user2} />);
   getByText('Alex Mason', { exact: false }); // Correct display name loaded
   getByText('Report', { exact: false }); // Report button present on different user profiles
   getByText('Follow'); // Follow button present on different user profiles
