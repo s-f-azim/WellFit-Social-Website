@@ -14,9 +14,7 @@ const socketEvents = (io) => {
       io.sockets.emit('message', newMessage);
     });
     // when the user leave
-    socket.on('disconnect', () => {
-      console.log('User had left!');
-    });
+    socket.on('disconnect', () => {});
   });
 };
 

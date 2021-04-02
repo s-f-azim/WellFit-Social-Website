@@ -5,7 +5,18 @@ import geocoder from '../utils/geocoder.js';
 const paginateAndFilter = (model) =>
   asyncHandler(async (req, res, next) => {
     let query;
+    if (req.query.tags) {
+      req.query.tags.all = req.query.tags.all.split(',');
+    }
+    if (req.query.trainingEquipment) {
+      req.query.trainingEquipment.all = req.query.trainingEquipment.all.split(
+        ','
+      );
+    }
     let reqQuery = { ...req.query };
+    // let reqQuery = Object.fromEntries(
+    //   Object.entries(req.query).filter(([_, v]) => v != null && v.length > 1)
+    // );
     const removeFields = ['select', 'sort', 'page', 'limit', 'name'];
     removeFields.forEach((param) => delete reqQuery[param]);
     // check for geospaital search
@@ -20,6 +31,7 @@ const paginateAndFilter = (model) =>
       const { latitude, longitude } = loc[0];
       // Calc radius using radians
       const radius = distance / 6378;
+      delete reqQuery.location;
       reqQuery = {
         location: {
           $geoWithin: { $centerSphere: [[longitude, latitude], radius] },
@@ -27,14 +39,29 @@ const paginateAndFilter = (model) =>
         ...reqQuery,
       };
     }
-    // if name is given match it with a regex
-    if (req.query.name) {
-      reqQuery = { name: { $regex: req.query.name, $options: 'i' } };
+    // if name or title is given match it with a regex
+    if (req.query.fName || req.query.lName) {
+      delete reqQuery.fName;
+      delete reqQuery.lName;
+      reqQuery = {
+        $or: [
+          { fName: { $regex: `${req.query.fName}`, $options: 'i' } },
+          { lName: { $regex: `${req.query.lName}`, $options: 'i' } },
+        ],
+        ...reqQuery,
+      };
+    }
+    if (req.query.title) {
+      delete reqQuery.title;
+      reqQuery = {
+        title: { $regex: req.query.title, $options: 'i' },
+        ...reqQuery,
+      };
     }
 
     let queryStr = JSON.stringify(reqQuery);
     queryStr = queryStr.replace(
-      /\b(gt|gte|lte|lt|in)\b/g,
+      /\b(gt|gte|lte|lt|in|all)\b/g,
       (match) => `$${match}`
     );
     query = model.find(JSON.parse(queryStr));

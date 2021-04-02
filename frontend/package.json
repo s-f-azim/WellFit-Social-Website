@@ -6,7 +6,7 @@
     "dev": "BABEL_ENV=dev next dev -p 8000",
     "build": "next build",
     "start": "next start -p 8000",
-    "test": "jest",
+    "test": "BABEL_ENV=test jest",
     "lint": "eslint --quiet --fix-dry-run ."
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "react-moment": "^1.1.1",
     "react-player": "^2.9.0",
     "react-scroll": "^1.8.2",
+    "react-twitter-widgets": "^1.9.5",
     "socket.io-client": "^4.0.0"
   },
   "devDependencies": {

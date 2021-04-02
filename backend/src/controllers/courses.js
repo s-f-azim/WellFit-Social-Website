@@ -15,7 +15,6 @@ const getCourse = asyncHandler(async (req, res) => {
     data: course,
   });
 });
-
 /**
  * @async
  * @desc get course creators by ID of the course

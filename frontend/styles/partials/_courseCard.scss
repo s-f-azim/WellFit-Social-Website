@@ -1,0 +1,78 @@
+.course-card {
+  .ant-card {
+    min-width: 25rem;
+    max-width: 25rem;
+    min-height: 16rem;
+    max-height: 16rem;
+  }
+
+  .title {
+    float: left;
+    font-size: 2em;
+    &:hover {
+      color: #ffa277;
+    }
+  }
+
+  .title:hover {
+    cursor: pointer;
+    float: left;
+  }
+
+  .card-image {
+    padding-right: 2rem;
+    min-width: 25%;
+  }
+
+  .course-details {
+    max-width: 60%;
+  }
+
+  .delete-icon {
+    font-size: 2rem;
+    color: black;
+    float: right;
+  }
+
+  .delete-icon:hover {
+    font-size: 2rem;
+    color: black;
+    cursor: pointer;
+    float: right;
+  }
+
+  .creators {
+    max-width: auto;
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+
+  .tags {
+    border-radius: 0.3rem;
+    background-color: #ffa277;
+    max-width: min-content;
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+
+  .modal-image {
+    padding-right: 2rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .ant-card {
+      min-width: 20rem;
+      max-width: 20rem;
+      min-height: 23rem;
+      max-height: 23rem;
+    }
+
+    .card-image {
+      min-width: 100%;
+    }
+
+    .course-details {
+      min-width: 100%;
+    }
+  }
+}

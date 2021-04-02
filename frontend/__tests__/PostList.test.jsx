@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import PostList from '../components/PostList';
+import PostList from '../components/userComponents/postComponents/PostList';
 
 const posts = [1, 2, 3, 4].map((n) => ({
   _id: `${n}`,

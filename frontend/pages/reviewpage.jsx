@@ -1,5 +1,5 @@
 import { Row, Col } from 'antd';
-import Review from '../components/Review';
+import Review from '../components/userComponents/reviewComponents/Review';
 import { getReviews } from '../actions/review';
 
 export default function ReviewPage({ reviewUser }) {

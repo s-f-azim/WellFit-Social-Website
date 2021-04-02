@@ -1,0 +1,39 @@
+#filterrow {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2rem;
+  width: 80%;
+}
+#filterrow > .courseSelect {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: inline-block;
+  width: 40%;
+  min-width: 300px;
+}
+#filterrow > .peopleSelectDrop {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+#filterrow > .peopleSelectTags {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: inline-block;
+  width: 50%;
+  min-width: 300px;
+}
+@media only screen and (max-width: 780px) {
+  #filterrow {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0.3rem;
+    width: 80%;
+  }
+  #filterrow > .ant-select {
+    padding: 0.5rem;
+  }
+}

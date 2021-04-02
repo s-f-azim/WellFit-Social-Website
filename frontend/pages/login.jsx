@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { signIn, useSession } from 'next-auth/client';
+import { signIn } from 'next-auth/client';
 import { Space, Form, Input, Alert, Button, Row, Card, notification, Modal } from 'antd';
 import {
   InstagramOutlined,
@@ -13,16 +13,7 @@ import { login } from '../services/auth';
 import API from '../services/api';
 
 // layout and styling for form
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-};
+
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
@@ -32,6 +23,19 @@ const tailFormItemLayout = {
     sm: {
       span: 16,
       offset: 8,
+    },
+  },
+};
+
+const socialFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 16,
+      offset: 6,
     },
   },
 };
@@ -122,64 +126,62 @@ const Login = () => {
     window.open(`${API}/users/oauth/facebook`, '_self');
   };
   return (
-    <Row type="flex" justify="center" align="middle" style={{ minHeight: '85vh' }}>
-      <Card>
-        <Form
-          {...formItemLayout}
-          form={form}
-          name="register"
-          onFinish={onFinish}
-          scrollToFirstError
-        >
-          <Space direction="vertical" size="large">
-            {hasError && <Alert type="error" message={errorText} banner />}
-            <Form.Item
-              name="email"
-              label="Email"
-              rules={[
-                {
-                  type: 'email',
-                  message: 'Invalid Email',
-                },
-                {
-                  required: true,
-                  message: 'Please enter your email',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              label="Password"
-              rules={[{ required: true, message: 'Please enter your password' }]}
-              hasFeedback
-            >
-              <Input.Password />
-            </Form.Item>
-            <Form.Item className="submit" {...tailFormItemLayout}>
-              <Button type="primary" htmlType="submit">
-                Login
-              </Button>
-            </Form.Item>
-            <Form.Item {...tailFormItemLayout}>
-              <h3>Or login with</h3>
-              <div className="buttons-form">
-                <Button type="primary" onClick={instaOauthHandler}>
-                  <InstagramOutlined />
+    <div className="login">
+      <Row type="flex" justify="center" align="middle" style={{ minHeight: '85vh' }}>
+        <Card>
+          <h1>
+            A step away from your goals! <SmileOutlined />
+          </h1>
+          <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
+            <Space direction="vertical" size="large">
+              {hasError && <Alert type="error" message={errorText} banner />}
+              <Form.Item
+                name="email"
+                label="Email"
+                rules={[
+                  {
+                    type: 'email',
+                    message: 'Invalid Email',
+                  },
+                  {
+                    required: true,
+                    message: 'Please enter your email',
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                label="Password"
+                rules={[{ required: true, message: 'Please enter your password' }]}
+              >
+                <Input.Password />
+              </Form.Item>
+              <Form.Item className="submit" {...tailFormItemLayout}>
+                <Button type="primary" htmlType="submit">
+                  Login
                 </Button>
-                <Button type="primary" onClick={googleOuthHandler}>
-                  <GoogleOutlined />
-                </Button>
-                <Button type="primary" onClick={facebookOuthHandler}>
-                  <FacebookOutlined />
-                </Button>
-              </div>
-            </Form.Item>
-          </Space>
-        </Form>
-      </Card>
-    </Row>
+              </Form.Item>
+              <Form.Item {...socialFormItemLayout}>
+                <h3>Or login with</h3>
+                <div className="buttons-form">
+                  <Button type="primary" onClick={instaOauthHandler}>
+                    <InstagramOutlined />
+                  </Button>
+                  <Button type="primary" onClick={googleOuthHandler}>
+                    <GoogleOutlined />
+                  </Button>
+                  <Button type="primary" onClick={facebookOuthHandler}>
+                    <FacebookOutlined />
+                  </Button>
+                </div>
+              </Form.Item>
+            </Space>
+          </Form>
+        </Card>
+      </Row>
+    </div>
   );
 };
 export default Login;
