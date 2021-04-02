@@ -4,7 +4,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as InstagramStrategy } from 'passport-instagram';
 import { Strategy as TwitterStrategy } from 'passport-twitter';
-import {default as jwtDecode} from 'jwt-decode';
+import { default as jwtDecode } from 'jwt-decode';
 import User from '../src/models/User.js';
 
 // get the cookie out of the request
@@ -76,13 +76,10 @@ if (process.env.NODE_ENV !== 'TEST') {
             },
             (err) => {
               if (err) {
-                console.log(err);
-              } else {
-                console.log('Updated');
+                done(err, false);
               }
             }
           );
-          console.log(currentUser);
           done(null, currentUser);
         }
 
@@ -112,7 +109,6 @@ if (process.env.NODE_ENV !== 'TEST') {
       },
       async (res, accessToken, refreshToken, profile, done) => {
         // check if the person is logged into our websie
-        console.log(profile);
         if (res.cookies) {
           const currentUser = await User.findOne({
             _id: jwtDecode(res.cookies.token).id,
@@ -128,9 +124,7 @@ if (process.env.NODE_ENV !== 'TEST') {
             },
             (err) => {
               if (err) {
-                console.log(err);
-              } else {
-                console.log('Updated');
+                done(err, false);
               }
             }
           );
@@ -177,9 +171,7 @@ if (process.env.NODE_ENV !== 'TEST') {
             },
             (err) => {
               if (err) {
-                console.log(err);
-              } else {
-                console.log('Updated');
+                done(err, false);
               }
             }
           );
@@ -232,9 +224,7 @@ if (process.env.NODE_ENV !== 'TEST') {
             },
             (err) => {
               if (err) {
-                console.log(err);
-              } else {
-                console.log('Updated');
+                done(err, false);
               }
             }
           );

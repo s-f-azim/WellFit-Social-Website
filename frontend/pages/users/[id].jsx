@@ -431,7 +431,6 @@ const User = ({ user }) => {
 export const getStaticProps = async ({ params }) => {
   const userId = params ? params.id : undefined;
   const response = await api.get(`/users/${userId}`);
-  console.log(response);
   if (!response.data.data) {
     return {
       notFound: true,
