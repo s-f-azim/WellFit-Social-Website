@@ -45,26 +45,30 @@ const ProfileCard = ({ content }) => {
                     : 'Instructor'
                   : 'Client'}
               </p>
-              <p style={profileDetails}>
+              <div style={profileDetails}>
                 Tags:{' '}
                 {content.tags.length > 0 ? (
                   <>
                     {content.tags.map((tag) => (
-                      <div className="tags">{tag}</div>
+                      <div className="tags" key={tag}>
+                        {tag}
+                      </div>
                     ))}
                   </>
                 ) : (
                   'None Specified'
                 )}
-              </p>
-              <p>
-                <h5 style={{ color: '#ffa277' }}>
-                  Followed by {content.follower ? content.follower.length : '0'} user(s).
-                </h5>
-                <h5 style={{ color: '#ffa277' }}>
+              </div>
+              <p />
+
+              <h5 style={{ color: '#ffa277' }}>
+                <p style={{ marginBottom: '0.5em' }}>
+                  Followed by {content.follower ? content.follower.length : '0'} user(s)
+                </p>
+                <p style={{ marginBottom: '1.2em' }}>
                   Follows {content.follower ? content.following.length : '0'} other user(s).
-                </h5>
-              </p>
+                </p>
+              </h5>
               <Button
                 aria-label="goToProfilePage"
                 style={{ color: '#ffa277' }}
