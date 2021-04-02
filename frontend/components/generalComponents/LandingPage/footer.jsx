@@ -41,15 +41,12 @@ const Footer = () => (
         </ul>
       </div>
       <p className="copyright">
-        <b>Copyright Wellfit 2021</b>
+        <b>&#169; Wellfit 2021</b>
         <br />
         <a href="https://www.freepik.com/vectors/background">
           Background vector created by tartila - www.freepik.com
         </a>
         <br />
-        <a href="https://www.freepik.com/vectors/background">
-          Background vector created by tartila - www.freepik.com
-        </a>
       </p>
     </div>
   </div>
