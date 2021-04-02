@@ -53,10 +53,20 @@ const SearchCard = ({ category }) => {
         <Card
           onClick={() => setVisible(true)}
           title={
-            <Typography.Title style={{ textAlign: 'center' }}>{category.name}</Typography.Title>
+            <Typography.Title className="title" style={{ textAlign: 'center' }}>
+              {category.name}
+            </Typography.Title>
           }
-          style={{ width: 450, height: 450 }}
-          cover={<Image src={category.photo} height={450} width={450} objectFit="contain" />}
+          style={{
+            width: 400,
+            height: 350,
+            borderColor: '#ffa277',
+            borderRadius: '0.5rem',
+            background: '#ffeee6',
+            margin: '1em',
+            padding: '1em',
+          }}
+          cover={category.photo}
         />
       </Col>
       <Modal
@@ -101,7 +111,7 @@ const SearchCard = ({ category }) => {
           <Carousel ref={ref} dots={false} style={{ padding: '2rem' }}>
             <Form.Item
               label={<h3 style={{ fontWeight: 'bold' }}>Searching for people or packages?</h3>}
-              name="gym"
+              name="type"
               rules={[{ required: true }]}
             >
               <Radio.Group
@@ -118,14 +128,44 @@ const SearchCard = ({ category }) => {
                 </Radio>
               </Radio.Group>
             </Form.Item>
-            <Form.Item label="another">
-              <Input />
-            </Form.Item>
-            <Form.Item label="location" name="location" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-            <Form.Item label="something" name="location" rules={[{ required: true }]}>
-              <Input />
+            {searchTarget === 2 && (
+              <Form.Item
+                label={<h3 style={{ fontWeight: 'bold' }}>Are you looking for gym based?</h3>}
+                name="gym"
+                rules={[{ required: true }]}
+              >
+                <Radio.Group onChange={() => setIsEmpty(false)}>
+                  <Radio style={radioStyle} value={1}>
+                    yes
+                  </Radio>
+                  <Radio style={radioStyle} value={2}>
+                    no
+                  </Radio>
+                </Radio.Group>
+              </Form.Item>
+            )}
+            {searchTarget === 2 && (
+              <Form.Item
+                label={<h3 style={{ fontWeight: 'bold' }}>Are you looking for virtual package?</h3>}
+                name="virtual"
+                rules={[{ required: true }]}
+              >
+                <Radio.Group onChange={() => setIsEmpty(false)}>
+                  <Radio style={radioStyle} value={1}>
+                    yes
+                  </Radio>
+                  <Radio style={radioStyle} value={2}>
+                    no
+                  </Radio>
+                </Radio.Group>
+              </Form.Item>
+            )}
+            <Form.Item
+              label={<h3 style={{ fontWeight: 'bold' }}>Please enter your address (zipcode)</h3>}
+              name="location"
+              rules={[{ required: true }]}
+            >
+              <Input onChange={() => setIsEmpty(false)} />
             </Form.Item>
           </Carousel>
         </Form>

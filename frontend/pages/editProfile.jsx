@@ -1,4 +1,14 @@
-import { CheckOutlined, QuestionOutlined } from '@ant-design/icons';
+import {
+  CheckOutlined,
+  QuestionOutlined,
+  InstagramOutlined,
+  GoogleOutlined,
+  FacebookOutlined,
+  TwitterOutlined,
+  LinkOutlined,
+  LockOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { useState } from 'react';
 import Router, { useRouter } from 'next/router';
 import {
@@ -20,6 +30,7 @@ import updateUser from '../actions/user';
 import InstQuest from '../components/userComponents/questionnaires/InstQuest';
 import AccessDenied from '../components/generalComponents/AccessDenied';
 import ClientQuest from '../components/userComponents/questionnaires/clientQuest';
+import API from '../config';
 
 const { Option } = Select;
 
@@ -58,6 +69,24 @@ const tags = [
   'Workout',
 ];
 
+const facebookOuthHandler = (e) => {
+  e.preventDefault();
+  window.open(`${API}/users/oauth/facebook`, '_self');
+};
+const googleOuthHandler = (e) => {
+  e.preventDefault();
+  window.open(`${API}/users/oauth/google`, '_self');
+};
+// Insta oauth login
+const instaOauthHandler = (e) => {
+  e.preventDefault();
+  window.open(`${API}/users/oauth/instagram`, '_self');
+};
+
+const twitterOauthHandler = (e) => {
+  e.preventDefault();
+  window.open(`${API}/users/oauth/twitter`, '_self');
+};
 const editProfilePage = () => {
   const [session, loading] = useSession();
   const router = useRouter();
@@ -128,7 +157,9 @@ const editProfilePage = () => {
                     {hasError && (
                       <Alert type="error" message="something went wrong, please try again" banner />
                     )}
-                    <h1>Add/Edit basic profile information</h1>
+                    <h1>
+                      Add/Edit basic profile information <UserOutlined />
+                    </h1>
                     <Alert
                       message="This helps professionals know about you right away"
                       type="info"
@@ -252,7 +283,9 @@ const editProfilePage = () => {
                         banner
                       />
                     )}
-                    <h1>Change your email or password</h1>
+                    <h1>
+                      Change your email or password <LockOutlined />
+                    </h1>
                   </Space>
                   <Form.Item
                     name="email"
@@ -294,6 +327,45 @@ const editProfilePage = () => {
                     </Button>
                   </Form.Item>
                 </Form>
+              </TabPane>
+              <TabPane tab="Link Social Media" key="4">
+                <h1>
+                  Link your social media accounts <LinkOutlined />
+                </h1>
+                <ul>
+                  <Row>
+                    <li>
+                      <Button type="text" onClick={facebookOuthHandler}>
+                        Link your Facebook account
+                        <FacebookOutlined />
+                      </Button>
+                    </li>
+                  </Row>
+                  <Row>
+                    <li>
+                      <Button type="text" onClick={instaOauthHandler}>
+                        Link your Instagram account
+                        <InstagramOutlined />
+                      </Button>
+                    </li>
+                  </Row>
+                  <Row>
+                    <li>
+                      <Button type="text" onClick={googleOuthHandler}>
+                        Link your Google account
+                        <GoogleOutlined />
+                      </Button>
+                    </li>
+                  </Row>
+                  <Row>
+                    <li>
+                      <Button type="text" onClick={twitterOauthHandler}>
+                        Link your Twitter account
+                        <TwitterOutlined />
+                      </Button>
+                    </li>
+                  </Row>
+                </ul>
               </TabPane>
             </Tabs>
           </Card>

@@ -56,7 +56,6 @@ const SearchBar = () => {
       }
     }
     if (response) {
-      console.log(response);
       setData(response.data.data);
       setTotal(response.data.total);
     }
@@ -105,7 +104,7 @@ const SearchBar = () => {
         </Radio.Group>
         <Col>
           {searchType === 'Questionnaire' && (
-            <Row>
+            <Row justify="center">
               <SearchQuestionaire />
             </Row>
           )}

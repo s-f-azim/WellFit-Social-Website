@@ -25,9 +25,9 @@ const Signup = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    const { role, email, fName, lName, password } = values;
+    const { role, email, fName, lName, password, address } = values;
     try {
-      const response = await signup(role, email, fName, lName, password);
+      const response = await signup(role, email, fName, lName, password, address);
       if (response.data.success) {
         notification.open({
           message: 'Signed up successfully!',
@@ -50,7 +50,7 @@ const Signup = () => {
           <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
             <Space direction="vertical" size="large">
               {hasError && (
-                <Alert type="error" message="this user already exists please try again" banner />
+                <Alert type="error" message="this user already exists, please try again" banner />
               )}
               <Form.Item
                 name="role"
@@ -147,6 +147,9 @@ const Signup = () => {
                 ]}
               >
                 <Input.Password />
+              </Form.Item>
+              <Form.Item label="Location (if applicable):" name="address">
+                <Input />
               </Form.Item>
               <Form.Item
                 name="agreement"

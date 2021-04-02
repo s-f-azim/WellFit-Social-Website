@@ -16,6 +16,5 @@ it('renders people', () => {
   users.forEach((u) => {
     expect(screen.getByText(u.fName, { exact: false })).toBeInTheDocument();
     expect(screen.getByText(u.lName, { exact: false })).toBeInTheDocument();
-    expect(screen.getByText(u.gender, { exact: false })).toBeInTheDocument();
   });
 });

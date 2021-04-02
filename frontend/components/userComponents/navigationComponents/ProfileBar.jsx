@@ -28,8 +28,8 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
       duration: 2,
       icon: <CheckOutlined style={{ color: '#70FF00' }} />,
     });
-    signOut({ redirect: true });
-    router.push('/landing');
+    signOut({ redirect: false });
+    router.replace('/login');
   };
 
   const GoToeditProfile = () => {
@@ -73,6 +73,15 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
           <Link href="/settings">Settings</Link>
         </h1>
       </div>
+      {session.user.role === 'admin' && (
+        <div className="item">
+          <SettingOutlined />
+          <h1>
+            <Link href="/adminDashboard">Admin</Link>
+          </h1>
+        </div>
+      )}
+
       <div onClick={signout} className="item logout">
         <LogoutOutlined />
         <h1>Logout</h1>

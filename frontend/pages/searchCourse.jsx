@@ -1,6 +1,6 @@
 import { Row } from 'antd';
 import SearchCard from '../components/generalComponents/Search/SearchCard';
-import { categories } from '../data/questions';
+import categories from '../data/categories';
 
 const searchPage = () => (
   <Row
