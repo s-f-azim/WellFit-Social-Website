@@ -120,7 +120,7 @@ CourseSchema.virtual('reviews', {
 });
 
 // Geocode and create location field
-CourseSchema.pre('save', async function (next) {
+CourseSchema.pre('save', async (next) => {
   if (!this.address) next();
   const loc = await geocoder.geocode(this.address);
   const {
@@ -145,7 +145,7 @@ CourseSchema.pre('save', async function (next) {
 });
 
 // Create course slug from the name
-CourseSchema.pre('save', function (next) {
+CourseSchema.pre('save', async (next) => {
   this.slug = slugify(this.title, { lower: true });
   next();
 });

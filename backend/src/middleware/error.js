@@ -22,6 +22,7 @@ const errorHandler = (err, req, res, next) => {
     const message = Object.values(err.errors).map((er) => er.message);
     error = new ErrorResponse(message, 400);
   }
+  // Other error send default code 500
   res
     .status(error.statusCode || 500)
     .send({ success: false, error: error.message || 'Server Error' });

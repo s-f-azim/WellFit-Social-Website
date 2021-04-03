@@ -5,6 +5,7 @@ import geocoder from '../utils/geocoder.js';
 const paginateAndFilter = (model) =>
   asyncHandler(async (req, res, next) => {
     let query;
+    // splitting tag parameters
     if (req.query.tags) {
       req.query.tags.all = req.query.tags.all.split(',');
     }
@@ -14,12 +15,10 @@ const paginateAndFilter = (model) =>
       );
     }
     let reqQuery = { ...req.query };
-    // let reqQuery = Object.fromEntries(
-    //   Object.entries(req.query).filter(([_, v]) => v != null && v.length > 1)
-    // );
+
     const removeFields = ['select', 'sort', 'page', 'limit', 'name'];
     removeFields.forEach((param) => delete reqQuery[param]);
-    // check for geospaital search
+    // check for geospatial search
     if (
       String(req.url).includes('radius') &&
       req.params.zipcode &&
