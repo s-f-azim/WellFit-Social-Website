@@ -52,9 +52,6 @@ app.use(
     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
   })
 );
-if (process.env.NODE_ENV === 'PRODUCTION') {
-  app.set('trust proxy', 1);
-}
 
 // routes
 app.use('/api/users', userRoutes);
