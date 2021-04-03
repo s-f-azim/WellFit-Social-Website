@@ -334,7 +334,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     ),
     // httpOnly: true,
     secure: process.env.NODE_ENV === 'PRODUCTION',
-    // sameSite: 'none',
+    sameSite: 'None',
     domain: process.env.CLIENT_URL,
   };
   res
@@ -357,7 +357,7 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
     // httpOnly: true,
     secure: process.env.NODE_ENV === 'PRODUCTION',
     domain: process.env.CLIENT_URL,
-    // sameSite: 'none',
+    sameSite: 'None',
   };
   res.cookie('user', JSON.stringify(user));
   res.cookie('token', token, options);
