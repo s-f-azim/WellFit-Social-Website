@@ -331,8 +331,8 @@ const sendTokenResponse = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'PRODUCTION',
+    // httpOnly: true,
+    // secure: process.env.NODE_ENV === 'PRODUCTION',
   };
   res
     .status(statusCode)
@@ -351,8 +351,8 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'PRODUCTION',
+    // httpOnly: true,
+    // secure: process.env.NODE_ENV === 'PRODUCTION',
   };
   res.cookie('user', JSON.stringify(user));
   res.cookie('token', token, options);
