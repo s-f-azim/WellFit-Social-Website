@@ -50,7 +50,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
       <div className="buttons">
         <ul className={click ? 'nav-options activs' : 'nav-options'}>
           <li className="option">
-            {session.user.role === 'instructor' ? (
+            {session && session.user && session.user.role === 'instructor' ? (
               <Dropdown overlay={courseMenu} trigger={['click']}>
                 <Button type="link" className="menuButton">
                   <ProfileOutlined /> Courses <DownOutlined />
@@ -148,9 +148,7 @@ const Navbar = () => {
             </div>
           </a>
         </Title>
-        {!session ? (
-          <LoggedOutMenu />
-        ) : (
+        {session && session.user ? (
           <>
             <LoggedInMenu
               session={session}
@@ -163,6 +161,8 @@ const Navbar = () => {
               setProfileOpen={setProfileOpen}
             />
           </>
+        ) : (
+          <LoggedOutMenu />
         )}
       </nav>
     </>

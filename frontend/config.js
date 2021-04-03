@@ -1,8 +1,11 @@
-import getConfig from 'next/config';
+const API =
+  process.env.ENVIRONMENT === 'Production'
+    ? process.env.API_PRODUCTION
+    : process.env.API_DEVELOPMENT;
+const SOCKET_URL = 'ws://localhost:4000';
+// process.env.ENVIRONMENT === 'Production'
+//   ? process.env.SOCKET_URL_PRODUCTION
+//   : process.env.NEXT_PUBLIC_SOCKET_URL_DEV;
 
-const { publicRuntimeConfig: config } = getConfig();
-const API = config.PRODUCTION ? config.API_PRODUCTION : config.API_DEVELOPMENT;
-const SOCKET_URL = config.PRODUCTION ? config.SOCKET_URL_PRODUCTION : config.SOCKET_URL_DEV;
-const env = config.PRODUCTION;
-const STRIPE_KEY = config.STRIPE_KEY;
-export { API as default, env, SOCKET_URL, STRIPE_KEY };
+const STRIPE_KEY = process.env.STRIPE_KEY;
+export { API as default, SOCKET_URL, STRIPE_KEY };
