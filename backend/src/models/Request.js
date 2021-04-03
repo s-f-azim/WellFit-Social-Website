@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
-// helper validation function
-const isReport = () => this.type === 'report';
-
+function isReport() {
+  return this.type === 'report';
+}
 const RequestSchema = new mongoose.Schema(
   {
     author: {
@@ -15,7 +15,6 @@ const RequestSchema = new mongoose.Schema(
       enum: ['verify', 'bug', 'message', 'report'],
       required: [true, 'Please select a request type'],
     },
-    // recipient is only required if type report
     recipient: {
       type: mongoose.Schema.Types.ObjectId,
       required: [isReport, 'Please enter a recipient'],
