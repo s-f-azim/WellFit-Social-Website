@@ -107,6 +107,7 @@ const getUserIdByEmail = asyncHandler(async (req, res) => {
  * @access private
  */
 const updateUser = asyncHandler(async (req, res) => {
+  console.log(req);
   const updates = Object.keys(req.body);
   updates.forEach(
     (update) =>
