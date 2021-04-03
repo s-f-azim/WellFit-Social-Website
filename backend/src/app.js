@@ -45,7 +45,13 @@ app.use(compression());
 app.use(passport.initialize());
 
 // cors
-app.use(cors({ credentials: true }));
+app.use(
+  cors({
+    credentials: true,
+    origin: ['http://localhost:8000', `${process.env.CLIENT_URL}`],
+    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
+  })
+);
 
 // routes
 app.use('/api/users', userRoutes);
