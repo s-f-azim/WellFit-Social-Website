@@ -8,6 +8,7 @@ const upload = multer({
   },
   /* eslint-disable consistent-return */
   fileFilter(req, file, cb) {
+    // wrong format send error response
     if (!file.originalname.match(/\.(jpg|jpeg|png)$/))
       return cb(
         new ErrorResponse(
