@@ -355,6 +355,7 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
     ),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'PRODUCTION',
+    sameSite: 'none',
   };
   res.cookie('user', JSON.stringify(user));
   res.cookie('token', token, options);
