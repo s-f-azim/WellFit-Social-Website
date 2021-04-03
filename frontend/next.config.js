@@ -13,7 +13,21 @@ const path = require('path');
 
 // Where your antd-custom.less file lives
 const themeVariables = lessToJS(fs.readFileSync('./styles/antd-custom.less', 'utf8'));
-
+const nextConfig = {
+  publicRuntimeConfig: {
+    APP_NAME: 'instaFit',
+    API_DEVELOPMENT: 'http://localhost:4000/api',
+    API_PRODUCTION: 'http://localhost:4000/api',
+    SOCKET_URL_DEV: 'ws://localhost:4000',
+    SOCKET_URL_PRODUCTION: '',
+    STRIPE_KEY:
+      'pk_test_51IXtHEDwrWa9UGRt2QwiL8Yj0XjYj9jsruDB9SYxq5GpIsNay4Qp3DllZnXIP90IIOwqSIwOMbCwt9cYYzURQ5T000ADaG6pOw',
+    PRODUCTION: false,
+  },
+  images: {
+    domains: ['images.unsplash.com'],
+  },
+};
 const plugins = [
   [
     withLess({
@@ -73,4 +87,4 @@ const plugins = [
   withCSS,
   withSass,
 ];
-module.exports = withPlugins(plugins);
+module.exports = withPlugins(plugins, nextConfig);
