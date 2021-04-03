@@ -21,13 +21,10 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [
-        function () {
-          return (
-            this.googleId === undefined &&
-            this.instaId === undefined &&
-            this.facebookId === undefined
-          );
-        },
+        () =>
+          this.googleId === undefined &&
+          this.instaId === undefined &&
+          this.facebookId === undefined,
         'Please add a password',
       ],
       minlength: 8,
@@ -348,21 +345,21 @@ UserSchema.virtual('requests', {
 });
 
 // change the json to not send specified fields
-UserSchema.methods.toJSON = function () {
+UserSchema.methods.toJSON = () => {
   const userObject = this.toObject();
   delete userObject.password; // remove the password
   return userObject;
 };
 
-// hash the password piror to save
-UserSchema.pre('save', async function (next) {
+// hash the password prior to save
+UserSchema.pre('save', async (next) => {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 10);
   }
   next();
 });
 // Geocode and create location field
-UserSchema.pre('save', async function (next) {
+UserSchema.pre('save', async (next) => {
   if (!this.address) next();
   if (this.isModified('address')) {
     const loc = await geocoder.geocode(this.address);
@@ -405,9 +402,8 @@ UserSchema.statics.checkCredentials = async ({ email, password }) => {
 };
 
 // Sign JWT and return the token
-UserSchema.methods.getSignedJWTToken = function () {
-  return JWT.sign({ id: this._id }, process.env.JWT_SECRET);
-};
+UserSchema.methods.getSignedJWTToken = () =>
+  JWT.sign({ id: this._id }, process.env.JWT_SECRET);
 
 // create user model
 const User = mongoose.model('User', UserSchema);
