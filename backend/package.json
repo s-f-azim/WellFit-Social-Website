@@ -7,6 +7,9 @@
     "testTimeout": 30000,
     "coveragePathIgnorePatterns": [
       "/node_modules/"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
     ]
   },
   "description": "This is project revolves around fitness and nutrition ",
