@@ -1,9 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import { render, screen, waitFor } from '@testing-library/react';
 import { useSession } from 'next-auth/client';
-import { useRouter } from 'next/router';
-import { getWishList, updateWishList } from '../../../actions/user';
-import { getCourseCreators } from '../../../actions/course';
+// import { useRouter } from 'next/router';
+// import { getWishList, updateWishList } from '../../../actions/user';
+// import { getCourseCreators } from '../../../actions/course';
 import Course from '../../../pages/courses/[id]';
 
 const user1 = {
@@ -30,13 +30,13 @@ const user3 = {
   wishlist: [],
 };
 
-const user4 = {
-  _id: 'user3',
-  fName: 'client',
-  lName: 'user',
-  role: 'client',
-  wishlist: ['course1'],
-};
+// const user4 = {
+//   _id: 'user3',
+//   fName: 'client',
+//   lName: 'user',
+//   role: 'client',
+//   wishlist: ['course1'],
+// };
 
 const course1 = {
   _id: 'course1',
@@ -52,19 +52,19 @@ const course1 = {
   gym: false,
 };
 
-const course2 = {
-  _id: 'course2',
-  title: 'course 2',
-  photos: [],
-  fitnessLevel: 'intermediate',
-  price: 20,
-  creators: ['user2', 'user3'],
-  tags: ['Cardio'],
-  description: 'testDescription',
-  trainingDuration: 30,
-  isVirtual: false,
-  gym: true,
-};
+// const course2 = {
+//   _id: 'course2',
+//   title: 'course 2',
+//   photos: [],
+//   fitnessLevel: 'intermediate',
+//   price: 20,
+//   creators: ['user2', 'user3'],
+//   tags: ['Cardio'],
+//   description: 'testDescription',
+//   trainingDuration: 30,
+//   isVirtual: false,
+//   gym: true,
+// };
 
 jest.mock('next-auth/client', () => ({
   useSession: jest.fn(),
@@ -88,7 +88,7 @@ jest.mock('../../../actions/course', () => ({
   getCourseCreators: () => ({ data: { success: true, data: [user2, user3] } }),
 }));
 
-it('renders course page with correct details', () => {
+it('renders course page with correct details', async () => {
   useSession.mockReturnValue([{ user1 }, false]);
   render(<Course course={course1} />);
   expect(screen.getByText(course1.title, { exact: false })).toBeInTheDocument();
@@ -98,7 +98,9 @@ it('renders course page with correct details', () => {
   expect(screen.getByText(course1.fitnessLevel, { exact: false })).toBeInTheDocument();
   //expect(screen.getByText(`Go To ${user2.fName}'s Profile`, { exact: false })).toBeInTheDocument();
   //expect(screen.getByText(`Go To ${user3.fName}'s Profile`, { exact: false })).toBeInTheDocument();
-  expect(screen.getAllByRole('link', { name: 'goToProfilePage' })).toHaveLength(2);
+  await waitFor(() => {
+    expect(screen.getAllByRole('link', { name: 'goToProfilePage' })).toHaveLength(2);
+  });
 
   expect(screen.getByRole('button', { name: 'purchase' })).toBeInTheDocument();
   expect(screen.getByText('This is a virtual course', { exact: false })).toBeInTheDocument();

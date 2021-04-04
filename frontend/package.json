@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
+    "@jest/globals": "^26.6.2",
     "@stripe/react-stripe-js": "^1.4.0",
     "@stripe/stripe-js": "^1.13.2",
     "@zeit/next-css": "^1.0.1",
