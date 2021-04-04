@@ -69,7 +69,7 @@ const UserFeed = ({ id }) => {
       renderItem={(p) => (
         <PostList.Item
           post={p}
-          onLike={user && user._id === p.author._id ? handleLike : undefined}
+          onLike={user && user._id !== p.author._id ? handleLike : undefined}
           isLiked={handleIsLiked(p._id)}
           onDelete={user && user._id === p.author._id ? handleDelete : undefined}
         />

@@ -21,7 +21,7 @@ const Favourites = () => {
 		const loadQuantity = 10;
 
 		const fetchMorePosts = async () => {
-			const fetchedPosts = await (await getFavouritedPosts(posts.length + loadQuantity)).data.data;
+			const fetchedPosts = (await getFavouritedPosts(posts.length + loadQuantity)).data.data;
 			console.log(typeof(fetchedPosts.length)); 
 			if (posts.length !== fetchedPosts.length) { //if more posts have been fetched
 				setPosts(fetchedPosts);
