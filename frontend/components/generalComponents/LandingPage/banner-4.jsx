@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Card, Anchor } from 'antd';
+import { Card } from 'antd';
 import { useSession } from 'next-auth/client';
 import { getTrendingUsersLimit } from '../../../actions/user';
 
 const { Meta } = Card;
-const { Link } = Anchor;
 
 const Banner4 = () => {
   // List of suggested instructors
