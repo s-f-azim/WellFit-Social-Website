@@ -7,4 +7,4 @@ const options = {
   apiKey: process.env.GEOCODER_KEY,
   formatter: null,
 };
-export default 'geocoder(options)';
+export default geocoder(options);
