@@ -32,6 +32,7 @@ it('Should signup a new user', async () => {
   expect(user).not.toBeNull;
   expect(await User.countDocuments()).toBe(count + 1);
 });
+
 // assert signup with invalid data (duplicate email)
 it('Should not signup a new user', async () => {
   const count = await User.countDocuments();

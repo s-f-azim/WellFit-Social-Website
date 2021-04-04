@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSession } from 'next-auth/client';
 import { Card } from 'antd';
 import ReviewList from './ReviewList';
@@ -16,7 +16,7 @@ import {
 
 const Review = ({ getReviews, onSubmit, onDelete }) => {
   const [session, loading] = useSession();
-  const [user, setUser] = useState(null);
+  const user = useMemo(() => (session ? session.user : null), [session]);
   const [reviews, setReviews] = useState([]);
   const [hasReviewed, setHasReviewed] = useState(false);
 
@@ -33,16 +33,12 @@ const Review = ({ getReviews, onSubmit, onDelete }) => {
   }, []);
 
   useEffect(() => {
-    if (session) setUser(session.user);
-  }, []);
-
-  useEffect(() => {
     setHasReviewed(user && reviews && reviews.find((r) => r.author._id === user._id));
   }, [user, reviews]);
 
   const handleSubmit = async (values) => {
-    const review = await onSubmit(values);
-    setReviews([review, ...reviews]);
+    const res = await onSubmit(values);
+    setReviews([res.data.data, ...reviews]);
   };
 
   const handleDelete = () => {

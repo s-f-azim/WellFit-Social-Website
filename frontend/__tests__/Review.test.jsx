@@ -31,6 +31,15 @@ it('renders fetched reviews', async () => {
   });
 });
 
+it.only('renders with no reviews', async () => {
+  const getReviews = jest.fn(() => []);
+
+  render(<Review getReviews={getReviews} />);
+
+  await waitFor(() => expect(getReviews).toHaveBeenCalledTimes(1));
+  expect(screen.getByText(/no data/i)).toBeInTheDocument();
+});
+
 it('creates review when submitted with valid data', async () => {
   const getReviews = () => [];
   const review = { _id: '1', rate: 1, comment: 'comment', author: user };

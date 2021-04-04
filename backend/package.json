@@ -2,8 +2,12 @@
   "name": "seg-major",
   "version": "1.0.0",
   "jest": {
+    "testEnvironment": "node",
     "transform": {},
-    "testTimeout": 30000
+    "testTimeout": 30000,
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "description": "This is project revolves around fitness and nutrition ",
   "main": "index.js",

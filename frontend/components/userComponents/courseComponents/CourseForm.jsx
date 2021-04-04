@@ -53,7 +53,7 @@ const CourseForm = () => {
       }
       setError(null);
     } catch (err) {
-      if (err.response.data) setError('something went wrong');
+      setError('Something went wrong');
     }
   };
 
@@ -79,7 +79,7 @@ const CourseForm = () => {
             name="title"
             rules={[{ required: true, message: 'Please input the title of the course' }]}
           >
-            <Input />
+            <Input aria-label="title" />
           </Form.Item>
 
           <Form.Item
@@ -87,7 +87,7 @@ const CourseForm = () => {
             name="description"
             rules={[{ required: true, message: 'Please input the description of the course' }]}
           >
-            <Input.TextArea rows={3} />
+            <Input.TextArea aria-label="description" rows={3} />
           </Form.Item>
 
           <Form.Item
@@ -106,7 +106,7 @@ const CourseForm = () => {
               icon: <InfoCircleOutlined />,
             }}
           >
-            <InputNumber precision={2} />
+            <InputNumber aria-label="price" precision={2} />
           </Form.Item>
 
           <Form.List name="creators">
@@ -138,14 +138,19 @@ const CourseForm = () => {
                             },
                           ]}
                         >
-                          <Input placeholder="example@email.com" />
+                          <Input aria-label="creator" placeholder="example@email.com" />
                         </Form.Item>
                         <MinusCircleOutlined onClick={() => remove(field.name)} />
                       </Space>
                     </>
                   ))}
                   <Form.Item>
-                    <Button type="dashed" onClick={() => add()} icon={<PlusOutlined />}>
+                    <Button
+                      aria-label="add creator"
+                      type="dashed"
+                      onClick={() => add()}
+                      icon={<PlusOutlined />}
+                    >
                       Add creator
                     </Button>
                   </Form.Item>
@@ -159,7 +164,7 @@ const CourseForm = () => {
             name="tags"
             rules={[{ required: true, message: 'Please select at least 1 tag' }]}
           >
-            <Select mode="multiple" allowClear>
+            <Select aria-label="tags" mode="multiple" allowClear>
               {tags.map((tag) => (
                 <Option key={tag} value={tag}>
                   {tag}
@@ -173,7 +178,7 @@ const CourseForm = () => {
             name="fitnessLevel"
             rules={[{ required: true, message: 'Please input the required fitness level' }]}
           >
-            <Select allowClear>
+            <Select aria-label="fitness level" allowClear>
               <Option value="beginner">Beginner</Option>
               <Option value="intermediate">Intermediate</Option>
               <Option value="advanced">Advanced</Option>
@@ -197,7 +202,7 @@ const CourseForm = () => {
               },
             ]}
           >
-            <InputNumber />
+            <InputNumber aria-label="training duration" />
           </Form.Item>
 
           <Form.Item
@@ -205,7 +210,7 @@ const CourseForm = () => {
             label="Online course ?"
             rules={[{ required: true, message: 'Please specify whether this course is online' }]}
           >
-            <Radio.Group>
+            <Radio.Group aria-label="virtual">
               <Radio value>Yes</Radio>
               <Radio value={false}>No</Radio>
             </Radio.Group>
@@ -221,7 +226,7 @@ const CourseForm = () => {
               },
             ]}
           >
-            <Radio.Group>
+            <Radio.Group aria-label="gym access">
               <Radio value>Yes</Radio>
               <Radio value={false}>No</Radio>
             </Radio.Group>
@@ -237,7 +242,7 @@ const CourseForm = () => {
               },
             ]}
           >
-            <Select mode="multiple" allowClear>
+            <Select aria-label="training equipment" mode="multiple" allowClear>
               <Option value="dumbbells">Dumbbells</Option>
               <Option value="barbells">Barbells</Option>
               <Option value="resistanceBands">Resistance Bands</Option>
@@ -253,11 +258,11 @@ const CourseForm = () => {
           </Form.Item>
 
           <Form.Item label="Location (if applicable):" name="address">
-            <Input />
+            <Input aria-label="address" />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button aria-label="create" type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>
