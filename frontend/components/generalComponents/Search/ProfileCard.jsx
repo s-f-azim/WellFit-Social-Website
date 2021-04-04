@@ -16,7 +16,7 @@ const ProfileCard = ({ content }) => {
         <Card style={{ borderColor: '#ffa277', borderRadius: '0.5rem', background: '#ffeee6' }}>
           <Row style={{ paddingBottom: '1rem' }}>
             <Col span={24}>
-              <Typography.Title className="title" ellipsis style={{ width: '100%' }}>
+              <Typography.Title className="userTitle" ellipsis style={{ width: '100%' }}>
                 <UserOutlined /> {content.fName} {content.lName}
               </Typography.Title>
               <Divider style={{ borderTop: '1px solid #ffa277' }} />

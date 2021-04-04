@@ -16,11 +16,9 @@ const Footer = () => (
       </div>
       <div className="footer_box_links">
         <h4>
-          <b>Legal Stuff</b>
+          <b>Legal</b>
         </h4>
         <ul>
-          <li>Privacy Policy</li>
-          <li>GDPR Notice</li>
           <li>
             <a href="/TandCs">Terms of Use</a>
           </li>
@@ -40,15 +38,10 @@ const Footer = () => (
           <li>
             <a href="/signup">Sign Up</a>
           </li>
-          <li>Contact Us</li>
         </ul>
       </div>
       <p className="copyright">
         <b>&#169; Wellfit 2021</b>
-        <br />
-        <a href="https://www.freepik.com/vectors/background">
-          Background vector created by tartila - www.freepik.com
-        </a>
         <br />
       </p>
     </div>

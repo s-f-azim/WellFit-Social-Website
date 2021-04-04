@@ -19,8 +19,8 @@ const Banner5 = () => (
         <h1>
           <b>Follow and Interact</b>
         </h1>
-        <p>Follow other users and instructors</p>
-        <p>Chat in real time with your friends and instructors</p>
+        <p>Follow other users</p>
+        <p>Chat in real time with people you've connected with</p>
       </div>
       <div className="banner5_chats_flip">
         <Image layout="intrinsic" src="/computer.svg" width="300px" height="200px" />
@@ -32,8 +32,8 @@ const Banner5 = () => (
         <h1>
           <b>Follow and Interact</b>
         </h1>
-        <p>Follow other users and instructors</p>
-        <p>Chat in real time with your friends and instructors</p>
+        <p>Follow other users</p>
+        <p>Chat in real time with people you've connected with</p>
       </div>
 
       <div className="banner5_chats">

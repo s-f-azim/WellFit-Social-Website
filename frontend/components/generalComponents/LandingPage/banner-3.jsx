@@ -9,13 +9,12 @@ const Banner3 = () => (
       <div className="inner_banner3_content">
         <h1>
           <b>
-            {' '}
-            Courses by enthusiast, <br /> made for you.
+            Courses by professionals , <br /> made for you.
           </b>
         </h1>
         <p>
-          We offer a wide range of different courses that fits all types of styles and budgets.{' '}
-          <br /> Made by your favorite creators.
+          Find a wide range of different courses that fit all needs and budgets, <br /> Directly
+          from your favorite creators.
         </p>
         <div className="banner_button_box">
           <Button size="large" href="/search" className="banner3_button">
