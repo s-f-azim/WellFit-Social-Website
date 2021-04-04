@@ -212,7 +212,6 @@ if (process.env.NODE_ENV !== 'TEST') {
           const currentUser = await User.findOne({
             _id: jwtDecode(res.cookies.token).id,
           });
-          console.log(`Current user: ${currentUser}`);
           await User.findOneAndUpdate(
             { _id: jwtDecode(res.cookies.token).id },
             {
