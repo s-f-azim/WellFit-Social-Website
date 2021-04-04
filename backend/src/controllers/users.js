@@ -413,15 +413,15 @@ const getTrendingUsers = asyncHandler(async (req, res) => {
  * @desc Gets user's favourited posts
  * @route GET /api/users/favouritedPosts
  */
-const getFavouritedPosts = asyncHandler(async (req, res) => {
+const getFavouritedPosts = asyncHandler(async (req, res) => { //get specified number of favourited posts
   const user = await User.findById(req.user._id).populate('favourites');
-  res.status(200).send({success: true, data: user.favourites});
+  res.status(200).send({success: true, data: user.favourites.slice(0, req.params.quantity)});
 });
 
 /** 
  * @async
  * @desc Update user's favourited posts
- * @route PATCH  /api/users/updateFavouritedPosts/:id
+ * @route PATCH  /api/users/favouritedPosts/:id
 */
 const updateFavouritedPosts = asyncHandler( async (req, res) => {
   if (Post.findById(req.params.id)) {

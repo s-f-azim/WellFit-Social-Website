@@ -318,11 +318,11 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
 
-    favourites: { 
-      type: [mongoose.Schema.ObjectId] ,
+    favourites: [{ 
+      type: mongoose.Schema.ObjectId ,
       ref: 'Post',
       default: [],
-    },
+    }],
   },
   { timestamps: true }
 );

@@ -161,11 +161,11 @@ router
 router.route('/trendingUsers').get(getTrendingUsers);
 
 router
-  .route('/favouritedPosts')
+  .route('/favouritedPosts/:quantity')
   .get(passport.authenticate('jwt', { session: false }), getFavouritedPosts);
 
 router
-  .route('/updateFavouritedPosts/:id')
+  .route('/favouritedPosts/:id')
   .patch(passport.authenticate('jwt', { session: false }), updateFavouritedPosts);
 
 router.route('/').get(paginate(User), getUsers);
