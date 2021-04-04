@@ -12,10 +12,14 @@ const WishList = () => {
   const [courses, setCourses] = useState({});
 
   useEffect(async () => {
-    const response = await getWishList();
-    setCourses(response.data.data);
-    // wish list can be shown once the courses in the wish list have been fetched
-    setShowState(true);
+    try {
+      const response = await getWishList();
+      setCourses(response.data.data);
+      // wish list can be shown once the courses in the wish list have been fetched
+      setShowState(true);
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   /**
@@ -55,7 +59,7 @@ const WishList = () => {
                 <List.Item className="course" id={course._id}>
                   <CourseCard
                     content={course}
-                    isWish
+                    isWish={true}
                     removeFromWishList={() => removeFromWishList(course._id)}
                   />
                 </List.Item>

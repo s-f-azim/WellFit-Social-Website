@@ -19,8 +19,25 @@
   grid-column: auto/span 4;
 }
 .banner5_content {
+  padding-left: 1rem;
   padding-top: 1rem;
   grid-column: auto/span 8;
+}
+.banner5_chats_flip {
+  grid-column: auto/span 6;
+}
+.banner5_content_flip {
+  padding-left: 1rem;
+  padding-top: 1rem;
+  grid-column: auto/span 6;
+}
+.banner5_chats_mobile {
+  grid-column: auto/span 6;
+}
+.banner5_content_mobile {
+  padding-left: 1rem;
+  padding-top: 1rem;
+  grid-column: auto/span 12;
 }
 .banner5_content h1 {
   font-size: 2rem;
@@ -35,5 +52,20 @@
   }
   .inner_banner5 {
     height: 100%;
+  }
+  .banner5_chats_flip {
+    display: none;
+  }
+  .banner5_content_flip {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 780px) {
+  .banner5_chats_mobile {
+    display: none;
+  }
+  .banner5_content_mobile {
+    display: none;
   }
 }

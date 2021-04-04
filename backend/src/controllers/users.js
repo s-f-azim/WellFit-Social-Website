@@ -107,6 +107,7 @@ const getUserIdByEmail = asyncHandler(async (req, res) => {
  * @access private
  */
 const updateUser = asyncHandler(async (req, res) => {
+  console.log(req);
   const updates = Object.keys(req.body);
   updates.forEach(
     (update) =>
@@ -159,7 +160,7 @@ const getFollowing = asyncHandler(async (req, res) => {
   const result = followings.following.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: result ? result : [],
+    data: result || [],
     pagination: {
       total: followings.following.length,
     },
@@ -183,7 +184,7 @@ const getFollower = asyncHandler(async (req, res) => {
   const result = followers.follower.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: result ? result : [],
+    data: result || [],
     pagination: {
       total: followers.follower.length,
     },
@@ -331,8 +332,9 @@ const sendTokenResponse = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true,
+    // httpOnly: true,
     secure: process.env.NODE_ENV === 'PRODUCTION',
+    sameSite: 'None',
   };
   res
     .status(statusCode)
@@ -351,8 +353,9 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true,
+    // httpOnly: true,
     secure: process.env.NODE_ENV === 'PRODUCTION',
+    sameSite: 'None',
   };
   res.cookie('user', JSON.stringify(user));
   res.cookie('token', token, options);
@@ -388,7 +391,6 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
  * @async
  * @desc Gets trending users on the website
  * @route GET /api/users/trendingUsers
- *
  */
 const getTrendingUsers = asyncHandler(async (req, res) => {
   const users = await User.find({
@@ -408,6 +410,7 @@ const getTrendingUsers = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @async
  * @desc ban a user
  * @route PATCH api/users/ban/:id
  * @access private

@@ -1,4 +1,6 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import {
   getUsers,
   getUsersWithinRadius,
@@ -30,8 +32,6 @@ import paginate from '../middleware/paginate.js';
 import User from '../models/User.js';
 import role from '../middleware/role.js';
 import upload from '../middleware/multer.js';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
 
 const router = new express.Router();
 
@@ -148,13 +148,9 @@ router
   .route('/follow/:id')
   .patch(passport.authenticate('jwt', { session: false }), followUser);
 
-router
-  .route('/getFollowing/:id')
-  .get(passport.authenticate('jwt', { session: false }), getFollowing);
+router.route('/getFollowing/:id').get(getFollowing);
 
-router
-  .route('/getFollower/:id')
-  .get(passport.authenticate('jwt', { session: false }), getFollower);
+router.route('/getFollower/:id').get(getFollower);
 
 router.route('/trendingUsers').get(getTrendingUsers);
 

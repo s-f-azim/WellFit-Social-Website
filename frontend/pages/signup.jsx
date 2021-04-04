@@ -62,7 +62,7 @@ const Signup = () => {
                   },
                 ]}
               >
-                <Select>
+                <Select aria-label="select">
                   <Option value="client">Client</Option>
                   <Option value="instructor">Instructor</Option>
                 </Select>
@@ -81,7 +81,7 @@ const Signup = () => {
                   },
                 ]}
               >
-                <Input />
+                <Input aria-label="email" />
               </Form.Item>
               <Form.Item
                 name="fName"
@@ -124,7 +124,7 @@ const Signup = () => {
                 ]}
                 hasFeedback
               >
-                <Input.Password />
+                <Input.Password aria-label="password" />
               </Form.Item>
               <Form.Item
                 name="confirm"
@@ -146,10 +146,10 @@ const Signup = () => {
                   }),
                 ]}
               >
-                <Input.Password />
+                <Input.Password aria-label="confirm" />
               </Form.Item>
               <Form.Item label="Location (if applicable):" name="address">
-                <Input />
+                <Input aria-label="location" />
               </Form.Item>
               <Form.Item
                 name="agreement"
@@ -163,7 +163,7 @@ const Signup = () => {
                   },
                 ]}
               >
-                <Checkbox>
+                <Checkbox aria-label="agreement">
                   I have read and agreed to the <a href="/TandCs">Terms and Conditions</a>.
                 </Checkbox>
               </Form.Item>

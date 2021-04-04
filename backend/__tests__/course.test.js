@@ -193,10 +193,12 @@ it('Should get all the creators of a course when there are several', async () =>
   expect(response.body.data[0]._id === userTwo._id);
   expect(response.body.data[1]._id === userOne._id);
 });
+// assert get all courses
 it('Should get all the courses', async () => {
   const response = await request(app).get('/api/courses').send().expect(200);
   expect(response.body.data.length).toBe(4);
 });
+// assert get all courses with title lose
 it('Should get all courses with title lose', async () => {
   const response = await request(app)
     .get('/api/courses?title=lose')
@@ -204,6 +206,7 @@ it('Should get all courses with title lose', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(2);
 });
+// assert get all courses with title weight
 it('Should get all courses with title weight', async () => {
   const response = await request(app)
     .get('/api/courses?title=weight')
@@ -211,6 +214,7 @@ it('Should get all courses with title weight', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(1);
 });
+// assert get all courses with title b
 it('Should get no courses with title b', async () => {
   const response = await request(app)
     .get('/api/courses?title=b')
@@ -218,6 +222,7 @@ it('Should get no courses with title b', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(0);
 });
+// assert get all courses with title weight and tag getfit
 it('Should get 1 course with title weight and tag GetFit', async () => {
   const response = await request(app)
     .get('/api/courses?title=weight&&tags[all]=GetFit')
@@ -225,6 +230,7 @@ it('Should get 1 course with title weight and tag GetFit', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(1);
 });
+// assert get courses with tag cardio
 it('Should get 3 courses with no title and tag Cardio', async () => {
   const response = await request(app)
     .get('/api/courses?tags[all]=Cardio')
@@ -232,7 +238,7 @@ it('Should get 3 courses with no title and tag Cardio', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(3);
 });
-
+// assert get courses with tag cycling
 it('Should get no course with tag Cycling', async () => {
   const response = await request(app)
     .get('/api/courses?tags[all]=Cycling')
@@ -240,6 +246,7 @@ it('Should get no course with tag Cycling', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(0);
 });
+// assert get couse cycling
 it('Should get no course with tag Cycling', async () => {
   const response = await request(app)
     .get('/api/courses?tags[all]=Cycling')
@@ -247,6 +254,7 @@ it('Should get no course with tag Cycling', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(0);
 });
+// assert get courses with equipment tags
 it('Should get 2 courses with equipment treadmill', async () => {
   const response = await request(app)
     .get('/api/courses?trainingEquipment[all]=treadmill')
@@ -254,6 +262,7 @@ it('Should get 2 courses with equipment treadmill', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(2);
 });
+// assert get courses with equipment tags and tags
 it('Should get 1 course with equipment treadmill and tag FitFam', async () => {
   const response = await request(app)
     .get('/api/courses?tags[all]=FitFam&&trainingEquipment[all]=treadmill')

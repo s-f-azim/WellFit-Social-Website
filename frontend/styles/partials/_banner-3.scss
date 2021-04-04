@@ -23,11 +23,12 @@
   font-weight: 400;
 }
 .inner_banner3_content p {
+  font-size: 1.3rem;
 }
 .ant-btn.banner3_button {
   margin-top: 0.8rem;
   min-width: 8rem;
-  background-color: $secondary-color;
+  background-color: #ffa277;
   font-family: 'Poppins';
   font-size: 0.8rem;
 }
@@ -48,6 +49,7 @@
   display: block;
 }
 .infoCard {
+  font-size: 1rem;
   grid-column: auto/span 6;
 }
 .scrollable {
@@ -83,7 +85,7 @@
   }
   .ant-btn.banner3_button {
     min-width: 10rem;
-    background-color: $secondary-color;
+    background-color: #ffa277;
     font-family: 'Poppins';
   }
 }

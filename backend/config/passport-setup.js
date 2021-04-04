@@ -1,5 +1,5 @@
 import passport from 'passport';
-import { Strategy } from 'passport-jwt';
+import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import { Strategy as InstagramStrategy } from 'passport-instagram';
@@ -27,7 +27,8 @@ passport.deserializeUser((id, done) => {
 passport.use(
   new Strategy(
     {
-      jwtFromRequest: cookieExtractor,
+      jwtFromRequest:
+        cookieExtractor || ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.JWT_SECRET,
       passReqToCallback: true,
     },

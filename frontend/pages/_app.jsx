@@ -1,7 +1,7 @@
 import { BackTop } from 'antd';
 import NProgress from 'nprogress';
 import { ArrowUpOutlined } from '@ant-design/icons';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.less';
 import '../styles/main.scss';
 import Head from 'next/head';
 import Router from 'next/router';

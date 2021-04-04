@@ -23,6 +23,7 @@ connectDb();
 
 // create the app and setup
 const app = express();
+app.set('proxy', 1);
 
 app.use(express.json());
 
@@ -45,7 +46,13 @@ app.use(compression());
 app.use(passport.initialize());
 
 // cors
-app.use(cors({ credentials: true, origin: `${process.env.CLIENT_URL}` }));
+app.use(
+  cors({
+    credentials: true,
+    origin: ['http://localhost:8000', `${process.env.CLIENT_URL}`],
+    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
+  })
+);
 
 // routes
 app.use('/api/users', userRoutes);

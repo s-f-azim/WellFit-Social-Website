@@ -29,6 +29,10 @@
   text-decoration: none;
   padding-top: 0.5rem;
 }
+.footer_box_links li a {
+  text-decoration: none;
+  color: black;
+}
 .footer_box_links ul {
   list-style-type: none;
   padding-left: 0;
@@ -43,7 +47,7 @@
   font-family: 'Poppins';
 }
 .ant-btn.footerButton {
-  background-color: $secondary-color;
+  background-color: #ffa277;
   font-family: 'Poppins';
   font-style: italic;
 }
