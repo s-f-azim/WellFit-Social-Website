@@ -148,13 +148,9 @@ router
   .route('/follow/:id')
   .patch(passport.authenticate('jwt', { session: false }), followUser);
 
-router
-  .route('/getFollowing/:id')
-  .get(passport.authenticate('jwt', { session: false }), getFollowing);
+router.route('/getFollowing/:id').get(getFollowing);
 
-router
-  .route('/getFollower/:id')
-  .get(passport.authenticate('jwt', { session: false }), getFollower);
+router.route('/getFollower/:id').get(getFollower);
 
 router.route('/trendingUsers').get(getTrendingUsers);
 
