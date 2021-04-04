@@ -22,9 +22,7 @@ const Footer = () => (
           <li>Privacy Policy</li>
           <li>GDPR Notice</li>
           <li>
-            <a style={{ textDecoration: 'none', color: 'black' }} href="/TandCs">
-              Terms of Use
-            </a>
+            <a href="/TandCs">Terms of Use</a>
           </li>
         </ul>
       </div>
@@ -33,10 +31,15 @@ const Footer = () => (
           <b>Quick links</b>
         </h4>
         <ul>
-          <li>Course Overview</li>
-          <li>Instructor Overview</li>
-          <li>Log In</li>
-          <li>Sign Up</li>
+          <li>
+            <a href="/search">Search</a>
+          </li>
+          <li>
+            <a href="/login">Log In</a>
+          </li>
+          <li>
+            <a href="/signup">Sign Up</a>
+          </li>
           <li>Contact Us</li>
         </ul>
       </div>
