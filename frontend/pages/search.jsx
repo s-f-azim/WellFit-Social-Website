@@ -70,13 +70,13 @@ const SearchBar = () => {
   };
 
   const tagsOption = tags.map((tag) => (
-    <Option key={tag.id} value={tag}>
+    <Option key={tag} value={tag}>
       {tag}
     </Option>
   ));
 
   const equipOptions = equip.map((tag) => (
-    <Option key={tag.id} value={tag}>
+    <Option key={tag} value={tag}>
       {tag}
     </Option>
   ));

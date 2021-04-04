@@ -6,7 +6,6 @@ import { notification } from 'antd';
 import { useRouter } from 'next/router';
 import { createRequest } from '../../actions/request';
 import { deleteUser } from '../../actions/user';
-// import AccessDenied from '../components/generalComponents/AccessDenied';
 import Settings from '../../pages/settings';
 
 const user = { _id: '1', fName: 'user', lName: 'test' };
