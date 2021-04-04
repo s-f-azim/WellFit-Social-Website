@@ -1,47 +1,5 @@
 # SEG-Major
 
-# Environment variables
-
-Add two files in the config folder named `dev.env` and `test.env`, each file should have:
-
-```.env
-#mode
-NODE_ENV=DEVELOPMENT (TEST for test.env)
-
-# frontend url
-CLIENT_URL=http://localhost:8000
-
-#port
-PORT=4000
-
-#db url (for test.env add -test to the end of your url)
-MONGO_URI=your database url
-```
-
-# How to use:
-
-## first time cloning:
-
-`in both folders run the command`:
-
-```node
-yarn install
-```
-
-## to run the server in development mode
-
-`while in the backend folder run:`
-
-```node
-yarn dev
-```
-
-## to run tests
-
-```node
-yarn test
-```
-
 # Team Name
 
     Assassin Monks
@@ -71,22 +29,27 @@ yarn test
 
 # Credentials - to access the website
 
-|Email						|  user role			|password
-|---						|---					|---
-|admin.admin@gmail.com		| admin					| ()
-|ahmed.alahmadi@test.com	| instructor			| ()
-|alex.chouman@test.com		| instructor			| ()
-|fahim.ahmed@gmail.com		| instructor			| ()
-|issa.kabir@gmail.com		| instructor			| ()
-|jon.riv@gmail.com			| client				| ()
-|oskar.ribbe@gmail.com		| client				| ()
-|shah.azim@gmail.com		| client				| ()
-|savraj.bassi@gmail.com		| client				| ()
+| Email                   | user role  | password |
+| ----------------------- | ---------- | -------- |
+| admin.admin@gmail.com   | admin      | ()       |
+| ahmed.alahmadi@test.com | instructor | ()       |
+| alex.chouman@test.com   | instructor | ()       |
+| fahim.ahmed@gmail.com   | instructor | ()       |
+| issa.kabir@gmail.com    | instructor | ()       |
+| jon.riv@gmail.com       | client     | ()       |
+| oskar.ribbe@gmail.com   | client     | ()       |
+| shah.azim@gmail.com     | client     | ()       |
+| savraj.bassi@gmail.com  | client     | ()       |
 
 - Note: Only the admin is important where the other users can be created using the website via SignUP
 
 # Deploy Location
 
-    -- TO BE ADDED HERE --
+    https://seg-major.vercel.app
 
-Please use the access credentials from the credentials section, mentioned above.
+# Short Description
+
+    This project's prime aspect is to introduce fitness enthusiasts to find a gym-mate or instructor.
+    Clients can search instructors/ clients and filter them as they wish.
+    Instructors can create courses to sell and get customers.
+    Users can signup using signup page or they have the option to login using thier Facebook, Google and Instagram account
