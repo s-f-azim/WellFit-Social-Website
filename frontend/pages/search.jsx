@@ -60,8 +60,7 @@ const SearchBar = () => {
     } else if (searchType === 'Questionnaire' && query.values) {
       try {
         const { type, location } = query.values;
-        console.log('hmm');
-        response = await searchRadius(type, location, currentPage);
+        response = await searchRadius(type, location, currentPage, query.category.name);
         console.log(response);
       } catch (err) {
         console.log(err);

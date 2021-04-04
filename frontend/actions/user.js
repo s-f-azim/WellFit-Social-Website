@@ -29,7 +29,7 @@ const getPeople = (name, gender, role, tags, pageSize, offset) =>
       ...(name.length > 0 && { fName: name }),
       ...(name.length > 0 && { lName: name }),
       ...(gender > 0 && { gender }),
-      ...(tags.length > 0 && { 'tags[in]': tags.join(',') }),
+      ...(tags.length > 0 && { 'tags[all]': tags.join(',') }),
       limit: pageSize,
       page: offset,
     },
