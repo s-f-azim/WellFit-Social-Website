@@ -47,6 +47,7 @@ const userTwo = {
   verified: false,
   role: 'instructor',
   following: [userOneId],
+  favourites: [postOneId, postTwoId],
 };
 
 const userThreeId = new mongoose.Types.ObjectId();
@@ -301,6 +302,15 @@ const postTwo = {
   youtubelink: 'postTwo',
 };
 
+const postThreeId = new mongoose.Types.ObjectId();
+
+const postThree = {
+  _id: postThreeId,
+  author: userOneId,
+  content: 'postThree',
+  youtubelink: 'postThree',
+};
+
 // create fixtures
 
 const requestOneId = new mongoose.Types.ObjectId();
@@ -351,7 +361,7 @@ const instructors = [
 const courses = [courseOne, courseTwo, courseThree, courseFour];
 const requests = [requestOne, requestTwo, requestThree, requestFour];
 const conversations = [conversationOne, conversationTwo];
-const posts = [postOne, postTwo];
+const posts = [postOne, postTwo, postThree];
 
 // token
 const tokens = [];
