@@ -54,6 +54,8 @@ const User = ({ user }) => {
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
   const [following, setFollowing] = useState([]);
   const [follower, setFollower] = useState([]);
+  const [followNum, setFollowNum] = useState(0);
+  const [followerNum, setFollowerNum] = useState(0);
   const router = useRouter();
   if (router.isFallback) {
     return <Skeleton active />;
@@ -68,6 +70,8 @@ const User = ({ user }) => {
       const followerData = await getFollowerList(user._id);
       setFollowing(followingData.data.data);
       setFollower(followerData.data.data);
+      setFollowNum(followingData.data.data.length);
+      setFollowerNum(followerData.data.data.length);
       setFollowerIsModalVisible(false);
       setIsFollowingModalVisible(false);
     } catch (error) {
@@ -270,7 +274,7 @@ const User = ({ user }) => {
                   {user.bio ? user.bio : 'No bio entered, edit your profile to display it.'}
                 </h4>
                 <Button type="link" onClick={showFollowerModal} size="small">
-                  <h5 style={{ color: '#ffa277' }}>Followed by {user.follower.length} user(s).</h5>
+                  <h5 style={{ color: '#ffa277' }}>Followed by {followerNum} user(s).</h5>
                 </Button>
                 <Modal
                   title="Followers"
@@ -284,9 +288,7 @@ const User = ({ user }) => {
                   </Card>
                 </Modal>
                 <Button type="link" onClick={showFollowingModal} size="small">
-                  <h5 style={{ color: '#ffa277' }}>
-                    Follows {user.following.length} other user(s).
-                  </h5>
+                  <h5 style={{ color: '#ffa277' }}>Follows {followNum} other user(s).</h5>
                 </Button>
                 <Modal
                   title="Following"
