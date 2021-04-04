@@ -144,8 +144,8 @@ const Course = ({ course }) => {
             <h1 style={{ color: 'grey' }}>
               <strong> Course creator(s):</strong>
               {creators.map((creator) => (
-                <Link href={`/users/${creator._id}`} aria-label="goToProfilePage">
-                  <Button type="text">
+                <Link href={`/users/${creator._id}`}>
+                  <Button type="text" aria-label="goToProfilePage">
                     <h2 style={{ color: '#ffa277' }}>
                       <UserOutlined /> Go To {creator.fName}'s Profile
                     </h2>
@@ -222,7 +222,12 @@ const Course = ({ course }) => {
              */}
             {wishListFetched ? (
               courses.find((c) => c._id === course._id) ? null : (
-                <Button type="primary" size="large" onClick={() => addToWishList()}>
+                <Button
+                  type="primary"
+                  size="large"
+                  onClick={() => addToWishList()}
+                  aria-label="addToWishList"
+                >
                   Or Add to your wish list <HeartOutlined />
                 </Button>
               )
