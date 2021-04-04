@@ -56,7 +56,7 @@ const Banner4 = () => {
             ))}
           </div>
         ) : (
-          'Doesnt work'
+          'No instructors have signed up yet!'
         )}
       </div>
     </div>
