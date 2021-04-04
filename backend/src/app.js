@@ -23,6 +23,7 @@ connectDb();
 
 // create the app and setup
 const app = express();
+app.set('proxy', 1);
 
 app.use(express.json());
 
