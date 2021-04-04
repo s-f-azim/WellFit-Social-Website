@@ -18,4 +18,7 @@ export default [
   'Weights',
   'WeightLifting',
   'Workout',
+  'Yoga',
+  'Meditation',
+  'Nutrition',
 ];

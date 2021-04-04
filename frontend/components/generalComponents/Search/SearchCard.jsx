@@ -18,17 +18,20 @@ const radioStyle = {
   lineHeight: '2rem',
 };
 
-const SearchCard = ({ category }) => {
+const SearchCard = ({ setQuery, category }) => {
   const [isEmpty, setIsEmpty] = useState(true);
   const ref = useRef();
   const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState(0);
-  const [searchTarget, setSearchTarget] = useState(null);
-  const onFinish = useCallback((values) => {}, []);
+  const onFinish = useCallback((values) => {
+    setQuery({ values, category });
+    setCurrent(0);
+    form.resetFields();
+  }, []);
   const closePopup = useCallback(() => {
     setVisible(false);
-    setCurrent(1);
+    setCurrent(0);
     setIsEmpty(true);
     form.resetFields();
   }, [form]);
@@ -44,7 +47,7 @@ const SearchCard = ({ category }) => {
   };
   const handleOk = () => {
     setVisible(false);
-    setCurrent(1);
+    setCurrent(0);
     form.submit();
   };
   return (
@@ -82,7 +85,7 @@ const SearchCard = ({ category }) => {
           <Button key="previous" onClick={previous} disabled={current === 0}>
             Previous
           </Button>,
-          current < 3 ? (
+          current < 1 ? (
             <Button key="next" type="primary" onClick={next} disabled={isEmpty}>
               Next
             </Button>
@@ -94,7 +97,7 @@ const SearchCard = ({ category }) => {
         ]}
       >
         <Steps current={current}>
-          {[0, 1, 2, 3].map((item) => (
+          {[0, 1].map((item) => (
             <Steps.Step key={item} />
           ))}
         </Steps>
@@ -115,51 +118,18 @@ const SearchCard = ({ category }) => {
               rules={[{ required: true }]}
             >
               <Radio.Group
-                onChange={(e) => {
+                onChange={() => {
                   setIsEmpty(false);
-                  setSearchTarget(e.target.value);
                 }}
               >
-                <Radio style={radioStyle} value={1}>
+                <Radio style={radioStyle} value={'users'}>
                   People
                 </Radio>
-                <Radio style={radioStyle} value={2}>
+                <Radio style={radioStyle} value={'courses'}>
                   Packages
                 </Radio>
               </Radio.Group>
             </Form.Item>
-            {searchTarget === 2 && (
-              <Form.Item
-                label={<h3 style={{ fontWeight: 'bold' }}>Are you looking for gym based?</h3>}
-                name="gym"
-                rules={[{ required: true }]}
-              >
-                <Radio.Group onChange={() => setIsEmpty(false)}>
-                  <Radio style={radioStyle} value={1}>
-                    yes
-                  </Radio>
-                  <Radio style={radioStyle} value={2}>
-                    no
-                  </Radio>
-                </Radio.Group>
-              </Form.Item>
-            )}
-            {searchTarget === 2 && (
-              <Form.Item
-                label={<h3 style={{ fontWeight: 'bold' }}>Are you looking for virtual package?</h3>}
-                name="virtual"
-                rules={[{ required: true }]}
-              >
-                <Radio.Group onChange={() => setIsEmpty(false)}>
-                  <Radio style={radioStyle} value={1}>
-                    yes
-                  </Radio>
-                  <Radio style={radioStyle} value={2}>
-                    no
-                  </Radio>
-                </Radio.Group>
-              </Form.Item>
-            )}
             <Form.Item
               label={<h3 style={{ fontWeight: 'bold' }}>Please enter your address (zipcode)</h3>}
               name="location"

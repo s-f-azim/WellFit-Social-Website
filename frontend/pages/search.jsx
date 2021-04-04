@@ -10,6 +10,7 @@ import equip from '../data/equipment';
 import PeopleFilter from '../components/generalComponents/Search/PeopleFilters';
 import CourseFilter from '../components/generalComponents/Search/CourseFilters';
 import SearchQuestionaire from '../components/generalComponents/Search/Search';
+import searchRadius from '../actions/search';
 import tags from '../data/tags';
 
 const { Option } = Select;
@@ -25,10 +26,12 @@ const SearchBar = () => {
   const [total, setTotal] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchType, setSearchType] = useState('People');
+  const [searchType, setSearchType] = useState('');
+  const [query, setQuery] = useState({});
+  let response;
   const router = useRouter();
   const searchName = async () => {
-    let response = null;
+    response = null;
     if (searchType === 'People') {
       try {
         response = await getPeople(
@@ -54,6 +57,15 @@ const SearchBar = () => {
       } catch (err) {
         console.log(err);
       }
+    } else if (searchType === 'Questionnaire' && query.values) {
+      try {
+        const { type, location } = query.values;
+        console.log('hmm');
+        response = await searchRadius(type, location, currentPage);
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
     }
     if (response) {
       setData(response.data.data);
@@ -62,7 +74,7 @@ const SearchBar = () => {
   };
   useEffect(() => {
     searchName();
-  }, [searchType, currentPage]);
+  }, [searchType, currentPage, query]);
 
   const handlePaginationChange = (current, updatedPageSize) => {
     setCurrentPage(current);
@@ -94,6 +106,7 @@ const SearchBar = () => {
           style={{ paddingBottom: '2rem' }}
           onChange={(e) => {
             setSearchType(e.target.value);
+            setQuery({});
           }}
           defaultValue={router.query.tab ? router.query.tab : 'People'}
           size="large"
@@ -103,9 +116,9 @@ const SearchBar = () => {
           <Radio.Button value="Courses">Courses</Radio.Button>
         </Radio.Group>
         <Col>
-          {searchType === 'Questionnaire' && (
+          {searchType === 'Questionnaire' && !query.values && (
             <Row justify="center">
-              <SearchQuestionaire />
+              <SearchQuestionaire setQuery={setQuery} />
             </Row>
           )}
           {searchType !== 'Questionnaire' && (
@@ -142,15 +155,16 @@ const SearchBar = () => {
           )}
         </Col>
       </div>
-      {searchType === 'People' ? (
+      {searchType === 'People' || (query.values && query.values.type === 'users') ? (
         <PeopleResults data={data} />
-      ) : searchType === 'Courses' && data.length > 0 ? (
+      ) : (searchType === 'Courses' || (query.values && query.values.type === 'courses')) &&
+        data.length > 0 ? (
         <CourseResults data={data} />
       ) : (
         ''
       )}
       <Row justify="center">
-        {searchType !== 'Questionnaire' && (
+        {response !== null && (
           <Pagination
             responsive
             showSizeChanger
