@@ -2,6 +2,7 @@ import request from 'supertest';
 import app from '../src/app.js';
 import { setupInstructors } from './fixtures/db.js';
 
+// setup db before test
 beforeAll(setupInstructors);
 
 it('Should get all instructors', async () => {
