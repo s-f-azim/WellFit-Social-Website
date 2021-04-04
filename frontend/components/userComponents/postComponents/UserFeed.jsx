@@ -6,6 +6,8 @@ import PostInput from './PostInput';
 import PostList from './PostList';
 
 import { createPost, getFeedPosts, deletePost } from '../../../actions/post';
+import { updateFavouritedPosts } from '../../../actions/user';
+
 
 const UserFeed = () => {
   const [session, loading] = useSession();
@@ -29,7 +31,11 @@ const UserFeed = () => {
   };
 
   const handleLike = (postId) => {
-    // likePost()
+    try {
+      updateFavouritedPosts(postId);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleDelete = (postId) => {

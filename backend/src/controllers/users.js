@@ -415,7 +415,18 @@ const getTrendingUsers = asyncHandler(async (req, res) => {
  */
 const getFavouritedPosts = asyncHandler(async (req, res) => { //get specified number of favourited posts
   const user = await User.findById(req.user._id).populate('favourites');
-  res.status(200).send({success: true, data: user.favourites.slice(0, req.params.quantity)});
+  console.log(typeof(req.params.quantity));
+  if (req.params.quantity) {
+    if (req.params.quantity === "*") { //if request wants all favourited posts 
+      res.status(200).send( {success: true, data: user.favourites} );
+    } else if ( !isNaN(parseInt(req.params.quantity)) ) { //if request wants limited amount 
+      console.log("oi");
+      res.status(200).send({success: true, data: user.favourites.slice(0, req.params.quantity)});
+    } else {
+      res.status(404).send( {success: false, error: "invalid parameter"});
+    }
+    
+  } 
 });
 
 /** 

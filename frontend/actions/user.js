@@ -57,6 +57,10 @@ const getWishList = () => api.get('/users/wishlist');
 
 const updateWishList = (courseId) => api.patch(`/users/updatewishlist/${courseId}`, {});
 
+const getFavouritedPosts = (quantity) => api.get(`users/favouritedPosts/${quantity}`, {});
+
+const updateFavouritedPosts = (id) => api.patch(`/users/favouritedPosts/${id}`, {});
+
 export {
   updateUser as default,
   deleteUser,
@@ -77,4 +81,6 @@ export {
   getTrendingUsersLimit,
   getWishList,
   updateWishList,
+  getFavouritedPosts,
+  updateFavouritedPosts,
 };

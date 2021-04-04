@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { List, Button, Popconfirm, Typography, Card } from 'antd';
-import { DeleteOutlined, HeartOutlined } from '@ant-design/icons';
+import { DeleteOutlined, HeartOutlined, HeartFilled } from '@ant-design/icons';
 import Moment from 'react-moment';
 import VideoPlayer from '../../generalComponents/VideoPlayer';
 
@@ -18,13 +18,23 @@ const PostList = ({ posts, renderItem, loading }) => (
   </Card>
 );
 
-PostList.Item = ({ post, onDelete, onLike }) => {
-  const LikeButton = ({ id }) => (
+PostList.Item = ({ post, onDelete, onLike, isLiked }) => {
+  const LikedButton = ({ id }) => (
     <Button
       aria-label="like"
       type="text"
       onClick={() => onLike(id)}
       icon={<HeartOutlined />}
+      danger
+    />
+  );
+
+  const NotLikedButton = ({ id }) => (
+    <Button
+      aria-label="like"
+      type="text"
+      onClick={() => onLike(id)}
+      icon={<HeartFilled />}
       danger
     />
   );
@@ -35,12 +45,16 @@ PostList.Item = ({ post, onDelete, onLike }) => {
     </Popconfirm>
   );
 
+  const handleLikeButtonShown = () => {
+    isLiked ? [<LikedButton id={post._id} />] : [<NotLikedButton id={post._id} />];
+  };
+
   return (
     <List.Item
       aria-label="post"
       key={post._id}
       actions={[
-        ...(onLike ? [<LikeButton id={post._id} />] : []),
+        ...(onLike ? handleLikeButtonShown : []),
         ...(onDelete ? [<DeleteButton id={post._id} />] : []),
       ]}
     >
