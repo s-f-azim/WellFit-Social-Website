@@ -19,12 +19,13 @@ const PostList = ({ posts, renderItem, loading }) => (
 );
 
 PostList.Item = ({ post, onDelete, onLike, isLiked }) => {
+
   const LikedButton = ({ id }) => (
     <Button
       aria-label="like"
       type="text"
       onClick={() => onLike(id)}
-      icon={<HeartOutlined />}
+      icon={<HeartFilled />}
       danger
     />
   );
@@ -34,7 +35,7 @@ PostList.Item = ({ post, onDelete, onLike, isLiked }) => {
       aria-label="like"
       type="text"
       onClick={() => onLike(id)}
-      icon={<HeartFilled />}
+      icon={<HeartOutlined />}
       danger
     />
   );
@@ -45,16 +46,12 @@ PostList.Item = ({ post, onDelete, onLike, isLiked }) => {
     </Popconfirm>
   );
 
-  const handleLikeButtonShown = () => {
-    isLiked ? [<LikedButton id={post._id} />] : [<NotLikedButton id={post._id} />];
-  };
-
   return (
     <List.Item
       aria-label="post"
       key={post._id}
       actions={[
-        ...(onLike ? handleLikeButtonShown : []),
+        ...(onLike ? isLiked ? [<LikedButton id={post._id} />] : [<NotLikedButton id={post._id} />] : []),
         ...(onDelete ? [<DeleteButton id={post._id} />] : []),
       ]}
     >
