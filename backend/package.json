@@ -12,12 +12,13 @@
       "<rootDir>/jest.setup.js"
     ],
     "collectCoverageFrom": [
+      "src/**/*.js",
       "!src/utils/stripe/*.js",
       "!src/index.js",
+      "!src/socketsEvents.js",
       "!src/middleware/multer.js",
       "!src/middleware/role.js",
-      "!src/controllers/payment.js",
-      "src/**/*.js"
+      "!src/controllers/payments.js"
     ]
   },
   "description": "This is project revolves around fitness and nutrition ",
