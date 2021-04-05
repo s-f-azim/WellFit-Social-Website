@@ -27,11 +27,7 @@ const SearchBar = () => {
   const [total, setTotal] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-<<<<<<< HEAD
   const [searchType, setSearchType] = useState(router.query.tab ? router.query.tab : 'People');
-=======
-  const [searchType, setSearchType] = useState('People');
->>>>>>> 42431e9249e8dfcc0e29d84207dc48a542d0f1f9
   const [query, setQuery] = useState({});
   let response;
 
