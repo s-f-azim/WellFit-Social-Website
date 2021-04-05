@@ -422,7 +422,7 @@ const getFavouritedPosts = asyncHandler(async (req, res) => { //get specified nu
   if (req.params.quantity) {
     if (req.params.quantity === "*") { //if request wants all favourited posts 
       res.status(200).send( {success: true, data: user.favourites} );
-    } else if ( !isNaN(parseInt(req.params.quantity)) ) { //if request wants limited amount 
+    } else if ( !Number.isNaN(parseInt(req.params.quantity)) ) { //if request wants limited amount 
       res.status(200).send({success: true, data: user.favourites.slice(0, req.params.quantity)});
     } else {
       res.status(404).send( {success: false, error: "invalid parameter"});

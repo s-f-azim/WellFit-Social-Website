@@ -447,7 +447,7 @@ it('Should retrieve some of the user\'s favourited posts specified by a quantity
 });
 
 it('Should not retrieve any of the user\'s favourited posts with a param that is NaN and not (*) ', async () => {
-  const response = await request(app)
+  await request(app)
     .get('api/users/favouritedPosts/fifteen')
     .send()
     .set('Cookie', [`token=${tokens[1]}`])
