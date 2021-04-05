@@ -31,6 +31,7 @@ function MyApp({ Component, pageProps }) {
           rel="stylesheet"
         />
         <meta name="viewport" content="initial-scale=1.0,width=device-width" />
+        <meta name="og:description" property="og:description" content="The main page" />
       </Head>
       <Layout>
         <BackTop>
