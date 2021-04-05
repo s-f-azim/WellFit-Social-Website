@@ -31,7 +31,7 @@ it('renders fetched reviews', async () => {
   });
 });
 
-it.only('renders with no reviews', async () => {
+it('renders with no reviews', async () => {
   const getReviews = jest.fn(() => []);
 
   render(<Review getReviews={getReviews} />);

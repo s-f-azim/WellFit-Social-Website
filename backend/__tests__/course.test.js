@@ -1,5 +1,4 @@
 import request from 'supertest';
-import { jest } from '@jest/globals';
 import Course from '../src/models/Course.js';
 import app from '../src/app.js';
 import geocoder from '../src/utils/geocoder.js';
@@ -13,24 +12,11 @@ import {
   courseTwo,
 } from './fixtures/db.js';
 
-jest.mock('geocoder');
-
 // setup db for each test
 beforeEach(setupDatabase);
 
 // assert creating a new course while logged in
 it('Should create a new course', async () => {
-  geocoder.geocode = jest.fn().mockResolvedValue([
-    {
-      longitude: -0.288986,
-      latitude: 51.412536,
-      formattedAddress: 'London KT2 6QW, United Kingdom',
-      streetName: 'London',
-      city: 'London',
-      zipcode: 'KT2 6QW',
-      countryCode: 'GB',
-    },
-  ]);
   const count = await Course.countDocuments();
   const response = await request(app)
     .post('/api/courses/create')
@@ -51,17 +37,6 @@ it('Should create a new course', async () => {
 
 // assert creating a new course when not logged in
 it('Should not create a new course when not logged in', async () => {
-  geocoder.geocode = jest.fn().mockResolvedValue([
-    {
-      longitude: -0.288986,
-      latitude: 51.412536,
-      formattedAddress: 'London KT2 6QW, United Kingdom',
-      streetName: 'London',
-      city: 'London',
-      zipcode: 'KT2 6QW',
-      countryCode: 'GB',
-    },
-  ]);
   await request(app)
     .post('/api/courses/create')
     .send({
@@ -77,17 +52,6 @@ it('Should not create a new course when not logged in', async () => {
 
 // assert creating a new course with invalid data
 it('Should not create a new course with invalid data', async () => {
-  geocoder.geocode = jest.fn().mockResolvedValue([
-    {
-      longitude: -0.288986,
-      latitude: 51.412536,
-      formattedAddress: 'London KT2 6QW, United Kingdom',
-      streetName: 'London',
-      city: 'London',
-      zipcode: 'KT2 6QW',
-      countryCode: 'GB',
-    },
-  ]);
   await request(app)
     .post('/api/courses/create')
     .set('Cookie', [`token=${tokens[0]}`])
