@@ -18,6 +18,7 @@ import {
   RiseOutlined,
   TeamOutlined,
   FileDoneOutlined,
+  HeartOutlined,
 } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
 import {
@@ -41,6 +42,7 @@ import UserFeed from '../../components/userComponents/postComponents/UserFeed';
 import UserPosts from '../../components/userComponents/postComponents/UserPosts';
 import TrendingUsers from '../../components/userComponents/TrendingUsers';
 import GetFollow from '../../components/userComponents/GetFollow';
+import FavouriteList from '../../components/userComponents/FavouriteList';
 import { createReport } from '../../actions/request';
 import { getFollowingList, getFollowerList, addingFollowUser } from '../../actions/user';
 import api from '../../services/api';
@@ -357,6 +359,22 @@ const User = ({ user }) => {
                       </Col>
                     </Row>
                   </Panel>
+
+                  <Panel
+                    header={
+                      <h2>
+                        Favourite Posts <HeartOutlined />
+                      </h2>
+                    }
+                    key="6"
+                  >
+                    <Row justify="space-around">
+                      <Col span={20}>
+                        <FavouriteList />
+                      </Col>
+                    </Row> 
+                  </Panel>
+                  
                   {user.role === 'client' && (
                     <>
                       <Panel

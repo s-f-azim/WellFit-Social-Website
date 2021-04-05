@@ -11,6 +11,8 @@ import Post from '../../src/models/Post.js';
 
 const courseOneId = new mongoose.Types.ObjectId();
 const userOneId = new mongoose.Types.ObjectId();
+const postOneId = new mongoose.Types.ObjectId();
+const postTwoId = new mongoose.Types.ObjectId();
 
 // create users
 const userOne = {
@@ -47,6 +49,7 @@ const userTwo = {
   verified: false,
   role: 'instructor',
   following: [userOneId],
+  favourites: [postOneId, postTwoId],
 };
 
 const userThreeId = new mongoose.Types.ObjectId();
@@ -283,8 +286,6 @@ const courseReviewOne = {
 
 // create posts
 
-const postOneId = new mongoose.Types.ObjectId();
-
 const postOne = {
   _id: postOneId,
   author: userOneId,
@@ -292,13 +293,20 @@ const postOne = {
   youtubelink: 'postOne',
 };
 
-const postTwoId = new mongoose.Types.ObjectId();
-
 const postTwo = {
   _id: postTwoId,
   author: userOneId,
   content: 'postTwo',
   youtubelink: 'postTwo',
+};
+
+const postThreeId = new mongoose.Types.ObjectId();
+
+const postThree = {
+  _id: postThreeId,
+  author: userOneId,
+  content: 'postThree',
+  youtubelink: 'postThree',
 };
 
 // create fixtures
@@ -351,7 +359,7 @@ const instructors = [
 const courses = [courseOne, courseTwo, courseThree, courseFour];
 const requests = [requestOne, requestTwo, requestThree, requestFour];
 const conversations = [conversationOne, conversationTwo];
-const posts = [postOne, postTwo];
+const posts = [postOne, postTwo, postThree];
 
 // token
 const tokens = [];

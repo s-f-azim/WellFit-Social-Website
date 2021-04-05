@@ -10,6 +10,8 @@ import {
   userTwoId,
   courseOne,
   courseTwo,
+  postOne,
+  postThree
 } from './fixtures/db.js';
 
 // setup db for each test
@@ -420,3 +422,59 @@ it('Should get top ten users that are not admins', async () => {
     response.body.data.every((user) => user.role !== 'admin')
   ).toBeTruthy();
 });
+
+/**
+ * @test getFavouritedPosts
+ * @desc Test querying favourited posts
+ */
+
+it('Should retrieve all the user\'s favourited posts', async () => {
+  const response = await request(app)
+    .get('api/users/favouritedPosts/*')
+    .send()
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(200);
+  expect(response.body.data.length).toEqual(2);
+});
+
+it('Should retrieve some of the user\'s favourited posts specified by a quantity param', async () => {
+  const response = await request(app)
+    .get('api/users/favouritedPosts/1')
+    .send()
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(200);
+  expect(response.body.data.length).toEqual(1);
+});
+
+it('Should not retrieve any of the user\'s favourited posts with a param that is NaN and not (*) ', async () => {
+  const response = await request(app)
+    .get('api/users/favouritedPosts/fifteen')
+    .send()
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(404);
+});
+
+/**
+ * @test updateFavouritedPosts
+ * @desc Test updates of favouriting and unfavouriting posts
+ */
+
+ it('Should unfavourite post already favourited', async () => {
+  await request(app)
+    .patch(`api/users/favouritedPosts/${postOne._id}`)
+    .send()
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(200);
+  expect(userTwo.favourites.length).toEqual(1);
+});
+
+it('Should favourite post not already favourited', async () => {
+  await request(app)
+    .patch(`api/users/favouritedPosts/${postThree._id}`)
+    .send()
+    .set('Cookie', [`token=${tokens[1]}`])
+    .expect(200);
+  expect(userTwo.favourites.length).toEqual(3);
+});
+
+
