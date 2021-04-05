@@ -58,7 +58,7 @@ const Course = ({ course }) => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [session]);
 
   if (typeof window !== 'undefined' && loading) return null;
 
