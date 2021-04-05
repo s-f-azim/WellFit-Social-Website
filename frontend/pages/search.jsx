@@ -26,7 +26,7 @@ const SearchBar = () => {
   const [total, setTotal] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchType, setSearchType] = useState('');
+  const [searchType, setSearchType] = useState('People');
   const [query, setQuery] = useState({});
   let response;
   const router = useRouter();
