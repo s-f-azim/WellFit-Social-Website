@@ -108,7 +108,6 @@ const getUserIdByEmail = asyncHandler(async (req, res) => {
  * @access private
  */
 const updateUser = asyncHandler(async (req, res) => {
-  console.log(req);
   const updates = Object.keys(req.body);
   updates.forEach(
     (update) =>
@@ -161,7 +160,7 @@ const getFollowing = asyncHandler(async (req, res) => {
   const result = followings.following.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: result ? result : [],
+    data: result || [],
     pagination: {
       total: followings.following.length,
     },
@@ -185,7 +184,7 @@ const getFollower = asyncHandler(async (req, res) => {
   const result = followers.follower.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: result ? result : [],
+    data: result || [],
     pagination: {
       total: followers.follower.length,
     },
@@ -392,7 +391,6 @@ const getSuggestedInstructors = asyncHandler(async (req, res) => {
  * @async
  * @desc Gets trending users on the website
  * @route GET /api/users/trendingUsers
- *
  */
 const getTrendingUsers = asyncHandler(async (req, res) => {
   const users = await User.find({
@@ -429,7 +427,6 @@ const getFavouritedPosts = asyncHandler(async (req, res) => { //get specified nu
     } else {
       res.status(404).send( {success: false, error: "invalid parameter"});
     }
-    
   } 
 });
 

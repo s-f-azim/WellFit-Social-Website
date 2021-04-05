@@ -1,8 +1,8 @@
 import stripe from './index.js';
 import Course from '../../models/Course.js';
 
-/* eslint-disable camelcase*/
-/* eslint-disable no-param-reassign*/
+/* eslint-disable camelcase */
+/* eslint-disable no-param-reassign */
 const createStripeCheckoutSession = async (line_items, user, courseId) => {
   // this is so the user can't manually enter the price on the client side
   const course = await Course.findById(courseId);

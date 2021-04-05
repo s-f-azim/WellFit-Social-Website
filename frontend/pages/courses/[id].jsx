@@ -20,7 +20,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
-import NotFound from '../../components/generalComponents/404';
 import api from '../../services/api';
 import stripePromise from '../../services/stripe';
 import checkout from '../../actions/payment';
@@ -28,228 +27,241 @@ import { CourseReview } from '../../components/userComponents/reviewComponents/R
 import { getWishList, updateWishList } from '../../actions/user';
 import { getCourseCreators } from '../../actions/course';
 
-const columnStyle = { width: 350, height: 'auto' };
-
 const Course = ({ course }) => {
-  const router = useRouter();
-  if (router.isFallback) {
-    return <Skeleton active />;
-  }
   const [session, loading] = useSession();
-
-  if (typeof window !== 'undefined' && loading) return null;
-
   // state to indicate whether or not the user's wish list has been fetched yet
   const [wishListFetched, setWishListFetched] = useState(false);
   // the courses in the user's wish list
   const [courses, setCourses] = useState({});
   // list of creators of this course
   const [creators, setCreators] = useState([]);
-
-  if (course) {
-    useEffect(async () => {
-      if (session) {
-        try {
-          // only attempt to fetch wish list if the current user is a client
-          if (session.user.role === 'client') {
-            const response = await getWishList();
-            setCourses(response.data.data);
-            // now that the courses from the wish list have been fetched, update the state
-            setWishListFetched(true);
-          }
-          const response2 = await getCourseCreators(course._id);
-          setCreators(response2.data.data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    }, []);
-
-    // Add this course to the user's wish list and then remove the add to wish list button
-    function addToWishList() {
-      /* eslint-disable no-underscore-dangle */
-      updateWishList(course._id);
-      notification.open({
-        message: 'Course added to wish list!',
-        duration: 2,
-        icon: <CheckOutlined style={{ color: '#33FF49' }} />,
-      });
-      ReactDOM.render(<></>, document.getElementById('wishListButton'));
-    }
-
-    // handle the payment
-    const handleClick = async (e) => {
-      try {
-        const stripe = await stripePromise;
-        const response = await checkout({
-          courseId: course._id,
-          line_items: [
-            {
-              name: course.title,
-              description: course.description,
-              amount: course.price * 100,
-              currency: 'usd',
-              quantity: 1,
-            },
-          ],
-        });
-        const { error } = await stripe.redirectToCheckout({ sessionId: response.data.id });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    <Image
-      src={
-        course.photos[0]
-          ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
-          : '/not-found.png'
-      }
-    />;
-    return (
-      <div style={{ padding: '2em' }}>
-        <Row justify="center">
-          <Typography.Title level={1} style={{ fontSize: '2.3rem', fontFamily: 'Poppins' }}>
-            {course.title} <ProfileOutlined />
-          </Typography.Title>
-        </Row>
-        <Divider>
-          <h3>
-            Course information <InfoCircleOutlined />
-          </h3>
-        </Divider>
-        <Row
-          align="top"
-          justify="space-around"
-          gutter={[
-            { xs: 8, sm: 26, md: 44, lg: 52 },
-            { xs: 8, sm: 6, md: 14, lg: 22 },
-          ]}
-          style={{ margin: '2rem' }}
-        >
-          <Col>
-            <h2>
-              Course Preview <CameraOutlined />
-            </h2>
-
-            <Divider />
-            <Image
-              src={
-                course.photos[0]
-                  ? `data:image/png;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
-                  : '/image-not-found.svg'
-              }
-              width={300}
-              height={300}
-            />
-          </Col>
-          <Col md={6}>
-            <Space direction="vertical" wrap>
-              <h1 style={{ color: 'grey' }}>
-                <strong> Course creator(s):</strong>
-                {creators.map((creator) => (
-                  <Link href={`/users/${creator._id}`}>
-                    <Button type="text">
-                      <h2 style={{ color: '#ffa277' }}>
-                        <UserOutlined /> Go To {creator.fName}'s Profile
-                      </h2>
-                    </Button>
-                  </Link>
-                ))}
-              </h1>
-              <Divider />
-              <Typography.Paragraph style={{ fontSize: '1.4rem', color: 'grey' }}>
-                <strong>Course Description: </strong>
-                <h6 style={{ color: 'grey' }}>{course.description}</h6>
-                <br />
-                <strong>Recommended level: </strong>
-                {course.fitnessLevel}
-                <br />
-                {course.trainingDuration && (
-                  <div>
-                    <strong>Session duration (min): </strong>
-                    {course.trainingDuration}
-                  </div>
-                )}
-              </Typography.Paragraph>
-              <Divider />
-              <div style={{ fontSize: '1.4rem', color: 'black' }}>
-                <ul>
-                  <h5>
-                    {course.gym ? (
-                      <li>
-                        You need access to a gym for this course <CarOutlined />.
-                      </li>
-                    ) : (
-                      <li>
-                        You can take this course from home <HomeOutlined />.
-                      </li>
-                    )}
-                    {course.isVirtual ? (
-                      <li>
-                        This is an in-person course <UserOutlined />.
-                      </li>
-                    ) : (
-                      <li>
-                        This is a virtual course <DesktopOutlined />.
-                      </li>
-                    )}
-                  </h5>
-                </ul>
-              </div>
-            </Space>
-          </Col>
-          <Col>
-            <Typography.Title level={2}>
-              {course.price > 0 ? `Price: $${course.price}` : 'Free'}
-            </Typography.Title>
-            <Divider />
-            <h2>
-              <strong>Course Tagged with:</strong>
-            </h2>
-            <Space>
-              {course.tags.map((tag) => (
-                <h3>{`#${tag}`}</h3>
-              ))}
-            </Space>
-            <br />
-            <Button onClick={handleClick} type="primary" size="large">
-              Purchase this course <ShoppingCartOutlined />
-            </Button>
-            <br />
-            <br />
-            <div id="wishListButton">
-              {/**
-               * If the wish list has not yet been fetched or it has but this course is already in
-               * the wish list, display nothing. If this course is not in the wish list, display a
-               * button to add the course to the wish list.
-               */}
-              {wishListFetched ? (
-                courses.find((c) => c._id === course._id) ? null : (
-                  <Button type="primary" size="large" onClick={() => addToWishList()}>
-                    Or Add to your wish list <HeartOutlined />
-                  </Button>
-                )
-              ) : null}
-            </div>
-          </Col>
-        </Row>
-        <Row justify="space-around">
-          <Col span={20}>
-            <CourseReview id={course._id} />
-          </Col>
-        </Row>
-      </div>
-    );
+  const router = useRouter();
+  if (router.isFallback) {
+    return <Skeleton active />;
   }
-  return <NotFound />;
+
+  useEffect(async () => {
+    try {
+      const response = await getCourseCreators(course._id);
+      setCreators(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+    try {
+      // only attempt to fetch wish list if the current user is a client
+      if (session && session.user.role === 'client') {
+        const response = await getWishList();
+        setCourses(response.data.data);
+        // now that the courses from the wish list have been fetched, update the state
+        setWishListFetched(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  if (typeof window !== 'undefined' && loading) return null;
+
+  // Add this course to the user's wish list and then remove the add to wish list button
+  function addToWishList() {
+    /* eslint-disable no-underscore-dangle */
+    updateWishList(course._id);
+    notification.open({
+      message: 'Course added to wish list!',
+      duration: 2,
+      icon: <CheckOutlined style={{ color: '#33FF49' }} />,
+    });
+    ReactDOM.render(<></>, document.getElementById('wishListButton'));
+  }
+
+  // handle the payment
+  const handleClick = async (e) => {
+    try {
+      const stripe = await stripePromise;
+      const response = await checkout({
+        courseId: course._id,
+        line_items: [
+          {
+            name: course.title,
+            description: course.description,
+            amount: course.price * 100,
+            currency: 'usd',
+            quantity: 1,
+          },
+        ],
+      });
+      const { error } = await stripe.redirectToCheckout({ sessionId: response.data.id });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  <Image
+    src={
+      course.photos[0]
+        ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
+        : '/not-found.png'
+    }
+  />;
+  return (
+    <div style={{ padding: '2em' }}>
+      <Row justify="center">
+        <Typography.Title level={1} style={{ fontSize: '2.3rem', fontFamily: 'Poppins' }}>
+          {course.title} <ProfileOutlined />
+        </Typography.Title>
+      </Row>
+      <Divider>
+        <h3>
+          Course information <InfoCircleOutlined />
+        </h3>
+      </Divider>
+      <Row
+        align="top"
+        justify="space-around"
+        gutter={[
+          { xs: 8, sm: 26, md: 44, lg: 52 },
+          { xs: 8, sm: 6, md: 14, lg: 22 },
+        ]}
+        style={{ margin: '2rem' }}
+      >
+        <Col>
+          <h2>
+            Course Preview <CameraOutlined />
+          </h2>
+
+          <Divider />
+          <Image
+            src={
+              course.photos[0]
+                ? `data:image/png;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
+                : '/image-not-found.svg'
+            }
+            width={300}
+            height={300}
+          />
+        </Col>
+        <Col md={6}>
+          <Space direction="vertical" wrap>
+            <h1 style={{ color: 'grey' }}>
+              <strong> Course creator(s):</strong>
+              {creators.map((creator) => (
+                <Link href={`/users/${creator._id}`}>
+                  <Button type="text" aria-label="goToProfilePage">
+                    <h2 style={{ color: '#ffa277' }}>
+                      <UserOutlined /> Go To {creator.fName}'s Profile
+                    </h2>
+                  </Button>
+                </Link>
+              ))}
+            </h1>
+            <Divider />
+            <Typography.Paragraph style={{ fontSize: '1.4rem', color: 'grey' }}>
+              <strong>Course Description: </strong>
+              <h6 style={{ color: 'grey' }}>{course.description}</h6>
+              <br />
+              <strong>Recommended level: </strong>
+              {course.fitnessLevel}
+              <br />
+              {course.trainingDuration && (
+                <div>
+                  <strong>Session duration (min): </strong>
+                  {course.trainingDuration}
+                </div>
+              )}
+            </Typography.Paragraph>
+            <Divider />
+            <div style={{ fontSize: '1.4rem', color: 'black' }}>
+              <ul>
+                <h5>
+                  {course.gym ? (
+                    <li>
+                      You need access to a gym for this course <CarOutlined />.
+                    </li>
+                  ) : (
+                    <li>
+                      You can take this course from home <HomeOutlined />.
+                    </li>
+                  )}
+                  {course.isVirtual ? (
+                    <li>
+                      This is a virtual course <DesktopOutlined />.
+                    </li>
+                  ) : (
+                    <li>
+                      This is an in-person course <UserOutlined />.
+                    </li>
+                  )}
+                </h5>
+              </ul>
+            </div>
+          </Space>
+        </Col>
+        <Col>
+          <Typography.Title level={2}>
+            {course.price > 0 ? `Price: $${course.price}` : 'Free'}
+          </Typography.Title>
+          <Divider />
+          <h2>
+            <strong>Course Tagged with:</strong>
+          </h2>
+          <Space>
+            {course.tags.map((tag) => (
+              <h3>{`#${tag}`}</h3>
+            ))}
+          </Space>
+          <br />
+          <Button aria-label="purchase" onClick={handleClick} type="primary" size="large">
+            Purchase this course <ShoppingCartOutlined />
+          </Button>
+          <br />
+          <br />
+          <div id="wishListButton">
+            {/**
+             * If the wish list has not yet been fetched or it has but this course is already in
+             * the wish list, display nothing. If this course is not in the wish list, display a
+             * button to add the course to the wish list.
+             */}
+            {wishListFetched ? (
+              courses.find((c) => c._id === course._id) ? null : (
+                <Button
+                  type="primary"
+                  size="large"
+                  onClick={() => addToWishList()}
+                  aria-label="addToWishList"
+                >
+                  Or Add to your wish list <HeartOutlined />
+                </Button>
+              )
+            ) : null}
+          </div>
+        </Col>
+      </Row>
+      <Row justify="space-around">
+        <Col span={20}>
+          <CourseReview id={course._id} />
+        </Col>
+      </Row>
+    </div>
+  );
 };
 
 // check if the id was given and prerender the page using the above template
 // this is using incremental static regeneration to rehydrate the page every 10 minutes
 export const getStaticProps = async ({ params }) => {
   const courseId = params ? params.id : undefined;
-  const response = await api.get(`/courses/${courseId}`);
-  return { props: { course: response.data.data }, revalidate: 60 * 10 };
+  let response;
+  try {
+    response = await api.get(`/courses/${courseId}`);
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (response) {
+    return { props: { course: response.data.data }, revalidate: 60 * 10 };
+  }
+
+  return {
+    notFound: true,
+  };
 };
 
 // create all the pages possible for each individual course and make it static to improve performance significantly

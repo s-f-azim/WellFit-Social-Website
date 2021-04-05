@@ -162,25 +162,25 @@ const settingsPage = () => {
             <Tabs size="large" defaultActiveKey="1" tabPosition="left">
               <TabPane key="1" tab="Account settings">
                 <Card className="settingCard" title={myAccount}>
-                  <Button onClick={editCredentials} type="text">
+                  <Button onClick={editCredentials} type="text" aria-label="edit password">
                     <EditOutlined />
                     Change my password or email
                   </Button>
                   <br />
                   <br />
-                  <Button onClick={editBasic} type="text">
+                  <Button onClick={editBasic} type="text" aria-label="edit basic">
                     <EditOutlined />
                     Edit my basic profile information
                   </Button>
                   <br />
                   <br />
-                  <Button onClick={editInDepth} type="text">
+                  <Button onClick={editInDepth} type="text" aria-label="edit in-depth">
                     <EditOutlined />
                     Edit my in-depth profile information
                   </Button>
                   <br />
                   <br />
-                  <Button onClick={showAlert} type="text" danger>
+                  <Button onClick={showAlert} type="text" danger aria-label="delete">
                     <WarningOutlined />
                     Delete my account
                   </Button>
@@ -215,10 +215,15 @@ const settingsPage = () => {
                         Please describe the bug below <DownCircleOutlined />
                       </h3>
                       <Form.Item name="report">
-                        <Input.TextArea allowClear showCount maxLength={150} />
+                        <Input.TextArea
+                          allowClear
+                          showCount
+                          maxLength={150}
+                          aria-label="bug report box"
+                        />
                       </Form.Item>
                       <Form.Item>
-                        <Button type="primary" htmlType="submit">
+                        <Button type="primary" htmlType="submit" aria-label="button bug report">
                           Submit bug report
                         </Button>
                       </Form.Item>
@@ -240,10 +245,19 @@ const settingsPage = () => {
                           Why should we verify you <DownCircleOutlined />
                         </h3>
                         <Form.Item name="verifyRequest">
-                          <Input.TextArea allowClear showCount maxLength={150} />
+                          <Input.TextArea
+                            allowClear
+                            showCount
+                            maxLength={150}
+                            aria-label="verify request box"
+                          />
                         </Form.Item>
                         <Form.Item>
-                          <Button type="primary" htmlType="submit">
+                          <Button
+                            type="primary"
+                            htmlType="submit"
+                            aria-label="button verify request"
+                          >
                             Submit verify request
                           </Button>
                         </Form.Item>

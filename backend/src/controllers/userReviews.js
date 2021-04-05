@@ -14,17 +14,12 @@ const createUserReview = asyncHandler(async (req, res) => {
     return res.status(400).send({ error: 'Please do not review yourself' });
   }
 
-  let review;
-  try {
-    review = await UserReview.create({
-      author: req.user._id,
-      user: req.params.id,
-      ...req.body,
-    });
-    review = await review.populate('author', 'fName lName').execPopulate();
-  } catch (err) {
-    return res.status(400).send({ success: false });
-  }
+  let review = await UserReview.create({
+    author: req.user._id,
+    user: req.params.id,
+    ...req.body,
+  });
+  review = await review.populate('author', 'fName lName').execPopulate();
 
   return res.status(200).send({ success: true, data: review });
 });

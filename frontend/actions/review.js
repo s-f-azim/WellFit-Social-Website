@@ -1,10 +1,9 @@
 import api from '../services/api';
 
 const createUserReview = async (id, review) => {
-  const res = await api.post(`/users/${id}/reviews`, {
+  api.post(`/users/${id}/reviews`, {
     ...review,
   });
-  return res.data.data;
 };
 
 const getUserReviews = async (id) => {

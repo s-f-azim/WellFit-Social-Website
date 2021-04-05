@@ -36,7 +36,6 @@ import {
 } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
-import AccessDenied from '../../components/generalComponents/AccessDenied';
 import Suggestions from '../../components/userComponents/SuggestedInstructors';
 import WishList from '../../components/userComponents/WishList';
 import UserFeed from '../../components/userComponents/postComponents/UserFeed';
@@ -57,294 +56,311 @@ const User = ({ user }) => {
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
   const [following, setFollowing] = useState([]);
   const [follower, setFollower] = useState([]);
-  const [currentUser, setCurrentUser] = useState(false);
+  const [followNum, setFollowNum] = useState(0);
+  const [followerNum, setFollowerNum] = useState(0);
   const router = useRouter();
   if (router.isFallback) {
     return <Skeleton active />;
   }
 
   useEffect(async () => {
-    if (session && session.user._id === user._id) {
-      setCurrentUser(true);
-    }
     if (session && session.user) {
       setIsFollowing(user.follower.includes(session.user._id));
     }
-    const followingData = await getFollowingList(user._id);
-    const followerData = await getFollowerList(user._id);
-    setFollowing(followingData.data.data);
-    setFollower(followerData.data.data);
-    setFollowerIsModalVisible(false);
-    setIsFollowingModalVisible(false);
+    try {
+      const followingData = await getFollowingList(user._id);
+      const followerData = await getFollowerList(user._id);
+      setFollowing(followingData.data.data);
+      setFollower(followerData.data.data);
+      setFollowNum(followingData.data.data.length);
+      setFollowerNum(followerData.data.data.length);
+      setFollowerIsModalVisible(false);
+      setIsFollowingModalVisible(false);
+    } catch (error) {
+      console.log(error);
+    }
   }, [router.query]);
 
   if (typeof window !== 'undefined' && loading) return null;
 
-  if (session) {
-    const { Panel } = Collapse;
+  const { Panel } = Collapse;
 
-    const showFollowingModal = () => {
-      setIsFollowingModalVisible(true);
-    };
-    const showFollowerModal = () => {
-      setFollowerIsModalVisible(true);
-    };
+  const showFollowingModal = () => {
+    setIsFollowingModalVisible(true);
+  };
+  const showFollowerModal = () => {
+    setFollowerIsModalVisible(true);
+  };
 
-    const handleFollowingCancel = () => {
-      setIsFollowingModalVisible(false);
-    };
-    const handleFollowerCancel = () => {
-      setFollowerIsModalVisible(false);
-    };
-    const handleFollow = async (id) => {
-      try {
-        await addingFollowUser(id);
-        if (!session.user.following.includes(id)) {
-          session.user.following = [id, ...session.user.following];
-          setIsFollowing(true);
-        } else {
-          const index = session.user.following.indexOf(id);
-          session.user.following.splice(index, 1);
-          setIsFollowing(false);
-        }
-      } catch (err) {
-        console.log(err);
+  const handleFollowingCancel = () => {
+    setIsFollowingModalVisible(false);
+  };
+  const handleFollowerCancel = () => {
+    setFollowerIsModalVisible(false);
+  };
+  const handleFollow = async (id) => {
+    try {
+      await addingFollowUser(id);
+      if (!session.user.following.includes(id)) {
+        session.user.following = [id, ...session.user.following];
+        setIsFollowing(true);
+      } else {
+        const index = session.user.following.indexOf(id);
+        session.user.following.splice(index, 1);
+        setIsFollowing(false);
       }
-    };
-    const handleReport = async (id) => {
-      try {
-        await createReport('report', 'something', id);
-        notification.open({
-          message: 'Report submitted, thanks for helping us!',
-          duration: 3,
-          icon: <CheckOutlined />,
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    };
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleReport = async (id) => {
+    try {
+      await createReport('report', 'something', id);
+      notification.open({
+        message: 'Report submitted, thanks for helping us!',
+        duration: 3,
+        icon: <CheckOutlined />,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-    const verified = (
-      <p>
-        Verified User <CheckCircleTwoTone twoToneColor="#096dd9" />
-      </p>
-    );
+  const verified = (
+    <p>
+      Verified User <CheckCircleTwoTone twoToneColor="#096dd9" />
+    </p>
+  );
 
-    const unverified = (
-      <p style={{ color: 'red' }}>
-        Unverified User <CloseCircleOutlined />
-      </p>
-    );
+  const unverified = (
+    <p style={{ color: 'red' }}>
+      Unverified User <CloseCircleOutlined />
+    </p>
+  );
 
-    const trendingInstructors = (
-      <h3>
-        <strong>
-          Trending Instructors <RiseOutlined />
-        </strong>
-      </h3>
-    );
+  const trendingInstructors = (
+    <h3>
+      <strong>
+        Trending Instructors <RiseOutlined />
+      </strong>
+    </h3>
+  );
 
-    const qualifs = (
-      <h4>
-        <strong>Qualifications: </strong>
-        {user.qualifications.join(', ')}
-      </h4>
-    );
+  const qualifs = (
+    <h4>
+      <strong>Qualifications: </strong>
+      {user.qualifications.join(', ')}
+    </h4>
+  );
 
-    const speciality = (
-      <h4>
-        <strong>Speciality: </strong>
-        {user.speciality}
-      </h4>
-    );
+  const speciality = (
+    <h4>
+      <strong>Speciality: </strong>
+      {user.speciality}
+    </h4>
+  );
 
-    const communicationFrequency = (
-      <h4>
-        <strong>Can meet: </strong>
-        {user.communicationFrequency}
-      </h4>
-    );
+  const communicationFrequency = (
+    <h4>
+      <strong>Can meet: </strong>
+      {user.communicationFrequency}
+    </h4>
+  );
 
-    const communicationModes = (
-      <h4>
-        <strong>Joinable via: </strong>
-        {user.communicationModes.join(', ')}
-      </h4>
-    );
+  const communicationModes = (
+    <h4>
+      <strong>Joinable via: </strong>
+      {user.communicationModes.join(', ')}
+    </h4>
+  );
 
-    const paymentFrequency = (
-      <h4>
-        <strong>Pay for services: </strong>
-        {user.paymentFrequency}
-      </h4>
-    );
+  const paymentFrequency = (
+    <h4>
+      <strong>Pay for services: </strong>
+      {user.paymentFrequency}
+    </h4>
+  );
 
-    const paymentOptions = (
-      <h4>
-        <strong>Accepts Payment by: </strong>
-        {user.paymentOptions.join(', ')}
-      </h4>
-    );
+  const paymentOptions = (
+    <h4>
+      <strong>Accepts Payment by: </strong>
+      {user.paymentOptions.join(', ')}
+    </h4>
+  );
 
-    const format = (
-      <h4>
-        <strong>Services are: </strong>
-        {user.serviceFormat.join(', ')}
-      </h4>
-    );
-    return (
-      <div className="userPage">
-        <Row justify="space-around">
-          <Col>
-            <Divider>
-              <h2>
-                Profile <UserOutlined />
-              </h2>
-            </Divider>
-            <Row justify="space-around">
-              <Col>
-                <Card
-                  className="userImage"
-                  style={{ width: 300 }}
-                  actions={[<EditOutlined key="edit" />]}
-                >
-                  <Avatar
-                    style={{ width: '100%', height: '100%' }}
-                    size={{
-                      xs: 94,
-                      sm: 102,
-                      md: 110,
-                      lg: 124,
-                      xl: 140,
-                      xxl: 160,
-                    }}
-                    icon={<UserOutlined />}
-                  />
-                </Card>
-              </Col>
-              <Col>
-                <Card style={{ border: '0px' }}>
-                  <h3>{user.verified ? verified : unverified}</h3>
-                  <h1>
-                    {user ? `${user.fName} ${user.lName} ` : 'Name not Found'}
-                    {user ? (
-                      user.gender === 'Male' ? (
-                        <ManOutlined />
-                      ) : user.gender === 'Female' ? (
-                        <WomanOutlined />
-                      ) : (
-                        <UserOutlined />
-                      )
+  const format = (
+    <h4>
+      <strong>Services are: </strong>
+      {user.serviceFormat.join(', ')}
+    </h4>
+  );
+
+  return (
+    <div className="userPage">
+      <Row justify="space-around">
+        <Col>
+          <Divider>
+            <h2>
+              Profile <UserOutlined />
+            </h2>
+          </Divider>
+          <Row justify="space-around">
+            <Col>
+              <Card
+                className="userImage"
+                style={{ width: 300 }}
+                actions={[<EditOutlined key="edit" />]}
+              >
+                <Avatar
+                  style={{ width: '100%', height: '100%' }}
+                  size={{
+                    xs: 94,
+                    sm: 102,
+                    md: 110,
+                    lg: 124,
+                    xl: 140,
+                    xxl: 160,
+                  }}
+                  icon={<UserOutlined />}
+                />
+              </Card>
+            </Col>
+            <Col>
+              <Card style={{ border: '0px' }}>
+                <h3>{user.verified ? verified : unverified}</h3>
+                <h1>
+                  {user ? `${user.fName} ${user.lName} ` : 'Name not Found'}
+                  {user ? (
+                    user.gender === 'Male' ? (
+                      <ManOutlined />
+                    ) : user.gender === 'Female' ? (
+                      <WomanOutlined />
                     ) : (
                       <UserOutlined />
-                    )}
-                  </h1>
-                  {session && session.user._id !== user._id && (
-                    <Space style={{ marginBottom: '0.5rem' }}>
-                      <Button
-                        type={isFollowing ? 'default' : 'primary'}
-                        onClick={() => handleFollow(user._id)}
-                      >
-                        {isFollowing ? 'Unfollow' : 'Follow'}
-                      </Button>
-                      <Button onClick={() => handleReport(user._id)}>Report</Button>
-                    </Space>
+                    )
+                  ) : (
+                    <UserOutlined />
                   )}
-                  <h3>
-                    <strong>Socials: </strong>
-                    <Button type="text" icon={<FacebookOutlined />} />
-                    <Button type="text" icon={<InstagramOutlined />} />
-                    <Button type="text" icon={<GoogleOutlined />} />
-                    <Button type="text" icon={<TwitterOutlined />} />
-                  </h3>
-                  <h3>
-                    <strong>Registered as: </strong>
-                    <h2>
-                      {user.role === 'instructor'
-                        ? user.trainerType && user.trainerType !== 'Other'
-                          ? user.trainerType
-                          : 'Instructor'
-                        : 'Client'}
-                    </h2>
-                  </h3>
+                </h1>
+                {session && session.user._id !== user._id && (
+                  <Space style={{ marginBottom: '0.5rem' }}>
+                    <Button
+                      type={isFollowing ? 'default' : 'primary'}
+                      onClick={() => handleFollow(user._id)}
+                    >
+                      {isFollowing ? 'Unfollow' : 'Follow'}
+                    </Button>
+                    <Button onClick={() => handleReport(user._id)}>Report</Button>
+                  </Space>
+                )}
+                <h3>
+                  <strong>Socials: </strong>
+                  <Button type="text" icon={<FacebookOutlined />} />
+                  <Button type="text" icon={<InstagramOutlined />} />
+                  <Button type="text" icon={<GoogleOutlined />} />
+                  <Button type="text" icon={<TwitterOutlined />} />
+                </h3>
+                <h3>
+                  <strong>Registered as: </strong>
+                  <h2>
+                    {user.role === 'instructor'
+                      ? user.trainerType && user.trainerType !== 'Other'
+                        ? user.trainerType
+                        : 'Instructor'
+                      : 'Client'}
+                  </h2>
+                </h3>
 
-                  <h4 style={{ minwidth: '30%' }}>
-                    <strong> About: </strong>
-                    {user.bio ? user.bio : 'No bio entered, edit your profile to display it.'}
-                  </h4>
-                  <Button type="link" onClick={showFollowerModal} size="small">
-                    <h5 style={{ color: '#ffa277' }}>
-                      Followed by {user.follower.length} user(s).
-                    </h5>
-                  </Button>
-                  <Modal
-                    title="Followers"
-                    visible={isFollowerModalVisible}
-                    okButtonProps={{ style: { display: 'none' } }}
-                    cancelButtonProps={{ style: { display: 'none' } }}
-                    onCancel={handleFollowerCancel}
-                  >
-                    <Card>
-                      <GetFollow data={follower} />
-                    </Card>
-                  </Modal>
-                  <Button type="link" onClick={showFollowingModal} size="small">
-                    <h5 style={{ color: '#ffa277' }}>
-                      Follows {user.following.length} other user(s).
-                    </h5>
-                  </Button>
-                  <Modal
-                    title="Following"
-                    visible={isFollowingModalVisible}
-                    okButtonProps={{ style: { display: 'none' } }}
-                    cancelButtonProps={{ style: { display: 'none' } }}
-                    onCancel={handleFollowingCancel}
-                  >
-                    <Card>
-                      <GetFollow data={following} />
-                    </Card>
-                  </Modal>
-                </Card>
-              </Col>
-              {user.role === 'instructor' && (
-                <Col>
-                  <br />
-                  <br />
-                  <br />
-                  <div>
-                    <h3> {user.qualifications.length > 0 && qualifs} </h3>
-                    <h3>{user.speciality && speciality}</h3>
-                    <h3>{user.communicationFrequency && communicationFrequency}</h3>
-                    <h3>{user.communicationModes.length > 0 && communicationModes}</h3>
-                    <h3>{user.paymentFrequency && paymentFrequency}</h3>
-                    <h3>{user.paymentOptions.length > 0 && paymentOptions}</h3>
-                    <h3>{user.serviceFormat.length > 0 && format}</h3>
-                  </div>
-                </Col>
-              )}
-            </Row>
-            <Divider>
-              <h2>
-                Social Hub <TeamOutlined />
-              </h2>
-            </Divider>
-            <Card style={{ border: '0px' }}>
-              <Collapse bordered={false} ghost>
-                <Panel
-                  header={
-                    <h2>
-                      Published Posts <FileOutlined />
-                    </h2>
-                  }
-                  key="1"
+                <h4 style={{ minwidth: '30%' }}>
+                  <strong> About: </strong>
+                  {user.bio ? user.bio : 'No bio entered, edit your profile to display it.'}
+                </h4>
+                <Button type="link" onClick={showFollowerModal} size="small">
+                  <h5 style={{ color: '#ffa277' }}>Followed by {followerNum} user(s).</h5>
+                </Button>
+                <Modal
+                  title="Followers"
+                  visible={isFollowerModalVisible}
+                  okButtonProps={{ style: { display: 'none' } }}
+                  cancelButtonProps={{ style: { display: 'none' } }}
+                  onCancel={handleFollowerCancel}
                 >
-                  <Row justify="space-around">
-                    <Col span={20}>
-                      <UserPosts id={user._id} />
-                    </Col>
-                  </Row>
-                </Panel>
-                <Panel
+                  <Card>
+                    <GetFollow data={follower} />
+                  </Card>
+                </Modal>
+                <Button type="link" onClick={showFollowingModal} size="small">
+                  <h5 style={{ color: '#ffa277' }}>Follows {followNum} other user(s).</h5>
+                </Button>
+                <Modal
+                  title="Following"
+                  visible={isFollowingModalVisible}
+                  okButtonProps={{ style: { display: 'none' } }}
+                  cancelButtonProps={{ style: { display: 'none' } }}
+                  onCancel={handleFollowingCancel}
+                >
+                  <Card>
+                    <GetFollow data={following} />
+                  </Card>
+                </Modal>
+              </Card>
+            </Col>
+            {user.role === 'instructor' && (
+              <Col>
+                <br />
+                <br />
+                <br />
+                <div>
+                  <h3> {user.qualifications.length > 0 && qualifs} </h3>
+                  <h3>{user.speciality && speciality}</h3>
+                  <h3>{user.communicationFrequency && communicationFrequency}</h3>
+                  <h3>{user.communicationModes.length > 0 && communicationModes}</h3>
+                  <h3>{user.paymentFrequency && paymentFrequency}</h3>
+                  <h3>{user.paymentOptions.length > 0 && paymentOptions}</h3>
+                  <h3>{user.serviceFormat.length > 0 && format}</h3>
+                </div>
+              </Col>
+            )}
+          </Row>
+          <Divider>
+            <h2>
+              Social Hub <TeamOutlined />
+            </h2>
+          </Divider>
+          <Card style={{ border: '0px' }}>
+            <Collapse bordered={false} ghost>
+              <Panel
+                header={
+                  <h2>
+                    Published Posts <FileOutlined />
+                  </h2>
+                }
+                key="1"
+              >
+                <Row justify="space-around">
+                  <Col span={20}>
+                    <UserPosts id={user._id} />
+                  </Col>
+                </Row>
+              </Panel>
+              {session && session.user._id === user._id && (
+                <>
+                  <Panel
+                    header={
+                      <h2>
+                        My Feed <FileOutlined />
+                      </h2>
+                    }
+                    key="2"
+                  >
+                    <Row justify="space-around">
+                      <Col span={20}>
+                        <UserFeed />
+                      </Col>
+                    </Row>
+                  </Panel>
+
+                  <Panel
                     header={
                       <h2>
                         Favourite Posts <HeartOutlined />
@@ -353,109 +369,96 @@ const User = ({ user }) => {
                     key="6"
                   >
                     <Row justify="space-around">
-                    <Col span={20}>
-                      <FavouriteList />
-                    </Col>
-                  </Row>
-                    
+                      <Col span={20}>
+                        <FavouriteList />
+                      </Col>
+                    </Row> 
                   </Panel>
-                {session && session.user._id === user._id && (
-                  <>
-                    <Panel
-                      header={
-                        <h2>
-                          My Feed <FileOutlined />
-                        </h2>
-                      }
-                      key="2"
-                    >
-                      <Row justify="space-around">
-                        <Col span={20}>
-                          <UserFeed />
-                        </Col>
-                      </Row>
-                    </Panel>
-                    {user.role === 'client' && currentUser && (
-                      <>
-                        <Panel
-                          header={
-                            <h2>
-                              My Course Wishlist <SearchOutlined />
-                            </h2>
-                          }
-                          key="3"
-                        >
-                          <Row justify="space-around">
-                            <Col>
-                              <WishList />
-                            </Col>
-                          </Row>
-                        </Panel>
-                      </>
-                    )}
-                    <Panel
-                      header={
-                        <h2>
-                          Discover Trending Users <SearchOutlined />
-                        </h2>
-                      }
-                      key="4"
-                    >
-                      <Row justify="space-around">
-                        <Col>
-                          <Card title={trendingInstructors} />
-                          <Suggestions />
-                        </Col>
-                      </Row>
-
-                      <Divider />
-                      <Row justify="space-around">
-                        <Col>
-                          <TrendingUsers />
-                        </Col>
-                      </Row>
-                    </Panel>
-
-                  </>
-                )}
-                {session && session.user._id !== user._id && (
+                  
+                  {user.role === 'client' && (
+                    <>
+                      <Panel
+                        header={
+                          <h2>
+                            My Course Wishlist <SearchOutlined />
+                          </h2>
+                        }
+                        key="3"
+                      >
+                        <Row justify="space-around">
+                          <Col>
+                            <WishList />
+                          </Col>
+                        </Row>
+                      </Panel>
+                    </>
+                  )}
                   <Panel
                     header={
                       <h2>
-                        User reviews <FileDoneOutlined />
+                        Discover Trending Users <SearchOutlined />
                       </h2>
                     }
-                    key="5"
+                    key="4"
                   >
                     <Row justify="space-around">
-                      <Col span={24}>
-                        <UserReview id={user._id} />
+                      <Col>
+                        <Card title={trendingInstructors} />
+                        <Suggestions />
+                      </Col>
+                    </Row>
+
+                    <Divider />
+                    <Row justify="space-around">
+                      <Col>
+                        <TrendingUsers />
                       </Col>
                     </Row>
                   </Panel>
-                  
-                )}
-              </Collapse>
-            </Card>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-  return <AccessDenied />;
+                </>
+              )}
+              {session && session.user._id !== user._id && (
+                <Panel
+                  header={
+                    <h2>
+                      User reviews <FileDoneOutlined />
+                    </h2>
+                  }
+                  key="5"
+                >
+                  <Row justify="space-around">
+                    <Col span={24}>
+                      <UserReview id={user._id} />
+                    </Col>
+                  </Row>
+                </Panel>
+              )}
+            </Collapse>
+          </Card>
+        </Col>
+      </Row>
+    </div>
+  );
 };
 
 // check if the id was given and prerender the page using the above template
 // this is using incremental static regeneration to rehydrate the page every 10 minutes
 export const getStaticProps = async ({ params }) => {
   const userId = params ? params.id : undefined;
-  const response = await api.get(`/users/${userId}`);
-  if (!response.data.data) {
-    return {
-      notFound: true,
-    };
+  let response;
+  try {
+    response = await api.get(`/users/${userId}`);
+  } catch (error) {
+    console.log(error);
   }
-  return { props: { user: response.data.data }, revalidate: 60 * 10 };
+
+  if (response) {
+    return { props: { user: response.data.data }, revalidate: 60 * 10 };
+  }
+
+  return {
+    notFound: true,
+  };
 };
 
 // create all the pages possible for each individual user and make it static to improve performance significantly

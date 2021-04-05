@@ -35,7 +35,7 @@ const Banner2 = () => (
             <h3>
               <b>Get 1-1 support and advice</b>
             </h3>
-            <p>Chat and interact with your instructor.</p>
+            <p>Chat and interact with your instructors.</p>
           </div>
         </div>
         <div className="card inner_banner_content2">
@@ -45,19 +45,9 @@ const Banner2 = () => (
 
           <div className="cardText">
             <h3>
-              <b>What else??</b>
-              <span
-                style={{
-                  display: 'inline',
-                  verticalAlign: 'super',
-                  fontSize: '0.8rem',
-                  color: 'brown',
-                }}
-              >
-                Soon&#8482;
-              </span>
+              <b>Better yourself</b>
             </h3>
-            <p>Discover something else idk what to put</p>
+            <p>Be Well, be Fit.</p>
           </div>
         </div>
       </div>
