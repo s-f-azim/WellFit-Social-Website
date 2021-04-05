@@ -34,26 +34,13 @@ const SearchBar = () => {
     response = null;
     if (searchType === 'People') {
       try {
-        response = await getPeople(
-          name,
-          gender,
-          age,
-          stags,
-          pageSize,
-          currentPage * pageSize - pageSize
-        );
+        response = await getPeople(name, gender, age, stags, pageSize, currentPage);
       } catch (err) {
         console.log(err);
       }
     } else if (searchType === 'Courses') {
       try {
-        response = await getCourses(
-          name,
-          stags,
-          etags,
-          pageSize,
-          currentPage * pageSize - pageSize
-        );
+        response = await getCourses(name, stags, etags, pageSize, currentPage);
       } catch (err) {
         console.log(err);
       }
@@ -68,12 +55,12 @@ const SearchBar = () => {
     }
     if (response) {
       setData(response.data.data);
-      setTotal(response.data.total);
+      setTotal(response.data.pagination.total);
     }
   };
   useEffect(() => {
     searchName();
-  }, [searchType, currentPage, query]);
+  }, [searchType, currentPage, query, pageSize]);
 
   const handlePaginationChange = (current, updatedPageSize) => {
     setCurrentPage(current);

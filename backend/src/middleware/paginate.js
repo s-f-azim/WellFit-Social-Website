@@ -84,7 +84,9 @@ const paginateAndFilter = (model) =>
     const limit = parseInt(req.query.limit, 10) || 12;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
-    const total = await model.countDocuments();
+    const Query2 = query.toConstructor();
+    const queryTotal = new Query2();
+    const total = await queryTotal.count();
     query = query.skip(startIndex).limit(limit);
     const results = await query;
     const pagination = { total };

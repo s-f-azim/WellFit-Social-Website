@@ -19,13 +19,14 @@ const PeopleFilter = ({ setGender, setAge, setTags, tagsOption }) => (
 
     <Select
       aria-label="role selection"
-      defaultValue="Registered as "
+      initialValues="Both"
       className="peopleSelectDrop"
       placeholder="Role"
       onChange={setAge}
     >
       <Option value="instructor">instructor</Option>
       <Option value="client">client</Option>
+      <Option value="">Both</Option>
     </Select>
     <Select
       aria-label="tag selection"
