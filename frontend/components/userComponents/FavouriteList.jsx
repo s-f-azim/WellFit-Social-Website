@@ -59,7 +59,7 @@ const Favourites = () => {
 
 
     return (
-			<div style={{overflow: "auto", height: "auto", width: 660, maxHeight: 700}}>
+			<div style={{overflow: "auto", height: "auto", width: 535, maxHeight: 700}}>
 				<InfiniteScroll
 					loadMore={fetchMorePosts}
 					hasMore={hasMore}
