@@ -11,7 +11,7 @@ const Chats = () => {
   const [conversation, setConversation] = useState(null);
   const [receiver, setReciver] = useState(null);
   if (typeof window !== 'undefined' && loading) return null;
-  if (session) {
+  if (session && session.user) {
     return (
       <Row className="chat-row" justify="center" type="flex">
         <Card
