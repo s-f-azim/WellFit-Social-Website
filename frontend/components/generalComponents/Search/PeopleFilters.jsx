@@ -5,6 +5,7 @@ const { Option } = Select;
 const PeopleFilter = ({ setGender, setAge, setTags, tagsOption }) => (
   <div id="filterrow">
     <Select
+      aria-label="gender selection"
       initialValues="All Genders"
       className="peopleSelectDrop"
       placeholder="Gender"
@@ -17,15 +18,23 @@ const PeopleFilter = ({ setGender, setAge, setTags, tagsOption }) => (
     </Select>
 
     <Select
-      defaultValue="Registered as "
+      aria-label="role selection"
+      initialValues="Both"
       className="peopleSelectDrop"
       placeholder="Role"
       onChange={setAge}
     >
       <Option value="instructor">instructor</Option>
       <Option value="client">client</Option>
+      <Option value="">Both</Option>
     </Select>
-    <Select className="peopleSelectTags" mode="multiple" placeholder="Tags" onChange={setTags}>
+    <Select
+      aria-label="tag selection"
+      className="peopleSelectTags"
+      mode="multiple"
+      placeholder="Tags"
+      onChange={setTags}
+    >
       {tagsOption}
     </Select>
   </div>

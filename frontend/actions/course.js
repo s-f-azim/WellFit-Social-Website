@@ -11,8 +11,8 @@ const getCourses = (title, tags, etags, pageSize, offset) =>
   api.get('courses', {
     params: {
       ...(title.length > 0 && { title }),
-      ...(tags.length > 0 && { 'tags[in]': tags.join(',') }),
-      ...(etags.length > 0 && { 'trainingEquipment[in]': etags.join(',') }),
+      ...(tags.length > 0 && { 'tags[all]': tags.join(',') }),
+      ...(etags.length > 0 && { 'trainingEquipment[all]': etags.join(',') }),
       limit: pageSize,
       page: offset,
     },

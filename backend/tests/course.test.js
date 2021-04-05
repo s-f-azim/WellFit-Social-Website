@@ -1,8 +1,6 @@
 import request from 'supertest';
-import { jest } from '@jest/globals';
 import Course from '../src/models/Course.js';
 import app from '../src/app.js';
-import geocoder from '../src/utils/geocoder.js';
 
 import {
   tokens,
@@ -13,24 +11,11 @@ import {
   courseTwo,
 } from './fixtures/db.js';
 
-jest.mock('geocoder');
-
 // setup db for each test
 beforeEach(setupDatabase);
 
 // assert creating a new course while logged in
 it('Should create a new course', async () => {
-  geocoder.geocode = jest.fn().mockResolvedValue([
-    {
-      longitude: -0.288986,
-      latitude: 51.412536,
-      formattedAddress: 'London KT2 6QW, United Kingdom',
-      streetName: 'London',
-      city: 'London',
-      zipcode: 'KT2 6QW',
-      countryCode: 'GB',
-    },
-  ]);
   const count = await Course.countDocuments();
   const response = await request(app)
     .post('/api/courses/create')
@@ -51,17 +36,6 @@ it('Should create a new course', async () => {
 
 // assert creating a new course when not logged in
 it('Should not create a new course when not logged in', async () => {
-  geocoder.geocode = jest.fn().mockResolvedValue([
-    {
-      longitude: -0.288986,
-      latitude: 51.412536,
-      formattedAddress: 'London KT2 6QW, United Kingdom',
-      streetName: 'London',
-      city: 'London',
-      zipcode: 'KT2 6QW',
-      countryCode: 'GB',
-    },
-  ]);
   await request(app)
     .post('/api/courses/create')
     .send({
@@ -77,17 +51,6 @@ it('Should not create a new course when not logged in', async () => {
 
 // assert creating a new course with invalid data
 it('Should not create a new course with invalid data', async () => {
-  geocoder.geocode = jest.fn().mockResolvedValue([
-    {
-      longitude: -0.288986,
-      latitude: 51.412536,
-      formattedAddress: 'London KT2 6QW, United Kingdom',
-      streetName: 'London',
-      city: 'London',
-      zipcode: 'KT2 6QW',
-      countryCode: 'GB',
-    },
-  ]);
   await request(app)
     .post('/api/courses/create')
     .set('Cookie', [`token=${tokens[0]}`])
@@ -193,10 +156,12 @@ it('Should get all the creators of a course when there are several', async () =>
   expect(response.body.data[0]._id === userTwo._id);
   expect(response.body.data[1]._id === userOne._id);
 });
+// assert get all courses
 it('Should get all the courses', async () => {
   const response = await request(app).get('/api/courses').send().expect(200);
   expect(response.body.data.length).toBe(4);
 });
+// assert get all courses with title lose
 it('Should get all courses with title lose', async () => {
   const response = await request(app)
     .get('/api/courses?title=lose')
@@ -204,6 +169,7 @@ it('Should get all courses with title lose', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(2);
 });
+// assert get all courses with title weight
 it('Should get all courses with title weight', async () => {
   const response = await request(app)
     .get('/api/courses?title=weight')
@@ -211,6 +177,7 @@ it('Should get all courses with title weight', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(1);
 });
+// assert get all courses with title b
 it('Should get no courses with title b', async () => {
   const response = await request(app)
     .get('/api/courses?title=b')
@@ -218,6 +185,7 @@ it('Should get no courses with title b', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(0);
 });
+// assert get all courses with title weight and tag getfit
 it('Should get 1 course with title weight and tag GetFit', async () => {
   const response = await request(app)
     .get('/api/courses?title=weight&&tags[all]=GetFit')
@@ -225,6 +193,7 @@ it('Should get 1 course with title weight and tag GetFit', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(1);
 });
+// assert get courses with tag cardio
 it('Should get 3 courses with no title and tag Cardio', async () => {
   const response = await request(app)
     .get('/api/courses?tags[all]=Cardio')
@@ -232,7 +201,7 @@ it('Should get 3 courses with no title and tag Cardio', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(3);
 });
-
+// assert get courses with tag cycling
 it('Should get no course with tag Cycling', async () => {
   const response = await request(app)
     .get('/api/courses?tags[all]=Cycling')
@@ -240,6 +209,7 @@ it('Should get no course with tag Cycling', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(0);
 });
+// assert get couse cycling
 it('Should get no course with tag Cycling', async () => {
   const response = await request(app)
     .get('/api/courses?tags[all]=Cycling')
@@ -247,6 +217,7 @@ it('Should get no course with tag Cycling', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(0);
 });
+// assert get courses with equipment tags
 it('Should get 2 courses with equipment treadmill', async () => {
   const response = await request(app)
     .get('/api/courses?trainingEquipment[all]=treadmill')
@@ -254,6 +225,7 @@ it('Should get 2 courses with equipment treadmill', async () => {
     .expect(200);
   expect(response.body.data.length).toBe(2);
 });
+// assert get courses with equipment tags and tags
 it('Should get 1 course with equipment treadmill and tag FitFam', async () => {
   const response = await request(app)
     .get('/api/courses?tags[all]=FitFam&&trainingEquipment[all]=treadmill')

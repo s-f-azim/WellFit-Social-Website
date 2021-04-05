@@ -87,24 +87,27 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
                 <p>
                   <strong>Price:</strong> ${content.price}
                 </p>
-                <p style={courseDetails}>
+                <div style={courseDetails}>
                   <strong>Creators: </strong>
                   {creators.map((creator) => (
-                    <div className="creators">
+                    <div className="creators" key={creator._id}>
                       {creator.fName} {creator.lName}
                     </div>
                   ))}
-                </p>
+                </div>
+                <p />
                 <p style={courseDetails}>
                   <strong>Difficulty: </strong>
                   {content.fitnessLevel}
                 </p>
-                <p style={courseDetails}>
+                <div style={courseDetails}>
                   <strong>Tags: </strong>
                   {content.tags.map((tag) => (
-                    <div className="tags">{tag}</div>
+                    <div className="tags" key={tag}>
+                      {tag}
+                    </div>
                   ))}
-                </p>
+                </div>
               </Col>
             </Row>
           </Card>
@@ -116,11 +119,15 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
             }
             centered
             visible={visible}
-            onOk={() => setVisible(false)}
             onCancel={() => setVisible(false)}
             width={700}
             footer={[
-              <Button type="primary" href={`/courses/${content._id}`} key={content._id}>
+              <Button
+                aria-label="goToCoursePage"
+                type="primary"
+                href={`/courses/${content._id}`}
+                key={content._id}
+              >
                 <div style={{ color: '#ffa277' }}>Go to course page</div>
               </Button>,
             ]}
@@ -144,20 +151,24 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
                 <p>
                   <strong>Price: </strong>${content.price}
                 </p>
-                <p>
+                <div>
                   <strong>Creators: </strong>
                   {creators.map((creator) => (
-                    <div className="creators">
+                    <div className="creators" key={creator._id}>
                       {creator.fName} {creator.lName} <strong>|</strong>
                     </div>
                   ))}
-                </p>
-                <p>
+                </div>
+                <p />
+                <div>
                   <strong>Tags: </strong>
                   {content.tags.map((tag) => (
-                    <div className="tags">{tag}</div>
+                    <div className="tags" key={tag}>
+                      {tag}
+                    </div>
                   ))}
-                </p>
+                </div>
+                <p />
                 <p>
                   <strong>Description: </strong>
                   {content.description}

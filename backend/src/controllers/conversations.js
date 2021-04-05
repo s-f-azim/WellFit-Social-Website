@@ -18,7 +18,7 @@ const createConversation = asyncHandler(async (req, res) => {
 
 /**
  * @async
- * @desc get a conversation given the ids
+ * @desc get a conversation given the ids of users
  * @route GET /api/conversation/:user
  * @access private
  */

@@ -23,8 +23,10 @@
   font-weight: 400;
 }
 .inner_banner3_content p {
+  font-size: 1.3rem;
 }
 .ant-btn.banner3_button {
+  color: black;
   margin-top: 0.8rem;
   min-width: 8rem;
   background-color: #ffa277;
@@ -48,6 +50,7 @@
   display: block;
 }
 .infoCard {
+  font-size: 1rem;
   grid-column: auto/span 6;
 }
 .scrollable {

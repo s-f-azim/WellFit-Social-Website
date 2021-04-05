@@ -278,7 +278,7 @@ const categories = [
     ),
   },
   {
-    name: 'meditation',
+    name: 'Meditation',
     photo: (
       <svg
         className="svg"

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
+    "@jest/globals": "^26.6.2",
     "@stripe/react-stripe-js": "^1.4.0",
     "@stripe/stripe-js": "^1.13.2",
     "@zeit/next-css": "^1.0.1",
@@ -27,6 +28,7 @@
     "next-auth": "^3.11.2",
     "next-compose-plugins": "^2.2.1",
     "next-images": "^1.7.0",
+    "next-seo": "^4.23.0",
     "node-sass": "^5.0.0",
     "nprogress": "^0.2.0",
     "null-loader": "^4.0.1",

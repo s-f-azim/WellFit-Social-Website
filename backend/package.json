@@ -2,8 +2,24 @@
   "name": "seg-major",
   "version": "1.0.0",
   "jest": {
+    "testEnvironment": "node",
     "transform": {},
-    "testTimeout": 30000
+    "testTimeout": 30000,
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/utils/stripe/*.js",
+      "!src/index.js",
+      "!src/socketsEvents.js",
+      "!src/middleware/multer.js",
+      "!src/middleware/role.js",
+      "!src/controllers/payments.js"
+    ]
   },
   "description": "This is project revolves around fitness and nutrition ",
   "main": "index.js",
@@ -49,7 +65,6 @@
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
-    "create-next-app": "^10.0.6",
     "env-cmd": "^10.1.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",

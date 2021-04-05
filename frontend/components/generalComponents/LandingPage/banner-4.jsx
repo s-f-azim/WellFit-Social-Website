@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Card, Anchor } from 'antd';
+import { Card } from 'antd';
 import { useSession } from 'next-auth/client';
 import { getTrendingUsersLimit } from '../../../actions/user';
 
 const { Meta } = Card;
-const { Link } = Anchor;
 
 const Banner4 = () => {
   // List of suggested instructors
@@ -24,20 +23,10 @@ const Banner4 = () => {
     }
   }, []);
 
-  const InstrCard = (item) => {
-    const life = '';
-    return (
-      <a>
-        <h1>fefhe</h1>
-      </a>
-    );
-  };
-
   return (
     <div className="banner4">
       <div className="inner_banner4">
-        <h1>Explore leading instructors </h1>
-        <h3>Anything from fitness to meditation</h3>
+        <h1>Meet leading instructors </h1>
         {showState ? (
           <div className="banner4_boxes">
             {list.map((item) => (
@@ -66,7 +55,7 @@ const Banner4 = () => {
             ))}
           </div>
         ) : (
-          'Doesnt work'
+          'No instructors have signed up yet!'
         )}
       </div>
     </div>

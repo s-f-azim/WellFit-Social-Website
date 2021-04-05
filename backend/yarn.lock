@@ -1657,11 +1657,6 @@ cors@^2.8.5, cors@~2.8.5:
     object-assign "^4"
     vary "^1"
 
-create-next-app@^10.0.6:
-  version "10.0.8"
-  resolved "https://registry.yarnpkg.com/create-next-app/-/create-next-app-10.0.8.tgz"
-  integrity sha512-0bzfcyiKYoc03lc9J3A52k+ETSobhNc4JmRsyXJwmZvJMb/i0Y26DW3SGX9DEa3TW5xLjH2zGk0svmNhYIsh8Q==
-
 cross-spawn@^6.0.0:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-6.0.5.tgz"

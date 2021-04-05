@@ -103,7 +103,7 @@ const InstQuest = ({ session }) => {
                       >
                         <Form.Item {...field} fieldKey={[field.fieldKey, 'qualification']}>
                           <Input
-                            arial-label="qualification"
+                            aria-label="qualification"
                             style={{ width: '90%' }}
                             placeholder="Enter your qualification"
                           />
@@ -115,6 +115,7 @@ const InstQuest = ({ session }) => {
                       </Space>
                     ))}
                     <Button
+                      aria-label="add qualification"
                       onClick={() => add()}
                       block
                       icon={<PlusOutlined style={{ color: '#33FF49' }} />}
@@ -146,6 +147,7 @@ const InstQuest = ({ session }) => {
                         <Form.Item {...field} fieldKey={[field.fieldKey, 'customerStory']}>
                           <Row>
                             <TextArea
+                              aria-label="customer story"
                               style={{ width: '90%' }}
                               showCount
                               maxLength={200}
@@ -160,6 +162,7 @@ const InstQuest = ({ session }) => {
                       </Space>
                     ))}
                     <Button
+                      aria-label="add customer story"
                       onClick={() => add()}
                       block
                       icon={<PlusOutlined style={{ color: '#33FF49' }} />}
@@ -173,7 +176,7 @@ const InstQuest = ({ session }) => {
               <br />
               <br />
               <Form.Item name="yearsExperience" label="Years of experience:">
-                <InputNumber min={0} />
+                <InputNumber aria-label="years experience" min={0} />
               </Form.Item>
             </Panel>
 

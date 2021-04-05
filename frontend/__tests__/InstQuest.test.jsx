@@ -1,8 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { notification } from 'antd';
 import InstQuest from '../components/userComponents/questionnaires/InstQuest';
-import ClientQuest from '../components/userComponents/questionnaires/clientQuest';
 
 import updateUser from '../actions/user';
 
@@ -20,34 +19,37 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-it.only('renders fields', () => {
+it('renders fields', () => {
   const session = { user: {} };
   render(<InstQuest session={session} />);
 
   userEvent.click(screen.getByRole('button', { name: 'right Your career' }));
   expect(screen.getByRole('combobox', { name: 'trainer type' })).toBeInTheDocument();
-  // expect(screen.getByRole('textbox', { name: 'qualification' })).toBeInTheDocument();
+  userEvent.click(screen.getByRole('button', { name: 'add qualification' }));
+  expect(screen.getByRole('textbox', { name: 'qualification' })).toBeInTheDocument();
   expect(screen.getByRole('textbox', { name: 'speciality' })).toBeInTheDocument();
-  // expect(screen.getByRole('textbox', { name: 'customer stories' })).toBeInTheDocument();
+  userEvent.click(screen.getByRole('button', { name: 'add customer story' }));
+  expect(screen.getByRole('textbox', { name: 'customer story' })).toBeInTheDocument();
+  expect(screen.getByRole('spinbutton', { name: 'years experience' })).toBeInTheDocument();
 
   userEvent.click(
     screen.getByRole('button', { name: 'right Client Communication (if applicable)' })
   );
-  expect(screen.getByRole('combobox', { name: 'communication modes' })).toBeInTheDocument();
+  expect(screen.getByRole('listbox', { name: 'communication modes' })).toBeInTheDocument();
   expect(screen.getByRole('combobox', { name: 'communication frequency' })).toBeInTheDocument();
 
   userEvent.click(
     screen.getByRole('button', { name: 'right Payment information (if applicable)' })
   );
   expect(screen.getByRole('combobox', { name: 'payment frequency' })).toBeInTheDocument();
-  expect(screen.getByRole('combobox', { name: 'payment options' })).toBeInTheDocument();
+  expect(screen.getByRole('listbox', { name: 'payment options' })).toBeInTheDocument();
 
   userEvent.click(screen.getByRole('button', { name: 'right Additional information' }));
-  expect(screen.getByRole('combobox', { name: 'service format' })).toBeInTheDocument();
+  expect(screen.getByRole('listbox', { name: 'service format' })).toBeInTheDocument();
   expect(screen.getByRole('combobox', { name: 'client gender' })).toBeInTheDocument();
-  // expect(screen.getByRole('slider', { name: 'client fitness' })).toBeInTheDocument();
-  // expect(screen.getByRole('slider', { name: 'client hypertrophy' })).toBeInTheDocument();
-  // expect(screen.getByRole('slider', { name: 'client strength' })).toBeInTheDocument();
+  expect(screen.getAllByRole('slider', { name: 'client fitness' })).not.toBeNull();
+  expect(screen.getAllByRole('slider', { name: 'client hypertrophy' })).not.toBeNull();
+  expect(screen.getAllByRole('slider', { name: 'client strength' })).not.toBeNull();
 
   expect(screen.getByRole('button', { name: 'save' })).toBeInTheDocument();
 });
@@ -59,85 +61,84 @@ it('updates user when submitted with valid data', async () => {
 
   const user = {
     trainerType: 'Lifestyle trainer',
+    qualifications: [1, 2, 3].map((n) => `qualification ${n}`),
     speciality: 'Nutrition',
-    communicationModes: ['Email', 'Phone calls'],
+    customerStories: [1, 2].map((n) => `customer story ${n}`),
+    yearsExperience: 3,
+    communicationModes: ['Email', 'Phone calls', 'Whatsapp'],
     communicationFrequency: 'Daily',
     paymentFrequency: 'One time',
-    paymentOptions: ['Paypal'],
+    paymentOptions: ['Paypal', 'Cash'],
     serviceFormat: ['Non-client-specific videos'],
     clientGenderPreference: 'Female',
+    clientFitness: [5, 60],
+    clientHypertrophy: [50, 85],
+    clientStrength: [34, 46],
   };
 
   userEvent.click(screen.getByRole('button', { name: 'right Your career' }));
-  userEvent.click(screen.getByRole('combobox', { name: 'trainer type' }));
-  userEvent.click(screen.getByText(user.trainerType));
+  userEvent.selectOptions(screen.getByRole('combobox', { name: 'trainer type' }), user.trainerType);
+  user.qualifications.forEach(() => {
+    userEvent.click(screen.getByRole('button', { name: 'add qualification' }));
+  });
+  screen.getAllByRole('textbox', { name: 'qualification' }).forEach((textbox, index) => {
+    userEvent.type(textbox, user.qualifications[index]);
+  });
   userEvent.type(screen.getByRole('textbox', { name: 'speciality' }), user.speciality);
+  user.customerStories.forEach(() => {
+    userEvent.click(screen.getByRole('button', { name: 'add customer story' }));
+  });
+  screen.getAllByRole('textbox', { name: 'customer story' }).forEach((textbox, index) => {
+    userEvent.type(textbox, user.customerStories[index]);
+  });
+  userEvent.type(
+    screen.getByRole('spinbutton', { name: 'years experience' }),
+    `${user.yearsExperience}`
+  );
 
   userEvent.click(
     screen.getByRole('button', { name: 'right Client Communication (if applicable)' })
   );
-  userEvent.click(screen.getByRole('combobox', { name: 'communication modes' }));
-  user.communicationModes.forEach((cm) =>
-    userEvent.click(screen.getByRole('option', { name: cm }))
+  userEvent.selectOptions(
+    screen.getByRole('listbox', { name: 'communication modes' }),
+    user.communicationModes
   );
-  userEvent.click(screen.getByRole('combobox', { name: 'communication frequency' }));
-  userEvent.click(screen.getByRole('option', { name: user.communicationFrequency }));
-  userEvent.click(screen.getByRole('combobox', { name: 'communication frequency' }));
+  userEvent.selectOptions(
+    screen.getByRole('combobox', { name: 'communication frequency' }),
+    user.communicationFrequency
+  );
 
   userEvent.click(
     screen.getByRole('button', { name: 'right Payment information (if applicable)' })
   );
-  userEvent.click(screen.getByRole('combobox', { name: 'payment frequency' }));
-  userEvent.click(screen.getByRole('option', { name: user.paymentFrequency }));
-  userEvent.click(screen.getByRole('combobox', { name: 'payment options' }));
-  user.paymentOptions.forEach((po) => userEvent.click(screen.getByRole('option', { name: po })));
-
-  userEvent.click(screen.getByRole('button', { name: 'right Additional information' }));
-  userEvent.click(screen.getByRole('combobox', { name: 'service format' }));
-  screen.getByRole('option', { name: 'Non-client-specific videos' });
-  /* user.serviceFormat.forEach((sf) =>
-	  userEvent.click(userEvent.click(screen.getByRole('option', { name: sf })))
-	); */
-  userEvent.click(screen.getByRole('combobox', { name: 'client gender' }));
-  userEvent.click(screen.getByRole('option', { name: user.clientGenderPreference }));
-
-  userEvent.click(screen.getByRole('button', { name: 'save' }));
-  await waitFor(() => expect(updateUser).toHaveBeenCalledWith(user));
-});
-
-it('does not update user when submitted with invalid data', async () => {
-  const session = { user: {} };
-  updateUser.mockReturnValue({ data: { success: false, data: {} } });
-  render(<ClientQuest session={session} />);
-
-  const user = {
-    weight: -10,
-    height: -10,
-    fitnessLevel: 'beginner',
-    preferredGender: 'male',
-    trainingDuration: -45,
-    trainingEquipment: ['barbells', 'dumbbells'],
-  };
-
-  userEvent.click(screen.getByRole('button', { name: 'right Personal information' }));
-  userEvent.type(screen.getByRole('spinbutton', { name: 'weight' }), `${user.weight}`);
-  userEvent.type(screen.getByRole('spinbutton', { name: 'height' }), `${user.height}`);
-  userEvent.click(screen.getByRole('combobox', { name: 'fitness level' }));
-  userEvent.click(screen.getByText('Beginner'));
-
-  userEvent.click(screen.getByRole('button', { name: 'right Preferences' }));
-  userEvent.click(screen.getByRole('combobox', { name: 'instructor gender' }));
-  userEvent.click(screen.getByText('Male'));
-  userEvent.type(
-    screen.getByRole('spinbutton', { name: 'training duration' }),
-    `${user.trainingDuration}`
+  userEvent.selectOptions(
+    screen.getByRole('combobox', { name: 'payment frequency' }),
+    user.paymentFrequency
+  );
+  userEvent.selectOptions(
+    screen.getByRole('listbox', { name: 'payment options' }),
+    user.paymentOptions
   );
 
   userEvent.click(screen.getByRole('button', { name: 'right Additional information' }));
-  userEvent.click(screen.getByRole('combobox', { name: 'training equipment' }));
-  userEvent.click(screen.getByText('Barbells'));
-  userEvent.click(screen.getByText('Dumbbells'));
+  userEvent.selectOptions(
+    screen.getByRole('listbox', { name: 'service format' }),
+    user.serviceFormat
+  );
+  userEvent.selectOptions(
+    screen.getByRole('combobox', { name: 'client gender' }),
+    user.clientGenderPreference
+  );
+  screen.getAllByRole('slider', { name: 'client fitness' }).forEach((slider, index) => {
+    fireEvent.change(slider, { target: { value: user.clientFitness[index] } });
+  });
+  screen.getAllByRole('slider', { name: 'client hypertrophy' }).forEach((slider, index) => {
+    fireEvent.change(slider, { target: { value: user.clientHypertrophy[index] } });
+  });
+  screen.getAllByRole('slider', { name: 'client strength' }).forEach((slider, index) => {
+    fireEvent.change(slider, { target: { value: user.clientStrength[index] } });
+  });
 
   userEvent.click(screen.getByRole('button', { name: 'save' }));
-  await waitFor(() => expect(updateUser).toHaveBeenCalledTimes(0));
+  await waitFor(() => expect(updateUser).toHaveBeenCalledWith(user));
 });

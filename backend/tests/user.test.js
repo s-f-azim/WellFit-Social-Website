@@ -32,6 +32,7 @@ it('Should signup a new user', async () => {
   expect(user).not.toBeNull;
   expect(await User.countDocuments()).toBe(count + 1);
 });
+
 // assert signup with invalid data (duplicate email)
 it('Should not signup a new user', async () => {
   const count = await User.countDocuments();
@@ -76,7 +77,7 @@ it('Should not edit profile when not logged in', async () => {
     .expect(200);
 });
 // assert update a user attribute
-it("Should update a user's valid attribute", async () => {
+it('Should update a users valid attribute', async () => {
   await request(app)
     .patch('/api/users/editProfile')
     .send({ email: 'testtttttttt@test.com' })
@@ -87,7 +88,7 @@ it("Should update a user's valid attribute", async () => {
 });
 
 // assert update a user attribute
-it("Should not update a user's invalid attribute", async () => {
+it('Should not update a users invalid attribute', async () => {
   await request(app)
     .patch('/api/users/editProfile')
     .send({ size: 'large' })
@@ -98,7 +99,7 @@ it("Should not update a user's invalid attribute", async () => {
 });
 
 // userId should be added to follow array
-it("Should increment user's following count", async () => {
+it('Should increment users following count', async () => {
   await request(app)
     .patch(`/api/users/follow/${userTwo._id}`)
     .send()
@@ -109,7 +110,7 @@ it("Should increment user's following count", async () => {
 });
 
 // same user's userId shouldn't be added to follow array
-it("Shouldn't change user's following count", async () => {
+it('Shouldnt change users following count', async () => {
   await request(app)
     .patch(`/api/users/follow/${userOne._id}`)
     .send()
@@ -120,7 +121,7 @@ it("Shouldn't change user's following count", async () => {
 });
 
 // userId should be added then removed again upon add request
-it("Should increment user's following count", async () => {
+it('Should increment users following count', async () => {
   await request(app)
     .patch(`/api/users/follow/${userTwo._id}`)
     .send()
@@ -262,10 +263,7 @@ it('Should get id of users by email', async () => {
   expect(response.body.data).toBe(userOne._id.toString());
 });
 
-/**
- * @test getSuggestedInstructors
- * @desc Testing querying for suggested instructors for users to follow
- */
+// assert get similar instructors based on tags and gender preference
 it('Should query similar instructors based on tags and client gender preference', async () => {
   const response = await request(app)
     .get('/api/users/suggestedinstructors')
@@ -396,17 +394,13 @@ it('Instructor cannot add courses to wish list', async () => {
   expect(response.body.data.length === 0);
 });
 
-/**
- * @test getTrendingUsers
- * @desc Testing querying users
- */
-
+// assert get trending users
 it('Should get top ten users in the database', async () => {
   const response = await request(app)
     .get('/api/users/trendingUsers')
     .send()
     .expect(200);
-  expect(response.body.data.length).toBeLessThanOrEqual(10); //check only max 10 users retrieved
+  expect(response.body.data.length).toBeLessThanOrEqual(10); // check only max 10 users retrieved
 });
 
 it('Should get top ten users in database sorted in ascending order', async () => {
@@ -414,7 +408,7 @@ it('Should get top ten users in database sorted in ascending order', async () =>
     .get('/api/users/trendingUsers')
     .send()
     .expect(200);
-  expect(response.body.data).toEqual(response.body.data.sort((a, b) => b - a)); //check array is ascending
+  expect(response.body.data).toEqual(response.body.data.sort((a, b) => b - a)); // check array is ascending
 });
 
 it('Should get top ten users that are not admins', async () => {
