@@ -1,7 +1,6 @@
 import request from 'supertest';
 import Course from '../src/models/Course.js';
 import app from '../src/app.js';
-import geocoder from '../src/utils/geocoder.js';
 
 import {
   tokens,
