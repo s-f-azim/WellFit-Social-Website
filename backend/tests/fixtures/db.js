@@ -409,7 +409,6 @@ const setupInstructors = async () => {
     instTokens.push(user.getSignedJWTToken());
   }
 };
-const deleteDb = async () => await mongoose.connection.db.dropDatabase();
 
 export {
   userOne,
@@ -438,5 +437,4 @@ export {
   conversationOne,
   conversationTwo,
   postOne,
-  deleteDb,
 };
