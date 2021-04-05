@@ -3,7 +3,7 @@ import sharp from 'sharp';
 import asyncHandler from '../middleware/async.js';
 import User from '../models/User.js';
 import Course from '../models/Course.js';
-import Post from '../models/Post.js'; 
+import Post from '../models/Post.js';
 
 /**
  * @async
@@ -150,20 +150,13 @@ const followUser = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollowing = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page, 10) || 1;
-  const limit = parseInt(req.query.limit, 10) || 12;
-  const startIndex = (page - 1) * limit;
   const followings = await User.findById(req.params.id).populate({
     path: 'following',
     select: ['fName', 'lName', 'photos'],
   });
-  const result = followings.following.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: result || [],
-    pagination: {
-      total: followings.following.length,
-    },
+    data: followings.following || [],
   });
 });
 
@@ -174,20 +167,13 @@ const getFollowing = asyncHandler(async (req, res) => {
  * @access private
  */
 const getFollower = asyncHandler(async (req, res) => {
-  const page = parseInt(req.query.page, 10) || 1;
-  const limit = parseInt(req.query.limit, 10) || 12;
-  const startIndex = (page - 1) * limit;
   const followers = await User.findById(req.params.id).populate({
     path: 'follower',
     select: ['fName', 'lName', 'photos'],
   });
-  const result = followers.follower.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: result || [],
-    pagination: {
-      total: followers.follower.length,
-    },
+    data: followers.follower || [],
   });
 });
 
@@ -414,34 +400,43 @@ const getTrendingUsers = asyncHandler(async (req, res) => {
  * @desc Gets user's favourited posts
  * @route GET /api/users/favouritedPosts
  */
-const getFavouritedPosts = asyncHandler(async (req, res) => { //get specified number of favourited posts
+const getFavouritedPosts = asyncHandler(async (req, res) => {
+  // get specified number of favourited posts
   const user = await User.findById(req.user._id).populate({
     path: 'favourites',
-    populate: {path: 'author', select: 'fName lName'},
+    populate: { path: 'author', select: 'fName lName' },
   });
   if (req.params.quantity) {
-    if (req.params.quantity === "*") { //if request wants all favourited posts 
-      res.status(200).send( {success: true, data: user.favourites} );
-    } else if ( !Number.isNaN(parseInt(req.params.quantity, 10)) ) { //if request wants limited amount 
-      res.status(200).send({success: true, data: user.favourites.slice(0, req.params.quantity)});
+    if (req.params.quantity === '*') {
+      // if request wants all favourited posts
+      res.status(200).send({ success: true, data: user.favourites });
+    } else if (!Number.isNaN(parseInt(req.params.quantity, 10))) {
+      // if request wants limited amount
+      res
+        .status(200)
+        .send({
+          success: true,
+          data: user.favourites.slice(0, req.params.quantity),
+        });
     } else {
-      res.status(404).send( {success: false, error: "invalid parameter"});
+      res.status(404).send({ success: false, error: 'invalid parameter' });
     }
-  } 
+  }
 });
 
-/** 
+/**
  * @async
  * @desc Update user's favourited posts
  * @route PATCH  /api/users/favouritedPosts/:id
-*/
-const updateFavouritedPosts = asyncHandler( async (req, res) => {
+ */
+const updateFavouritedPosts = asyncHandler(async (req, res) => {
   if (Post.findById(req.params.id)) {
     const index = req.user.favourites.indexOf(req.params.id);
-    if (index === -1) { //if post not favourited
+    if (index === -1) {
+      // if post not favourited
       req.user.favourites.push(req.params.id);
-    } else { 
-      req.user.favourites.splice(index, 1); //remove from favourites
+    } else {
+      req.user.favourites.splice(index, 1); // remove from favourites
     }
   }
   const updatedUser = await req.user.save();
