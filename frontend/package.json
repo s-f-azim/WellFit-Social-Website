@@ -28,6 +28,7 @@
     "next-auth": "^3.11.2",
     "next-compose-plugins": "^2.2.1",
     "next-images": "^1.7.0",
+    "next-seo": "^4.23.0",
     "node-sass": "^5.0.0",
     "nprogress": "^0.2.0",
     "null-loader": "^4.0.1",

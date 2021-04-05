@@ -4,6 +4,7 @@ import { ArrowUpOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.less';
 import '../styles/main.scss';
 import Head from 'next/head';
+import { DefaultSeo } from 'next-seo';
 import Router from 'next/router';
 import { Provider } from 'next-auth/client';
 import Layout from '../components/generalComponents/Layout';
@@ -21,6 +22,14 @@ function MyApp({ Component, pageProps }) {
         keepAlive: 60 * 60,
       }}
     >
+      <DefaultSeo
+        openGraph={{
+          type: 'website',
+          locale: 'en_us',
+          url: 'https://www.seg-majr.com',
+          site_name: 'WellFit',
+        }}
+      />
       <Head>
         <title>WellFit</title>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
