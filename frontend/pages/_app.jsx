@@ -22,6 +22,7 @@ function MyApp({ Component, pageProps }) {
       }}
     >
       <Head>
+        <title>WellFit</title>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link rel="stylesheet" type="text/css" href="/nprogress.css" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -29,6 +30,7 @@ function MyApp({ Component, pageProps }) {
           href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:ital,wght@0,400;0,600;1,700&display=swap"
           rel="stylesheet"
         />
+        <meta name="viewport" content="initial-scale=1.0,width=device-width" />
       </Head>
       <Layout>
         <BackTop>
