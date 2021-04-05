@@ -16,7 +16,7 @@ import {
 
 const Review = ({ getReviews, onSubmit, onDelete }) => {
   const [session, loading] = useSession();
-  const user = useMemo(() => (session ? session.user : null), [session]);
+  const [user, setUser] = useState();
   const [reviews, setReviews] = useState([]);
   const [hasReviewed, setHasReviewed] = useState(false);
 
@@ -31,6 +31,10 @@ const Review = ({ getReviews, onSubmit, onDelete }) => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (session) setUser(session.user);
+  }, [session]);
 
   useEffect(() => {
     setHasReviewed(user && reviews && reviews.find((r) => r.author._id === user._id));
