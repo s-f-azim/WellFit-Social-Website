@@ -44,6 +44,7 @@ function MyApp({ Component, pageProps }) {
           name="description"
           content="The landing page of wellfit where you can find everything from fitness to nutrition"
         />
+        <meta name="robots" content="all" />
       </Head>
       <Layout>
         <BackTop>
