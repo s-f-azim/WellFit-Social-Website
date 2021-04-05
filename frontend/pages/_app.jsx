@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
         openGraph={{
           type: 'website',
           locale: 'en_us',
-          url: 'https://www.seg-majr.com',
+          url: 'https://seg-major.vercel.app',
           site_name: 'WellFit',
         }}
       />
