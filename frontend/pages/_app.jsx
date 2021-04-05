@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
         openGraph={{
           type: 'website',
           locale: 'en_us',
-          url: 'https://www.seg-majr.com',
+          url: 'https://seg-major.vercel.app',
           site_name: 'WellFit',
         }}
       />
@@ -44,7 +44,6 @@ function MyApp({ Component, pageProps }) {
           name="description"
           content="The landing page of wellfit where you can find everything from fitness to nutrition"
         />
-        <meta name="robots" content="all" />
       </Head>
       <Layout>
         <BackTop>
