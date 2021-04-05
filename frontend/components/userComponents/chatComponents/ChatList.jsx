@@ -16,9 +16,14 @@ const ChatList = ({ setConversation, setReciver }) => {
   const [lastMsgs, setLastMsgs] = useState({});
   let totalUsers;
   useEffect(async () => {
-    const response = await getFollowingList(session.user._id);
-    totalUsers = response.data.pagination.total;
-    setUsers([...response.data.data]);
+    try {
+      const response = await getFollowingList(session.user._id);
+
+      totalUsers = response.data.pagination.total;
+      setUsers([...response.data.data]);
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
   // load images of users
   const image = (user) => {
