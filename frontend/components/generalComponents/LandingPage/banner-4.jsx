@@ -39,8 +39,10 @@ const Banner4 = () => {
                         alt="example"
                         src={
                           item.photos[0]
-                            ? item.photos[0]
-                            : '/alex-suprun-ZHvM3XIOHoE-unsplash-2.jpg'
+                            ? `data:image/png;base64,${Buffer.from(item.photos[0].data).toString(
+                                'base64'
+                              )}`
+                            : '/image-not-found.svg'
                         }
                       />
                     }

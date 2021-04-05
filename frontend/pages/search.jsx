@@ -17,6 +17,7 @@ const { Option } = Select;
 const { Search } = Input;
 
 const SearchBar = () => {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
@@ -26,10 +27,10 @@ const SearchBar = () => {
   const [total, setTotal] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchType, setSearchType] = useState('');
+  const [searchType, setSearchType] = useState(router.query.tab ? router.query.tab : 'People');
   const [query, setQuery] = useState({});
   let response;
-  const router = useRouter();
+
   const searchName = async () => {
     response = null;
     if (searchType === 'People') {
@@ -91,6 +92,7 @@ const SearchBar = () => {
         <Radio.Group
           style={{ paddingBottom: '2rem' }}
           onChange={(e) => {
+            setCurrentPage(1);
             setSearchType(e.target.value);
             setQuery({});
           }}
@@ -157,6 +159,7 @@ const SearchBar = () => {
             onShowSizeChange={handlePaginationChange}
             defaultCurrent={0}
             total={total}
+            current={currentPage}
             style={{ margin: '2rem', alignItems: 'center' }}
             onChange={handlePaginationChange}
           />
