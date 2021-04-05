@@ -91,6 +91,7 @@ const SearchBar = () => {
         <Radio.Group
           style={{ paddingBottom: '2rem' }}
           onChange={(e) => {
+            setCurrentPage(1);
             setSearchType(e.target.value);
             setQuery({});
           }}
@@ -157,6 +158,7 @@ const SearchBar = () => {
             onShowSizeChange={handlePaginationChange}
             defaultCurrent={0}
             total={total}
+            current={currentPage}
             style={{ margin: '2rem', alignItems: 'center' }}
             onChange={handlePaginationChange}
           />
