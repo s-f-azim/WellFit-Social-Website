@@ -11,6 +11,8 @@ import Post from '../../src/models/Post.js';
 
 const courseOneId = new mongoose.Types.ObjectId();
 const userOneId = new mongoose.Types.ObjectId();
+const postOneId = new mongoose.Types.ObjectId();
+const postTwoId = new mongoose.Types.ObjectId();
 
 // create users
 const userOne = {
@@ -284,16 +286,12 @@ const courseReviewOne = {
 
 // create posts
 
-const postOneId = new mongoose.Types.ObjectId();
-
 const postOne = {
   _id: postOneId,
   author: userOneId,
   content: 'postOne',
   youtubelink: 'postOne',
 };
-
-const postTwoId = new mongoose.Types.ObjectId();
 
 const postTwo = {
   _id: postTwoId,
