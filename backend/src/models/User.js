@@ -320,6 +320,12 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+
+    favourites: [{ 
+      type: mongoose.Schema.ObjectId ,
+      ref: 'Post',
+      default: [],
+    }],
   },
   { timestamps: true }
 );
