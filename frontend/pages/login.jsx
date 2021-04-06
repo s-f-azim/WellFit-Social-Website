@@ -9,6 +9,7 @@ import {
   SmileOutlined,
   QuestionOutlined,
 } from '@ant-design/icons';
+import { NextSeo } from 'next-seo';
 import { login } from '../services/auth';
 import API from '../services/api';
 
@@ -127,6 +128,10 @@ const Login = () => {
   };
   return (
     <div className="login">
+      <NextSeo
+        title="Login Page"
+        description="A page from which a user can sign into their WellFit account."
+      />
       <Row type="flex" justify="center" align="middle" style={{ minHeight: '85vh' }}>
         <Card>
           <h1>

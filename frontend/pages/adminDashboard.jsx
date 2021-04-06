@@ -14,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import { useState } from 'react';
 import { useSession } from 'next-auth/client';
+import { NextSeo } from 'next-seo';
 import {
   getUsers,
   getUsersWithLimit,
@@ -158,6 +159,10 @@ const AdminDashboard = ({
 
     return (
       <div className="adminDashboard">
+        <NextSeo
+          title="Admin Dashboard"
+          description="An administrative dashboard from which to manage the website as administrator."
+        />
         <Row justify="left" type="flex">
           <Card title={title}>
             <Tabs size="small" defaultActiveKey="1" tabPosition="left">

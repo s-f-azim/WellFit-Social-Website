@@ -2,6 +2,7 @@
 import { Input, Select, Radio, Pagination, Row, Col } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { NextSeo } from 'next-seo';
 import { getPeople } from '../actions/user';
 import { getCourses } from '../actions/course';
 import PeopleResults from '../components/generalComponents/Search/PeopleResults';
@@ -81,6 +82,10 @@ const SearchBar = () => {
   ));
   return (
     <>
+      <NextSeo
+        title="Search Page"
+        description="A page from which a user can search the site for questionnaires, courses, and people."
+      />
       <div
         style={{
           display: 'flex',

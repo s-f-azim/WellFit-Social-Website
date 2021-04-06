@@ -26,6 +26,7 @@ import {
 } from 'antd';
 import { useState } from 'react';
 import { useSession } from 'next-auth/client';
+import { NextSeo } from 'next-seo';
 import { createRequest } from '../actions/request';
 import { deleteUser } from '../actions/user';
 import AccessDenied from '../components/generalComponents/AccessDenied';
@@ -157,6 +158,10 @@ const settingsPage = () => {
 
     return (
       <div className="settings">
+        <NextSeo
+          title="Settings Page"
+          description="A page from which a user can change their settings, as well as submit bug reports to administrators."
+        />
         <Row type="flex" justify="left">
           <Card className="mainCard" size="default" title={settingsTitle}>
             <Tabs size="large" defaultActiveKey="1" tabPosition="left">
