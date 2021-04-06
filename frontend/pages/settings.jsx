@@ -4,8 +4,6 @@ import {
   UserOutlined,
   BugOutlined,
   CheckCircleOutlined,
-  StopOutlined,
-  MailOutlined,
   WarningOutlined,
   CheckOutlined,
   DownCircleOutlined,
@@ -62,18 +60,6 @@ const settingsPage = () => {
     const verifyMe = (
       <h3>
         <CheckCircleOutlined /> Verify my profile
-      </h3>
-    );
-
-    const UserReport = (
-      <h3>
-        <StopOutlined /> report a user
-      </h3>
-    );
-
-    const feedback = (
-      <h3>
-        <MailOutlined /> Inbox
       </h3>
     );
 
@@ -274,9 +260,6 @@ const settingsPage = () => {
                     </Text>
                   </Card>
                 )}
-                <Card className="settingCard" title={feedback}>
-                  check your inbox
-                </Card>
               </TabPane>
             </Tabs>
           </Card>

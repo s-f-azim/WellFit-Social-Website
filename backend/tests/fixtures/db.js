@@ -314,7 +314,6 @@ const postThree = {
 const requestOneId = new mongoose.Types.ObjectId();
 const requestTwoId = new mongoose.Types.ObjectId();
 const requestThreeId = new mongoose.Types.ObjectId();
-const requestFourId = new mongoose.Types.ObjectId();
 
 // requests
 const requestOne = {
@@ -334,13 +333,6 @@ const requestTwo = {
 const requestThree = {
   _id: requestThreeId,
   author: userOneId,
-  type: 'message',
-  content: 'message #1',
-};
-
-const requestFour = {
-  _id: requestFourId,
-  author: userOneId,
   recipient: userTwoId,
   type: 'report',
   content: 'user report #1',
@@ -357,7 +349,7 @@ const instructors = [
   instructorSix,
 ];
 const courses = [courseOne, courseTwo, courseThree, courseFour];
-const requests = [requestOne, requestTwo, requestThree, requestFour];
+const requests = [requestOne, requestTwo, requestThree];
 const conversations = [conversationOne, conversationTwo];
 const posts = [postOne, postTwo, postThree];
 
@@ -427,7 +419,6 @@ export {
   requestOne,
   requestTwo,
   requestThree,
-  requestFour,
   instructorOne,
   instructorTwo,
   instructorThree,
