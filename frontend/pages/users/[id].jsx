@@ -58,6 +58,7 @@ import { UserReview } from '../../components/userComponents/reviewComponents/Rev
 
 const User = ({ user }) => {
   const [session, loading] = useSession();
+  console.log(session);
   const [isFollowing, setIsFollowing] = useState(false);
 
   const [isFollowingModalVisible, setIsFollowingModalVisible] = useState(false);
