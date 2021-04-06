@@ -1,5 +1,4 @@
 import { Button, Form, Card, Col, Modal, Typography, Carousel, Steps, Input, Radio } from 'antd';
-import Image from 'next/image';
 import { useRef, useState, useCallback } from 'react';
 
 const formItemLayout = {
@@ -122,10 +121,10 @@ const SearchCard = ({ setQuery, category }) => {
                   setIsEmpty(false);
                 }}
               >
-                <Radio style={radioStyle} value={'users'}>
+                <Radio style={radioStyle} value="users">
                   People
                 </Radio>
-                <Radio style={radioStyle} value={'courses'}>
+                <Radio style={radioStyle} value="courses">
                   Packages
                 </Radio>
               </Radio.Group>

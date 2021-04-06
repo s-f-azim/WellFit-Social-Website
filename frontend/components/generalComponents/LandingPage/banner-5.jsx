@@ -4,8 +4,20 @@ const Banner5 = () => (
   <div className="banner5">
     <div className="inner_banner5">
       <div className="banner5_chats">
-        <Image layout="intrinsic" src="/Chat_Right.svg" width="500px" height="200px" />
-        <Image layout="intrinsic" src="/Chat_Left.svg" width="500px" height="200px" />
+        <Image
+          alt="A chat bubble"
+          layout="intrinsic"
+          src="/Chat_Right.svg"
+          width="500px"
+          height="200px"
+        />
+        <Image
+          alt="A chat bubble"
+          layout="intrinsic"
+          src="/Chat_Left.svg"
+          width="500px"
+          height="200px"
+        />
       </div>
       <div className="banner5_content">
         <h1>
@@ -23,10 +35,22 @@ const Banner5 = () => (
         <p>Chat in real time with people you've connected with</p>
       </div>
       <div className="banner5_chats_flip">
-        <Image layout="intrinsic" src="/computer.svg" width="300px" height="200px" />
+        <Image
+          alt="A man at his desk with a computer"
+          layout="intrinsic"
+          src="/computer.svg"
+          width="300px"
+          height="200px"
+        />
       </div>
       <div className="banner5_chats_mobile">
-        <Image layout="intrinsic" src="/computer.svg" width="500px" height="500px" />
+        <Image
+          alt="A man at his desk with a computer"
+          layout="intrinsic"
+          src="/computer.svg"
+          width="500px"
+          height="500px"
+        />
       </div>
       <div className="banner5_content_mobile">
         <h1>
@@ -37,7 +61,13 @@ const Banner5 = () => (
       </div>
 
       <div className="banner5_chats">
-        <Image layout="intrinsic" src="/Group.svg" width="500px" height="500px" />
+        <Image
+          alt="A diverse group of people"
+          layout="intrinsic"
+          src="/Group.svg"
+          width="500px"
+          height="500px"
+        />
       </div>
       <div className="banner5_content">
         <h1>

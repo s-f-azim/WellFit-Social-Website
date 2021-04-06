@@ -72,6 +72,7 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
             <Row>
               <Col className="card-image">
                 <Image
+                  alt="A picture preview of a course"
                   src={
                     content.photos[0]
                       ? `data:image/png;base64,${Buffer.from(content.photos[0]).toString('base64')}`
@@ -133,6 +134,7 @@ const CourseCard = ({ content, isWish, removeFromWishList }) => {
             <Row justify="center" align="middle" className="course-card">
               <Col className="modal-image">
                 <Image
+                  alt="A picture preview of a course"
                   src={
                     content.photos[0]
                       ? `data:image/png;base64,${Buffer.from(content.photos[0]).toString('base64')}`

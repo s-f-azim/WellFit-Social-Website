@@ -36,6 +36,7 @@ const Banner4 = () => {
                     hoverable
                     cover={
                       <Image
+                        alt="Picture of an instructor"
                         src={
                           item.photos[0]
                             ? `data:image/png;base64,${Buffer.from(item.photos[0]).toString(
