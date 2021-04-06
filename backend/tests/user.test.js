@@ -12,10 +12,12 @@ import {
   courseTwo,
   postOne,
   postThree,
+  dropDb,
 } from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
+afterAll(dropDb);
 
 // assert signup with valid data
 it('Should signup a new user', async () => {
