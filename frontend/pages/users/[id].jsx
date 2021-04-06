@@ -59,10 +59,6 @@ import { UserReview } from '../../components/userComponents/reviewComponents/Rev
 const User = ({ user }) => {
   const [session, loading] = useSession();
   const [isFollowing, setIsFollowing] = useState(false);
-  if (session && session.user) {
-    console.log('hmm', follower, session.user);
-    setIsFollowing(follower.includes(session.user._id));
-  }
 
   const [isFollowingModalVisible, setIsFollowingModalVisible] = useState(false);
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
@@ -70,6 +66,10 @@ const User = ({ user }) => {
   const [follower, setFollower] = useState([]);
   const [followNum, setFollowNum] = useState(0);
   const [followerNum, setFollowerNum] = useState(0);
+  if (session && session.user) {
+    console.log('hmm', follower, session.user);
+    setIsFollowing(follower.includes(session.user._id));
+  }
   const router = useRouter();
   if (router.isFallback) {
     return <Skeleton active />;
