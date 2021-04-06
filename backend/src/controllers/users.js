@@ -418,7 +418,7 @@ const getFavouritedPosts = asyncHandler(async (req, res) => {
   // get specified number of favourited posts
   const user = await User.findById(req.user._id).populate({
     path: 'favourites',
-    populate: { path: 'author', select: 'fName lName' },
+    populate: { path: 'author', select: 'fName lName photos' },
   });
   if (req.params.quantity) {
     if (req.params.quantity === '*') {

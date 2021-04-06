@@ -27,6 +27,14 @@
 .instructorCard {
   grid-column: auto/span 4;
 }
+.instructorCard .ant-card {
+  border-radius: 0.5rem;
+}
+.instructorCard .anticon svg {
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+}
 .instructorCard Card {
   background-color: white;
 }

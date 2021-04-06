@@ -155,6 +155,15 @@ CourseSchema.pre('save', function (next) {
   next();
 });
 
+CourseSchema.pre('remove', (next) => {
+  this.model('User').update(
+    {wishlist: { $in: [this._id] }},
+    {$pull: { wishlist: this._id }},
+    {multi: true},
+    next
+  );
+});
+
 // create course model
 const Course = mongoose.model('Course', CourseSchema);
 
