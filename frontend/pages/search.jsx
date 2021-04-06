@@ -50,7 +50,6 @@ const SearchBar = () => {
       try {
         const { type, location } = query.values;
         response = await searchRadius(type, location, currentPage, query.category.name);
-        console.log(response);
       } catch (err) {
         console.log(err);
       }
@@ -97,6 +96,7 @@ const SearchBar = () => {
         <Radio.Group
           style={{ paddingBottom: '2rem' }}
           onChange={(e) => {
+            setData([]);
             setCurrentPage(1);
             setSearchType(e.target.value);
             setQuery({});
