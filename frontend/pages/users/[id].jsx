@@ -33,9 +33,12 @@ import {
   Avatar,
   Skeleton,
   notification,
+  Upload,
+  message,
 } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import Suggestions from '../../components/userComponents/SuggestedInstructors';
 import WishList from '../../components/userComponents/WishList';
 import UserFeed from '../../components/userComponents/postComponents/UserFeed';
@@ -44,7 +47,12 @@ import TrendingUsers from '../../components/userComponents/TrendingUsers';
 import GetFollow from '../../components/userComponents/GetFollow';
 import FavouriteList from '../../components/userComponents/FavouriteList';
 import { createReport } from '../../actions/request';
-import { getFollowingList, getFollowerList, addingFollowUser } from '../../actions/user';
+import {
+  getFollowingList,
+  getFollowerList,
+  addingFollowUser,
+  uploadImages,
+} from '../../actions/user';
 import api from '../../services/api';
 import { UserReview } from '../../components/userComponents/reviewComponents/Review';
 
@@ -195,8 +203,38 @@ const User = ({ user }) => {
     </h4>
   );
 
+  const Uploader = () => {
+    const props = {
+      beforeUpload: (file) => {
+        const isValidFormat = ['image/png', 'image/jpg', 'image/jpeg'].includes(file.type);
+        if (!isValidFormat) message.error('Invalid Format: only png, jpg or jpeg');
+        return isValidFormat;
+      },
+      onChange: async ({ file }) => {
+        if (file.status === 'done') {
+          const formData = new FormData();
+          formData.append('images', file.originFileObj);
+          await uploadImages(formData);
+          message.success('Profile picture updated!');
+        }
+      },
+      maxCount: 1,
+      accept: ['image/png', 'image/jpg', 'image/jpeg'],
+      showUploadList: false,
+    };
+    return (
+      <Upload {...props}>
+        <Button icon={<EditOutlined />} />
+      </Upload>
+    );
+  };
+
   return (
     <div className="userPage">
+      <NextSeo
+        title="User Profile Page"
+        description="A page containing all the information about a specific user."
+      />
       <Row justify="space-around">
         <Col>
           <Divider>
@@ -209,7 +247,7 @@ const User = ({ user }) => {
               <Card
                 className="userImage"
                 style={{ width: 300 }}
-                actions={[<EditOutlined key="edit" />]}
+                actions={session && session.user._id === user._id && [<Uploader />]}
               >
                 <Avatar
                   style={{ width: '100%', height: '100%' }}
@@ -221,7 +259,13 @@ const User = ({ user }) => {
                     xl: 140,
                     xxl: 160,
                   }}
-                  icon={<UserOutlined />}
+                  src={
+                    user.photos[0] ? (
+                      `data:image/png;base64,${user.photos[0].toString('base64')}`
+                    ) : (
+                      <UserOutlined />
+                    )
+                  }
                 />
               </Card>
             </Col>
@@ -372,9 +416,9 @@ const User = ({ user }) => {
                       <Col span={20}>
                         <FavouriteList />
                       </Col>
-                    </Row> 
+                    </Row>
                   </Panel>
-                  
+
                   {user.role === 'client' && (
                     <>
                       <Panel

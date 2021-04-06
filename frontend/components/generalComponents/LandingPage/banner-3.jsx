@@ -35,7 +35,12 @@ const Banner3 = () => (
       </div>
       <div className="inner_banner3_image">
         <div className="banner3_screen">
-          <Image src="/wellfit_vert.png" width="231px" height="500px" />
+          <Image
+            alt="A Phone with a site preview on the screen"
+            src="/wellfit_vert.png"
+            width="231px"
+            height="500px"
+          />
         </div>
       </div>
     </div>

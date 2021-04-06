@@ -26,6 +26,7 @@ import {
   Tabs,
 } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
+import { NextSeo } from 'next-seo';
 import updateUser from '../actions/user';
 import InstQuest from '../components/userComponents/questionnaires/InstQuest';
 import AccessDenied from '../components/generalComponents/AccessDenied';
@@ -148,6 +149,10 @@ const editProfilePage = () => {
 
     return (
       <div className="EditProfile">
+        <NextSeo
+          title="Edit Profile"
+          description="A page from which a user can edit information relating to their profile, such as their tags, location or credentials."
+        />
         <Row type="flex" justify="center" align="middle">
           <Card>
             <Tabs defaultActiveKey={tab} tabPosition="left">

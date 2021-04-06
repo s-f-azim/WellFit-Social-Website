@@ -11,7 +11,7 @@ import {
   courseOne,
   courseTwo,
   postOne,
-  postThree
+  postThree,
 } from './fixtures/db.js';
 
 // setup db for each test
@@ -428,27 +428,27 @@ it('Should get top ten users that are not admins', async () => {
  * @desc Test querying favourited posts
  */
 
-it('Should retrieve all the user\'s favourited posts', async () => {
+it('Should retrieve all the users favourited posts', async () => {
   const response = await request(app)
-    .get('api/users/favouritedPosts/*')
+    .get('/api/users/favouritedPosts/*')
     .send()
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
-  expect(response.body.data.length).toEqual(2);
+  expect(response.body.data.length === 2);
 });
 
-it('Should retrieve some of the user\'s favourited posts specified by a quantity param', async () => {
+it('Should retrieve some of the users favourited posts specified by a quantity param', async () => {
   const response = await request(app)
-    .get('api/users/favouritedPosts/1')
+    .get('/api/users/favouritedPosts/1')
     .send()
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
-  expect(response.body.data.length).toEqual(1);
+  expect(response.body.data.length === 1);
 });
 
-it('Should not retrieve any of the user\'s favourited posts with a param that is NaN and not (*) ', async () => {
-  const response = await request(app)
-    .get('api/users/favouritedPosts/fifteen')
+it('Should not retrieve any of the users favourited posts with a param that is NaN and not (*) ', async () => {
+  await request(app)
+    .get('/api/users/favouritedPosts/fifteen')
     .send()
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(404);
@@ -459,22 +459,22 @@ it('Should not retrieve any of the user\'s favourited posts with a param that is
  * @desc Test updates of favouriting and unfavouriting posts
  */
 
- it('Should unfavourite post already favourited', async () => {
+it('Should unfavourite post already favourited', async () => {
   await request(app)
-    .patch(`api/users/favouritedPosts/${postOne._id}`)
+    .patch(`/api/users/favouritedPosts/${postOne._id}`)
     .send()
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
-  expect(userTwo.favourites.length).toEqual(1);
+  const user = await User.findById(userTwo._id);
+  expect(user.favourites.length === 1);
 });
 
 it('Should favourite post not already favourited', async () => {
   await request(app)
-    .patch(`api/users/favouritedPosts/${postThree._id}`)
+    .patch(`/api/users/favouritedPosts/${postThree._id}`)
     .send()
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
-  expect(userTwo.favourites.length).toEqual(3);
+  const user = await User.findById(userTwo._id);
+  expect(user.favourites.length === 1);
 });
-
-

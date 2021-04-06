@@ -8,7 +8,7 @@ const Banner2 = () => (
       <div className="inner_banner2_boxes">
         <div className="card inner_banner_content2">
           <div className="cardImage">
-            <Image src="/Asset_1.svg" height="150px" width="150px" />
+            <Image alt="A woman doing yoga" src="/Asset_1.svg" height="150px" width="150px" />
           </div>
           <div className="cardText">
             <h3>
@@ -19,7 +19,7 @@ const Banner2 = () => (
         </div>
         <div className="card inner_banner_content2">
           <div className="cardImage">
-            <Image src="/Asset_3.svg" height="150px" width="150px" />
+            <Image alt="A man flexing his biceps" src="/Asset_3.svg" height="150px" width="150px" />
           </div>
           <div className="cardText">
             <h3>
@@ -30,7 +30,7 @@ const Banner2 = () => (
         </div>
         <div className="card inner_banner_content2">
           <div className="cardImage">
-            <Image src="/Asset_2.svg" height="150px" width="150px" />
+            <Image alt="A woman meditating" src="/Asset_2.svg" height="150px" width="150px" />
           </div>
           <div className="cardText">
             <h3>
@@ -41,7 +41,7 @@ const Banner2 = () => (
         </div>
         <div className="card inner_banner_content2">
           <div className="cardImage">
-            <Image src="/Asset_4.svg" height="150px" width="150px" />
+            <Image alt="A man practicing kicks" src="/Asset_4.svg" height="150px" width="150px" />
           </div>
 
           <div className="cardText">

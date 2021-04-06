@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card } from 'antd';
+import { Card, Image } from 'antd';
 import { useSession } from 'next-auth/client';
 import { getTrendingUsersLimit } from '../../../actions/user';
 import template from '../../../data/frontPageText';
@@ -36,11 +36,11 @@ const Banner4 = () => {
                   <Card
                     hoverable
                     cover={
-                      <img
-                        alt="example"
+                      <Image
+                        alt="Picture of an instructor"
                         src={
                           item.photos[0]
-                            ? `data:image/png;base64,${Buffer.from(item.photos[0].data).toString(
+                            ? `data:image/png;base64,${Buffer.from(item.photos[0]).toString(
                                 'base64'
                               )}`
                             : '/image-not-found.svg'

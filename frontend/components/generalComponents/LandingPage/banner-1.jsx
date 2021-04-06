@@ -22,7 +22,7 @@ const Banner1 = () => {
           </div>
         </div>
         <div className="inner_banner1_image">
-          <Image src="/jogging.svg" width="600px" height="600px" />
+          <Image alt="Two people jogging" src="/jogging.svg" width="600px" height="600px" />
         </div>
       </div>
     </div>
