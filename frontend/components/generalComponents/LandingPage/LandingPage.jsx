@@ -25,7 +25,9 @@ const LandingText = () => (
   </div>
 );
 
-const LandingImage = () => <Image src="/jogging.svg" layout="intrinsic" width="550" height="550" />;
+const LandingImage = () => (
+  <Image alt="Two people jogging" src="/jogging.svg" layout="intrinsic" width="550" height="550" />
+);
 
 const LandingFooter = () => (
   <div style={{ textAlign: 'center', backgroundColor: 'white' }}>

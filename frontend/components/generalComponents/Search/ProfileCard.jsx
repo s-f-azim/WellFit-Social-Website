@@ -25,6 +25,7 @@ const ProfileCard = ({ content }) => {
           <Row>
             <Col className="card-image">
               <Image
+                alt="The profile picture of the user who's page you are visiting"
                 src={
                   content.photos[0]
                     ? `data:image/png;base64,${content.photos[0].toString('base64')}`
