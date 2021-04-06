@@ -27,9 +27,7 @@ const ProfileCard = ({ content }) => {
               <Image
                 src={
                   content.photos[0]
-                    ? `data:image/png;base64,${Buffer.from(content.photos[0].data).toString(
-                        'base64'
-                      )}`
+                    ? `data:image/png;base64,${content.photos[0].toString('base64')}`
                     : '/image-not-found.svg'
                 }
                 width={100}

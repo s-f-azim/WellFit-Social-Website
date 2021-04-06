@@ -30,7 +30,13 @@ const ChatList = ({ setConversation, setReciver }) => {
     if (user.photos[0]) {
       return (
         <Avatar
-          src={`data:image/png;base64,${Buffer.from(user.photos[0].data).toString('base64')}`}
+          src={
+            user.photos[0] ? (
+              `data:image/png;base64,${user.photos[0].toString('base64')}`
+            ) : (
+              <UserOutlined />
+            )
+          }
         />
       );
     }
