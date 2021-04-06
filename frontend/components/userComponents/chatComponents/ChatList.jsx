@@ -37,7 +37,7 @@ const ChatList = ({ setConversation, setReciver }) => {
     return <Avatar icon={<UserOutlined />} />;
   };
   // handle the infinite scroll
-  const handleScroll = async (params, total, type) => {
+  const handleScroll = async (params, total) => {
     setLoading(true);
     if (users.length >= total) {
       setLoading(false);
@@ -51,6 +51,7 @@ const ChatList = ({ setConversation, setReciver }) => {
   };
   // handle the click of the conversation or user
   const handleClick = async (user) => {
+    setReciver(user);
     const response = await getConversation(user._id);
     if (response.data.success) {
       // if conversation exists return that
@@ -61,7 +62,6 @@ const ChatList = ({ setConversation, setReciver }) => {
         const newConversation = await createConversation(user._id);
         setConversation(newConversation.data.data);
       }
-      setReciver(user);
     }
   };
   const addMsg = async (id) => {
