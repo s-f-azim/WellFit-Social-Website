@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import template from '../../../data/frontPageText';
 
 const Banner5 = () => (
   <div className="banner5">
@@ -9,18 +10,16 @@ const Banner5 = () => (
       </div>
       <div className="banner5_content">
         <h1>
-          <b>Get individual help</b>
+          <b>{template.banner5.card1.cardHeader}</b>
         </h1>
-        <p>Benefit from interactions with your favorite instructors</p>
-        <p> Get fast answers to your questions about workouts or nutrition.</p>
+        <p>{template.banner5.card1.cardText}</p>
       </div>
 
       <div className="banner5_content_flip">
         <h1>
-          <b>Follow and Interact</b>
+          <b>{template.banner5.card2.cardHeader}</b>
         </h1>
-        <p>Follow other users</p>
-        <p>Chat in real time with people you've connected with</p>
+        <p>{template.banner5.card2.cardText}</p>
       </div>
       <div className="banner5_chats_flip">
         <Image layout="intrinsic" src="/computer.svg" width="300px" height="200px" />
@@ -30,10 +29,9 @@ const Banner5 = () => (
       </div>
       <div className="banner5_content_mobile">
         <h1>
-          <b>Follow and Interact</b>
+          <b>{template.banner5.card2.cardHeader}</b>
         </h1>
-        <p>Follow other users</p>
-        <p>Chat in real time with people you've connected with</p>
+        <p>{template.banner5.card2.cardText}</p>
       </div>
 
       <div className="banner5_chats">
@@ -41,11 +39,9 @@ const Banner5 = () => (
       </div>
       <div className="banner5_content">
         <h1>
-          <b>Build a Community</b>
+          <b>{template.banner5.card3.cardHeader}</b>
         </h1>
-        <p>Follow other users and instructors</p>
-        <p>Post your thought or links to other resources</p>
-        <p>See what others have to say</p>
+        <p>{template.banner5.card3.cardText}</p>
       </div>
     </div>
   </div>

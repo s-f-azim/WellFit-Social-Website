@@ -14,8 +14,10 @@
 }
 .inner_banner1_content {
   padding-top: 3rem;
+  white-space: pre-wrap;
   padding-bottom: 3rem;
   grid-column: auto/span 6;
+  font-family: 'Open Sans';
 }
 .inner_banner1_image {
   grid-column: auto/span 6;
@@ -24,6 +26,7 @@
 }
 .headerText {
   font-size: 3rem;
+  font-family: 'Poppins';
 }
 .ant-btn.banner_button {
   color: black;
