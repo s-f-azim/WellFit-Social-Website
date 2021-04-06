@@ -58,7 +58,6 @@ import { UserReview } from '../../components/userComponents/reviewComponents/Rev
 
 const User = ({ user }) => {
   const [session, loading] = useSession();
-  console.log(session);
   const [isFollowing, setIsFollowing] = useState(false);
 
   const [isFollowingModalVisible, setIsFollowingModalVisible] = useState(false);
@@ -72,24 +71,28 @@ const User = ({ user }) => {
     return <Skeleton active />;
   }
 
-  useEffect(async () => {
-    try {
-      const followingData = await getFollowingList(user._id);
-      const followerData = await getFollowerList(user._id);
-      setFollowing(followingData.data.data);
-      setFollower(followerData.data.data);
-      setFollowNum(followingData.data.data.length);
-      setFollowerNum(followerData.data.data.length);
-      setFollowerIsModalVisible(false);
-      setIsFollowingModalVisible(false);
-      if (session && session.user) {
-        console.log('hmm', follower, session.user);
-        setIsFollowing(follower.includes(session.user._id));
+  useEffect(
+    async () => {
+      try {
+        const followingData = await getFollowingList(user._id);
+        const followerData = await getFollowerList(user._id);
+        setFollowing(followingData.data.data);
+        setFollower(followerData.data.data);
+        setFollowNum(followingData.data.data.length);
+        setFollowerNum(followerData.data.data.length);
+        setFollowerIsModalVisible(false);
+        setIsFollowingModalVisible(false);
+        if (session && session.user) {
+          console.log('hmm', follower, session.user);
+          setIsFollowing(follower.includes(session.user._id));
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [router.query]);
+    },
+    [router.query],
+    [session]
+  );
 
   if (typeof window !== 'undefined' && loading) return null;
 
