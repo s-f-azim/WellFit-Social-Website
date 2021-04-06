@@ -66,13 +66,12 @@ const User = ({ user }) => {
   const [follower, setFollower] = useState([]);
   const [followNum, setFollowNum] = useState(0);
   const [followerNum, setFollowerNum] = useState(0);
-  if (session && session.user) {
-    console.log('hmm', follower, session.user);
-    setIsFollowing(follower.includes(session.user._id));
-  }
   const router = useRouter();
   if (router.isFallback) {
     return <Skeleton active />;
+  }
+  if (session && session.user && follower.length > 0 && follower.includes(session.user._id)) {
+    setIsFollowing(true);
   }
 
   useEffect(async () => {
