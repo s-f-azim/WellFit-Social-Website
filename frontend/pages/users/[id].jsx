@@ -72,9 +72,6 @@ const User = ({ user }) => {
   }
 
   useEffect(async () => {
-    if (session && session.user) {
-      setIsFollowing(user.follower.includes(session.user._id));
-    }
     try {
       const followingData = await getFollowingList(user._id);
       const followerData = await getFollowerList(user._id);
@@ -84,6 +81,9 @@ const User = ({ user }) => {
       setFollowerNum(followerData.data.data.length);
       setFollowerIsModalVisible(false);
       setIsFollowingModalVisible(false);
+      if (session && session.user) {
+        setIsFollowing(follower.includes(session.user._id));
+      }
     } catch (error) {
       console.log(error);
     }
