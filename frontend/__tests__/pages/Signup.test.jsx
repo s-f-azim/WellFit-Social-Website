@@ -39,7 +39,7 @@ it('renders fields', () => {
   expect(screen.getByRole('button', { name: 'Register' })).toBeInTheDocument();
 });
 
-it.only('signs up user when submitted with valid data and redirects', async () => {
+it('signs up user when submitted with valid data and redirects', async () => {
   signup.mockReturnValue({ data: { success: true, data: {} } });
   render(<Signup />);
 
