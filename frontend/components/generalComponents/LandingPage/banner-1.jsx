@@ -14,7 +14,7 @@ const Banner1 = () => {
           </h1>
           <h2>{template.banner1.subheader}</h2>
           <div className="banner_button_box">
-            <Button className="banner_button" href="/signup" size="large">
+            <Button className="banner_button" href={session ? '/search' : '/signup'} size="large">
               <b>
                 {session ? template.banner1.button_signed_in : template.banner1.button_signed_out}
               </b>
