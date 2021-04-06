@@ -35,15 +35,13 @@ const Banner4 = () => {
               <div className="instructorCard">
                 <a href={session ? `users/${item._id}` : ''}>
                   <Card
-                    style={{ width: '100%', height: '100%' }}
                     hoverable
                     cover={
                       item.photos[0] ? (
                         <Image
+                          preview={false}
                           alt="Picture of an instructor"
-                          src={`data:image/png;base64,${Buffer.from(item.photos[0]).toString(
-                            'base64'
-                          )}`}
+                          src={`data:image/png;base64,${item.photos[0].toString('base64')}`}
                         />
                       ) : (
                         <UserOutlined />
