@@ -21,9 +21,13 @@
 .inner_banner3_content h1 {
   font-size: 2rem;
   font-weight: 400;
+  white-space: pre-wrap;
+  font-family: 'Poppins';
 }
 .inner_banner3_content p {
   font-size: 1.3rem;
+  white-space: pre-wrap;
+  font-family: 'Open Sans';
 }
 .ant-btn.banner3_button {
   color: black;
@@ -52,6 +56,13 @@
 .infoCard {
   font-size: 1rem;
   grid-column: auto/span 6;
+  white-space: pre-wrap;
+}
+.infoCard b {
+  font-family: 'Poppins';
+}
+.infoCard p {
+  font-family: 'Open Sans';
 }
 .scrollable {
   overflow-x: scroll;

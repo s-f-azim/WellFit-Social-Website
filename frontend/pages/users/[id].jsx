@@ -244,7 +244,11 @@ const User = ({ user }) => {
           </Divider>
           <Row justify="space-around">
             <Col>
-              <Card className="userImage" style={{ width: 300 }} actions={[<Uploader />]}>
+              <Card
+                className="userImage"
+                style={{ width: 300 }}
+                actions={session && session.user._id === user._id && [<Uploader />]}
+              >
                 <Avatar
                   style={{ width: '100%', height: '100%' }}
                   size={{

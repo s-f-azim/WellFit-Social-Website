@@ -15,7 +15,7 @@ const createCourseReview = asyncHandler(async (req, res) => {
     course: req.params.id,
     ...req.body,
   });
-  review = await review.populate('author', 'fName lName').execPopulate();
+  review = await review.populate('author', 'fName lName photos').execPopulate();
 
   return res.status(200).json({ success: true, data: review });
 });
@@ -30,7 +30,7 @@ const getCourseReviews = asyncHandler(async (req, res) => {
   Course.findById(req.params.id, 'reviews')
     .populate({
       path: 'reviews',
-      populate: { path: 'author', select: 'fName lName' },
+      populate: { path: 'author', select: 'fName lName photos' },
     })
     .exec((err, course) => {
       if (err) return res.status(400).json({ success: false });

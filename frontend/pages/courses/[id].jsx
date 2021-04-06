@@ -97,6 +97,7 @@ const Course = ({ course }) => {
     }
   };
   <Image
+    alt="a preview picture of the course"
     src={
       course.photos[0]
         ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
@@ -135,6 +136,7 @@ const Course = ({ course }) => {
 
           <Divider />
           <Image
+            alt="a preview picture of the course"
             src={
               course.photos[0]
                 ? `data:image/png;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
