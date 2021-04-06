@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import { NextSeo } from 'next-seo';
 import { login } from '../services/auth';
-import API from '../services/api';
+import API from '../config';
 
 // layout and styling for form
 
