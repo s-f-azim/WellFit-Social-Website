@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { Space, Form, Input, Checkbox, Alert, Button, Row, Card, notification, Select } from 'antd';
 import { SmileOutlined, RocketOutlined } from '@ant-design/icons';
 import { useState } from 'react';
+import { NextSeo } from 'next-seo';
 import { signup } from '../services/auth';
 
 const { Option } = Select;
@@ -42,6 +43,10 @@ const Signup = () => {
   };
   return (
     <div className="signup">
+      <NextSeo
+        title="Register Page"
+        description="A page from which a user can register their WellFit account."
+      />
       <Row type="flex" justify="center" align="middle" style={{ minHeight: '85vh' }}>
         <Card>
           <h1>

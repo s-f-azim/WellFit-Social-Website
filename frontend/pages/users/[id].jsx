@@ -38,6 +38,7 @@ import {
 } from 'antd';
 import { useSession, getSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import Suggestions from '../../components/userComponents/SuggestedInstructors';
 import WishList from '../../components/userComponents/WishList';
 import UserFeed from '../../components/userComponents/postComponents/UserFeed';
@@ -230,6 +231,10 @@ const User = ({ user }) => {
 
   return (
     <div className="userPage">
+      <NextSeo
+        title="User Profile Page"
+        description="A page containing all the information about a specific user."
+      />
       <Row justify="space-around">
         <Col>
           <Divider>
