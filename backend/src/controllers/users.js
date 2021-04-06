@@ -13,7 +13,7 @@ import Post from '../models/Post.js';
  */
 const getUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
-  res.status(200).send({
+  res.status(200).json({
     success: true,
     data: user,
   });
@@ -160,7 +160,7 @@ const getFollowing = asyncHandler(async (req, res) => {
   const result = followings.following.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: result ? result : [],
+    data: result || [],
     pagination: {
       total: followings.following.length,
     },
@@ -184,7 +184,7 @@ const getFollower = asyncHandler(async (req, res) => {
   const result = followers.follower.slice(startIndex, limit);
   res.status(200).send({
     success: true,
-    data: result ? result : [],
+    data: result || [],
     pagination: {
       total: followers.follower.length,
     },
@@ -426,12 +426,10 @@ const getFavouritedPosts = asyncHandler(async (req, res) => {
       res.status(200).send({ success: true, data: user.favourites });
     } else if (!Number.isNaN(parseInt(req.params.quantity, 10))) {
       // if request wants limited amount
-      res
-        .status(200)
-        .send({
-          success: true,
-          data: user.favourites.slice(0, req.params.quantity),
-        });
+      res.status(200).send({
+        success: true,
+        data: user.favourites.slice(0, req.params.quantity),
+      });
     } else {
       res.status(404).send({ success: false, error: 'invalid parameter' });
     }
