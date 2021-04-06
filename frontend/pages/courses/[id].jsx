@@ -52,23 +52,24 @@ const Course = ({ course }) => {
     }
     try {
       // only attempt to fetch wish list if the current user is a client
-      if (session) {
-        if (session.user.role === 'client') {
+      if (session && session.user.role === 'client') {
           const response = await getWishList();
           console.log(creators);
           setCourses(response.data.data);
           // now that the courses from the wish list have been fetched, update the state
           setWishListFetched(true);
-        } else if (creators.some(user => user._id === session.user._id)) {
-          setUserIsCreator(true); //Set to true if user is creator of course
-        }
-      }
-      
+        } 
       
     } catch (error) {
       console.log(error);
     }
   }, [session]);
+
+  useEffect(() => {
+    if (session && creators.some(user => user._id === session.user._id)) {
+      setUserIsCreator(true);
+    }
+  }, [creators, session]);
 
   if (typeof window !== 'undefined' && loading) return null;
 
