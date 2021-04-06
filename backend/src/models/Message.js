@@ -11,6 +11,11 @@ const MessageSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'Message must have an author'],
     },
+    conversation: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Conversation',
+      required: [true, 'Message must have a conversation id to be sent to'],
+    },
   },
   { timestamps: true }
 );

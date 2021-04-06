@@ -35,7 +35,7 @@ const Chats = () => {
         >
           <Col className="content-chat">
             {conversation ? (
-              <Conversation conversation={conversation} />
+              <Conversation conversation={conversation} receiver={receiver} />
             ) : (
               <ChatList setReciver={setReciver} setConversation={setConversation} />
             )}
