@@ -19,7 +19,7 @@ const createUserReview = asyncHandler(async (req, res) => {
     user: req.params.id,
     ...req.body,
   });
-  review = await review.populate('author', 'fName lName').execPopulate();
+  review = await review.populate('author', 'fName lName photos').execPopulate();
 
   return res.status(200).send({ success: true, data: review });
 });
@@ -34,7 +34,7 @@ const getUserReviews = asyncHandler(async (req, res) => {
   User.findById(req.params.id, 'reviews')
     .populate({
       path: 'reviews',
-      populate: { path: 'author', select: 'fName lName' },
+      populate: { path: 'author', select: 'fName lName photos' },
     })
     .exec((err, user) => {
       if (err) return res.status(400).json({ success: false });
