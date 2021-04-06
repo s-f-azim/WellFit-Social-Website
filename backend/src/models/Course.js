@@ -45,6 +45,11 @@ const CourseSchema = new mongoose.Schema(
         'Weights',
         'WeightLifting',
         'Workout',
+        'Yoga',
+        'Meditation',
+        'Nutrition',
+        'Weightloss',
+        'Bodybuilding',
       ],
     },
     address: {

@@ -166,6 +166,8 @@ const UserSchema = new mongoose.Schema(
         'Yoga',
         'Meditation',
         'Nutrition',
+        'Weightloss',
+        'Bodybuilding',
       ],
     },
     trainerType: {
