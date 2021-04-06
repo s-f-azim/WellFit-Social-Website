@@ -28,6 +28,7 @@ import {
   banUser,
   getFavouritedPosts,
   updateFavouritedPosts,
+  getUserPhotos,
 } from '../controllers/users.js';
 import passport from '../../config/passport-setup.js';
 import paginate from '../middleware/paginate.js';
@@ -162,10 +163,15 @@ router
 
 router
   .route('/favouritedPosts/:id')
-  .patch(passport.authenticate('jwt', { session: false }), updateFavouritedPosts);
+  .patch(
+    passport.authenticate('jwt', { session: false }),
+    updateFavouritedPosts
+  );
 
 router.route('/').get(paginate(User), getUsers);
 
 router.route('/:id').get(getUser);
+
+router.route('/:id/photos').get(getUserPhotos);
 
 export default router;

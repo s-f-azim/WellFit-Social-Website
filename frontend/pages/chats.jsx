@@ -29,7 +29,16 @@ const Chats = () => {
                   <>
                     <LeftOutlined onClick={() => setConversation(null)} />
                     <div className="details">
-                      <Avatar icon={<UserOutlined />} size="large" />
+                      <Avatar
+                        src={
+                          receiver.photos[0] ? (
+                            `data:image/png;base64,${receiver.photos[0].toString('base64')}`
+                          ) : (
+                            <UserOutlined />
+                          )
+                        }
+                        size="large"
+                      />
                       <h3>{receiver ? receiver.fName : ''}</h3>
                     </div>
                   </>

@@ -470,6 +470,20 @@ const banUser = asyncHandler(async (req, res) => {
   sendTokenResponse(user, 200, res);
 });
 
+/**
+ * @async
+ * @desc get photos of a user
+ * @route GET /api/users/:id/photos
+ * @access public
+ */
+ const getUserPhotos = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id, 'photos');
+  res.status(200).send({
+    success: true,
+    data: user.photos,
+  });
+});
+
 export {
   getUsers,
   getUsersWithinRadius,
@@ -497,4 +511,5 @@ export {
   banUser,
   getFavouritedPosts,
   updateFavouritedPosts,
+  getUserPhotos
 };
