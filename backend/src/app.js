@@ -54,7 +54,7 @@ app.use(
       `${process.env.CLIENT_URL_PREVIEW}`,
       `${process.env.CLIENT_URL}`,
     ],
-    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['GET', 'POST', 'OPTION', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
   })
 );
 

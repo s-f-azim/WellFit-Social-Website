@@ -4,7 +4,7 @@ import NotFound from '../components/generalComponents/404';
 const NotFoundPage = () => (
   <>
     <NextSeo
-      title="404 Page"
+      title="404 Page Not Found"
       description="A 404 page indicating that the entered url does not lead to an existing page."
     />
     <NotFound />

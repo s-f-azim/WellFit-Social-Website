@@ -44,7 +44,7 @@ const Signup = () => {
   return (
     <div className="signup">
       <NextSeo
-        title="SignUp Page"
+        title="Register Page"
         description="A page from which a user can register their WellFit account."
       />
       <Row type="flex" justify="center" align="middle" style={{ minHeight: '85vh' }}>

@@ -96,7 +96,9 @@ it('search renders Course radio selected then tags & equipment are there', () =>
 });
 
 it('renders the users in the search page', async () => {
-  getPeople.mockReturnValueOnce({ data: { data: users, total: `${users.length}` } });
+  getPeople.mockReturnValueOnce({
+    data: { data: users, pagination: { total: `${users.length}` } },
+  });
   await act(async () => {
     render(<Search />);
   });
@@ -106,11 +108,13 @@ it('renders the users in the search page', async () => {
   });
 });
 
-it.only('renders the courses in the search page', async () => {
+it('renders the courses in the search page', async () => {
   getCourseCreators.mockReturnValue({
     data: { success: true, data: [] },
   });
-  getCourses.mockReturnValueOnce({ data: { data: courses, total: `${courses.length}` } });
+  getCourses.mockReturnValueOnce({
+    data: { data: courses, pagination: { total: `${users.length}` } },
+  });
   await act(async () => {
     render(<Search />);
   });

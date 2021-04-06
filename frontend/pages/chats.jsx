@@ -12,7 +12,7 @@ const Chats = () => {
   const [conversation, setConversation] = useState(null);
   const [receiver, setReciver] = useState(null);
   if (typeof window !== 'undefined' && loading) return null;
-  if (session) {
+  if (session && session.user) {
     return (
       <>
         <NextSeo
@@ -41,7 +41,7 @@ const Chats = () => {
           >
             <Col className="content-chat">
               {conversation ? (
-                <Conversation conversation={conversation} />
+                <Conversation conversation={conversation} receiver={receiver} />
               ) : (
                 <ChatList setReciver={setReciver} setConversation={setConversation} />
               )}

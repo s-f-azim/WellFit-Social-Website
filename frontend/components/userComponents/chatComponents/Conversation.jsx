@@ -42,7 +42,7 @@ const Conversation = ({ conversation }) => {
   // check for new messages and update the state
   useEffect(() => {
     socket.on('message', (message) => {
-      setMsgs([...msgs, message]);
+      if (conversation._id === message.conversation) setMsgs([...msgs, message]);
     });
     scrollToBottom();
   }, [msgs]);

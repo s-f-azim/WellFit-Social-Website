@@ -106,7 +106,7 @@ const Course = ({ course }) => {
   return (
     <div style={{ padding: '2em' }}>
       <NextSeo
-        title="Course Page."
+        title="Course Page"
         description="A page containing all the information about a specific course."
       />
       <Row justify="center">

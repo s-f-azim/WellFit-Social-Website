@@ -150,7 +150,7 @@ const editProfilePage = () => {
     return (
       <div className="EditProfile">
         <NextSeo
-          title="Edit Profile Page"
+          title="Edit Profile"
           description="A page from which a user can edit information relating to their profile, such as their tags, location or credentials."
         />
         <Row type="flex" justify="center" align="middle">
