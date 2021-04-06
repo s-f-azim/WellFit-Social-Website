@@ -332,9 +332,9 @@ const sendTokenResponse = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
-    // httpOnly: true,
+    httpOnly: true,
     secure: process.env.NODE_ENV === 'PRODUCTION',
-    sameSite: 'None',
+    sameSite: process.env.NODE_ENV === 'PRODUCTION' ? 'None' : '',
   };
   res
     .status(statusCode)
@@ -353,9 +353,9 @@ const sendTokenResponseOauth = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
-    // httpOnly: true,
+    httpOnly: true,
     secure: process.env.NODE_ENV === 'PRODUCTION',
-    sameSite: 'None',
+    sameSite: process.env.NODE_ENV === 'PRODUCTION' ? 'None' : '',
   };
   res.cookie('user', JSON.stringify(user));
   res.cookie('token', token, options);
@@ -476,7 +476,7 @@ const banUser = asyncHandler(async (req, res) => {
  * @route GET /api/users/:id/photos
  * @access public
  */
- const getUserPhotos = asyncHandler(async (req, res) => {
+const getUserPhotos = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id, 'photos');
   res.status(200).send({
     success: true,
@@ -511,5 +511,5 @@ export {
   banUser,
   getFavouritedPosts,
   updateFavouritedPosts,
-  getUserPhotos
+  getUserPhotos,
 };
