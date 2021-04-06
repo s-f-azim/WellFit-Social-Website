@@ -70,9 +70,6 @@ const User = ({ user }) => {
   if (router.isFallback) {
     return <Skeleton active />;
   }
-  if (session && session.user && follower.length > 0 && follower.includes(session.user._id)) {
-    setIsFollowing(true);
-  }
 
   useEffect(async () => {
     try {
@@ -88,6 +85,16 @@ const User = ({ user }) => {
       console.log(error);
     }
   }, [router.query]);
+  useEffect(() => {
+    if (
+      session &&
+      session.user &&
+      follower.length > 0 &&
+      follower.some((e) => e._id === session.user._id)
+    ) {
+      setIsFollowing(true);
+    }
+  }, [follower, session]);
 
   if (typeof window !== 'undefined' && loading) return null;
 
@@ -112,10 +119,12 @@ const User = ({ user }) => {
       if (!session.user.following.includes(id)) {
         session.user.following = [id, ...session.user.following];
         setIsFollowing(true);
+        setFollowerNum(followerNum + 1);
       } else {
         const index = session.user.following.indexOf(id);
         session.user.following.splice(index, 1);
         setIsFollowing(false);
+        setFollowerNum(followerNum - 1);
       }
     } catch (err) {
       console.log(err);
