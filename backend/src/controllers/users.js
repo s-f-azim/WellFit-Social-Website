@@ -13,7 +13,7 @@ import Post from '../models/Post.js';
  */
 const getUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
-  res.status(200).json({
+  res.status(200).send({
     success: true,
     data: user,
   });

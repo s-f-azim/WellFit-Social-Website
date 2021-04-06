@@ -20,6 +20,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
+import { NextSeo } from 'next-seo';
 import api from '../../services/api';
 import stripePromise from '../../services/stripe';
 import checkout from '../../actions/payment';
@@ -104,6 +105,10 @@ const Course = ({ course }) => {
   />;
   return (
     <div style={{ padding: '2em' }}>
+      <NextSeo
+        title="Course Page"
+        description="A page containing all the information about a specific course."
+      />
       <Row justify="center">
         <Typography.Title level={1} style={{ fontSize: '2.3rem', fontFamily: 'Poppins' }}>
           {course.title} <ProfileOutlined />
