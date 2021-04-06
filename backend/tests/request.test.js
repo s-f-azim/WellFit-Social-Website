@@ -7,12 +7,14 @@ import {
   userOne,
   userTwo,
   requestOne,
-  requestFour,
+  requestThree,
   setupDatabase,
+  dropDb,
 } from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
+afterAll(dropDb);
 
 // A verify request is created for instructor
 it('Verify request should increment', async () => {
@@ -139,21 +141,21 @@ it('Should be able to create a request of any type', async () => {
     .send(report2)
     .expect(200);
 
-  const report3 = {
-    author: userOne,
-    type: 'message',
-    content: 'message to admin',
-  };
+  // const report3 = {
+  //   author: userOne,
+  //   type: 'message',
+  //   content: 'message to admin',
+  // };
 
-  await request(app)
-    .post('/api/requests/create')
-    .set('Cookie', [`token=${tokens[0]}`])
-    .send(report3)
-    .expect(200);
+  // await request(app)
+  //   .post('/api/requests/create')
+  //   .set('Cookie', [`token=${tokens[0]}`])
+  //   .send(report3)
+  //   .expect(200);
 
   // Recipient is required for report reqs only
 
-  const report4 = {
+  const report3 = {
     author: userOne,
     type: 'report',
     recipientID: userTwo._id,
@@ -163,10 +165,10 @@ it('Should be able to create a request of any type', async () => {
   await request(app)
     .post('/api/requests/create')
     .set('Cookie', [`token=${tokens[0]}`])
-    .send(report4)
+    .send(report3)
     .expect(200);
 
-  expect(await Request.countDocuments()).toBe(count + 4);
+  expect(await Request.countDocuments()).toBe(count + 3);
 });
 
 //
@@ -345,7 +347,7 @@ it('Should delete a report request', async () => {
   const count = await Request.countDocuments();
 
   await request(app)
-    .delete(`/api/requests/delete/${requestFour._id}`)
+    .delete(`/api/requests/delete/${requestThree._id}`)
     .set('Cookie', [`token=${tokens[0]}`])
     .send()
     .expect(200);
@@ -363,7 +365,7 @@ it('Should delete a bug request and a report request', async () => {
     .send()
     .expect(200);
   await request(app)
-    .delete(`/api/requests/delete/${requestFour._id}`)
+    .delete(`/api/requests/delete/${requestThree._id}`)
     .set('Cookie', [`token=${tokens[0]}`])
     .send()
     .expect(200);

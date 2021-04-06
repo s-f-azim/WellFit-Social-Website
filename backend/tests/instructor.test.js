@@ -1,9 +1,10 @@
 import request from 'supertest';
 import app from '../src/app.js';
-import { setupInstructors } from './fixtures/db.js';
+import { setupInstructors, dropDb } from './fixtures/db.js';
 
 // setup db before test
 beforeEach(setupInstructors);
+afterAll(dropDb);
 
 it('Should get all instructors', async () => {
   const response = await request(app).get('/api/users?role=instructor');

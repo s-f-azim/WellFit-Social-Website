@@ -13,7 +13,7 @@ const RequestSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ['verify', 'bug', 'message', 'report'],
+      enum: ['verify', 'bug', 'report'],
       required: [true, 'Please select a request type'],
     },
     // recipient is only required for type report
