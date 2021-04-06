@@ -7,10 +7,12 @@ import {
   userTwo,
   userThree,
   setupDatabase,
+  dropDb,
 } from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
+afterAll(dropDb);
 
 it('Should add a review with valid data', async () => {
   const count = await UserReview.countDocuments();

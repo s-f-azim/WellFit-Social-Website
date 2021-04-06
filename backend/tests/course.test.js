@@ -1,7 +1,6 @@
 import request from 'supertest';
 import Course from '../src/models/Course.js';
 import app from '../src/app.js';
-
 import {
   tokens,
   userOne,
@@ -9,10 +8,12 @@ import {
   setupDatabase,
   courseOne,
   courseTwo,
+  dropDb,
 } from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
+afterAll(dropDb);
 
 // assert creating a new course while logged in
 it('Should create a new course', async () => {

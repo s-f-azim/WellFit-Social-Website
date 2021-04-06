@@ -9,10 +9,12 @@ import {
   requestOne,
   requestThree,
   setupDatabase,
+  dropDb,
 } from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
+afterAll(dropDb);
 
 // A verify request is created for instructor
 it('Verify request should increment', async () => {
