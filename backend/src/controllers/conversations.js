@@ -74,6 +74,7 @@ const updateConversation = asyncHandler(async (req, res) => {
   const message = await Message.create({
     author: req.user._id,
     content: req.body.message.content,
+    conversation: conversation._id,
   });
   conversation.messages = [...conversation.messages, message];
   await conversation.save();
