@@ -82,6 +82,7 @@ const User = ({ user }) => {
       setFollowerIsModalVisible(false);
       setIsFollowingModalVisible(false);
       if (session && session.user) {
+        console.log('hmm', follower, session.user);
         setIsFollowing(follower.includes(session.user._id));
       }
     } catch (error) {
