@@ -7,6 +7,10 @@ const createCourse = async (values) => {
   return res.data;
 };
 
+const deleteCourse = async (id) => {
+  await api.delete(`/courses/delete/${id}`);
+};
+
 const getCourses = (title, tags, etags, pageSize, offset) =>
   api.get('courses', {
     params: {
@@ -20,4 +24,5 @@ const getCourses = (title, tags, etags, pageSize, offset) =>
 
 const getCourseCreators = (courseId) => api.get(`/courses/${courseId}/creators`);
 
-export { createCourse as default, getCourses, getCourseCreators };
+
+export { createCourse as default, deleteCourse, getCourses, getCourseCreators };

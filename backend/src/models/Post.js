@@ -18,10 +18,9 @@ const PostSchema = new mongoose.Schema(
 );
 
 PostSchema.pre('remove', (next) => { //remove favourites from user if post deleted
-  let post = this;
-  post.model('User').update(
-    {favourites: { $in: [post._id] }},
-    {$pull: { favourites: post._id }},
+  this.model('User').update(
+    {favourites: { $in: [this._id] }},
+    {$pull: { favourites: this._id }},
     {multi: true},
     next);
 });
