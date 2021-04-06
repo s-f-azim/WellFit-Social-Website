@@ -26,9 +26,7 @@ const providers = [
         if (user) {
           return { success: 'success', data: user.data };
         }
-      } catch (e) {
-        return;
-      }
+      } catch (e) {}
     },
   }),
 ];
