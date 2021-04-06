@@ -19,7 +19,7 @@ const ChatBubble = ({ incoming, content }) => (
     </div>
   </div>
 );
-const Conversation = ({ conversation }) => {
+const Conversation = ({ conversation, reciver }) => {
   const [msgs, setMsgs] = useState(
     conversation && conversation.messages ? conversation.messages : []
   );
@@ -42,7 +42,8 @@ const Conversation = ({ conversation }) => {
   // check for new messages and update the state
   useEffect(() => {
     socket.on('message', (message) => {
-      if (conversation.users.includes(message.author)) setMsgs([...msgs, message]);
+      if (conversation.users.includes(reciver._id) && conversation.users.includes(session.user._id))
+        setMsgs([...msgs, message]);
     });
     scrollToBottom();
   }, [msgs]);
