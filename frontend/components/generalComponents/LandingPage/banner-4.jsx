@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Card, Image } from 'antd';
 import { useSession } from 'next-auth/client';
 import { getTrendingUsersLimit } from '../../../actions/user';
+import template from '../../../data/frontPageText';
 
 const { Meta } = Card;
 
@@ -26,7 +27,7 @@ const Banner4 = () => {
   return (
     <div className="banner4">
       <div className="inner_banner4">
-        <h1>Meet leading instructors </h1>
+        <h1>{template.banner4.header} </h1>
         {showState ? (
           <div className="banner4_boxes">
             {list.map((item) => (

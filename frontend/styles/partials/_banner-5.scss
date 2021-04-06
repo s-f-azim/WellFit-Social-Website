@@ -14,6 +14,13 @@
   column-gap: 2rem;
   grid-template-columns: repeat(12, 1fr);
   grid-auto-flow: row;
+  white-space: pre-wrap;
+}
+.inner_banner5 h1 {
+  font-family: 'Poppins';
+}
+.inner_banner5 p {
+  font-family: 'Open Sans';
 }
 .banner5_chats {
   grid-column: auto/span 4;

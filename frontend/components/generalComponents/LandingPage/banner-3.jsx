@@ -1,21 +1,16 @@
 import { Button } from 'antd';
 import Image from 'next/image';
 import { CreditCardOutlined, DislikeOutlined } from '@ant-design/icons';
-import tags from '../../../data/tags';
+import template from '../../../data/frontPageText';
 
 const Banner3 = () => (
   <div className="banner3">
     <div className="inner_banner3">
       <div className="inner_banner3_content">
         <h1>
-          <b>
-            Courses by professionals, <br /> made for you.
-          </b>
+          <b>{template.banner3.header}</b>
         </h1>
-        <p>
-          Find a wide range of different courses that fit all needs and budgets, <br /> Directly
-          from your favorite creators.
-        </p>
+        <p>{template.banner3.subheader_1}</p>
         <div className="banner_button_box">
           <Button size="large" href="/search" className="banner3_button">
             What are you looking for?
@@ -25,15 +20,16 @@ const Banner3 = () => (
           <div className="infoCard">
             <CreditCardOutlined style={{ color: 'w', fontSize: '2rem' }} />
             <br />
-            <b>Payment by us.</b>
+            <b>{template.banner3.card1.cardHeader}</b>
             <br />
-            No more wiring money and hoping you get your product.
+            {template.banner3.card1.cardText}
           </div>
           <div className="infoCard">
             <DislikeOutlined style={{ fontSize: '2rem', color: 'black' }} />
             <br />
-            <b>No Fun? No Problem.</b>
-            <br /> Easy refunds should you not be satisfied.
+            <b>{template.banner3.card2.cardHeader}</b>
+            <br />
+            {template.banner3.card2.cardText}
           </div>
         </div>
       </div>
