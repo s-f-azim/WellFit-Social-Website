@@ -48,15 +48,15 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
           xl: 95,
           xxl: 130,
         }}
-        src={
-          session.user.photos[0] ? (
-            `data:image/png;base64,${Buffer.from(session.user.photos[0]).toString('base64')}`
-          ) : (
-            <h1>
-              <UserOutlined />
-            </h1>
-          )
-        }
+        // src={
+        //   session.user.photos[0] ? (
+        //     `data:image/png;base64,${Buffer.from(session.user.photos[0]).toString('base64')}`
+        //   ) : (
+        //     <h1>
+        //       <UserOutlined />
+        //     </h1>
+        //   )
+        // }
       />
       <h1 className="item">
         <UserOutlined />
