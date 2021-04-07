@@ -159,10 +159,14 @@ CourseSchema.pre('save', function (next) {
   next();
 });
 
-CourseSchema.post('remove', function (course)  {
-  this.model('User').updateMany(
+CourseSchema.post('remove', async function (course)  { 
+  await this.model('User').updateMany( //delete course from users' wishlists when course deleted
     {wishlist: { $in: [course._id] }},
     {$pull: { wishlist: course._id }},
+  ).exec();
+
+  await this.model('Review').remove( //delete reviews of course when course deleted
+    {course: { $exists: true, $eq: course._id }},
   ).exec();
 }); 
 
