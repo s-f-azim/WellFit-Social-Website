@@ -64,10 +64,14 @@ const settingsPage = () => {
     );
 
     const deleteAccount = async () => {
-      const response = await deleteUser();
-      if (response.data.success) {
-        session.user = null;
-        router.replace('/');
+      try {
+        const response = await deleteUser();
+        if (response.data.success) {
+          session.user = null;
+          router.replace('/');
+        }
+      } catch (error) {
+        console.log(error);
       }
     };
 

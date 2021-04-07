@@ -52,7 +52,9 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
           session.user.photos[0] ? (
             `data:image/png;base64,${Buffer.from(session.user.photos[0]).toString('base64')}`
           ) : (
-            <UserOutlined />
+            <h1>
+              <UserOutlined />
+            </h1>
           )
         }
       />
