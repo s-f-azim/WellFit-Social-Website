@@ -71,9 +71,6 @@ it('renders admin dashboard with correct numbers for the various types of reques
   expect(
     screen.getByRole('tab', { name: 'dislike User reports 2', selected: false, hidden: true })
   ).toBeInTheDocument();
-  expect(
-    screen.getByRole('tab', { name: 'mail contact users', selected: false, hidden: true })
-  ).toBeInTheDocument();
 
   // statistics tab details should be shown when navigating to the admin dashboard
   expect(screen.getByText('No. users', { exact: false })).toBeInTheDocument();
