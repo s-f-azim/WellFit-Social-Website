@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import Link from 'next/link';
 import { Avatar, notification } from 'antd';
 import { useRouter } from 'next/router';
@@ -10,12 +11,14 @@ import {
   SendOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { signOut } from 'next-auth/client';
 import { logout } from '../../../services/auth';
+import { getUserPhotos } from '../../../actions/user';
 
 const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
   const router = useRouter();
+  const [photo, setPhoto] = useState();
 
   const signout = async () => {
     setProfileOpen(false);
@@ -33,7 +36,20 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
     setProfileOpen(false);
     router.push('/editProfile');
   };
+
   useEffect(() => setProfileOpen(false), [router.pathname]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await getUserPhotos(session.user._id);
+        if (res.data.data[0]) setPhoto(res.data.data[0]);
+      } catch (error) {
+        setPhoto(null);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className={`profile-bar ${profileOpen ? 'active' : ''}`}>
@@ -48,6 +64,15 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
           xl: 95,
           xxl: 130,
         }}
+        src={
+          photo ? (
+            `data:image/png;base64,${Buffer.from(photo).toString('base64')}`
+          ) : (
+            <h1>
+              <UserOutlined />
+            </h1>
+          )
+        }
       />
       <h1 className="item">
         <UserOutlined />
