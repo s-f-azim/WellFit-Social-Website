@@ -6,7 +6,7 @@ export default {
     button_signed_in: 'What are you looking for?',
   },
   banner2: {
-    header: 'See what we offer',
+    header: 'We offer a broad range of services',
     card1: {
       cardHeader: 'Take Courses',
       cardText: 'Explore courses from fitness to nutrition or general wellness.',
