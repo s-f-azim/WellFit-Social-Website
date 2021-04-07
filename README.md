@@ -31,8 +31,8 @@
 
 | Email                   | user role  | password |
 | ----------------------- | ---------- | -------- |
-| admin.admin@gmail.com   | admin      | ()       |
-| ahmed.alahmadi@test.com | instructor | ()       |
+| admin.admin@gmail.com   | admin      |admin1234 |
+| ahmed.alahmadi@test.com | client	   |ahmed1234 |
 | alex.chouman@test.com   | instructor | ()       |
 | fahim.ahmed@gmail.com   | instructor | ()       |
 | issa.kabir@gmail.com    | instructor | ()       |
