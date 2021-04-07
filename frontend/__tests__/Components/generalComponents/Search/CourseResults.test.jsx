@@ -1,9 +1,9 @@
 import { render, screen, act } from '@testing-library/react';
-import CourseResults from '../components/generalComponents/Search/CourseResults';
+import CourseResults from '../../../../components/generalComponents/Search/CourseResults';
 
-import api from '../services/api';
+import api from '../../../../services/api';
 
-jest.mock('../services/api', () => ({
+jest.mock('../../../../services/api', () => ({
   get: jest.fn(),
 }));
 

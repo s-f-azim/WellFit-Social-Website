@@ -1,7 +1,7 @@
 import { render, screen, act } from '@testing-library/react';
-import SuggestedInstructors from '../components/userComponents/SuggestedInstructors';
+import SuggestedInstructors from '../../../components/userComponents/SuggestedInstructors';
 
-import { getSuggestedInstructors } from '../actions/user';
+import { getSuggestedInstructors } from '../../../actions/user';
 
 const instructors = [1, 2, 3, 4].map((n) => ({
   _id: `${n}`,
@@ -10,7 +10,7 @@ const instructors = [1, 2, 3, 4].map((n) => ({
   email: `email ${n}`,
 }));
 
-jest.mock('../actions/user', () => ({
+jest.mock('../../../actions/user', () => ({
   getSuggestedInstructors: jest.fn(),
 }));
 

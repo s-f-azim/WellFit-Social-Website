@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import PeopleResults from '../components/generalComponents/Search/PeopleResults';
+import PeopleResults from '../../../../components/generalComponents/Search/PeopleResults';
 
 const users = [1, 2, 3, 4].map((n) => ({
   _id: `${n}`,

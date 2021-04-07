@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ReportButton from '../components/userComponents/ReportButton';
+import ReportButton from '../../../components/userComponents/ReportButton';
 
-import { createReport } from '../actions/request';
+import { createReport } from '../../../actions/request';
 
-jest.mock('../actions/request', () => ({
+jest.mock('../../../actions/request', () => ({
   createReport: jest.fn(),
 }));
 

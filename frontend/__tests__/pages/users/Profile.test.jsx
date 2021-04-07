@@ -1,5 +1,5 @@
 import { render, screen, act } from '@testing-library/react';
-import UserProfile from '../pages/users/[id]';
+import UserProfile from '../../../pages/users/[id]';
 
 const user = {
   _id: '1',

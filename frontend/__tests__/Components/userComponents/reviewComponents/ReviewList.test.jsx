@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ReviewList from '../components/userComponents/reviewComponents/ReviewList';
+import ReviewList from '../../../../components/userComponents/reviewComponents/ReviewList';
 
 const reviews = [1, 2, 3, 4, 5].map((n) => ({
   _id: `${n}`,
