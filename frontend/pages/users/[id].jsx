@@ -495,7 +495,7 @@ const User = ({ user }) => {
 };
 
 // check if the id was given and prerender the page using the above template
-// this is using incremental static regeneration to rehydrate the page every 10 minutes
+// this is using incremental static regeneration to rehydrate the page every 1 minutes
 export const getStaticProps = async ({ params }) => {
   const userId = params ? params.id : undefined;
   let response;
@@ -506,7 +506,7 @@ export const getStaticProps = async ({ params }) => {
   }
 
   if (response) {
-    return { props: { user: response.data.data }, revalidate: 60 * 10 };
+    return { props: { user: response.data.data }, revalidate: 60 * 2 };
   }
 
   return {
