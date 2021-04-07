@@ -86,13 +86,17 @@ const Course = ({ course }) => {
   }
 
   const handleCourseDelete = async (id) => {
-    await deleteCourse(id);
-    notification.open({
-      message: 'Course successfully deleted',
-      duration: 2,
-      icon: <CheckOutlined style={{ color: '#70FF00' }} />,
-    });
-    router.replace('/');
+    try {
+      await deleteCourse(id);
+      notification.open({
+        message: 'Course successfully deleted',
+        duration: 2,
+        icon: <CheckOutlined style={{ color: '#70FF00' }} />,
+      });
+      router.replace('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // handle the payment

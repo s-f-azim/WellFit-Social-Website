@@ -118,11 +118,15 @@ const CourseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+
 CourseSchema.virtual('reviews', {
   ref: 'CourseReview',
   localField: '_id',
   foreignField: 'course',
 });
+
+
+
 
 // Geocode and create location field
 CourseSchema.pre('save', async function (next) {
@@ -155,14 +159,13 @@ CourseSchema.pre('save', function (next) {
   next();
 });
 
-CourseSchema.pre('remove', (next) => {
-  this.model('User').update(
-    {wishlist: { $in: [this._id] }},
-    {$pull: { wishlist: this._id }},
-    {multi: true},
-    next
-  );
-});
+CourseSchema.post('remove', function (course)  {
+  this.model('User').updateMany(
+    {wishlist: { $in: [course._id] }},
+    {$pull: { wishlist: course._id }},
+  ).exec();
+}); 
+
 
 // create course model
 const Course = mongoose.model('Course', CourseSchema);
