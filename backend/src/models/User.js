@@ -45,7 +45,6 @@ const UserSchema = new mongoose.Schema(
     screenname: {
       type: String,
       required: false,
-      // fix for missing usernames causing validation fail
     },
     gender: {
       type: String,
@@ -282,6 +281,12 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
+    facebookAccessToken: {
+      type: String,
+    },
+    facebookRefreshToken: {
+      type: String,
+    },
     twitterId: {
       type: String,
     },
@@ -421,8 +426,6 @@ UserSchema.statics.checkCredentials = async ({ email, password }) => {
 UserSchema.methods.getSignedJWTToken = function () {
   return JWT.sign({ id: this._id }, process.env.JWT_SECRET);
 };
-
-
 
 // create user model
 const User = mongoose.model('User', UserSchema);
