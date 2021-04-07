@@ -72,9 +72,6 @@ const User = ({ user }) => {
   }
 
   useEffect(async () => {
-    if (session && session.user) {
-      setIsFollowing(user.follower.includes(session.user._id));
-    }
     try {
       const followingData = await getFollowingList(user._id);
       const followerData = await getFollowerList(user._id);
@@ -88,6 +85,16 @@ const User = ({ user }) => {
       console.log(error);
     }
   }, [router.query]);
+  useEffect(() => {
+    if (
+      session &&
+      session.user &&
+      follower.length > 0 &&
+      follower.some((e) => e._id === session.user._id)
+    ) {
+      setIsFollowing(true);
+    }
+  }, [follower, session]);
 
   if (typeof window !== 'undefined' && loading) return null;
 
@@ -112,10 +119,12 @@ const User = ({ user }) => {
       if (!session.user.following.includes(id)) {
         session.user.following = [id, ...session.user.following];
         setIsFollowing(true);
+        setFollowerNum(followerNum + 1);
       } else {
         const index = session.user.following.indexOf(id);
         session.user.following.splice(index, 1);
         setIsFollowing(false);
+        setFollowerNum(followerNum - 1);
       }
     } catch (err) {
       console.log(err);

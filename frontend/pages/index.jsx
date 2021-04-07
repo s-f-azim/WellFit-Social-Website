@@ -7,7 +7,7 @@ import LandingPage from '../components/generalComponents/LandingPage/LandingPage
 export default function Home() {
   const [session, loading] = useSession();
 
-  if (session && session.user.role === 'admin') {
+  if (session && session.user != null && session.user.role === 'admin') {
     Router.push('/adminDashboard');
   } else {
     return <LandingPage />;

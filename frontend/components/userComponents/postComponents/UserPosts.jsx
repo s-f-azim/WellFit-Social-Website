@@ -6,9 +6,7 @@ import PostList from './PostList';
 import { getPostsByAuthor, deletePost } from '../../../actions/post';
 import { getFavouritedPosts, updateFavouritedPosts } from '../../../actions/user';
 
-//TODO: Change ternary operator for onLike so users cant favourite own posts
-
-const UserFeed = ({ id }) => {
+const UserPosts = ({ id }) => {
   const [session, loading] = useSession();
   const [user, setUser] = useState();
   const [posts, setPosts] = useState([]);
@@ -17,7 +15,7 @@ const UserFeed = ({ id }) => {
   useEffect(() => {
     async function fetchData() {
       setPosts(await getPostsByAuthor(id));
-      setFavouritedPosts(await (await getFavouritedPosts("*")).data.data);
+      setFavouritedPosts(await (await getFavouritedPosts('*')).data.data);
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -30,13 +28,13 @@ const UserFeed = ({ id }) => {
   const handleLike = (postId) => {
     try {
       updateFavouritedPosts(postId);
-      if (favouritedPosts.some(p => p._id === postId)) { //if already liked
-        setFavouritedPosts(favouritedPosts.filter((p) => p._id !== postId)) //remove from liked        
+      if (favouritedPosts.some((p) => p._id === postId)) {
+        // if already liked
+        setFavouritedPosts(favouritedPosts.filter((p) => p._id !== postId)); // remove from liked
       } else {
-        const likedPost = posts.filter((p) => p._id === postId)[0]; //extract liked post as object
-        setFavouritedPosts(favouritedPosts.concat([likedPost])); //add liked post
+        const likedPost = posts.filter((p) => p._id === postId)[0]; // extract liked post as object
+        setFavouritedPosts(favouritedPosts.concat([likedPost])); // add liked post
       }
-      
     } catch (err) {
       console.log(err);
     }
@@ -51,12 +49,14 @@ const UserFeed = ({ id }) => {
     }
   };
 
-  const handleIsLiked = (postId) => { //show post has been liked already by setting isLiked prop
+  const handleIsLiked = (postId) => {
+    // show post has been liked already by setting isLiked prop
     let isLiked = false;
-    for (let i = 0; i < favouritedPosts.length; i++) { //check favouritedPosts
-      if (favouritedPosts[i]._id === postId) { 
+    for (let i = 0; i < favouritedPosts.length; i++) {
+      // check favouritedPosts
+      if (favouritedPosts[i]._id === postId) {
         isLiked = true;
-        break; 
+        break;
       }
     }
     return isLiked;
@@ -78,4 +78,4 @@ const UserFeed = ({ id }) => {
   );
 };
 
-export default UserFeed;
+export default UserPosts;

@@ -11,6 +11,7 @@ const reviews = [1, 2, 3, 4, 5].map((n) => ({
     _id: `${n}`,
     fName: `user ${n}`,
     lName: `test ${n}`,
+    photos: [],
   },
 }));
 

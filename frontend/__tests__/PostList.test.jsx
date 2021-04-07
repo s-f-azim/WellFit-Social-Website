@@ -10,6 +10,7 @@ const posts = [1, 2, 3, 4].map((n) => ({
     _id: `${n}`,
     fName: `user ${n}`,
     lName: `test ${n}`,
+    photos: [],
   },
 }));
 

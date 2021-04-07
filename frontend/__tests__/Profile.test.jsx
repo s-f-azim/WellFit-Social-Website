@@ -5,7 +5,7 @@ const user = {
   _id: '1',
   fName: 'John',
   lName: 'Wick',
-  following: ['2'],
+  following: [],
   qualifications: [],
   speciality: '',
   communicationModes: [],
@@ -17,25 +17,8 @@ const user = {
   role: 'client',
   trainerType: '',
   follower: [],
+  photos: [],
 };
-
-// const user2 = {
-//   _id: '14',
-//   fName: 'Alex',
-//   lName: 'Mason',
-//   following: [],
-//   qualifications: [],
-//   speciality: '',
-//   communicationModes: [],
-//   paymentFrequency: [],
-//   paymentOptions: [],
-//   serviceFormat: [],
-//   verified: true,
-//   gender: 'Male',
-//   role: 'instructor',
-//   trainerType: '',
-//   follower: [],
-// };
 
 jest.mock('next-auth/client', () => ({
   useSession: () => [{ user }, false],
@@ -44,6 +27,7 @@ jest.mock('next-auth/client', () => ({
 jest.mock('next/router', () => ({
   useRouter: () => ({
     replace: jest.fn(),
+    push: jest.fn(),
   }),
 }));
 
@@ -55,10 +39,12 @@ it('renders client profile', async () => {
   await act(async () => {
     render(<UserProfile user={user} />);
   });
-  screen.getByText('John Wick', { exact: false }); // display name
-  screen.getByText('Unverified User'); // verified = false
-  screen.getByText('Client'); // role
-  screen.getByText('No bio entered, edit your profile to display it', { exact: false });
-  screen.getByText('Follows 1 other user(s)', { exact: false });
-  screen.getByText('Followed by 0 user(s)', { exact: false });
+  expect(screen.getByText('John Wick', { exact: false })).toBeInTheDocument(); // display name
+  expect(screen.getByText('Unverified User')).toBeInTheDocument(); // verified = false
+  expect(screen.getByText('Client')).toBeInTheDocument(); // role
+  expect(
+    screen.getByText('No bio entered, edit your profile to display it', { exact: false })
+  ).toBeInTheDocument();
+  expect(screen.getByText('Follows 0 other user(s)', { exact: false })).toBeInTheDocument();
+  expect(screen.getByText('Followed by 0 user(s)', { exact: false })).toBeInTheDocument();
 });

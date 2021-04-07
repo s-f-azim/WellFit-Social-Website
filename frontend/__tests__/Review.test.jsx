@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Review } from '../components/userComponents/reviewComponents/Review';
 
-const user = { _id: '1', fName: 'user', lName: 'test' };
+const user = { _id: '1', fName: 'user', lName: 'test', photos: [] };
 
 jest.mock('next-auth/client', () => ({
   useSession: () => [{ user }, false],
@@ -18,6 +18,7 @@ it('renders fetched reviews', async () => {
       _id: `${n}`,
       fName: `user ${n}`,
       lName: `test ${n}`,
+      photos: [],
     },
   }));
   const getReviews = jest.fn(() => reviews);
@@ -26,7 +27,9 @@ it('renders fetched reviews', async () => {
 
   await waitFor(() => expect(getReviews).toHaveBeenCalledTimes(1));
   reviews.forEach((review) => {
-    expect(screen.getByText(`${review.author.fName} ${review.author.lName}`)).toBeInTheDocument();
+    expect(
+      screen.getByText(`${review.author.fName} ${review.author.lName}`, { exact: false })
+    ).toBeInTheDocument();
     expect(screen.getByText(review.comment)).toBeInTheDocument();
   });
 });
@@ -43,7 +46,7 @@ it('renders with no reviews', async () => {
 it('creates review when submitted with valid data', async () => {
   const getReviews = () => [];
   const review = { _id: '1', rate: 1, comment: 'comment', author: user };
-  const handleSubmit = jest.fn(() => review);
+  const handleSubmit = jest.fn(() => ({ data: { data: review } }));
   render(<Review getReviews={getReviews} onSubmit={handleSubmit} />);
 
   userEvent.click(screen.getAllByRole('radio')[0]);
@@ -57,14 +60,16 @@ it('creates review when submitted with valid data', async () => {
   await waitFor(() =>
     expect(handleSubmit).toHaveBeenCalledWith({ rate: review.rate, comment: review.comment })
   );
-  expect(screen.getByText(`${review.author.fName} ${review.author.lName}`)).toBeInTheDocument();
+  expect(
+    screen.getByText(`${review.author.fName} ${review.author.lName}`, { exact: false })
+  ).toBeInTheDocument();
   expect(screen.getByText(review.comment)).toBeInTheDocument();
 });
 
 it('does not create review when submitted with invalid data', async () => {
   const review = { _id: '1', rate: 1, comment: 'comment', author: user };
   const getReviews = () => [];
-  const handleSubmit = jest.fn(() => review);
+  const handleSubmit = jest.fn(() => ({ data: { data: review } }));
   render(<Review getReviews={getReviews} onSubmit={handleSubmit} />);
 
   const commentField = screen.getByRole('textbox', { name: 'comment' });

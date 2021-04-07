@@ -4,8 +4,6 @@ import {
   UserOutlined,
   BugOutlined,
   CheckCircleOutlined,
-  StopOutlined,
-  MailOutlined,
   WarningOutlined,
   CheckOutlined,
   DownCircleOutlined,
@@ -65,23 +63,11 @@ const settingsPage = () => {
       </h3>
     );
 
-    const UserReport = (
-      <h3>
-        <StopOutlined /> report a user
-      </h3>
-    );
-
-    const feedback = (
-      <h3>
-        <MailOutlined /> Inbox
-      </h3>
-    );
-
     const deleteAccount = async () => {
       const response = await deleteUser();
       if (response.data.success) {
         session.user = null;
-        router.push('/');
+        router.replace('/');
       }
     };
 
@@ -274,9 +260,6 @@ const settingsPage = () => {
                     </Text>
                   </Card>
                 )}
-                <Card className="settingCard" title={feedback}>
-                  check your inbox
-                </Card>
               </TabPane>
             </Tabs>
           </Card>

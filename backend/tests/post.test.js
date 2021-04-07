@@ -1,10 +1,17 @@
 import request from 'supertest';
 import Post from '../src/models/Post.js';
 import app from '../src/app.js';
-import { tokens, userOne, postOne, setupDatabase } from './fixtures/db.js';
+import {
+  tokens,
+  userOne,
+  postOne,
+  setupDatabase,
+  dropDb,
+} from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
+afterAll(dropDb);
 
 it('Should create a post with valid data', async () => {
   const count = await Post.countDocuments();
