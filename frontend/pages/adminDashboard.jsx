@@ -1,12 +1,11 @@
 /* eslint-disable import/no-duplicates */
-import { Card, Row, Col, Statistic, Button, Tabs, List, notification, Badge } from 'antd';
+import { Card, Row, Col, Statistic, Tabs, List, notification, Badge } from 'antd';
 import {
   FundProjectionScreenOutlined,
   BarChartOutlined,
   CheckCircleOutlined,
   StopOutlined,
   BugOutlined,
-  MailOutlined,
   UserOutlined,
   CloseOutlined,
   CheckOutlined,
@@ -39,7 +38,6 @@ const AdminDashboard = ({
   bugReports,
   verifyRequests,
   userReports,
-  Messages,
 }) => {
   const [session, loading] = useSession();
   const [allBugReports, setBugReports] = useState(bugReports);
@@ -81,12 +79,6 @@ const AdminDashboard = ({
     const userTitle = (
       <p>
         <DislikeOutlined /> User reports <Badge count={userReports.length} />
-      </p>
-    );
-
-    const contactTitle = (
-      <p>
-        <MailOutlined /> contact users
       </p>
     );
 
@@ -311,21 +303,9 @@ const AdminDashboard = ({
                           ? getRequestAuthor(report.author)
                           : 'User has been deleted'}
                       </h3>{' '}
-                      <br />
-                      <Button
-                        type="danger"
-                        style={{ marginRight: '2rem' }}
-                        disabled
-                        onClick={() => onBanUser(report.recipient, report)}
-                      >
-                        Ban reported user
-                      </Button>
                     </List.Item>
                   )}
                 />
-              </TabPane>
-              <TabPane key="5" tab={contactTitle}>
-                hi
               </TabPane>
             </Tabs>
           </Card>
@@ -348,10 +328,6 @@ function isContentReport(request) {
   return request.type === 'report';
 }
 
-function isMessage(request) {
-  return request.type === 'message';
-}
-
 export async function getStaticProps() {
   const getUsersRes = await getUsers();
   const getUsersWithLimitRes = await getUsersWithLimit(getUsersRes.data.pagination.total);
@@ -369,7 +345,6 @@ export async function getStaticProps() {
       bugReports: getRequestsRes.filter(isBugReport),
       verifyRequests: getRequestsRes.filter(isVerifyRequest),
       userReports: getRequestsRes.filter(isContentReport),
-      Messages: getRequestsRes.filter(isMessage),
     },
     revalidate: 60 * 1,
   };

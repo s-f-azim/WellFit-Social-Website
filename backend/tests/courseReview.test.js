@@ -1,10 +1,11 @@
 import request from 'supertest';
 import CourseReview from '../src/models/CourseReview.js';
 import app from '../src/app.js';
-import { tokens, courseOne, setupDatabase } from './fixtures/db.js';
+import { tokens, courseOne, setupDatabase, dropDb } from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
+afterAll(dropDb);
 
 it('Should add a review with valid data', async () => {
   const count = await CourseReview.countDocuments();
