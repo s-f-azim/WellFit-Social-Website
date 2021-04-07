@@ -2,6 +2,8 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useSession } from 'next-auth/client';
+import { useRouter } from 'next/router';
+import { deleteCourse } from '../../../actions/course';
 import { getWishList, updateWishList } from '../../../actions/user';
 import Course from '../../../pages/courses/[id]';
 
@@ -71,9 +73,11 @@ jest.mock('next-auth/client', () => ({
 
 jest.mock('next/router', () => {
   const push = jest.fn();
+  const replace = jest.fn();
   return {
     useRouter: () => ({
       push,
+      replace,
     }),
   };
 });
@@ -85,6 +89,7 @@ jest.mock('../../../actions/user', () => ({
 
 jest.mock('../../../actions/course', () => ({
   getCourseCreators: () => ({ data: { success: true, data: [instructorUser, instructorUser2] } }),
+  deleteCourse: jest.fn(),
 }));
 
 jest.mock('../../../actions/review', () => ({
@@ -151,99 +156,187 @@ it('renders course page with correct details when not logged in', async () => {
   ).toBeInTheDocument();
 });
 
-it('getWishList is not called if there is no session', async () => {
-  useSession.mockReturnValue([null, false]);
-  render(<Course course={course1} />);
-  await waitFor(() => expect(getWishList).toHaveBeenCalledTimes(0));
+describe('wish list button', () => {
+  it('getWishList is not called if there is no session', async () => {
+    useSession.mockReturnValue([null, false]);
+    render(<Course course={course1} />);
+    await waitFor(() => expect(getWishList).toHaveBeenCalledTimes(0));
+  });
+
+  it('getWishList is not called if the user is an admin', async () => {
+    const user = adminUser;
+    useSession.mockReturnValue([{ user }, false]);
+    render(<Course course={course1} />);
+    await waitFor(() => expect(getWishList).toHaveBeenCalledTimes(0));
+  });
+
+  it('getWishList is not called if the user is an instructor', async () => {
+    const user = instructorUser;
+    useSession.mockReturnValue([{ user }, false]);
+    render(<Course course={course1} />);
+    await waitFor(() => expect(getWishList).toHaveBeenCalledTimes(0));
+  });
+
+  it('getWishList is called if the user is a client', async () => {
+    const user = clientUser;
+    useSession.mockReturnValue([{ user }, false]);
+    getWishList.mockReturnValue({
+      data: { success: true, data: [course1] },
+    });
+    render(<Course course={course1} />);
+    await waitFor(() => expect(getWishList).toHaveBeenCalledTimes(1));
+  });
+
+  it('add to wish list button is not displayed if there is no session', async () => {
+    useSession.mockReturnValue([null, false]);
+    render(<Course course={course1} />);
+    await waitFor(() => {
+      expect(screen.queryByRole('button', { name: 'addToWishList' })).not.toBeInTheDocument();
+    });
+  });
+
+  it('add to wish list button is not displayed if the user is an admin', async () => {
+    const user = adminUser;
+    useSession.mockReturnValue([{ user }, false]);
+    render(<Course course={course1} />);
+    await waitFor(() => {
+      expect(screen.queryByRole('button', { name: 'addToWishList' })).not.toBeInTheDocument();
+    });
+  });
+
+  it('add to wish list button is not displayed if the user is an instructor', async () => {
+    const user = instructorUser;
+    useSession.mockReturnValue([{ user }, false]);
+    render(<Course course={course1} />);
+    await waitFor(() => {
+      expect(screen.queryByRole('button', { name: 'addToWishList' })).not.toBeInTheDocument();
+    });
+  });
+
+  it('add to wish list button is not displayed if course is already in wish list', async () => {
+    const user = clientUser;
+    useSession.mockReturnValue([{ user }, false]);
+    getWishList.mockReturnValue({
+      data: { success: true, data: [course1] },
+    });
+    render(<Course course={course1} />);
+    await waitFor(() => {
+      expect(screen.queryByRole('button', { name: 'addToWishList' })).not.toBeInTheDocument();
+    });
+  });
+
+  it('add to wish list button is displayed if course is not in wish list', async () => {
+    const user = clientUser;
+    useSession.mockReturnValue([{ user }, false]);
+    getWishList.mockReturnValue({
+      data: { success: true, data: [course1] },
+    });
+    render(<Course course={course2} />);
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'addToWishList' })).toBeInTheDocument();
+    });
+  });
+
+  it('add to wish list button calls update wish list and disappears once clicked', async () => {
+    const user = clientUser;
+    useSession.mockReturnValue([{ user }, false]);
+    getWishList.mockReturnValue({
+      data: { success: true, data: [course1] },
+    });
+    render(<Course course={course2} />);
+    const addToWishListButton = await waitFor(() =>
+      screen.getByRole('button', { name: 'addToWishList' })
+    );
+    userEvent.click(addToWishListButton);
+    await waitFor(() => {
+      expect(updateWishList).toHaveBeenCalledTimes(1);
+      expect(screen.queryByRole('button', { name: 'addToWishList' })).not.toBeInTheDocument();
+    });
+  });
 });
 
-it('getWishList is not called if the user is an admin', async () => {
-  const user = adminUser;
-  useSession.mockReturnValue([{ user }, false]);
-  render(<Course course={course1} />);
-  await waitFor(() => expect(getWishList).toHaveBeenCalledTimes(0));
-});
+describe('course deletion', () => {
+  it('renders course delete button for course creator', async () => {
+    const user = instructorUser;
+    useSession.mockReturnValue([{ user }, false]);
+    render(<Course course={course1} />);
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'deleteCourse' })).toBeInTheDocument();
+    });
+  });
 
-it('getWishList is not called if the user is an instructor', async () => {
-  const user = instructorUser;
-  useSession.mockReturnValue([{ user }, false]);
-  render(<Course course={course1} />);
-  await waitFor(() => expect(getWishList).toHaveBeenCalledTimes(0));
-});
+  it('does not render course delete button for non-course creator', async () => {
+    const user = clientUser;
+    useSession.mockReturnValue([{ user }, false]);
+    render(<Course course={course1} />);
+    await waitFor(() => {
+      expect(screen.queryByRole('button', { name: 'deleteCourse' })).not.toBeInTheDocument();
+    });
+  });
 
-it('getWishList is called if the user is a client', async () => {
-  const user = clientUser;
-  useSession.mockReturnValue([{ user }, false]);
-  getWishList.mockReturnValue({
-    data: { success: true, data: [course1] },
-  });
-  render(<Course course={course1} />);
-  await waitFor(() => expect(getWishList).toHaveBeenCalledTimes(1));
-});
+  it('clicking course delete button opens tooltip', async () => {
+    const user = instructorUser2;
+    useSession.mockReturnValue([{ user }, false]);
+    render(<Course course={course2} />);
+    const deleteCourseButton = await waitFor(() =>
+      screen.getByRole('button', { name: 'deleteCourse' })
+    );
+    expect(
+      screen.queryByRole('tooltip', { name: 'exclamation-circle Are you sure? No Yes' })
+    ).not.toBeInTheDocument();
 
-it('add to wish list button is not displayed if there is no session', async () => {
-  useSession.mockReturnValue([null, false]);
-  render(<Course course={course1} />);
-  await waitFor(() => {
-    expect(screen.queryByRole('button', { name: 'addToWishList' })).not.toBeInTheDocument();
-  });
-});
+    userEvent.click(deleteCourseButton);
 
-it('add to wish list button is not displayed if the user is an admin', async () => {
-  const user = adminUser;
-  useSession.mockReturnValue([{ user }, false]);
-  render(<Course course={course1} />);
-  await waitFor(() => {
-    expect(screen.queryByRole('button', { name: 'addToWishList' })).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('tooltip', { name: 'exclamation-circle Are you sure? No Yes' })
+    ).toBeInTheDocument();
   });
-});
 
-it('add to wish list button is not displayed if the user is an instructor', async () => {
-  const user = instructorUser;
-  useSession.mockReturnValue([{ user }, false]);
-  render(<Course course={course1} />);
-  await waitFor(() => {
-    expect(screen.queryByRole('button', { name: 'addToWishList' })).not.toBeInTheDocument();
-  });
-});
+  it('selecting the no button in the tooltip does not delete course', async () => {
+    const user = instructorUser2;
+    const router = useRouter();
+    useSession.mockReturnValue([{ user }, false]);
+    render(<Course course={course2} />);
+    const deleteCourseButton = await waitFor(() =>
+      screen.getByRole('button', { name: 'deleteCourse' })
+    );
 
-it('add to wish list button is not displayed if course is already in wish list', async () => {
-  const user = clientUser;
-  useSession.mockReturnValue([{ user }, false]);
-  getWishList.mockReturnValue({
-    data: { success: true, data: [course1] },
-  });
-  render(<Course course={course1} />);
-  await waitFor(() => {
-    expect(screen.queryByRole('button', { name: 'addToWishList' })).not.toBeInTheDocument();
-  });
-});
+    userEvent.click(deleteCourseButton);
 
-it('add to wish list button is displayed if course is not in wish list', async () => {
-  const user = clientUser;
-  useSession.mockReturnValue([{ user }, false]);
-  getWishList.mockReturnValue({
-    data: { success: true, data: [course1] },
-  });
-  render(<Course course={course2} />);
-  await waitFor(() => {
-    expect(screen.getByRole('button', { name: 'addToWishList' })).toBeInTheDocument();
-  });
-});
+    expect(
+      screen.getByRole('tooltip', { name: 'exclamation-circle Are you sure? No Yes' })
+    ).toBeInTheDocument();
+    const noButton = await waitFor(() => screen.getByRole('button', { name: 'No' }));
 
-it('add to wish list button calls update wish list and disappears once clicked', async () => {
-  const user = clientUser;
-  useSession.mockReturnValue([{ user }, false]);
-  getWishList.mockReturnValue({
-    data: { success: true, data: [course1] },
+    userEvent.click(noButton);
+
+    await waitFor(() => {
+      expect(router.replace).toHaveBeenCalledTimes(0);
+      expect(deleteCourse).toHaveBeenCalledTimes(0);
+    });
   });
-  render(<Course course={course2} />);
-  const addToWishListButton = await waitFor(() =>
-    screen.getByRole('button', { name: 'addToWishList' })
-  );
-  userEvent.click(addToWishListButton);
-  await waitFor(() => {
-    expect(updateWishList).toHaveBeenCalledTimes(1);
-    expect(screen.queryByRole('button', { name: 'addToWishList' })).not.toBeInTheDocument();
+
+  it('selecting the yes button in the tooltip deletes course', async () => {
+    const user = instructorUser2;
+    const router = useRouter();
+    useSession.mockReturnValue([{ user }, false]);
+    render(<Course course={course2} />);
+    const deleteCourseButton = await waitFor(() =>
+      screen.getByRole('button', { name: 'deleteCourse' })
+    );
+
+    userEvent.click(deleteCourseButton);
+
+    expect(
+      screen.getByRole('tooltip', { name: 'exclamation-circle Are you sure? No Yes' })
+    ).toBeInTheDocument();
+    const yesButton = await waitFor(() => screen.getByRole('button', { name: 'Yes' }));
+
+    userEvent.click(yesButton);
+
+    await waitFor(() => {
+      expect(router.replace).toHaveBeenCalledWith('/');
+      expect(deleteCourse).toHaveBeenCalledTimes(1);
+    });
   });
 });
