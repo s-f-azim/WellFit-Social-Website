@@ -116,16 +116,7 @@ const User = ({ user }) => {
   const handleFollow = async (id) => {
     try {
       await addingFollowUser(id);
-      if (!session.user.following.includes(id)) {
-        session.user.following = [id, ...session.user.following];
-        setIsFollowing(true);
-        setFollowerNum(followerNum + 1);
-      } else {
-        const index = session.user.following.indexOf(id);
-        session.user.following.splice(index, 1);
-        setIsFollowing(false);
-        setFollowerNum(followerNum - 1);
-      }
+      setIsFollowing(!isFollowing);
     } catch (err) {
       console.log(err);
     }
