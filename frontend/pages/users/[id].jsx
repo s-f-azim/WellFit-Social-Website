@@ -316,7 +316,7 @@ const User = ({ user }) => {
 
                 <h4 style={{ minwidth: '30%' }}>
                   <strong> About: </strong>
-                  {user.bio ? user.bio : 'No bio entered, edit your profile to display it.'}
+                  {user.bio ? user.bio : 'Bio not available'}
                 </h4>
                 <Button type="link" onClick={showFollowerModal} size="small">
                   <h5 style={{ color: '#ffa277' }}>Followed by {followerNum} user(s).</h5>

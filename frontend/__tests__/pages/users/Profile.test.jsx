@@ -42,9 +42,7 @@ it('renders client profile', async () => {
   expect(screen.getByText('John Wick', { exact: false })).toBeInTheDocument(); // display name
   expect(screen.getByText('Unverified User')).toBeInTheDocument(); // verified = false
   expect(screen.getByText('Client')).toBeInTheDocument(); // role
-  expect(
-    screen.getByText('No bio entered, edit your profile to display it', { exact: false })
-  ).toBeInTheDocument();
+  expect(screen.getByText('Bio not available', { exact: false })).toBeInTheDocument();
   expect(screen.getByText('Follows 0 other user(s)', { exact: false })).toBeInTheDocument();
   expect(screen.getByText('Followed by 0 user(s)', { exact: false })).toBeInTheDocument();
 });
