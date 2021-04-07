@@ -1,8 +1,9 @@
 /* eslint-disable no-nested-ternary */
-import { Input, Select, Radio, Pagination, Row, Col } from 'antd';
+import { Input, Select, Radio, Pagination, Row, Col, Empty } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
+import { FrownOutlined } from '@ant-design/icons';
 import { getPeople } from '../actions/user';
 import { getCourses } from '../actions/course';
 import PeopleResults from '../components/generalComponents/Search/PeopleResults';
@@ -153,13 +154,21 @@ const SearchBar = () => {
           )}
         </Col>
       </div>
-      {searchType === 'People' || (query.values && query.values.type === 'users') ? (
+      {(searchType === 'People' || (query.values && query.values.type === 'users')) &&
+      data.length > 0 ? (
         <PeopleResults data={data} />
       ) : (searchType === 'Courses' || (query.values && query.values.type === 'courses')) &&
         data.length > 0 ? (
         <CourseResults data={data} />
       ) : (
-        ''
+        <Empty
+          style={{ margin: '2em' }}
+          description={
+            <span>
+              We didn't find anything that matched your search <FrownOutlined />
+            </span>
+          }
+        />
       )}
       <Row justify="center">
         {response !== null && (

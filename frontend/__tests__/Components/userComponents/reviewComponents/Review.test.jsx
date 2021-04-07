@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Review } from '../components/userComponents/reviewComponents/Review';
+import { Review } from '../../../../components/userComponents/reviewComponents/Review';
 
 const user = { _id: '1', fName: 'user', lName: 'test', photos: [] };
 
