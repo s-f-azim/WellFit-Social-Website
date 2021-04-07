@@ -89,7 +89,7 @@ const Course = ({ course }) => {
     try {
       await deleteCourse(id);
       notification.open({
-        message: 'Course successfully deleted',
+        message: 'Course successfully deleted!',
         duration: 2,
         icon: <CheckOutlined style={{ color: '#70FF00' }} />,
       });

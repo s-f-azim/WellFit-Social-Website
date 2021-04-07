@@ -67,7 +67,7 @@ const settingsPage = () => {
       const response = await deleteUser();
       if (response.data.success) {
         session.user = null;
-        router.push('/');
+        router.replace('/');
       }
     };
 
