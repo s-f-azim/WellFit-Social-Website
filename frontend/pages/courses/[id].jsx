@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-inner-declarations */
-import { Row, Col, Button, Typography, Space, Divider, Rate, notification, Skeleton } from 'antd';
+import { Row, Col, Button, Typography, Space, Divider, Rate, notification, Skeleton, Popconfirm } from 'antd';
 import {
   CheckOutlined,
   UserOutlined,
@@ -13,6 +13,7 @@ import {
   CameraOutlined,
   ShoppingCartOutlined,
   HeartOutlined,
+  DeleteOutlined,
 } from '@ant-design/icons';
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
@@ -20,17 +21,19 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
+import { NextSeo } from 'next-seo';
 import api from '../../services/api';
 import stripePromise from '../../services/stripe';
 import checkout from '../../actions/payment';
 import { CourseReview } from '../../components/userComponents/reviewComponents/Review';
 import { getWishList, updateWishList } from '../../actions/user';
-import { getCourseCreators } from '../../actions/course';
+import { getCourseCreators, deleteCourse } from '../../actions/course';
 
 const Course = ({ course }) => {
   const [session, loading] = useSession();
   // state to indicate whether or not the user's wish list has been fetched yet
   const [wishListFetched, setWishListFetched] = useState(false);
+  const [userIsCreator, setUserIsCreator] = useState(false);
   // the courses in the user's wish list
   const [courses, setCourses] = useState({});
   // list of creators of this course
@@ -50,15 +53,23 @@ const Course = ({ course }) => {
     try {
       // only attempt to fetch wish list if the current user is a client
       if (session && session.user.role === 'client') {
-        const response = await getWishList();
-        setCourses(response.data.data);
-        // now that the courses from the wish list have been fetched, update the state
-        setWishListFetched(true);
-      }
+          const response = await getWishList();
+          console.log(creators);
+          setCourses(response.data.data);
+          // now that the courses from the wish list have been fetched, update the state
+          setWishListFetched(true);
+        } 
+      
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [session]);
+
+  useEffect(() => {
+    if (session && creators.some(user => user._id === session.user._id)) {
+      setUserIsCreator(true);
+    }
+  }, [creators, session]);
 
   if (typeof window !== 'undefined' && loading) return null;
 
@@ -73,6 +84,20 @@ const Course = ({ course }) => {
     });
     ReactDOM.render(<></>, document.getElementById('wishListButton'));
   }
+
+  const handleCourseDelete = async (id) => {
+    try {
+      await deleteCourse(id);
+      notification.open({
+        message: 'Course successfully deleted!',
+        duration: 2,
+        icon: <CheckOutlined style={{ color: '#70FF00' }} />,
+      });
+      router.replace('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // handle the payment
   const handleClick = async (e) => {
@@ -96,6 +121,7 @@ const Course = ({ course }) => {
     }
   };
   <Image
+    alt="a preview picture of the course"
     src={
       course.photos[0]
         ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
@@ -104,6 +130,10 @@ const Course = ({ course }) => {
   />;
   return (
     <div style={{ padding: '2em' }}>
+      <NextSeo
+        title="Course Page"
+        description="A page containing all the information about a specific course."
+      />
       <Row justify="center">
         <Typography.Title level={1} style={{ fontSize: '2.3rem', fontFamily: 'Poppins' }}>
           {course.title} <ProfileOutlined />
@@ -130,6 +160,7 @@ const Course = ({ course }) => {
 
           <Divider />
           <Image
+            alt="a preview picture of the course"
             src={
               course.photos[0]
                 ? `data:image/png;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
@@ -212,6 +243,25 @@ const Course = ({ course }) => {
           <Button aria-label="purchase" onClick={handleClick} type="primary" size="large">
             Purchase this course <ShoppingCartOutlined />
           </Button>
+          <br />
+          <br />
+          {
+            //Only display if creator is logged in
+            userIsCreator ? (
+              <Popconfirm title="Are you sure?" onConfirm={() => handleCourseDelete(course._id)} okText="Yes" cancelText="No">
+                <Button
+                  type="primary"
+                  size="large"
+                  aria-label="deleteCourse"
+                  danger
+                >
+                  Delete this course <DeleteOutlined />
+                </Button>
+              </Popconfirm>
+              
+            ) : null
+
+          }
           <br />
           <br />
           <div id="wishListButton">

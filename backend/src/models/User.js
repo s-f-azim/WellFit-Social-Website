@@ -45,7 +45,6 @@ const UserSchema = new mongoose.Schema(
     screenname: {
       type: String,
       required: false,
-      // fix for missing usernames causing validation fail
     },
     gender: {
       type: String,
@@ -166,6 +165,8 @@ const UserSchema = new mongoose.Schema(
         'Yoga',
         'Meditation',
         'Nutrition',
+        'Weightloss',
+        'Bodybuilding',
       ],
     },
     trainerType: {
@@ -280,6 +281,12 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
+    facebookAccessToken: {
+      type: String,
+    },
+    facebookRefreshToken: {
+      type: String,
+    },
     twitterId: {
       type: String,
     },
@@ -321,11 +328,13 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
 
-    favourites: [{ 
-      type: mongoose.Schema.ObjectId ,
-      ref: 'Post',
-      default: [],
-    }],
+    favourites: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Post',
+        default: [],
+      },
+    ],
   },
   { timestamps: true }
 );
@@ -402,7 +411,7 @@ UserSchema.pre('save', async function (next) {
 // check that given email and password exists
 UserSchema.statics.checkCredentials = async ({ email, password }) => {
   // eslint-disable-next-line no-use-before-define
-  const user = await User.findOne({ email }).select('+password');
+  const user = await User.findOne({ email }).select('+password -photos');
   if (!user) {
     throw new ErrorResponse('Unable to login', 404);
   }

@@ -8,10 +8,12 @@ import {
   userThree,
   setupDatabase,
   conversationTwo,
+  dropDb,
 } from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
+afterAll(dropDb);
 
 it('Should not be able to create a new conversation when not logged in', async () => {
   await request(app).post('/api/conversation').send().expect(401);
@@ -48,7 +50,10 @@ it('Should be able to send messages', async () => {
     .patch('/api/conversation')
     .send({
       users: [userThree._id, userTwo._id],
-      message: { author: userTwo._id, content: 'hey there' },
+      message: {
+        author: userTwo._id,
+        content: 'hey there',
+      },
     })
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);

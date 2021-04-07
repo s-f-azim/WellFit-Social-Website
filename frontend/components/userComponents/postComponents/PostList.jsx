@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import { List, Button, Popconfirm, Typography, Card } from 'antd';
-import { DeleteOutlined, HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { List, Button, Popconfirm, Typography, Card, Avatar } from 'antd';
+import { DeleteOutlined, HeartOutlined, HeartFilled, UserOutlined } from '@ant-design/icons';
 import Moment from 'react-moment';
 import VideoPlayer from '../../generalComponents/VideoPlayer';
 
@@ -19,7 +19,6 @@ const PostList = ({ posts, renderItem, loading }) => (
 );
 
 PostList.Item = ({ post, onDelete, onLike, isLiked }) => {
-
   const LikedButton = ({ id }) => (
     <Button
       aria-label="like"
@@ -51,11 +50,26 @@ PostList.Item = ({ post, onDelete, onLike, isLiked }) => {
       aria-label="post"
       key={post._id}
       actions={[
-        ...(onLike ? isLiked ? [<LikedButton id={post._id} />] : [<NotLikedButton id={post._id} />] : []),
+        ...(onLike
+          ? isLiked
+            ? [<LikedButton id={post._id} />]
+            : [<NotLikedButton id={post._id} />]
+          : []),
         ...(onDelete ? [<DeleteButton id={post._id} />] : []),
       ]}
     >
       <List.Item.Meta
+        avatar={
+          <Avatar
+            src={
+              post.author.photos[0] ? (
+                `data:image/png;base64,${post.author.photos[0].toString('base64')}`
+              ) : (
+                <UserOutlined />
+              )
+            }
+          />
+        }
         title={
           <div>
             <Title level={4}>

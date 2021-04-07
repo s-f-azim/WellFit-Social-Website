@@ -14,7 +14,7 @@ const createPost = asyncHandler(async (req, res) => {
     author: req.user._id,
     ...req.body,
   });
-  post = await post.populate('author', 'fName lName').execPopulate();
+  post = await post.populate('author', 'fName lName photos').execPopulate();
   return res.status(200).send({ success: true, data: post });
 });
 
@@ -28,7 +28,7 @@ const getPostsByAuthor = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.authorId, 'posts').populate({
     path: 'posts',
     options: { sort: { createdAt: -1 } },
-    populate: { path: 'author', select: 'fName lName' },
+    populate: { path: 'author', select: 'fName lName photos' },
   });
   res.status(200).json({ success: true, data: user.posts });
 });
@@ -45,7 +45,7 @@ const getFeedPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find({
     $or: [{ author: req.user._id }, { author: { $in: user.following } }],
   })
-    .populate('author', 'fName lName')
+    .populate('author', 'fName lName photos')
     .sort('-createdAt');
 
   res.status(200).json({ success: true, data: posts });

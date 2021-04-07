@@ -59,6 +59,8 @@ const getFavouritedPosts = (quantity) => api.get(`users/favouritedPosts/${quanti
 
 const updateFavouritedPosts = (id) => api.patch(`/users/favouritedPosts/${id}`, {});
 
+const uploadImages = (images) => api.post('/users/avatar', images);
+
 export {
   updateUser as default,
   deleteUser,
@@ -81,4 +83,5 @@ export {
   updateWishList,
   getFavouritedPosts,
   updateFavouritedPosts,
+  uploadImages,
 };

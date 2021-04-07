@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import { List, Rate, Button, Popconfirm, Typography } from 'antd';
-import { DeleteOutlined, FileDoneOutlined, StarOutlined } from '@ant-design/icons';
+import { List, Button, Popconfirm, Typography, Avatar } from 'antd';
+import { DeleteOutlined, FileDoneOutlined, StarOutlined, UserOutlined } from '@ant-design/icons';
 
 const ReviewList = ({ reviews, renderItem, loading }) => (
   <List
@@ -36,6 +36,17 @@ ReviewList.Item = ({ review, onDelete }) => {
   return (
     <List.Item aria-label="review" key={review._id} actions={[onDelete && <DeleteButton />]}>
       <List.Item.Meta
+        avatar={
+          <Avatar
+            src={
+              review.author.photos[0] ? (
+                `data:image/png;base64,${review.author.photos[0].toString('base64')}`
+              ) : (
+                <UserOutlined />
+              )
+            }
+          />
+        }
         title={
           <div>
             <strong>Author:</strong> {review.author.fName} {review.author.lName}

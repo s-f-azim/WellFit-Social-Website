@@ -2,6 +2,7 @@
 import { Input, Select, Radio, Pagination, Row, Col } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { NextSeo } from 'next-seo';
 import { getPeople } from '../actions/user';
 import { getCourses } from '../actions/course';
 import PeopleResults from '../components/generalComponents/Search/PeopleResults';
@@ -48,8 +49,12 @@ const SearchBar = () => {
     } else if (searchType === 'Questionnaire' && query.values) {
       try {
         const { type, location } = query.values;
-        response = await searchRadius(type, location, currentPage, query.category.name);
-        console.log(response);
+        response = await searchRadius(
+          type,
+          location,
+          currentPage,
+          query.category.name.replace(/\s/g, '')
+        );
       } catch (err) {
         console.log(err);
       }
@@ -81,6 +86,10 @@ const SearchBar = () => {
   ));
   return (
     <>
+      <NextSeo
+        title="Search Page"
+        description="A page from which a user can search the site for questionnaires, courses, and people."
+      />
       <div
         style={{
           display: 'flex',
@@ -92,6 +101,7 @@ const SearchBar = () => {
         <Radio.Group
           style={{ paddingBottom: '2rem' }}
           onChange={(e) => {
+            setData([]);
             setCurrentPage(1);
             setSearchType(e.target.value);
             setQuery({});

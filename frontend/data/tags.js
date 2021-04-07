@@ -21,4 +21,6 @@ export default [
   'Yoga',
   'Meditation',
   'Nutrition',
+  'Weightloss',
+  'Bodybuilding',
 ];

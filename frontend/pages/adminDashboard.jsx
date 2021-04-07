@@ -1,12 +1,11 @@
 /* eslint-disable import/no-duplicates */
-import { Card, Row, Col, Statistic, Button, Tabs, List, notification, Badge } from 'antd';
+import { Card, Row, Col, Statistic, Tabs, List, notification, Badge } from 'antd';
 import {
   FundProjectionScreenOutlined,
   BarChartOutlined,
   CheckCircleOutlined,
   StopOutlined,
   BugOutlined,
-  MailOutlined,
   UserOutlined,
   CloseOutlined,
   CheckOutlined,
@@ -14,6 +13,7 @@ import {
 } from '@ant-design/icons';
 import { useState } from 'react';
 import { useSession } from 'next-auth/client';
+import { NextSeo } from 'next-seo';
 import {
   getUsers,
   getUsersWithLimit,
@@ -38,7 +38,6 @@ const AdminDashboard = ({
   bugReports,
   verifyRequests,
   userReports,
-  Messages,
 }) => {
   const [session, loading] = useSession();
   const [allBugReports, setBugReports] = useState(bugReports);
@@ -80,12 +79,6 @@ const AdminDashboard = ({
     const userTitle = (
       <p>
         <DislikeOutlined /> User reports <Badge count={userReports.length} />
-      </p>
-    );
-
-    const contactTitle = (
-      <p>
-        <MailOutlined /> contact users
       </p>
     );
 
@@ -158,6 +151,10 @@ const AdminDashboard = ({
 
     return (
       <div className="adminDashboard">
+        <NextSeo
+          title="Admin Dashboard"
+          description="An administrative dashboard from which to manage the website as administrator."
+        />
         <Row justify="left" type="flex">
           <Card title={title}>
             <Tabs size="small" defaultActiveKey="1" tabPosition="left">
@@ -306,21 +303,9 @@ const AdminDashboard = ({
                           ? getRequestAuthor(report.author)
                           : 'User has been deleted'}
                       </h3>{' '}
-                      <br />
-                      <Button
-                        type="danger"
-                        style={{ marginRight: '2rem' }}
-                        disabled
-                        onClick={() => onBanUser(report.recipient, report)}
-                      >
-                        Ban reported user
-                      </Button>
                     </List.Item>
                   )}
                 />
-              </TabPane>
-              <TabPane key="5" tab={contactTitle}>
-                hi
               </TabPane>
             </Tabs>
           </Card>
@@ -343,10 +328,6 @@ function isContentReport(request) {
   return request.type === 'report';
 }
 
-function isMessage(request) {
-  return request.type === 'message';
-}
-
 export async function getStaticProps() {
   const getUsersRes = await getUsers();
   const getUsersWithLimitRes = await getUsersWithLimit(getUsersRes.data.pagination.total);
@@ -364,7 +345,6 @@ export async function getStaticProps() {
       bugReports: getRequestsRes.filter(isBugReport),
       verifyRequests: getRequestsRes.filter(isVerifyRequest),
       userReports: getRequestsRes.filter(isContentReport),
-      Messages: getRequestsRes.filter(isMessage),
     },
     revalidate: 60 * 1,
   };

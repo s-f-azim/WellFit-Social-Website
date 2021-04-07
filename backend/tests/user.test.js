@@ -11,11 +11,13 @@ import {
   courseOne,
   courseTwo,
   postOne,
-  postThree
+  postThree,
+  dropDb,
 } from './fixtures/db.js';
 
 // setup db for each test
 beforeEach(setupDatabase);
+afterAll(dropDb);
 
 // assert signup with valid data
 it('Should signup a new user', async () => {
@@ -459,7 +461,7 @@ it('Should not retrieve any of the users favourited posts with a param that is N
  * @desc Test updates of favouriting and unfavouriting posts
  */
 
- it('Should unfavourite post already favourited', async () => {
+it('Should unfavourite post already favourited', async () => {
   await request(app)
     .patch(`/api/users/favouritedPosts/${postOne._id}`)
     .send()
@@ -475,9 +477,6 @@ it('Should favourite post not already favourited', async () => {
     .send()
     .set('Cookie', [`token=${tokens[1]}`])
     .expect(200);
-    const user = await User.findById(userTwo._id);
-    expect(user.favourites.length === 1);
+  const user = await User.findById(userTwo._id);
+  expect(user.favourites.length === 1);
 });
-
-
-

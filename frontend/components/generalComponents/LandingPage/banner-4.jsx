@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Card } from 'antd';
+import { Card, Image } from 'antd';
 import { useSession } from 'next-auth/client';
+import { UserOutlined } from '@ant-design/icons';
 import { getTrendingUsersLimit } from '../../../actions/user';
+import template from '../../../data/frontPageText';
 
 const { Meta } = Card;
 
@@ -26,7 +28,7 @@ const Banner4 = () => {
   return (
     <div className="banner4">
       <div className="inner_banner4">
-        <h1>Meet leading instructors </h1>
+        <h1>{template.banner4.header} </h1>
         {showState ? (
           <div className="banner4_boxes">
             {list.map((item) => (
@@ -35,16 +37,15 @@ const Banner4 = () => {
                   <Card
                     hoverable
                     cover={
-                      <img
-                        alt="example"
-                        src={
-                          item.photos[0]
-                            ? `data:image/png;base64,${Buffer.from(item.photos[0].data).toString(
-                                'base64'
-                              )}`
-                            : '/image-not-found.svg'
-                        }
-                      />
+                      item.photos[0] ? (
+                        <Image
+                          preview={false}
+                          alt="Picture of an instructor"
+                          src={`data:image/png;base64,${item.photos[0].toString('base64')}`}
+                        />
+                      ) : (
+                        <UserOutlined />
+                      )
                     }
                   >
                     <Meta

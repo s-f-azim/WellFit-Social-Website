@@ -2,6 +2,7 @@ import { Card, Row, Col, Avatar } from 'antd';
 import { UserOutlined, LeftOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useSession, getSession } from 'next-auth/client';
+import { NextSeo } from 'next-seo';
 import ChatList from '../components/userComponents/chatComponents/ChatList';
 import Conversation from '../components/userComponents/chatComponents/Conversation';
 import AccessDenied from '../components/generalComponents/AccessDenied';
@@ -11,38 +12,53 @@ const Chats = () => {
   const [conversation, setConversation] = useState(null);
   const [receiver, setReciver] = useState(null);
   if (typeof window !== 'undefined' && loading) return null;
-  if (session) {
+  if (session && session.user) {
     return (
-      <Row className="chat-row" justify="center" type="flex">
-        <Card
-          className="chat-card"
-          bordered={false}
-          title={
-            <div className="header">
+      <>
+        <NextSeo
+          title="Chats Page"
+          description="A page from which a user can access chats and chat with mutual followers."
+        />
+        <Row className="chat-row" justify="center" type="flex">
+          <Card
+            className="chat-card"
+            bordered={false}
+            title={
+              <div className="header">
+                {conversation ? (
+                  <>
+                    <LeftOutlined onClick={() => setConversation(null)} />
+                    <div className="details">
+                      <Avatar
+                        src={
+                          receiver.photos[0] ? (
+                            `data:image/png;base64,${receiver.photos[0].toString('base64')}`
+                          ) : (
+                            <UserOutlined />
+                          )
+                        }
+                        size="large"
+                      />
+                      <h3>{receiver ? receiver.fName : ''}</h3>
+                    </div>
+                  </>
+                ) : (
+                  <h1>Contact list</h1>
+                )}
+              </div>
+            }
+          >
+            <Col className="content-chat">
               {conversation ? (
-                <>
-                  <LeftOutlined onClick={() => setConversation(null)} />
-                  <div className="details">
-                    <Avatar icon={<UserOutlined />} size="large" />
-                    <h3>{receiver ? receiver.fName : ''}</h3>
-                  </div>
-                </>
+                <Conversation conversation={conversation} receiver={receiver} />
               ) : (
-                <h1>Contact list</h1>
+                <ChatList setReciver={setReciver} setConversation={setConversation} />
               )}
-            </div>
-          }
-        >
-          <Col className="content-chat">
-            {conversation ? (
-              <Conversation conversation={conversation} />
-            ) : (
-              <ChatList setReciver={setReciver} setConversation={setConversation} />
-            )}
-          </Col>
-          <Col />
-        </Card>
-      </Row>
+            </Col>
+            <Col />
+          </Card>
+        </Row>
+      </>
     );
   }
   return <AccessDenied />;

@@ -2,8 +2,9 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import UserPosts from '../components/userComponents/postComponents/UserPosts';
 import { getPostsByAuthor } from '../actions/post';
+import { getFavouritedPosts } from '../actions/user';
 
-const user = { _id: '1', fName: 'user', lName: 'test' };
+const user = { _id: '1', fName: 'user', lName: 'test', photos: [] };
 
 jest.mock('next-auth/client', () => ({
   useSession: () => [{ user }, false],
@@ -14,6 +15,11 @@ jest.mock('../actions/post', () => ({
   deletePost: jest.fn(),
 }));
 
+jest.mock('../actions/user', () => ({
+  getFavouritedPosts: jest.fn(),
+  updateFavouritedPosts: jest.fn(),
+}));
+
 const posts = [1, 2, 3, 4].map((n) => ({
   _id: `${n}`,
   content: `content ${n}`,
@@ -22,11 +28,13 @@ const posts = [1, 2, 3, 4].map((n) => ({
     _id: `${n}`,
     fName: `user ${n}`,
     lName: `test ${n}`,
+    photos: [],
   },
 }));
 
 it('renders posts', async () => {
   getPostsByAuthor.mockReturnValueOnce(posts);
+  getFavouritedPosts.mockReturnValue({ data: { data: [] } });
   render(<UserPosts />);
 
   await waitFor(() =>
@@ -41,6 +49,7 @@ it('renders posts', async () => {
 
 it('deletes post when delete button is clicked', async () => {
   getPostsByAuthor.mockReturnValueOnce(posts);
+  getFavouritedPosts.mockReturnValue({ data: { data: [] } });
   render(<UserPosts />);
 
   await waitFor(() =>

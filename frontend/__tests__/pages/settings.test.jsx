@@ -24,9 +24,11 @@ jest.mock('../../actions/user', () => ({
 
 jest.mock('next/router', () => {
   const push = jest.fn();
+  const replace = jest.fn();
   return {
     useRouter: () => ({
       push,
+      replace,
     }),
   };
 });
@@ -130,7 +132,7 @@ it('routes correctly for clicking delete in button press Account settings', asyn
 
   const router = useRouter();
 
-  await waitFor(() => expect(router.push).toHaveBeenCalledWith('/'));
+  await waitFor(() => expect(router.replace).toHaveBeenCalledWith('/'));
 });
 
 it('Contact us screen textbox and submit button is working', async () => {

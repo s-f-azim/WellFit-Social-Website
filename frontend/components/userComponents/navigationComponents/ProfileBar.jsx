@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { Avatar, notification } from 'antd';
 import { useRouter } from 'next/router';
 import {
-  AntDesignOutlined,
   SettingOutlined,
   EditOutlined,
   LogoutOutlined,
@@ -10,12 +9,10 @@ import {
   CloseOutlined,
   SendOutlined,
   UserOutlined,
-  HeartOutlined,
 } from '@ant-design/icons';
 import { useEffect } from 'react';
 import { signOut } from 'next-auth/client';
 import { logout } from '../../../services/auth';
-import ReportButton from '../ReportButton';
 
 const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
   const router = useRouter();
@@ -51,7 +48,15 @@ const ProfileBar = ({ session, profileOpen, setProfileOpen }) => {
           xl: 95,
           xxl: 130,
         }}
-        icon={<AntDesignOutlined />}
+        src={
+          session.user.photos[0] ? (
+            `data:image/png;base64,${Buffer.from(session.user.photos[0]).toString('base64')}`
+          ) : (
+            <h1>
+              <UserOutlined />
+            </h1>
+          )
+        }
       />
       <h1 className="item">
         <UserOutlined />
