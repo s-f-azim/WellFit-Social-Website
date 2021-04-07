@@ -1,11 +1,11 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { notification } from 'antd';
-import InstQuest from '../components/userComponents/questionnaires/InstQuest';
+import InstQuest from '../../../../components/userComponents/questionnaires/InstQuest';
 
-import updateUser from '../actions/user';
+import updateUser from '../../../../actions/user';
 
-jest.mock('../actions/user');
+jest.mock('../../../../actions/user');
 
 jest.mock('next/router', () => ({
   useRouter: () => ({

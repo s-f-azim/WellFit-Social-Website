@@ -1,9 +1,9 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ChatList from '../components/userComponents/chatComponents/ChatList';
+import ChatList from '../../../../components/userComponents/chatComponents/ChatList';
 
-import { getFollowingList } from '../actions/user';
-import { createConversation, getConversation } from '../actions/conversation';
+import { getFollowingList } from '../../../../actions/user';
+import { createConversation, getConversation } from '../../../../actions/conversation';
 
 const user = { _id: '1', fName: 'user', lName: 'test' };
 
@@ -11,11 +11,11 @@ jest.mock('next-auth/client', () => ({
   useSession: () => [{ user }, false],
 }));
 
-jest.mock('../actions/user', () => ({
+jest.mock('../../../../actions/user', () => ({
   getFollowingList: jest.fn(),
 }));
 
-jest.mock('../actions/conversation', () => ({
+jest.mock('../../../../actions/conversation', () => ({
   createConversation: jest.fn(),
   getConversation: jest.fn(),
 }));
