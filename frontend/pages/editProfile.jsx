@@ -99,7 +99,7 @@ const editProfilePage = () => {
     const [isAlertVisible, setIsAlertVisible] = useState(false);
 
     const infoAlertText =
-      user.role === 'client' ? (
+      (user && user.role) === 'client' ? (
         <p>
           Adding information on this page helps us tailor our services and allows instructors to be
           more suited to your needs, as well as found for you more efficiently. We encourage but do
@@ -107,9 +107,10 @@ const editProfilePage = () => {
         </p>
       ) : (
         <p>
-          Adding information on this page helps us tailor our services and allows clients to be
-          matched more efficiently, as well as letting them know who you are and how you work before
-          initiating contact. We encourage but do not require you to provide this information.
+          Adding information on this page helps us tailor our services and allows for matching to be
+          more efficient, as well as informing others of who you are and how you prefer to interact
+          before initiating contact. We encourage but do not require you to provide this
+          information.
         </p>
       );
 
@@ -173,7 +174,7 @@ const editProfilePage = () => {
                     <Form.Item name="gender" label="Gender">
                       <Select
                         aria-label="gender"
-                        defaultValue={user.gender ? user.gender : null}
+                        defaultValue={user && user.gender ? user.gender : null}
                         placeholder="Select your gender"
                       >
                         <Option value="Male">Male</Option>
@@ -193,7 +194,7 @@ const editProfilePage = () => {
                       ]}
                     >
                       <DatePicker
-                        defaultPickerValue={user.birtdhay ? user.birthday : null}
+                        defaultPickerValue={user && user.birtdhay ? user.birthday : null}
                         disabledDate={(d) => !d || d.isAfter(date)}
                       />
                     </Form.Item>
@@ -201,7 +202,7 @@ const editProfilePage = () => {
                     <Form.Item name="nickname" label="Nickname">
                       <Input
                         aria-label="nickname"
-                        defaultValue={user.nickname ? user.nickname : null}
+                        defaultValue={user && user.nickname ? user.nickname : null}
                       />
                     </Form.Item>
 
@@ -210,7 +211,7 @@ const editProfilePage = () => {
                         aria-label="bio"
                         maxLength={200}
                         showCount
-                        defaultValue={user.bio ? user.bio : null}
+                        defaultValue={user && user.bio ? user.bio : null}
                       />
                     </Form.Item>
 
@@ -220,7 +221,7 @@ const editProfilePage = () => {
                         mode="tags"
                         style={{ display: 'flex', flexFlow: 'column wrap', flexGrow: '2' }}
                         placeholder="Select your interests"
-                        defaultValue={user.tags ? user.tags : null}
+                        defaultValue={user && user.tags ? user.tags : null}
                         rules={[
                           {
                             type: 'string',
@@ -262,7 +263,7 @@ const editProfilePage = () => {
                     </Modal>
                   </>
                 </h1>
-                {user.role === 'client' ? (
+                {user && user.role === 'client' ? (
                   <ClientQuest session={session} />
                 ) : (
                   <InstQuest session={session} />
