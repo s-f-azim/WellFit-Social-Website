@@ -44,6 +44,7 @@ const Course = ({ course }) => {
   const [session, loading] = useSession();
   // state to indicate whether or not the user's wish list has been fetched yet
   const [wishListFetched, setWishListFetched] = useState(false);
+  // state to indicate if the currently logged in user is a course creator
   const [userIsCreator, setUserIsCreator] = useState(false);
   // the courses in the user's wish list
   const [courses, setCourses] = useState({});
@@ -53,6 +54,11 @@ const Course = ({ course }) => {
   if (router.isFallback) {
     return <Skeleton active />;
   }
+  const tagStyle = {
+    maxWidth: 'min-content',
+    display: 'inline-block',
+    marginRight: '0.5rem',
+  };
 
   useEffect(async () => {
     try {
@@ -235,11 +241,11 @@ const Course = ({ course }) => {
           <h2>
             <strong>Course Tagged with:</strong>
           </h2>
-          <Space>
+          <div>
             {course.tags.map((tag) => (
-              <h3>{`#${tag}`}</h3>
+              <h3 style={tagStyle} key={tag}>{`#${tag}`}</h3>
             ))}
-          </Space>
+          </div>
           <br />
           <Button aria-label="purchase" onClick={handleClick} type="primary" size="large">
             Purchase this course <ShoppingCartOutlined />
