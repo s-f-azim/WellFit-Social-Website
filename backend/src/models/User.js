@@ -282,6 +282,12 @@ const UserSchema = new mongoose.Schema(
     facebookId: {
       type: String,
     },
+    facebookAccessToken: {
+      type: String,
+    },
+    facebookRefreshToken: {
+      type: String,
+    },
     twitterId: {
       type: String,
     },
