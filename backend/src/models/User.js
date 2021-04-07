@@ -422,11 +422,7 @@ UserSchema.methods.getSignedJWTToken = function () {
   return JWT.sign({ id: this._id }, process.env.JWT_SECRET);
 };
 
-UserSchema.post('remove', async function (user)  { 
-  await this.model('Review').remove( //delete reviews made by user when user deleted
-    {author: { $eq: user._id }},
-  ).exec();
-}); 
+
 
 // create user model
 const User = mongoose.model('User', UserSchema);
