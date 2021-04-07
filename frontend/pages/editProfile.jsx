@@ -182,21 +182,6 @@ const editProfilePage = () => {
                         <Option value="Prefer not to say">Prefer not to say</Option>
                       </Select>
                     </Form.Item>
-
-                    {/* <Form.Item name="location" label="Location">
-                    <Select
-                      defaultValue={user.location ? user.location : null}
-                      placeholder="Select your location"
-                    >
-                      <Option value="Europe">Europe</Option>
-                      <Option value="Asia">Asia</Option>
-                      <Option value="North America">North America</Option>
-                      <Option value="South America">South America</Option>
-                      <Option value="Australia">Australia</Option>
-                      <Option value="Africa">Africa</Option>
-                    </Select>
-                  </Form.Item> */}
-
                     <Form.Item
                       name="birthday"
                       label="Birthday"

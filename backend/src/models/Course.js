@@ -118,15 +118,11 @@ const CourseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
 CourseSchema.virtual('reviews', {
   ref: 'CourseReview',
   localField: '_id',
   foreignField: 'course',
 });
-
-
-
 
 // Geocode and create location field
 CourseSchema.pre('save', async function (next) {
@@ -159,17 +155,22 @@ CourseSchema.pre('save', function (next) {
   next();
 });
 
-CourseSchema.post('remove', async function (course)  { 
-  await this.model('User').updateMany( //delete course from users' wishlists when course deleted
-    {wishlist: { $in: [course._id] }},
-    {$pull: { wishlist: course._id }},
-  ).exec();
+CourseSchema.post('remove', async function (course) {
+  await this.model('User')
+    .updateMany(
+      // delete course from users' wishlists when course deleted
+      { wishlist: { $in: [course._id] } },
+      { $pull: { wishlist: course._id } }
+    )
+    .exec();
 
-  await this.model('Review').remove( //delete reviews of course when course deleted
-    {course: { $exists: true, $eq: course._id }},
-  ).exec();
-}); 
-
+  await this.model('Review')
+    .remove(
+      // delete reviews of course when course deleted
+      { course: { $exists: true, $eq: course._id } }
+    )
+    .exec();
+});
 
 // create course model
 const Course = mongoose.model('Course', CourseSchema);

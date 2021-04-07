@@ -315,7 +315,6 @@ const requestOneId = new mongoose.Types.ObjectId();
 const requestTwoId = new mongoose.Types.ObjectId();
 const requestThreeId = new mongoose.Types.ObjectId();
 
-// requests
 const requestOne = {
   _id: requestOneId,
   author: userOneId,
@@ -353,7 +352,6 @@ const requests = [requestOne, requestTwo, requestThree];
 const conversations = [conversationOne, conversationTwo];
 const posts = [postOne, postTwo, postThree];
 
-// token
 const tokens = [];
 
 const setupDatabase = async () => {

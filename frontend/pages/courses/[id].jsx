@@ -1,7 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-inner-declarations */
-import { Row, Col, Button, Typography, Space, Divider, Rate, notification, Skeleton, Popconfirm } from 'antd';
+import {
+  Row,
+  Col,
+  Button,
+  Typography,
+  Space,
+  Divider,
+  Rate,
+  notification,
+  Skeleton,
+  Popconfirm,
+} from 'antd';
 import {
   CheckOutlined,
   UserOutlined,
@@ -53,20 +64,19 @@ const Course = ({ course }) => {
     try {
       // only attempt to fetch wish list if the current user is a client
       if (session && session.user.role === 'client') {
-          const response = await getWishList();
-          console.log(creators);
-          setCourses(response.data.data);
-          // now that the courses from the wish list have been fetched, update the state
-          setWishListFetched(true);
-        } 
-      
+        const response = await getWishList();
+        console.log(creators);
+        setCourses(response.data.data);
+        // now that the courses from the wish list have been fetched, update the state
+        setWishListFetched(true);
+      }
     } catch (error) {
       console.log(error);
     }
   }, [session]);
 
   useEffect(() => {
-    if (session && creators.some(user => user._id === session.user._id)) {
+    if (session && creators.some((user) => user._id === session.user._id)) {
       setUserIsCreator(true);
     }
   }, [creators, session]);
@@ -246,21 +256,19 @@ const Course = ({ course }) => {
           <br />
           <br />
           {
-            //Only display if creator is logged in
+            // Only display if creator is logged in
             userIsCreator ? (
-              <Popconfirm title="Are you sure?" onConfirm={() => handleCourseDelete(course._id)} okText="Yes" cancelText="No">
-                <Button
-                  type="primary"
-                  size="large"
-                  aria-label="deleteCourse"
-                  danger
-                >
+              <Popconfirm
+                title="Are you sure?"
+                onConfirm={() => handleCourseDelete(course._id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button type="primary" size="large" aria-label="deleteCourse" danger>
                   Delete this course <DeleteOutlined />
                 </Button>
               </Popconfirm>
-              
             ) : null
-
           }
           <br />
           <br />
