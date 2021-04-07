@@ -1,6 +1,6 @@
 import Conversation from './models/Conversation.js';
 import Message from './models/Message.js';
-// let users = {};
+
 const socketEvents = (io) => {
   io.on('connection', (socket) => {
     // on send message create a new message and add it to the conversation

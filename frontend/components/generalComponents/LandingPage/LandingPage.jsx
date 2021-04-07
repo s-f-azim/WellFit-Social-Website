@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Row, Col, Button } from 'antd';
+import { Row } from 'antd';
 import Banner1 from './banner-1';
 import Banner2 from './banner-2';
 import Banner3 from './banner-3';

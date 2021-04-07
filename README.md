@@ -29,19 +29,19 @@
 
 # Credentials - to access the website
 
-| Email                   | user role  | password |
-| ----------------------- | ---------- | -------- |
-| admin.admin@gmail.com   | admin      |admin1234 |
-| ahmed.alahmadi@test.com | client	   |ahmed1234 |
-| alex.chouman@test.com   | instructor | ()       |
-| fahim.ahmed@gmail.com   | instructor | ()       |
-| issa.kabir@gmail.com    | instructor | ()       |
-| jon.riv@gmail.com       | client     | ()       |
-| oskar.ribbe@gmail.com   | client     | ()       |
-| shah.azim@gmail.com     | client     | ()       |
-| savraj.bassi@gmail.com  | client     | ()       |
+| Email                   | user role  | password  |
+| ----------------------- | ---------- | --------- |
+| admin.admin@gmail.com   | admin      | admin1234 |
+| ahmed.alahmadi@test.com | client     | ahmed1234 |
+| alex.chouman@test.com   | instructor | ()        |
+| fahim.ahmed@gmail.com   | instructor | ()        |
+| issa.kabir@gmail.com    | instructor | ()        |
+| jon.riv@gmail.com       | client     | ()        |
+| oskar.ribbe@gmail.com   | client     | ()        |
+| shah.azim@gmail.com     | client     | ()        |
+| savraj.bassi@gmail.com  | client     | ()        |
 
-- Note: Only the admin is important where the other users can be created using the website via SignUP
+- Note: Only the admin is important since the other users with roles such as "client" and "instructor" can be created using the website via SignUP
 
 # Deploy Location
 
@@ -53,7 +53,5 @@
 
 # Short Description
 
-    This project's prime aspect is to introduce fitness enthusiasts to find a gym-mate or instructor.
-    Clients can search instructors/ clients and filter them as they wish.
-    Instructors can create courses to sell and get customers.
-    Users can signup using signup page or they have the option to login using thier Facebook, Google and Instagram account
+    WellFit is a software built to better the health of its users by facilitating all interactions between fitness/health professionals and clients, from finding the right professional, to initiating contact, to handling payment for said services; all this whilst using a durable business model. The objective of this project is to create a relevant, efficient and complete platform to allow the incredible
+    amount of fitness and health professionals existing on various social media to share their programs and courses, be aggregated, gain in visibility and meet/interact with clients seamlessly.
