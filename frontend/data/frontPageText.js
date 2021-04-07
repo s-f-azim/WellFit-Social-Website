@@ -6,7 +6,7 @@ export default {
     button_signed_in: 'What are you looking for?',
   },
   banner2: {
-    header: 'Choose what works for you',
+    header: 'See what we offer',
     card1: {
       cardHeader: 'Take Courses',
       cardText: 'Explore courses from fitness to nutrition or general wellness.',
@@ -55,5 +55,9 @@ export default {
       cardText:
         'Follow other users and instructors\n\nPost your thought or links to other resources\n\nSee what others have to say',
     },
+  },
+  footer: {
+    button_signed_out: 'Curious?',
+    button_signed_in: 'Discover now',
   },
 };
