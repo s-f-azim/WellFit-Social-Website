@@ -65,9 +65,7 @@ const Course = ({ course }) => {
       // only attempt to fetch wish list if the current user is a client
       if (session && session.user.role === 'client') {
         const response = await getWishList();
-        console.log(creators);
         setCourses(response.data.data);
-        // now that the courses from the wish list have been fetched, update the state
         setWishListFetched(true);
       }
     } catch (error) {
@@ -92,7 +90,7 @@ const Course = ({ course }) => {
       duration: 2,
       icon: <CheckOutlined style={{ color: '#33FF49' }} />,
     });
-    ReactDOM.render(<></>, document.getElementById('wishListButton'));
+    ReactDOM.render(null, document.getElementById('wishListButton'));
   }
 
   const handleCourseDelete = async (id) => {
@@ -125,19 +123,12 @@ const Course = ({ course }) => {
           },
         ],
       });
-      const { error } = await stripe.redirectToCheckout({ sessionId: response.data.id });
+      await stripe.redirectToCheckout({ sessionId: response.data.id });
     } catch (err) {
       console.log(err);
     }
   };
-  <Image
-    alt="a preview picture of the course"
-    src={
-      course.photos[0]
-        ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
-        : '/not-found.png'
-    }
-  />;
+
   return (
     <div style={{ padding: '2em' }}>
       <NextSeo
@@ -270,8 +261,6 @@ const Course = ({ course }) => {
               </Popconfirm>
             ) : null
           }
-          <br />
-          <br />
           <div id="wishListButton">
             {/**
              * If the wish list has not yet been fetched or it has but this course is already in

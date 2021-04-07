@@ -36,7 +36,7 @@ import {
   Upload,
   message,
 } from 'antd';
-import { useSession, getSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import Suggestions from '../../components/userComponents/SuggestedInstructors';
@@ -59,7 +59,6 @@ import { UserReview } from '../../components/userComponents/reviewComponents/Rev
 const User = ({ user }) => {
   const [session, loading] = useSession();
   const [isFollowing, setIsFollowing] = useState(false);
-
   const [isFollowingModalVisible, setIsFollowingModalVisible] = useState(false);
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
   const [following, setFollowing] = useState([]);
