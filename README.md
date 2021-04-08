@@ -45,11 +45,11 @@
 
 # Deploy Location
 
-    Frontend;
-        https://seg-major.vercel.app
+Frontend
+    https://seg-major.vercel.app
 
-    Backend:
-        https://api-wellfit.herokuapp.com/
+Backend:
+    https://api-wellfit.herokuapp.com/
 
 # Short Description
 
