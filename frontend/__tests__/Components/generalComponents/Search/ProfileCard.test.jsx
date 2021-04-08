@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { render, screen } from '@testing-library/react';
-import ProfileCard from '../components/generalComponents/Search/ProfileCard';
+import ProfileCard from '../../../../components/generalComponents/Search/ProfileCard';
 
 const instructor = {
   _id: '1',

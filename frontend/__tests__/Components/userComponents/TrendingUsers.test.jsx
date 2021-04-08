@@ -1,7 +1,7 @@
 import { render, screen, act } from '@testing-library/react';
-import TrendingUsers from '../components/userComponents/TrendingUsers';
+import TrendingUsers from '../../../components/userComponents/TrendingUsers';
 
-import { getTrendingUsers } from '../actions/user';
+import { getTrendingUsers } from '../../../actions/user';
 
 const users = [1, 2, 3, 4].map((n) => ({
   _id: `${n}`,
@@ -11,7 +11,7 @@ const users = [1, 2, 3, 4].map((n) => ({
   follower: [],
 }));
 
-jest.mock('../actions/user', () => ({
+jest.mock('../../../actions/user', () => ({
   getTrendingUsers: jest.fn(),
 }));
 

@@ -225,7 +225,9 @@ const settingsPage = () => {
                     </Space>
                   </Form>
                 </Card>
-                {(user.verified && user.role === 'instructor') || user.role === 'client' ? null : (
+                {user.verified || user.role !== 'instructor' ? (
+                  <> </>
+                ) : (
                   <Card className="settingCard" title={verifyMe}>
                     <Form form={VerifyForm} name="Update my verify" onFinish={onVerifyRequest}>
                       <Space direction="vertical" size="middle">

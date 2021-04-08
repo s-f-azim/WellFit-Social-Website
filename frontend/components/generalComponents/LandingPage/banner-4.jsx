@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Card, Image } from 'antd';
+import { Card } from 'antd';
+import Image from 'next/image';
 import { useSession } from 'next-auth/client';
 import { UserOutlined } from '@ant-design/icons';
 import { getTrendingUsersLimit } from '../../../actions/user';
@@ -33,13 +34,16 @@ const Banner4 = () => {
           <div className="banner4_boxes">
             {list.map((item) => (
               <div className="instructorCard">
-                <a href={session ? `users/${item._id}` : ''}>
+                <a href={`users/${item._id}`}>
                   <Card
                     hoverable
                     cover={
                       item.photos[0] ? (
                         <Image
-                          preview={false}
+                          className="testing"
+                          objectFit="cover"
+                          height="800px"
+                          width="800px"
                           alt="Picture of an instructor"
                           src={`data:image/png;base64,${item.photos[0].toString('base64')}`}
                         />

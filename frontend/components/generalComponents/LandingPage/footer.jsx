@@ -14,7 +14,7 @@ const Footer = () => {
           <h3>
             <b>Curious?</b>
           </h3>
-          <Button className="footerButton" href="/signup" size="large">
+          <Button className="footerButton" href={session ? '/search' : '/signup'} size="large">
             {session ? template.footer.button_signed_in : template.footer.button_signed_out}
           </Button>
         </div>

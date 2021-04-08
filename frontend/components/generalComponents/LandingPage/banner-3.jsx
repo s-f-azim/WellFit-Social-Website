@@ -13,7 +13,7 @@ const Banner3 = () => (
         <p>{template.banner3.subheader_1}</p>
         <div className="banner_button_box">
           <Button size="large" href="/search" className="banner3_button">
-            What are you looking for?
+            <b>What are you looking for?</b>
           </Button>
         </div>
         <div className="infoGrid">

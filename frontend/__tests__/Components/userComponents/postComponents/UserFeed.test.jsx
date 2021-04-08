@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import UserFeed from '../components/userComponents/postComponents/UserFeed';
-import { createPost, getFeedPosts, deletePost } from '../actions/post';
-import { getFavouritedPosts } from '../actions/user';
+import UserFeed from '../../../../components/userComponents/postComponents/UserFeed';
+import { createPost, getFeedPosts, deletePost } from '../../../../actions/post';
+import { getFavouritedPosts } from '../../../../actions/user';
 
 const user = { _id: '1', fName: 'user', lName: 'test', photos: [] };
 
@@ -10,13 +10,13 @@ jest.mock('next-auth/client', () => ({
   useSession: () => [{ user }, false],
 }));
 
-jest.mock('../actions/post', () => ({
+jest.mock('../../../../actions/post', () => ({
   createPost: jest.fn(),
   getFeedPosts: jest.fn(),
   deletePost: jest.fn(),
 }));
 
-jest.mock('../actions/user', () => ({
+jest.mock('../../../../actions/user', () => ({
   getFavouritedPosts: jest.fn(),
   updateFavouritedPosts: jest.fn(),
 }));

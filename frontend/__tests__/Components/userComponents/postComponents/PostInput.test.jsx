@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import PostInput from '../components/userComponents/postComponents/PostInput';
+import PostInput from '../../../../components/userComponents/postComponents/PostInput';
 
 jest.mock('react-player/lazy', () => ({
   canPlay: () => true,

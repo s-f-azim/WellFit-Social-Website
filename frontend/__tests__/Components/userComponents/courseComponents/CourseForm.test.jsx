@@ -1,9 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { notification } from 'antd';
-import CourseForm from '../components/userComponents/courseComponents/CourseForm';
+import CourseForm from '../../../../components/userComponents/courseComponents/CourseForm';
 
-import createCourse from '../actions/course';
+import createCourse from '../../../../actions/course';
 
 const user = { _id: '1', fName: 'user', lName: 'test' };
 
@@ -11,9 +11,9 @@ jest.mock('next-auth/client', () => ({
   useSession: () => [{ user }, false],
 }));
 
-jest.mock('../actions/course');
+jest.mock('../../../../actions/course');
 
-jest.mock('../actions/user', () => ({
+jest.mock('../../../../actions/user', () => ({
   getUserIdByEmail: (email) => email,
 }));
 

@@ -4,7 +4,7 @@ import Course from '../../models/Course.js';
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
 const createStripeCheckoutSession = async (line_items, user, courseId) => {
-  // this is so the user can't manually enter the price on the client side
+  // prevent user from manually entering the price on the client side
   const course = await Course.findById(courseId);
   line_items[0].amount = course.price * 100;
   const session = await stripe.checkout.sessions.create({

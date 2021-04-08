@@ -1,7 +1,7 @@
 import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import CourseCard from '../components/generalComponents/Search/CourseCard';
-import { getCourseCreators } from '../actions/course';
+import CourseCard from '../../../../components/generalComponents/Search/CourseCard';
+import { getCourseCreators } from '../../../../actions/course';
 
 const courseCreator = {
   _id: '1',
@@ -39,7 +39,7 @@ const course2 = {
   description: 'course description',
 };
 
-jest.mock('../actions/course', () => ({
+jest.mock('../../../../actions/course', () => ({
   getCourseCreators: jest.fn(),
 }));
 
@@ -63,7 +63,7 @@ it('renders course card with delete icon if isWish is true', async () => {
     data: { success: true, data: [courseCreator] },
   });
   await act(async () => {
-    render(<CourseCard content={course1} isWish={true} />);
+    render(<CourseCard content={course1} isWish />);
   });
 
   expect(screen.getByText(course1.title, { exact: false })).toBeInTheDocument();
@@ -78,7 +78,7 @@ it('renders course card with more than one tag and creator correctly', async () 
     data: { success: true, data: [courseCreator, courseCreator2] },
   });
   await act(async () => {
-    render(<CourseCard content={course2} isWish={true} />);
+    render(<CourseCard content={course2} isWish />);
   });
 
   expect(screen.getByText(course2.title, { exact: false })).toBeInTheDocument();

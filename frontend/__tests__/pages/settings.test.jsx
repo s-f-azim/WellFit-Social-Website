@@ -1,17 +1,17 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import { notification } from 'antd';
-
+import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { createRequest } from '../../actions/request';
 import { deleteUser } from '../../actions/user';
 import Settings from '../../pages/settings';
 
-const user = { _id: '1', fName: 'user', lName: 'test' };
+const client = { _id: '1', fName: 'user', lName: 'test', role: 'client' };
+const instructor = { _id: '1', fName: 'user', lName: 'test', role: 'instructor' };
 
 jest.mock('next-auth/client', () => ({
-  useSession: () => [{ user }, false],
+  useSession: jest.fn(),
 }));
 
 jest.mock('../../actions/request', () => ({
@@ -40,6 +40,8 @@ afterEach(() => {
 });
 
 it('settings renders and tabs are there', () => {
+  const user = client;
+  useSession.mockReturnValue([{ user }, false]);
   render(<Settings />);
 
   expect(screen.getByRole('tab', { name: 'Account settings' })).toBeInTheDocument();
@@ -47,6 +49,8 @@ it('settings renders and tabs are there', () => {
 });
 
 it('renders the screen of Account settings when settings is rendered', () => {
+  const user = client;
+  useSession.mockReturnValue([{ user }, false]);
   render(<Settings />);
 
   expect(screen.getByRole('tabpanel', { name: 'Account settings' })).toBeInTheDocument();
@@ -57,7 +61,9 @@ it('renders the screen of Account settings when settings is rendered', () => {
   expect(screen.getByRole('button', { name: 'delete' })).toBeInTheDocument();
 });
 
-it('renders the screen and buttons for the Contact us in settings', () => {
+it('renders the Contact us section in settings with verify request box for instructor users', () => {
+  const user = instructor;
+  useSession.mockReturnValue([{ user }, false]);
   render(<Settings />);
   userEvent.click(screen.getByRole('tab', { name: 'Contact us' }));
 
@@ -70,7 +76,24 @@ it('renders the screen and buttons for the Contact us in settings', () => {
   expect(screen.getByRole('button', { name: 'button verify request' })).toBeInTheDocument();
 });
 
+it('renders the Contact us section in settings without verify request box for client users', () => {
+  const user = client;
+  useSession.mockReturnValue([{ user }, false]);
+  render(<Settings />);
+  userEvent.click(screen.getByRole('tab', { name: 'Contact us' }));
+
+  expect(screen.getByRole('tabpanel', { name: 'Contact us' })).toBeInTheDocument();
+
+  expect(screen.getByRole('textbox', { name: 'bug report box' })).toBeInTheDocument();
+  expect(screen.queryByRole('textbox', { name: 'verify request box' })).not.toBeInTheDocument();
+
+  expect(screen.getByRole('button', { name: 'button bug report' })).toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'button verify request' })).not.toBeInTheDocument();
+});
+
 it('routes correctly for pressing edit password button in Account settings', async () => {
+  const user = client;
+  useSession.mockReturnValue([{ user }, false]);
   render(<Settings />);
   expect(screen.getByRole('tabpanel', { name: 'Account settings' })).toBeInTheDocument();
 
@@ -87,6 +110,8 @@ it('routes correctly for pressing edit password button in Account settings', asy
 });
 
 it('routes correctly for clicking edit basic button in Account settings', async () => {
+  const user = client;
+  useSession.mockReturnValue([{ user }, false]);
   render(<Settings />);
   expect(screen.getByRole('tabpanel', { name: 'Account settings' })).toBeInTheDocument();
 
@@ -103,6 +128,8 @@ it('routes correctly for clicking edit basic button in Account settings', async 
 });
 
 it('routes correctly for clicking edit in-depth button in Account settings', async () => {
+  const user = client;
+  useSession.mockReturnValue([{ user }, false]);
   render(<Settings />);
   expect(screen.getByRole('tabpanel', { name: 'Account settings' })).toBeInTheDocument();
 
@@ -119,6 +146,8 @@ it('routes correctly for clicking edit in-depth button in Account settings', asy
 });
 
 it('routes correctly for clicking delete in button press Account settings', async () => {
+  const user = client;
+  useSession.mockReturnValue([{ user }, false]);
   deleteUser.mockReturnValue({ data: { success: true, data: {} } });
   render(<Settings />);
   expect(screen.getByRole('tabpanel', { name: 'Account settings' })).toBeInTheDocument();
@@ -136,6 +165,8 @@ it('routes correctly for clicking delete in button press Account settings', asyn
 });
 
 it('Contact us screen textbox and submit button is working', async () => {
+  const user = instructor;
+  useSession.mockReturnValue([{ user }, false]);
   render(<Settings />);
   userEvent.click(screen.getByRole('tab', { name: 'Contact us' }));
 
