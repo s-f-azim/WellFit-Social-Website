@@ -47,6 +47,7 @@
 
     Frontend;
     [Frontend]: https://seg-major.vercel.app
+    [https://seg-major.vercel.app]
 
     Backend:
     [Backend]: (https://api-wellfit.herokuapp.com/)
