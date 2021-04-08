@@ -31,7 +31,6 @@ import {
   Modal,
   Collapse,
   Avatar,
-  Skeleton,
   notification,
   Upload,
   message,
@@ -66,9 +65,6 @@ const User = ({ user }) => {
   const [followNum, setFollowNum] = useState(0);
   const [followerNum, setFollowerNum] = useState(0);
   const router = useRouter();
-  if (router.isFallback) {
-    return <Skeleton active />;
-  }
 
   useEffect(async () => {
     try {
