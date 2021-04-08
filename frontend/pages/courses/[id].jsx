@@ -18,7 +18,7 @@ import {
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
@@ -45,9 +45,9 @@ const Course = ({ course }) => {
     display: 'inline-block',
     marginRight: '0.5rem',
   };
-
   useEffect(async () => {
     try {
+      console.log(course);
       const response = await getCourseCreators(course._id);
       setCreators(response.data.data);
     } catch (error) {
@@ -73,7 +73,6 @@ const Course = ({ course }) => {
   if (router.isFallback) {
     return <></>;
   }
-
   if (typeof window !== 'undefined' && loading) return null;
 
   // Add this course to the user's wish list and then remove the add to wish list button
