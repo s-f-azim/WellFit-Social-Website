@@ -30,7 +30,7 @@ import { getWishList, updateWishList } from '../../actions/user';
 import { getCourseCreators, deleteCourse } from '../../actions/course';
 
 const Course = ({ course }) => {
-  const [session] = useSession();
+  const [session, loading] = useSession();
   // state to indicate whether or not the user's wish list has been fetched yet
   const [wishListFetched, setWishListFetched] = useState(false);
   // state to indicate if the currently logged in user is a course creator
