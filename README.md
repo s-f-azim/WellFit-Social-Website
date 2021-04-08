@@ -62,7 +62,8 @@ https://api-wellfit.herokuapp.com/
 
 # Data Fetching time
 
-   * User Profile page fetches data every 2 seconds
+   * Course page fetches data every 10 minutes
+   * User page fetches data every 5 seconds
    * Admin Dashboard fetched data every 20 seconds
 
 # Short Description
