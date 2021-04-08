@@ -74,7 +74,7 @@ const Course = ({ course }) => {
     return <></>;
   }
 
-  // if (typeof window !== 'undefined' && loading) return null;
+  if (typeof window !== 'undefined' && loading) return null;
 
   // Add this course to the user's wish list and then remove the add to wish list button
   function addToWishList() {
