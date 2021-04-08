@@ -29,26 +29,26 @@
 
 # Credentials - to access the website
 
-| Email                              | user role  | password  |
-| ---------------------------------- | ---------- | --------- |
-| admin.admin@gmail.com              | admin      | admin1234 |
-| admin2.admin2@gmail.com            | admin      | admin1234 |
-| ahmed.alahmadi.instructor@test.com | instructor | ahmed1234 |
-| alex.chouman.instructor@test.com   | instructor | ()        |
-| fahim.ahmed.instructor@gmail.com   | instructor | ()        |
-| issa.kabir.instructor@gmail.com    | instructor | ()        |
-| jon.riv.instructor@gmail.com       | instructor | ()        |
-| oskar.ribbe.instructor@gmail.com   | instructor | ()        |
-| shah.azim.instructor@gmail.com     | instructor | ()        |
-| savraj.bassi.instructor@gmail.com  | instructor | ()        |
-| ahmed.alahmadi.client@email.com    | client     | ahmed1234 |
-| alex.chouman.client@email.com      | client     | ()        |
-| fahim.ahmed.client@email.com       | client     | ()        |
-| issa.kabir.client@email.com        | client     | ()        |
-| jon.riv.client@email.com           | client     | ()        |
-| oskar.ribbe.client@email.com       | client     | ()        |
-| shah.azim.client@email.com         | client     | ()        |
-| savraj.bassi.client@email.com      | client     | ()        |
+| Email                              | user role  | password               |
+| ---------------------------------- | ---------- | ---------------------- |
+| admin.admin@gmail.com              | admin      | SuperProtect1          |
+| admin2.admin2@gmail.com            | admin      | SuperProtect2          |
+| ahmed.alahmadi.instructor@test.com | instructor | additionProtect        |
+| alex.chouman.instructor@test.com   | instructor | subtractionProtect     |
+| fahim.ahmed.instructor@gmail.com   | instructor | multiplicationProtect  |
+| issa.kabir.instructor@gmail.com    | instructor | divisionProtect        |
+| jon.riv.instructor@gmail.com       | instructor | logarithmicProtect     |
+| oskar.ribbe.instructor@gmail.com   | instructor | algebraProtect         |
+| shah.azim.instructor@gmail.com     | instructor | arithmeticProtect      |
+| savraj.bassi.instructor@gmail.com  | instructor | calculusProtect        |
+| ahmed.alahmadi.client@email.com    | client     | additionProtect2       |
+| alex.chouman.client@email.com      | client     | subtractionProtect2    |
+| fahim.ahmed.client@email.com       | client     | multiplicationProtect2 |
+| issa.kabir.client@email.com        | client     | divisionProtect2       |
+| jon.riv.client@email.com           | client     | logarithmicProtect2    |
+| oskar.ribbe.client@email.com       | client     | algebraProtect2        |
+| shah.azim.client@email.com         | client     | arithmeticProtect2     |
+| savraj.bassi.client@email.com      | client     | calculusProtect2       |
 
 - Note: Only the admin is important since the other users with roles such as "client" and "instructor" can be created using the website via SignUP
 
