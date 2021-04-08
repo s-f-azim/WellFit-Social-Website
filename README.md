@@ -21,11 +21,11 @@
 
 # Stack Used
 
-   MERN:
-       - M MongoDB
-       - E Express
-       - R React (nextjs)
-       - N NodeJS
+    MERN:
+        - M MongoDB
+        - E Express
+        - R React (nextjs)
+        - N NodeJS
 
 # Credentials - to access the website
 
