@@ -10,6 +10,7 @@ import {
   Alert,
   Space,
   Radio,
+  Upload,
 } from 'antd';
 import {
   MinusCircleOutlined,
@@ -17,6 +18,7 @@ import {
   CheckOutlined,
   ProfileOutlined,
   InfoCircleOutlined,
+  UploadOutlined,
 } from '@ant-design/icons';
 
 import { useSession } from 'next-auth/client';
@@ -62,6 +64,11 @@ const CourseForm = () => {
       Create and Upload a Course <ProfileOutlined />
     </h2>
   );
+
+  const normFile = (e) => {
+    if (Array.isArray(e)) return e;
+    return e && e.fileList.length > 0 ? e.fileList[0] : undefined;
+  };
 
   return (
     <h2>
@@ -259,6 +266,28 @@ const CourseForm = () => {
 
           <Form.Item label="Location (if applicable):" name="address">
             <Input aria-label="address" />
+          </Form.Item>
+
+          <Form.Item
+            name="photo"
+            label="Photo"
+            getValueFromEvent={normFile}
+            rules={[
+              {
+                validator: async (_, file) => {
+                  if (!file) return Promise.resolve();
+                  const isValidFormat = ['image/png', 'image/jpg', 'image/jpeg'].includes(
+                    file.type
+                  );
+                  if (isValidFormat) return Promise.resolve();
+                  return Promise.reject('Invalid Format: only png, jpg or jpeg');
+                },
+              },
+            ]}
+          >
+            <Upload maxCount={1} accept={['image/png', 'image/jpg', 'image/jpeg']}>
+              <Button icon={<UploadOutlined />}>Upload Photo</Button>
+            </Upload>
           </Form.Item>
 
           <Form.Item>

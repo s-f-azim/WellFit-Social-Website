@@ -31,7 +31,6 @@ import {
   Modal,
   Collapse,
   Avatar,
-  Skeleton,
   notification,
   Upload,
   message,
@@ -57,7 +56,7 @@ import api from '../../services/api';
 import { UserReview } from '../../components/userComponents/reviewComponents/Review';
 
 const User = ({ user }) => {
-  const [session, loading] = useSession();
+  const [session] = useSession();
   const [isFollowing, setIsFollowing] = useState(false);
   const [isFollowingModalVisible, setIsFollowingModalVisible] = useState(false);
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
@@ -66,9 +65,7 @@ const User = ({ user }) => {
   const [followNum, setFollowNum] = useState(0);
   const [followerNum, setFollowerNum] = useState(0);
   const router = useRouter();
-  if (router.isFallback) {
-    return <Skeleton active />;
-  }
+  // if (typeof window !== 'undefined' && loading) return null;
 
   useEffect(async () => {
     try {
@@ -84,7 +81,7 @@ const User = ({ user }) => {
       console.log(error);
     }
   }, [router.query, isFollowing]);
-  useEffect(() => {
+  useEffect(async () => {
     if (
       session &&
       session.user &&
@@ -94,9 +91,9 @@ const User = ({ user }) => {
       setIsFollowing(true);
     }
   }, [follower, session]);
-
-  if (typeof window !== 'undefined' && loading) return null;
-
+  if (router.isFallback) {
+    return <></>;
+  }
   const { Panel } = Collapse;
 
   const showFollowingModal = () => {
@@ -485,7 +482,7 @@ const User = ({ user }) => {
 };
 
 // check if the id was given and prerender the page using the above template
-// this is using incremental static regeneration to rehydrate the page every 1 minutes
+// this is using incremental static regeneration to rehydrate the page every 5 secs
 export const getStaticProps = async ({ params }) => {
   const userId = params ? params.id : undefined;
   let response;
@@ -496,7 +493,7 @@ export const getStaticProps = async ({ params }) => {
   }
 
   if (response) {
-    return { props: { user: response.data.data }, revalidate: 60 * 2 };
+    return { props: { user: response.data.data }, revalidate: 5 };
   }
 
   return {

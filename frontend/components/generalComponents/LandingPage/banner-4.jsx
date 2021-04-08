@@ -34,7 +34,7 @@ const Banner4 = () => {
           <div className="banner4_boxes">
             {list.map((item) => (
               <div className="instructorCard">
-                <a href={session ? `users/${item._id}` : ''}>
+                <a href={`users/${item._id}`}>
                   <Card
                     hoverable
                     cover={

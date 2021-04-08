@@ -1,18 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-inner-declarations */
-import {
-  Row,
-  Col,
-  Button,
-  Typography,
-  Space,
-  Divider,
-  Rate,
-  notification,
-  Skeleton,
-  Popconfirm,
-} from 'antd';
+import { Row, Col, Button, Typography, Space, Divider, notification, Popconfirm } from 'antd';
 import {
   CheckOutlined,
   UserOutlined,
@@ -29,7 +18,7 @@ import {
 import ReactDOM from 'react-dom';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
@@ -51,15 +40,11 @@ const Course = ({ course }) => {
   // list of creators of this course
   const [creators, setCreators] = useState([]);
   const router = useRouter();
-  if (router.isFallback) {
-    return <Skeleton active />;
-  }
   const tagStyle = {
     maxWidth: 'min-content',
     display: 'inline-block',
     marginRight: '0.5rem',
   };
-
   useEffect(async () => {
     try {
       const response = await getCourseCreators(course._id);
@@ -79,12 +64,14 @@ const Course = ({ course }) => {
     }
   }, [session]);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (session && creators.some((user) => user._id === session.user._id)) {
       setUserIsCreator(true);
     }
   }, [creators, session]);
-
+  if (router.isFallback) {
+    return <></>;
+  }
   if (typeof window !== 'undefined' && loading) return null;
 
   // Add this course to the user's wish list and then remove the add to wish list button

@@ -57,7 +57,7 @@ export default {
     },
   },
   footer: {
-    button_signed_out: 'Curious?',
+    button_signed_out: 'Join now',
     button_signed_in: 'Discover now',
   },
 };

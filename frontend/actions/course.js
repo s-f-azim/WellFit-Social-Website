@@ -1,9 +1,18 @@
+/* eslint-disable no-underscore-dangle */
 import api from '../services/api';
 
 const createCourse = async (values) => {
   const res = await api.post('/courses/create', {
     ...values,
   });
+
+  if (values.photo) {
+    const course = res.data.data;
+    const formData = new FormData();
+    formData.append('images', values.photo.originFileObj);
+    await api.post(`/courses/${course._id}/images`, formData);
+  }
+
   return res.data;
 };
 
@@ -23,6 +32,5 @@ const getCourses = (title, tags, etags, pageSize, offset) =>
   });
 
 const getCourseCreators = (courseId) => api.get(`/courses/${courseId}/creators`);
-
 
 export { createCourse as default, deleteCourse, getCourses, getCourseCreators };
