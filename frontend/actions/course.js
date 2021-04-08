@@ -5,10 +5,13 @@ const createCourse = async (values) => {
   const res = await api.post('/courses/create', {
     ...values,
   });
-  const course = res.data.data;
-  const formData = new FormData();
-  formData.append('images', values.photo.originFileObj);
-  await api.post(`/courses/${course._id}/images`, formData);
+
+  if (values.photo) {
+    const course = res.data.data;
+    const formData = new FormData();
+    formData.append('images', values.photo.originFileObj);
+    await api.post(`/courses/${course._id}/images`, formData);
+  }
 
   return res.data;
 };
