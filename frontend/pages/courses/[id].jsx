@@ -47,9 +47,6 @@ const Course = ({ course }) => {
   };
   useEffect(async () => {
     try {
-      if (!course) {
-        course = await api.get(`/courses/${router.query.id}`);
-      }
       const response = await getCourseCreators(course._id);
       setCreators(response.data.data);
     } catch (error) {
@@ -65,13 +62,13 @@ const Course = ({ course }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [session]);
+  }, [session, router.query.id]);
 
   useEffect(async () => {
     if (session && creators.some((user) => user._id === session.user._id)) {
       setUserIsCreator(true);
     }
-  }, [creators, session]);
+  }, [creators, session, router.query.id]);
   if (router.isFallback) {
     return <></>;
   }
