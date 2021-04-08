@@ -29,27 +29,40 @@
 
 # Credentials - to access the website
 
-| Email                   | user role  | password  |
-| ----------------------- | ---------- | --------- |
-| admin.admin@gmail.com   | admin      | admin1234 |
-| ahmed.alahmadi@test.com | client     | ahmed1234 |
-| alex.chouman@test.com   | instructor | ()        |
-| fahim.ahmed@gmail.com   | instructor | ()        |
-| issa.kabir@gmail.com    | instructor | ()        |
-| jon.riv@gmail.com       | client     | ()        |
-| oskar.ribbe@gmail.com   | client     | ()        |
-| shah.azim@gmail.com     | client     | ()        |
-| savraj.bassi@gmail.com  | client     | ()        |
+| Email                              | user role  | password  |
+| ---------------------------------- | ---------- | --------- |
+| admin.admin@gmail.com              | admin      | admin1234 |
+| ahmed.alahmadi.instructor@test.com | instructor | ahmed1234 |
+| alex.chouman.instructor@test.com   | instructor | ()        |
+| fahim.ahmed.instructor@gmail.com   | instructor | ()        |
+| issa.kabir.instructor@gmail.com    | instructor | ()        |
+| jon.riv.instructor@gmail.com       | instructor | ()        |
+| oskar.ribbe.instructor@gmail.com   | instructor | ()        |
+| shah.azim.instructor@gmail.com     | instructor | ()        |
+| savraj.bassi.instructor@gmail.com  | instructor | ()        |
+| ahmed.alahmadi.client@email.com    | client     | ahmed1234 |
+| alex.chouman.client@email.com      | client     | ()        |
+| fahim.ahmed.client@email.com       | client     | ()        |
+| issa.kabir.client@email.com        | client     | ()        |
+| jon.riv.client@email.com           | client     | ()        |
+| oskar.ribbe.client@email.com       | client     | ()        |
+| shah.azim.client@email.com         | client     | ()        |
+| savraj.bassi.client@email.com      | client     | ()        |
 
 - Note: Only the admin is important since the other users with roles such as "client" and "instructor" can be created using the website via SignUP
 
 # Deploy Location
 
 Frontend
-    https://seg-major.vercel.app
+https://seg-major.vercel.app
 
 Backend:
-    https://api-wellfit.herokuapp.com/
+https://api-wellfit.herokuapp.com/
+
+# Data Fetching time
+
+    * User Profile page fetches data every 2 minutes
+    * Admin Dashboard fetched data every 1 minute
 
 # Short Description
 
