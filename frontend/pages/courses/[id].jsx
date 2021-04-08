@@ -47,7 +47,9 @@ const Course = ({ course }) => {
   };
   useEffect(async () => {
     try {
-      console.log(course);
+      if (!course) {
+        course = await api.get(`/courses/${router.query.id}`);
+      }
       const response = await getCourseCreators(course._id);
       setCreators(response.data.data);
     } catch (error) {
