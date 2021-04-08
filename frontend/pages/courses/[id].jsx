@@ -30,7 +30,7 @@ import { getWishList, updateWishList } from '../../actions/user';
 import { getCourseCreators, deleteCourse } from '../../actions/course';
 
 const Course = ({ course }) => {
-  const [session, loading] = useSession();
+  const [session] = useSession();
   // state to indicate whether or not the user's wish list has been fetched yet
   const [wishListFetched, setWishListFetched] = useState(false);
   // state to indicate if the currently logged in user is a course creator
@@ -74,7 +74,7 @@ const Course = ({ course }) => {
     }
   }, [creators, session]);
 
-  if (typeof window !== 'undefined' && loading) return null;
+  // if (typeof window !== 'undefined' && loading) return null;
 
   // Add this course to the user's wish list and then remove the add to wish list button
   function addToWishList() {

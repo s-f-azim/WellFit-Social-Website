@@ -56,7 +56,7 @@ import api from '../../services/api';
 import { UserReview } from '../../components/userComponents/reviewComponents/Review';
 
 const User = ({ user }) => {
-  const [session, loading] = useSession();
+  const [session] = useSession();
   const [isFollowing, setIsFollowing] = useState(false);
   const [isFollowingModalVisible, setIsFollowingModalVisible] = useState(false);
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
@@ -68,6 +68,7 @@ const User = ({ user }) => {
   if (router.isFallback) {
     return <></>;
   }
+  // if (typeof window !== 'undefined' && loading) return null;
 
   useEffect(async () => {
     try {
@@ -93,9 +94,6 @@ const User = ({ user }) => {
       setIsFollowing(true);
     }
   }, [follower, session]);
-
-  if (typeof window !== 'undefined' && loading) return null;
-
   const { Panel } = Collapse;
 
   const showFollowingModal = () => {
