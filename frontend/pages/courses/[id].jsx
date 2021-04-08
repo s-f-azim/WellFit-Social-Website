@@ -62,13 +62,13 @@ const Course = ({ course }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [session, router.query.id]);
+  }, [session]);
 
   useEffect(async () => {
     if (session && creators.some((user) => user._id === session.user._id)) {
       setUserIsCreator(true);
     }
-  }, [creators, session, router.query.id]);
+  }, [creators, session]);
   if (router.isFallback) {
     return <></>;
   }
