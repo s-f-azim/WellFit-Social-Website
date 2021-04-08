@@ -161,8 +161,8 @@ const SearchBar = () => {
         data.length > 0 ? (
         <CourseResults data={data} />
       ) : (
-        !query.values &&
-        data.length <= 0 && (
+        (searchType !== 'Questionnaire' && !query.values) ||
+        (query.values && data.length === 0 && (
           <Empty
             style={{ margin: '2em' }}
             description={
@@ -171,7 +171,7 @@ const SearchBar = () => {
               </span>
             }
           />
-        )
+        ))
       )}
       <Row justify="center">
         {response !== null && (
