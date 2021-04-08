@@ -36,7 +36,7 @@ import {
   Upload,
   message,
 } from 'antd';
-import { useSession, getSession } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import Suggestions from '../../components/userComponents/SuggestedInstructors';
@@ -59,7 +59,6 @@ import { UserReview } from '../../components/userComponents/reviewComponents/Rev
 const User = ({ user }) => {
   const [session, loading] = useSession();
   const [isFollowing, setIsFollowing] = useState(false);
-
   const [isFollowingModalVisible, setIsFollowingModalVisible] = useState(false);
   const [isFollowerModalVisible, setFollowerIsModalVisible] = useState(false);
   const [following, setFollowing] = useState([]);
@@ -84,7 +83,7 @@ const User = ({ user }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [router.query]);
+  }, [router.query, isFollowing]);
   useEffect(() => {
     if (
       session &&
@@ -116,16 +115,7 @@ const User = ({ user }) => {
   const handleFollow = async (id) => {
     try {
       await addingFollowUser(id);
-      if (!session.user.following.includes(id)) {
-        session.user.following = [id, ...session.user.following];
-        setIsFollowing(true);
-        setFollowerNum(followerNum + 1);
-      } else {
-        const index = session.user.following.indexOf(id);
-        session.user.following.splice(index, 1);
-        setIsFollowing(false);
-        setFollowerNum(followerNum - 1);
-      }
+      setIsFollowing(!isFollowing);
     } catch (err) {
       console.log(err);
     }
@@ -326,7 +316,7 @@ const User = ({ user }) => {
 
                 <h4 style={{ minwidth: '30%' }}>
                   <strong> About: </strong>
-                  {user.bio ? user.bio : 'No bio entered, edit your profile to display it.'}
+                  {user.bio ? user.bio : 'Bio not available'}
                 </h4>
                 <Button type="link" onClick={showFollowerModal} size="small">
                   <h5 style={{ color: '#ffa277' }}>Followed by {followerNum} user(s).</h5>

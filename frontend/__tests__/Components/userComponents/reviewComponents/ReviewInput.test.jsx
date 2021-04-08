@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ReviewInput from '../components/userComponents/reviewComponents/ReviewInput';
+import ReviewInput from '../../../../components/userComponents/reviewComponents/ReviewInput';
 
 it('renders fields', () => {
   render(<ReviewInput />);

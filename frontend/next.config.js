@@ -57,27 +57,6 @@ const plugins = [
           });
         }
 
-        // const builtInLoader = config.module.rules.find((rule) => {
-        //   if (rule.oneOf) {
-        //     return (
-        //       rule.oneOf.find((deepRule) => {
-        //         return deepRule.test && deepRule.test.toString().includes('/a^/');
-        //       }) !== undefined
-        //     );
-        //   }
-        //   return false;
-        // });
-
-        // if (typeof builtInLoader !== 'undefined') {
-        //   config.module.rules.push({
-        //     oneOf: [
-        //       ...builtInLoader.oneOf.filter((rule) => {
-        //         return (rule.test && rule.test.toString().includes('/a^/')) !== true;
-        //       }),
-        //     ],
-        //   });
-        // }
-
         config.resolve.alias['@'] = path.resolve(__dirname);
         return config;
       },

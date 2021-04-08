@@ -1,11 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { notification } from 'antd';
-import DeleteUser from '../components/adminComponents/DeleteUser';
+import DeleteUser from '../../../components/adminComponents/DeleteUser';
 
-import { deleteSpecificUser } from '../actions/user';
+import { deleteSpecificUser } from '../../../actions/user';
 
-jest.mock('../actions/user', () => ({
+jest.mock('../../../actions/user', () => ({
   deleteSpecificUser: jest.fn(),
 }));
 

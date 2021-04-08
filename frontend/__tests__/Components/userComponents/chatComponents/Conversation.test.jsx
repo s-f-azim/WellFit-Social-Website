@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import io from 'socket.io-client';
-import Conversation from '../components/userComponents/chatComponents/Conversation';
+import Conversation from '../../../../components/userComponents/chatComponents/Conversation';
 
 const user = { _id: '1', fName: 'user 1', lName: 'test 1' };
 const otherUser = { _id: '2', fName: 'user 2', lName: 'test 2' };

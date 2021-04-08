@@ -45,8 +45,6 @@ const callbacks = {
   async session(session, token) {
     session.accessToken = token.accessToken;
     session.user = token.user;
-    const res = await api.get(`/users/${session.user._id}/photos`);
-    session.user.photos = res.data.data;
     return Promise.resolve(session);
   },
 };

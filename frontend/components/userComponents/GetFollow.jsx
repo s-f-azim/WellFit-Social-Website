@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { List, Button } from 'antd';
+import { List } from 'antd';
 import Link from 'next/link';
 
 const GetFollow = ({ data }) => (

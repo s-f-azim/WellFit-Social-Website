@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 // import userEvent from '@testing-library/user-event';
-import GetFollow from '../components/userComponents/GetFollow';
+import GetFollow from '../../../components/userComponents/GetFollow';
 
 const followingUser = [1, 2, 3, 4].map((u) => ({
   _id: `${u}`,

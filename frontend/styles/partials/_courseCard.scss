@@ -9,14 +9,6 @@
   .title {
     float: left;
     font-size: 2em;
-    &:hover {
-      color: #ffa277;
-    }
-  }
-
-  .title:hover {
-    cursor: pointer;
-    float: left;
   }
 
   .card-image {
@@ -65,6 +57,7 @@
       max-width: 20rem;
       min-height: 23rem;
       max-height: 23rem;
+      margin-bottom: 2rem;
     }
 
     .card-image {

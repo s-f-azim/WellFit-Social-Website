@@ -1,7 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-inner-declarations */
-import { Row, Col, Button, Typography, Space, Divider, Rate, notification, Skeleton, Popconfirm } from 'antd';
+import {
+  Row,
+  Col,
+  Button,
+  Typography,
+  Space,
+  Divider,
+  Rate,
+  notification,
+  Skeleton,
+  Popconfirm,
+} from 'antd';
 import {
   CheckOutlined,
   UserOutlined,
@@ -33,6 +44,7 @@ const Course = ({ course }) => {
   const [session, loading] = useSession();
   // state to indicate whether or not the user's wish list has been fetched yet
   const [wishListFetched, setWishListFetched] = useState(false);
+  // state to indicate if the currently logged in user is a course creator
   const [userIsCreator, setUserIsCreator] = useState(false);
   // the courses in the user's wish list
   const [courses, setCourses] = useState({});
@@ -42,6 +54,11 @@ const Course = ({ course }) => {
   if (router.isFallback) {
     return <Skeleton active />;
   }
+  const tagStyle = {
+    maxWidth: 'min-content',
+    display: 'inline-block',
+    marginRight: '0.5rem',
+  };
 
   useEffect(async () => {
     try {
@@ -53,20 +70,17 @@ const Course = ({ course }) => {
     try {
       // only attempt to fetch wish list if the current user is a client
       if (session && session.user.role === 'client') {
-          const response = await getWishList();
-          console.log(creators);
-          setCourses(response.data.data);
-          // now that the courses from the wish list have been fetched, update the state
-          setWishListFetched(true);
-        } 
-      
+        const response = await getWishList();
+        setCourses(response.data.data);
+        setWishListFetched(true);
+      }
     } catch (error) {
       console.log(error);
     }
   }, [session]);
 
   useEffect(() => {
-    if (session && creators.some(user => user._id === session.user._id)) {
+    if (session && creators.some((user) => user._id === session.user._id)) {
       setUserIsCreator(true);
     }
   }, [creators, session]);
@@ -82,7 +96,7 @@ const Course = ({ course }) => {
       duration: 2,
       icon: <CheckOutlined style={{ color: '#33FF49' }} />,
     });
-    ReactDOM.render(<></>, document.getElementById('wishListButton'));
+    ReactDOM.render(null, document.getElementById('wishListButton'));
   }
 
   const handleCourseDelete = async (id) => {
@@ -115,19 +129,12 @@ const Course = ({ course }) => {
           },
         ],
       });
-      const { error } = await stripe.redirectToCheckout({ sessionId: response.data.id });
+      await stripe.redirectToCheckout({ sessionId: response.data.id });
     } catch (err) {
       console.log(err);
     }
   };
-  <Image
-    alt="a preview picture of the course"
-    src={
-      course.photos[0]
-        ? `data:image/jpeg;base64,${Buffer.from(course.photos[0].data).toString('base64')}`
-        : '/not-found.png'
-    }
-  />;
+
   return (
     <div style={{ padding: '2em' }}>
       <NextSeo
@@ -234,11 +241,11 @@ const Course = ({ course }) => {
           <h2>
             <strong>Course Tagged with:</strong>
           </h2>
-          <Space>
+          <div>
             {course.tags.map((tag) => (
-              <h3>{`#${tag}`}</h3>
+              <h3 style={tagStyle} key={tag}>{`#${tag}`}</h3>
             ))}
-          </Space>
+          </div>
           <br />
           <Button aria-label="purchase" onClick={handleClick} type="primary" size="large">
             Purchase this course <ShoppingCartOutlined />
@@ -246,24 +253,20 @@ const Course = ({ course }) => {
           <br />
           <br />
           {
-            //Only display if creator is logged in
+            // Only display if creator is logged in
             userIsCreator ? (
-              <Popconfirm title="Are you sure?" onConfirm={() => handleCourseDelete(course._id)} okText="Yes" cancelText="No">
-                <Button
-                  type="primary"
-                  size="large"
-                  aria-label="deleteCourse"
-                  danger
-                >
+              <Popconfirm
+                title="Are you sure?"
+                onConfirm={() => handleCourseDelete(course._id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button type="primary" size="large" aria-label="deleteCourse" danger>
                   Delete this course <DeleteOutlined />
                 </Button>
               </Popconfirm>
-              
             ) : null
-
           }
-          <br />
-          <br />
           <div id="wishListButton">
             {/**
              * If the wish list has not yet been fetched or it has but this course is already in

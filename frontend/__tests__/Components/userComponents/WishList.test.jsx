@@ -1,9 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import WishList from '../components/userComponents/WishList';
 import { notification } from 'antd';
-import { getWishList, updateWishList } from '../actions/user';
 import { expect } from '@jest/globals';
+import WishList from '../../../components/userComponents/WishList';
+import { getWishList, updateWishList } from '../../../actions/user';
 
 const course1 = {
   _id: 'course1',
@@ -56,12 +56,12 @@ const instructor = {
   email: `instructor1@test.com`,
 };
 
-jest.mock('../actions/user', () => ({
+jest.mock('../../../actions/user', () => ({
   getWishList: jest.fn(),
   updateWishList: jest.fn(),
 }));
 
-jest.mock('../actions/course', () => ({
+jest.mock('../../../actions/course', () => ({
   getCourseCreators: () => ({ data: { success: true, data: [instructor] } }),
 }));
 
