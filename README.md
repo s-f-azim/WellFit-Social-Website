@@ -21,7 +21,7 @@
 
 # Stack Used
 
-   MERN:
+    MERN:
         - M MongoDB
         - E Express
         - R React (nextjs)
