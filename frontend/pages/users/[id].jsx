@@ -84,7 +84,7 @@ const User = ({ user }) => {
       console.log(error);
     }
   }, [router.query, isFollowing]);
-  useEffect(() => {
+  useEffect(async () => {
     if (
       session &&
       session.user &&

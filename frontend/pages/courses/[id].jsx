@@ -79,7 +79,7 @@ const Course = ({ course }) => {
     }
   }, [session]);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (session && creators.some((user) => user._id === session.user._id)) {
       setUserIsCreator(true);
     }
