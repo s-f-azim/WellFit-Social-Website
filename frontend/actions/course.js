@@ -33,6 +33,4 @@ const getCourses = (title, tags, etags, pageSize, offset) =>
 
 const getCourseCreators = (courseId) => api.get(`/courses/${courseId}/creators`);
 
-const uploadImages = (id, images) => api.post(`/courses/${id}/images`, images);
-
 export { createCourse as default, deleteCourse, getCourses, getCourseCreators };
