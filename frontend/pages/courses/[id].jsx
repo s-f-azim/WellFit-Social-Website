@@ -40,9 +40,6 @@ const Course = ({ course }) => {
   // list of creators of this course
   const [creators, setCreators] = useState([]);
   const router = useRouter();
-  if (router.isFallback) {
-    return <></>;
-  }
   const tagStyle = {
     maxWidth: 'min-content',
     display: 'inline-block',
@@ -73,6 +70,9 @@ const Course = ({ course }) => {
       setUserIsCreator(true);
     }
   }, [creators, session]);
+  if (router.isFallback) {
+    return <></>;
+  }
 
   // if (typeof window !== 'undefined' && loading) return null;
 

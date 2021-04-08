@@ -65,9 +65,6 @@ const User = ({ user }) => {
   const [followNum, setFollowNum] = useState(0);
   const [followerNum, setFollowerNum] = useState(0);
   const router = useRouter();
-  if (router.isFallback) {
-    return <></>;
-  }
   // if (typeof window !== 'undefined' && loading) return null;
 
   useEffect(async () => {
@@ -94,6 +91,9 @@ const User = ({ user }) => {
       setIsFollowing(true);
     }
   }, [follower, session]);
+  if (router.isFallback) {
+    return <></>;
+  }
   const { Panel } = Collapse;
 
   const showFollowingModal = () => {
