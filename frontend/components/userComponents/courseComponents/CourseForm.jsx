@@ -11,7 +11,6 @@ import {
   Space,
   Radio,
   Upload,
-  message,
 } from 'antd';
 import {
   MinusCircleOutlined,
