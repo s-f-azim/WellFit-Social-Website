@@ -496,7 +496,7 @@ export const getStaticProps = async ({ params }) => {
   }
 
   if (response) {
-    return { props: { user: response.data.data }, revalidate: 20 };
+    return { props: { user: response.data.data }, revalidate: 5 };
   }
 
   return {

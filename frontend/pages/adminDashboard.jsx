@@ -346,7 +346,7 @@ export async function getStaticProps() {
       verifyRequests: getRequestsRes.filter(isVerifyRequest),
       userReports: getRequestsRes.filter(isContentReport),
     },
-    revalidate: 60 * 1,
+    revalidate: 20,
   };
 }
 
