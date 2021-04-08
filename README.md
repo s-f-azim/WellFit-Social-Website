@@ -70,6 +70,10 @@ https://api-wellfit.herokuapp.com/
 
    WellFit is a software built to better the health of its users by facilitating all interactions between fitness/health professionals and clients, from finding the right professional, to initiating contact, to handling payment for said services; all this whilst using a durable business model. The objective of this project is to create a relevant, efficient and complete platform to allow the incredible amount of fitness and health professionals existing on various social media to share their programs and courses, be aggregated, gain in visibility and meet/interact with clients seamlessly.
 
+# Code Reference
+
+   Test codes from this: https://github.com/ant-design/ant-design/issues/21080 were used to get a proper understanding on how to do frontend testing.
+
 # Payment Test
 
    In our website there is a payment process where you can buy courses from Instructors
