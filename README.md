@@ -51,7 +51,7 @@
 
     Backend:
     [Backend](https://api-wellfit.herokuapp.com/)
-    <https://api-wellfit.herokuapp.com/>
+    [https://api-wellfit.herokuapp.com/]
 
 # Short Description
 
