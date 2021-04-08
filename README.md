@@ -64,7 +64,7 @@ https://api-wellfit.herokuapp.com/
 
    * Course page fetches data every 10 minutes
    * User page fetches data every 5 seconds
-   * Admin Dashboard fetched data every 20 seconds
+   * Admin Dashboard fetches data every 20 seconds
 
 # Short Description
 
@@ -76,7 +76,7 @@ https://api-wellfit.herokuapp.com/
 
 # Payment Test
 
-   In our website there is a payment process where you can buy courses from Instructors
+   In our website, there is a payment process where you can buy courses from Instructors.
    In order to test the buying process you can use this: https://stripe.com/docs/testing link to create a fake buy test.
    If you do not wish to visit the link, use the following:
    Card number- 4242 4242 4242 4242
