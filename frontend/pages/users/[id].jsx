@@ -65,6 +65,9 @@ const User = ({ user }) => {
   const [followNum, setFollowNum] = useState(0);
   const [followerNum, setFollowerNum] = useState(0);
   const router = useRouter();
+  if (router.isFallback) {
+    return <></>;
+  }
 
   useEffect(async () => {
     try {
