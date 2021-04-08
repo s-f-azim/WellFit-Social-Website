@@ -1,18 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-inner-declarations */
-import {
-  Row,
-  Col,
-  Button,
-  Typography,
-  Space,
-  Divider,
-  Rate,
-  notification,
-  Skeleton,
-  Popconfirm,
-} from 'antd';
+import { Row, Col, Button, Typography, Space, Divider, notification, Popconfirm } from 'antd';
 import {
   CheckOutlined,
   UserOutlined,
@@ -52,7 +41,7 @@ const Course = ({ course }) => {
   const [creators, setCreators] = useState([]);
   const router = useRouter();
   if (router.isFallback) {
-    return <Skeleton active />;
+    return <></>;
   }
   const tagStyle = {
     maxWidth: 'min-content',

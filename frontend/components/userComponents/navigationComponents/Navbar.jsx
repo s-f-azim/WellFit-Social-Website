@@ -49,7 +49,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
     <>
       <div className="buttons">
         <ul className={click ? 'nav-options activs' : 'nav-options'}>
-          <li className="option" onClick={closeMobileMenu}>
+          <li className="option">
             {session && session.user && session.user.role === 'instructor' ? (
               <Dropdown overlay={courseMenu} trigger={['click']}>
                 <Button type="link" className="menuButton">
@@ -58,7 +58,7 @@ const LoggedInMenu = ({ session, profileOpen, setProfileOpen }) => {
               </Dropdown>
             ) : (
               <Link href={{ pathname: '/search', query: { tab: 'Courses' } }}>
-                <Button type="link" className="menuButton">
+                <Button type="link" className="menuButton" onClick={closeMobileMenu}>
                   <ProfileOutlined /> Courses
                 </Button>
               </Link>
