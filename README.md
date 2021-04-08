@@ -32,6 +32,7 @@
 | Email                              | user role  | password  |
 | ---------------------------------- | ---------- | --------- |
 | admin.admin@gmail.com              | admin      | admin1234 |
+| admin2.admin2@gmail.com            | admin      | admin1234 |
 | ahmed.alahmadi.instructor@test.com | instructor | ahmed1234 |
 | alex.chouman.instructor@test.com   | instructor | ()        |
 | fahim.ahmed.instructor@gmail.com   | instructor | ()        |
@@ -68,3 +69,13 @@ https://api-wellfit.herokuapp.com/
 
     WellFit is a software built to better the health of its users by facilitating all interactions between fitness/health professionals and clients, from finding the right professional, to initiating contact, to handling payment for said services; all this whilst using a durable business model. The objective of this project is to create a relevant, efficient and complete platform to allow the incredible
     amount of fitness and health professionals existing on various social media to share their programs and courses, be aggregated, gain in visibility and meet/interact with clients seamlessly.
+
+# Payment Test
+
+    In our website there is a payment process where you can buy courses from Instructors
+    In order to test the buying process you can use this: https://stripe.com/docs/testing link to create a fake buy test.
+    If you do not wish to visit the link, use the following:
+    Card number- 4242 4242 4242 4242
+    Exp Date and Security code- Any sequence of number
+    Name on Card- Any name
+    Country or region- Any country or postal code
