@@ -382,7 +382,7 @@ const User = ({ user }) => {
               >
                 <Row justify="space-around">
                   <Col span={20}>
-                    <UserPosts id={router.query.id} />
+                    <UserPosts id={user._id} />
                   </Col>
                 </Row>
               </Panel>
@@ -485,7 +485,7 @@ const User = ({ user }) => {
 };
 
 // check if the id was given and prerender the page using the above template
-// this is using incremental static regeneration to rehydrate the page every 20 minutes
+// this is using incremental static regeneration to rehydrate the page every 20 secs
 export const getStaticProps = async ({ params }) => {
   const userId = params ? params.id : undefined;
   let response;
